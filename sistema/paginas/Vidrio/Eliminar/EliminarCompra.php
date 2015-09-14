@@ -6,7 +6,7 @@ include "../../../librerias/funciones.php";
 $factura = $_REQUEST['codigo'];
 
 $select_factura = "
-SELECT facturas.codigo_factura, facturas.fecha, recolectores.nombre_recolector, facturas.codigo_recolector, proveedores.nombre_proveedor, facturas.codigo_proveedor
+SELECT facturas.codigo_factura, facturas.sucursal, facturas.fecha, recolectores.nombre_recolector, facturas.codigo_recolector, proveedores.nombre_proveedor, facturas.codigo_proveedor
 FROM facturas, recolectores, proveedores
 WHERE facturas.codigo_factura = '$factura'
 AND facturas.codigo_recolector = recolectores.codigo_recolector
@@ -33,7 +33,19 @@ while($vidrios = mysql_fetch_array($consulta_vidrio)){
 	mysql_query($instruccion_delete, $conexion) or die ("<SPAN CLASS='error'>Fallo eliminar_vidrio!! </SPAN>".mysql_error());
 }
 
-//eliminar el registro de la tabla facturas con el codigo del proveedor que se va eliminar
+//buscar con el codigo de factura en la tabla compras el codigo de la compra del registro que se va eliminar de la tabla compras
+$instruccion_compra = "
+SELECT compras.codigo_compra, facturas.codigo_factura
+FROM compras, facturas
+WHERE compras.codigo_factura = '$factura'
+AND facturas.codigo_factura = compras.codigo_factura";
+$consultar_compra = mysql_query($instruccion_compra, $conexion) or die ("<SPAN CLASS='error'>Fallo consultar_compra!! </SPAN>".mysql_error());
+		
+//eliminar el registro de la tabla compras con el codigo de la factura que se va eliminar
+$instruccion_delete = "DELETE FROM compras WHERE compras.codigo_factura = '$factura'";
+mysql_query($instruccion_delete, $conexion) or die ("<SPAN CLASS='error'>Fallo eliminar_compra!! </SPAN>".mysql_error());
+
+//eliminar el registro de la tabla facturas con el codigo de la factura que se va eliminar
 $instruccion_delete = "DELETE FROM facturas WHERE facturas.codigo_factura = '$factura'";
 mysql_query($instruccion_delete, $conexion) or die ("<SPAN CLASS='error'>Fallo eliminar_factura!! </SPAN>".mysql_error());
 ?>
@@ -90,7 +102,6 @@ mysql_query($instruccion_delete, $conexion) or die ("<SPAN CLASS='error'>Fallo e
 										<td align="right"><b>No:</b></td>
 										<td align="left"><?php echo $facturas['codigo_factura'];?></td>
 									</tr>
-									<caption><h1></h1></caption>
 									<!--------------------------------RECOLECOR---------------------------------->
 									<tr>
 										<td></td>
@@ -107,6 +118,15 @@ mysql_query($instruccion_delete, $conexion) or die ("<SPAN CLASS='error'>Fallo e
 										<td align="left"><?php echo $facturas['nombre_proveedor'];?></td>
 										<td align="right"><b>Codigo:</b></td>
 										<td align="left"><?php echo $facturas['codigo_proveedor'];?></td>
+										<td></td>
+									</tr>
+									<!--------------------------------SUCURSAL---------------------------------->
+									<tr>
+										<td></td>
+										<td align="right"><b>Sucursal:</b></td>
+										<td align="left"><?php echo $facturas['sucursal'];?></td>
+										<td></td>
+										<td></td>
 										<td></td>
 									</tr>
 									<!--------------------------------------------------------------------------->

@@ -459,5 +459,3 @@ $.fn.visualize = function(options, container){
 	}).next(); //returns canvas(es)
 };
 })(jQuery);
-
-

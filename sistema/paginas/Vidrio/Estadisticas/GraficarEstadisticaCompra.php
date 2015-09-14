@@ -6,20 +6,28 @@ include "../../../librerias/funciones.php";
 //RECUPERRAR VALORES DEL FORMULARIO
 $numero_ano = $_POST['seleccionar_ano'];
 $numero_mes = $_POST['seleccionar_mes'];
-$mostrar = $_POST['mostrar'];
+$mostrar 	= $_POST['mostrar'];
+$sucursal 	= $_POST['sucursal'];
 
 //VERIFICAR QUE NO SE HAN DEJADO ELEMENTOS SIN SELECCIONAR
-if($numero_ano=="" || $numero_mes=="" || $mostrar=='') header("Location: frmEstadisticaCompra.php");
+if($numero_ano=="" || $numero_mes=="" || $mostrar=='' || $sucursal=="") header("Location: frmEstadisticaCompra.php");
 
 //BUSCAR EL MES
 $lista_meses = array(1 => "Enero", 2 => "Febrero", 3 => "Marzo", 4 => "Abril", 5 => "Mayo", 6 => "Junio", 7 => "Julio", 8 => "Agosto", 9 => "Septiembre", 10 => "Octubre", 11 => "Noviembre", 12 => "Diciembre");
-for($i=1;$i<=12;$i++)
-	if($numero_mes == $i) $nombre_mes = $lista_meses[$i];
+for($i=1;$i<=12;$i++) if($numero_mes == $i) $nombre_mes = $lista_meses[$i];
 
-$SumaCompras = calcularSumaCompras($numero_mes,$numero_ano);
+//CALCULAR LAS SUMAS DE VIDRIO DE LAS FACTURAS
+$SumaCompras = calcularSumaCompras($numero_mes,$numero_ano,$sucursal);
 $SumasTotales = calcularSumaTotales($SumaCompras);
 $Bsuma_cantidad = $SumasTotales[1];	$Bsuma_precio = $SumasTotales[2];
 $Psuma_cantidad = $SumasTotales[3];	$Psuma_precio = $SumasTotales[4];
+
+//TITULO DE LA SUCURSAL
+switch($sucursal){
+	case 'VICESA':
+	case 'VIGUA':	$sucursal = "para ".$sucursal; break;
+	case 'AMBAS':	$sucursal = ""; break;
+}
 ?>
 <HTML>
 	<head>
@@ -63,7 +71,7 @@ $Psuma_cantidad = $SumasTotales[3];	$Psuma_precio = $SumasTotales[4];
 				<h2 class="encabezado2"><img src="../../../imagenes/icono_error.png"><br>NO SE PUDO MOSTRAR LA ESTADISTICA!!</h2>
 				<table align="center" class="alerta error centro">
 					<tr>
-						<td align="center" colspan="3">No hay valores que mostrar.<br>No se a comprado vidrio en <?php echo $nombre_mes." ".$numero_ano;?>.</td>
+						<td align="center" colspan="3">No hay valores que mostrar.<br>No se a comprado vidrio <?php echo $sucursal." en ".$nombre_mes." ".$numero_ano;?>.</td>
 						<meta http-equiv ="refresh"		 content="5;url=frmEstadisticaCompra.php">
 					</tr>
 				</table>
@@ -85,7 +93,7 @@ $Psuma_cantidad = $SumasTotales[3];	$Psuma_precio = $SumasTotales[4];
 					<!---------------------------------------------------------------------------------------------------->
 					<tr>
 						<td align="center">
-							<h2 class="encabezado2">Grafica de estadistica de vidrio comprado en <?php echo $nombre_mes." ".$numero_ano;?>.<h2>
+							<h2 class="encabezado2">Grafica de estadistica de vidrio comprado <?php echo $sucursal." en ".$nombre_mes." ".$numero_ano;?>.<h2>
 							<table align="center" border bgcolor="white">
 								<thead class="titulo2">
 									<tr>
@@ -162,7 +170,7 @@ $Psuma_cantidad = $SumasTotales[3];	$Psuma_precio = $SumasTotales[4];
 					<tr>
 						<td align="center">
 							<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-							<h2 class="encabezado2">Detalle de estadistica de vidrio comprado en <?php echo $nombre_mes." ".$numero_ano;?>.</h2>
+							<h2 class="encabezado2">Detalle de estadistica de vidrio comprado <?php echo $sucursal." en ".$nombre_mes." ".$numero_ano;?>.</h2>
 							<table border bgcolor="white">
 								<thead class="titulo2">
 									<tr>

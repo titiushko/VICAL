@@ -6,7 +6,7 @@ include "../../../librerias/funciones.php";
 $factura = $_REQUEST['eliminar_factura'];
 
 $select_factura = "
-SELECT facturas.codigo_factura, facturas.fecha, recolectores.nombre_recolector, facturas.codigo_recolector, proveedores.nombre_proveedor, facturas.codigo_proveedor
+SELECT facturas.codigo_factura, facturas.sucursal, facturas.fecha, recolectores.nombre_recolector, facturas.codigo_recolector, proveedores.nombre_proveedor, facturas.codigo_proveedor
 FROM facturas, recolectores, proveedores
 WHERE facturas.codigo_factura = '$factura'
 AND facturas.codigo_recolector = recolectores.codigo_recolector
@@ -67,7 +67,6 @@ $facturas = mysql_fetch_assoc($consulta_factura);
 										<td align="right"><b>No:</b></td>
 										<td align="left"><?php echo $facturas['codigo_factura'];?></td>
 									</tr>
-									<caption><h1></h1></caption>
 									<!--------------------------------RECOLECOR---------------------------------->
 									<tr>
 										<td></td>
@@ -84,6 +83,15 @@ $facturas = mysql_fetch_assoc($consulta_factura);
 										<td align="left"><?php echo $facturas['nombre_proveedor'];?></td>
 										<td align="right"><b>Codigo:</b></td>
 										<td align="left"><?php echo $facturas['codigo_proveedor'];?></td>
+										<td></td>
+									</tr>
+									<!--------------------------------SUCURSAL---------------------------------->
+									<tr>
+										<td></td>
+										<td align="right"><b>Sucursal:</b></td>
+										<td align="left"><?php echo $facturas['sucursal'];?></td>
+										<td></td>
+										<td></td>
 										<td></td>
 									</tr>
 									<!--------------------------------------------------------------------------->
@@ -197,7 +205,7 @@ $facturas = mysql_fetch_assoc($consulta_factura);
 					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 					<!------------------------------------------------------------------------>
 					<input name="Eliminar" type="submit" value="Eliminar" onMouseOver="toolTip('Aceptar',this)" class="boton aceptar">
-					<input type="button" onMouseOver="toolTip('Cancelar',this)" class="boton cancelar" <?php echo "onClick=\"redireccionar('../Consultar/VerCompra.php?valor=$factura')\"";?>>
+					<input type="button" onMouseOver="toolTip('Cancelar',this)" class="boton cancelar" onClick="redireccionar('javascript:window.history.back()');">
 					<!------------------------------------------------------------------------>
 					</form>
 				</td>

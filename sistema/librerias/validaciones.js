@@ -43,6 +43,12 @@ function validarNuevaCompra(F,cantidad){
 		elemento = document.getElementById('id6'); elemento.addClassName("elementoVacio");
 		return false;
 	}
+//lista sucursal
+	if(F.sucursal.selectedIndex == 0){
+		elemento = document.getElementById('mensaje6'); elemento.addClassName("visto");
+		elemento = document.getElementById('id7'); elemento.addClassName("elementoVacio");
+		return false;
+	}
 //campos cantidad vidrio
 	if(F.BVe1.value.length == 0) cantidad_vacios++;	if(F.PVe1.value.length == 0) cantidad_vacios++;
 	if(F.BCr1.value.length == 0) cantidad_vacios++;	if(F.PCr1.value.length == 0) cantidad_vacios++;
@@ -51,8 +57,8 @@ function validarNuevaCompra(F,cantidad){
 	if(F.BRe1.value.length == 0) cantidad_vacios++;	if(F.PRe1.value.length == 0) cantidad_vacios++;
 //mostrar si no se registro ningun vidrio
 	if(cantidad_vacios == 10){
-		elemento = document.getElementById('mensaje6'); elemento.addClassName("visto");
-		elemento = document.getElementById('id7'); elemento.addClassName("elementoVacio");
+		elemento = document.getElementById('mensaje7'); elemento.addClassName("visto");
+		elemento = document.getElementById('id8'); elemento.addClassName("elementoVacio");
 		F.BVe1.focus();
 		return false;
 	}
@@ -150,28 +156,37 @@ function validarNuevoRecolector(F,cantidad){
 function validarNuevoCentroAcopio(F,cantidad){
 	var elemento;
 	borrarMensaje(cantidad);	elementosVacios(cantidad+1);
-//lista de encargados
-	if (F.nombre_recolector.selectedIndex == 0){
+//caja de texto nombre entro de acopio
+	if(F.nombre_centro_acopio.value == ""){
 		elemento = document.getElementById('mensaje1'); elemento.addClassName("visto");
 		elemento = document.getElementById('id1'); elemento.addClassName("elementoVacio");
+		F.nombre_centro_acopio.focus();
+		return false;
+	}
+//lista de encargados
+	if (F.nombre_recolector.selectedIndex == 0){
+		elemento = document.getElementById('mensaje2'); elemento.addClassName("visto");
+		elemento = document.getElementById('id2'); elemento.addClassName("elementoVacio");
 		F.nombre_recolector.focus();
 		return false;
 	}
 //lista departamentos
 	if (F.departamento.selectedIndex == 0){
-		elemento = document.getElementById('mensaje2'); elemento.addClassName("visto");
-		elemento = document.getElementById('id2'); elemento.addClassName("elementoVacio");
+		elemento = document.getElementById('mensaje3'); elemento.addClassName("visto");
+		elemento = document.getElementById('id3'); elemento.addClassName("elementoVacio");
 		F.departamento.focus();
 		return false;
 	}
 //caja de texto del telefonico
-	if(F.telefono1.value == "" || F.telefono2.value == ""){
-		elemento = document.getElementById('mensaje3'); elemento.addClassName("visto");
-		elemento = document.getElementById('id3'); elemento.addClassName("elementoVacio");
-		elemento = document.getElementById('id4'); elemento.addClassName("elementoVacio");
-		F.telefono1.focus();
-		//F.telefono2.focus();
-		return false;
+	if(F.telefono1.value != "" || F.telefono2.value != ""){
+		if(!(F.telefono1.value != "" && F.telefono2.value != "")){
+			elemento = document.getElementById('mensaje4'); elemento.addClassName("visto");
+			elemento = document.getElementById('id4'); elemento.addClassName("elementoVacio");
+			elemento = document.getElementById('id5'); elemento.addClassName("elementoVacio");
+			F.telefono1.focus();
+			//F.telefono2.focus();
+			return false;
+		}
 	}
 	return true;
 }
@@ -297,7 +312,7 @@ function validarModificarProveedor(F,cantidad){
 //------------------------------------------------------------------------------------
 function validarEstadisticaVidrio(F,cantidad){
 	borrarMensaje(cantidad);
-	return ListaMes(F,1) && ListaAno(F,2) && RadioMostrar(F,3);
+	return ListaMes(F,1) && ListaAno(F,2) && RadioMostrar(F,3) && ListaSucursal(F,4);
 }
 //------------------------------------------------------------------------------------
 //							formulario estadistica proveedor
@@ -314,7 +329,7 @@ function validarEstadisticaRecolector(F,cantidad){
 	return ListaAno(F,1) && ListaRecolector(F,2) && RadioMostrar(F,3) && RadioVidrio(F,4);
 }
 //------------------------------------------------------------------------------------
-//							formulario estadistica recolector
+//							formulario reporte recolector
 //------------------------------------------------------------------------------------
 function validarReporteRecolector(F,cantidad){
 	borrarMensaje(cantidad);
@@ -342,16 +357,39 @@ function validarComparacionCompra(F,cantidad){
 		elemento = document.getElementById('mensaje4'); elemento.addClassName("visto");
 		return false;
 	}
-//validar que no se escoja la misma fecha para comparar
-	var periodo1 = F.ano1.value+F.mes1.value; var periodo2 = F.ano2.value+F.mes2.value;
+//validar las fechas a comprar
+	var periodo1;	if(F.mes1.value < 10) periodo1 = F.ano1.value+'-0'+F.mes1.value;	else periodo1 = F.ano1.value+'-'+F.mes1.value;
+	var periodo2;	if(F.mes2.value < 10) periodo2 = F.ano2.value+'-0'+F.mes2.value;	else periodo2 = F.ano2.value+'-'+F.mes2.value;
+	
 	if (periodo1 == periodo2){
 		elemento = document.getElementById('mensaje5'); elemento.addClassName("visto");
 		return false;
 	}
-	if (F.mostrar.selectedIndex == 0){
+	if (periodo1 > periodo2){
 		elemento = document.getElementById('mensaje6'); elemento.addClassName("visto");
 		return false;
 	}
+	if (periodo2 < periodo1){
+		elemento = document.getElementById('mensaje7'); elemento.addClassName("visto");
+		return false;
+	}
+	if(periodo1 > fechaActual()){
+		elemento = document.getElementById('mensaje8'); elemento.addClassName("visto");
+		return false;
+	}
+	if(periodo2 > fechaActual()){
+		elemento = document.getElementById('mensaje9'); elemento.addClassName("visto");
+		return false;
+	}
+	if (F.mostrar.selectedIndex == 0){
+		elemento = document.getElementById('mensaje10'); elemento.addClassName("visto");
+		return false;
+	}
+	if (F.sucursal.selectedIndex == 0){
+		elemento = document.getElementById('mensaje11'); elemento.addClassName("visto");
+		return false;
+	}
+//si no hubo error, eviar un valor verdadero
 	return true;
 }
 //------------------------------------------------------------------------------------
@@ -361,13 +399,13 @@ function validarHistorialCompra(F,cantidad,criterio){
 	borrarMensaje(cantidad);
 	switch(criterio){
 	case 'periodo':
-					return ListaMes(F,1) && ListaAno(F,2);
+					return FechaInicialFinal(F) && ListaSucursal(F,10);
 					break;
 	case 'tipo':
-					return ListaTipoVidrio(F,3);
+					return ListaTipoVidrio(F,8) && ListaSucursal(F,10);
 					break;
 	case 'proveedor':
-					return ListaProveedor(F,4);
+					return ListaProveedor(F,9) && ListaSucursal(F,10);
 					break;
 	}
 }
@@ -400,6 +438,48 @@ function RadioVidrio(F,msj){
 	}
 	return true;
 }
+//inputs fecha_inicial y fecha_final
+function FechaInicialFinal(F){
+//falta seleccionar la fecha_inicial
+	if (F.fecha_inicial.value == 0){
+		elemento = document.getElementById('mensaje1'); elemento.addClassName("visto");
+		elemento = document.getElementById('id1'); elemento.addClassName("elementoVacio");
+		return false;
+	}
+//falta seleccionar la fecha_final
+	if (F.fecha_final.value == 0){
+		elemento = document.getElementById('mensaje2'); elemento.addClassName("visto");
+		elemento = document.getElementById('id2'); elemento.addClassName("elementoVacio");
+		return false;
+	}
+//fecha_inicial no debe ser igual a fecha_final
+	if (F.fecha_inicial.value == F.fecha_final.value){
+		elemento = document.getElementById('mensaje3'); elemento.addClassName("visto");
+		return false;
+	}
+//fecha_inicial no debe ser mayor a fecha_final
+	if (F.fecha_inicial.value > F.fecha_final.value){
+		elemento = document.getElementById('mensaje4'); elemento.addClassName("visto");
+		return false;
+	}
+//fecha_final no debe ser menor a fecha_inicial
+	if (F.fecha_final.value < F.fecha_inicial.value){
+		elemento = document.getElementById('mensaje5'); elemento.addClassName("visto");
+		return false;
+	}
+//fecha_inicial no debe ser mayor ni igual a la fecha actual
+	if(F.fecha_inicial.value >= fechaActual()){
+		elemento = document.getElementById('mensaje6'); elemento.addClassName("visto");
+		return false;
+	}
+//fecha_final no debe ser mayor ni igual a la fecha actual
+	if(F.fecha_final.value >= fechaActual()){
+		elemento = document.getElementById('mensaje7'); elemento.addClassName("visto");
+		return false;
+	}
+//si no hubo error, eviar un valor verdadero
+	return true;
+}
 //lista años
 function ListaAno(F,msj){
 	if (F.seleccionar_ano.selectedIndex == 0){
@@ -427,6 +507,14 @@ function ListaProveedor(F,msj){
 //lista recolectores
 function ListaRecolector(F,msj){
 	if (F.seleccionar_recolector.selectedIndex == 0){
+		var elemento = document.getElementById('mensaje'+msj); elemento.addClassName("visto");
+		return false;
+	}
+	return true;
+}
+//lista sucursal
+function ListaSucursal(F,msj){
+	if (F.sucursal.selectedIndex == 0){
 		var elemento = document.getElementById('mensaje'+msj); elemento.addClassName("visto");
 		return false;
 	}

@@ -2,10 +2,6 @@
 include "../../../loggin/BloqueSeguridad.php";
 include "../../../loggin/AccesoAdministrador.php";
 include "../../../librerias/abrir_conexion.php";
-$consulta_usuario = mysql_query("SELECT MAX(id) AS maximo FROM usuarios", $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_usuario!! </SPAN>".mysql_error());
-$usuario = mysql_fetch_array($consulta_usuario);
-$cantidad = $usuario['maximo'];
-$tipos_usuarios = array(1=>"Administrador",2=>"Contador",3=>"Recolector");
 ?>
 <HTML>
 	<head>
@@ -49,13 +45,6 @@ $tipos_usuarios = array(1=>"Administrador",2=>"Contador",3=>"Recolector");
 				<td colspan="2">
 					<form name="formulario" action="RegistrarUsuario.php" method="POST" onSubmit="return validarNuevoUsuario(this,5);">
 						<table align="center" class="marco">
-							<!--------------------------------CODIGO---------------------------------->
-							<tr>
-								<td align="right"><span class="titulo1">Id:</span></td>
-								<td align="left">
-									<input name="id" type="text" size=1 readonly value="<?php echo ($cantidad+1);?>">
-								</td>
-							</tr>
 							<!--------------------------------NOMBRE---------------------------------->
 							<tr>
 								<td align="right"><span class="titulo1">Nombre Completo:</span></td>
@@ -87,6 +76,7 @@ $tipos_usuarios = array(1=>"Administrador",2=>"Contador",3=>"Recolector");
 									<select name="nivel" id="id4" class="requiredo lista opcion" onBlur="borrarMensaje(5), elementosVacios(4);" onClick="borrarMensaje(5), elementosVacios(4);">
 										<option selected value="">.:Opciones:.</option>
 									<?php
+									$tipos_usuarios = array(1=>"Administrador",2=>"Contador",3=>"Recolector");
 									for($i=1;$i<=3;$i++){
 										echo "<option value=\"$i\">".$tipos_usuarios[$i]."</option>";
 									}

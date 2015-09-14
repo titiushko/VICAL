@@ -24,7 +24,7 @@ $consulta_proveedores = mysql_query($instruccion_select, $conexion) or die ("<SP
 ?>
 <HTML>
 	<head>
-		<title>Reporte de Proveedores</title>
+		<title>REPORTE_DE_PROVEEDORES</title>
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">

@@ -6,9 +6,6 @@ $nombre_mes = $_REQUEST['valor_mes'];
 $ano 		= $_REQUEST['valor_ano'];
 if($nombre_mes== '' || $ano == '') header("Location: VerReporteCompra_Periodo.php");
 
-header("Content-type: application/vnd.ms-word");
-header("Content-Disposition: attachment; filename=Reporte-Compra-$nombre_mes$ano.doc");
-
 $mes = '';
 if($nombre_mes == 'Enero') $mes = '01';
 if($nombre_mes == 'Febrero') $mes = '02';
@@ -25,6 +22,9 @@ if($nombre_mes == 'Diciembre') $mes = '12';
 
 $recibos = calcularSumaFacturaPeriodo($mes,$ano);
 $totales = array(1=>0,2=>0);
+
+header("Content-type: application/vnd.ms-word");
+header("Content-Disposition: attachment; filename=REPORTE_DE_COMPRAS_EN_".strtoupper($nombre_mes)."_DEL_".$ano.".doc");
 ?>
 <HTML>
 	<head>

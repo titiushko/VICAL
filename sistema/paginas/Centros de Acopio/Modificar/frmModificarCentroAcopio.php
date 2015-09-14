@@ -8,6 +8,7 @@ $direccion			= $_REQUEST['direccion'];
 $instruccion_select = "
 SELECT
 centros_de_acopio.codigo_centro_acopio,
+centros_de_acopio.nombre_centro_acopio,
 centros_de_acopio.direccion,
 centros_de_acopio.departamento,
 centros_de_acopio.telefono,
@@ -60,9 +61,13 @@ $departamentos = array("Ahuachapan","Santa Ana","Sonsonate","Usulutan","San Migu
 			function validarNuevoCentroAcopio(F){
 				borrarMensaje();
 				//caja de texto del telefonico
-				if(F.telefono1.value == "" || F.telefono2.value == ""){
-					elemento = document.getElementById('mensaje'); elemento.className = "visto";
-					return false;
+				if(F.telefono1.value != "" || F.telefono2.value != ""){
+					if(!(F.telefono1.value != "" && F.telefono2.value != "")){
+						elemento = document.getElementById('mensaje4'); elemento.addClassName("visto");
+						F.telefono1.focus();
+						//F.telefono2.focus();
+						return false;
+					}
 				}
 				return true;
 			}
@@ -86,6 +91,13 @@ $departamentos = array("Ahuachapan","Santa Ana","Sonsonate","Usulutan","San Migu
 						<tr>
 							<td align="right" class="titulo1">Codigo:</td>
 							<td class="subtitulo1"><?php echo $centros_de_acopio["codigo_centro_acopio"]; ?></td>
+						</tr>
+						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+						<tr>
+							<td align="right" class="titulo1">Nombre:</td>
+							<td>
+								<input name="nombre_centro_acopio" class="subtitulo1 fondo" size=39 <?php echo "value='".$centros_de_acopio["nombre_centro_acopio"]."'";?> onKeyPress="return soloLetras(event)" onBlur="borrarMensaje(4);" onClick="borrarMensaje(4);">
+							</td>
 						</tr>
 						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 						<tr>
@@ -173,13 +185,30 @@ $departamentos = array("Ahuachapan","Santa Ana","Sonsonate","Usulutan","San Migu
 					<!------------------------------------------------------------------------>
 					<input name="Modificar" type="submit" value="Modificar" onMouseOver="toolTip('Modificar',this)" class="boton aceptar">
 					<?php
-					if($direccion == "../Consultar/VerCentroAcopioDepartamento.php") $centro_de_acopio = $centros_de_acopio["departamento"];
+					if($direccion == "../Consultar/VerCentroAcopioDepartamento.php"){
+						switch($centros_de_acopio["departamento"]){
+							case "Ahuachapan": $centro_de_acopio = 1; break;
+							case "Santa Ana": $centro_de_acopio = 2; break;
+							case "Sonsonate": $centro_de_acopio = 3; break;
+							case "Usulutan": $centro_de_acopio = 4; break;
+							case "San Miguel": $centro_de_acopio = 5; break;
+							case "Morazan": $centro_de_acopio = 6; break;
+							case "La Union": $centro_de_acopio = 7; break;
+							case "La Libertad": $centro_de_acopio = 8; break;
+							case "Chalatenango": $centro_de_acopio = 9; break;
+							case "Cuscatlan": $centro_de_acopio = 10; break;
+							case "San Salvador": $centro_de_acopio = 11; break;
+							case "La Paz": $centro_de_acopio = 12; break;
+							case "Caba&ntilde;as": $centro_de_acopio = 13; break;
+							case "San Vicente": $centro_de_acopio = 14; break;
+						}
+					}
 					?>
-					<input type="button" onMouseOver="toolTip('Cancelar',this)" class="boton cancelar" <?php echo "onClick=\"redireccionar('$direccion?valor=$centro_de_acopio')\"";?>>
+					<input type="button" onMouseOver="toolTip('Cancelar',this)" class="boton cancelar" <?php echo "onClick=\"redireccionar('$direccion?departamento=$centro_de_acopio')\"";?>>
 					<!------------------------------------------------------------------------>
 					</form>
 					<center>
-						<div id="mensaje" class="oculto"><span class="alerta error">&nbsp;&nbsp;Falta el numero telefonico!!&nbsp;&nbsp;</span></div>
+						<div id="mensaje" class="oculto"><span class="alerta error">&nbsp;&nbsp;El numero telefonico esta incompleto!!&nbsp;&nbsp;</span></div>
 					</center>
 				</td>
 			</tr>

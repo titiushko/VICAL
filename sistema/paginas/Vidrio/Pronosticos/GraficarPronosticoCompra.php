@@ -3,35 +3,41 @@ include "../../../loggin/BloqueSeguridad.php";
 include "../../../librerias/abrir_conexion.php";
 include "../../../librerias/funciones.php";
 
-$filas=1;
 $consulta = mysql_query("SELECT DISTINCT YEAR(fecha) AS ano FROM facturas ORDER BY fecha ASC",$conexion) or die ("<SPAN CLASS='error'>Fallo en consulta fecha!!</SPAN>".mysql_error());
-while($opciones = mysql_fetch_array($consulta)){
-	$anos[$filas] = $opciones['ano'];
-	$filas++;
-}
-for($ano=1; $ano<$filas; $ano++){
-	$instruccion = "SELECT SUM(precio) AS precio FROM vidrio, facturas WHERE YEAR(facturas.fecha) = '$anos[$ano]' AND vidrio.codigo_factura = facturas.codigo_factura";
-	$consulta = mysql_query($instruccion,$conexion) or die ("<SPAN CLASS='error'>Fallo en consulta precios!!</SPAN>".mysql_error());
-	$opciones = mysql_fetch_array($consulta);
-	$precios[$ano] = $opciones['precio'];
-}
-//calculo de pronostico aplicando suavizamiento exponencial simple
-$ano_actual = $precios[1];
-$alfha = 0.5;			//constante de suavisamiento
-$bandera = true;
-for($i=1; $i<=$filas; $i++){
-	if($bandera){
-		$ano_anterior = $precios[1];
-		$Ft = $ano_actual + ($alfha * ($ano_anterior - $ano_actual));
-		$ano_actual = $Ft;
-		$bandera = false;
+$cantidad = mysql_num_rows($consulta);
+
+$filas=1;
+if($cantidad != 0){
+	while($opciones = mysql_fetch_array($consulta)){
+		$anos[$filas] = $opciones['ano'];
+		$filas++;
 	}
-	else{
-		$ano_anterior = $precios[$i-1];
-		$Ft = $ano_actual + ($alfha * ($ano_anterior - $ano_actual));
-		$ano_actual = $Ft;
+	for($ano=1; $ano<$filas; $ano++){
+		$instruccion = "SELECT SUM(precio) AS precio FROM vidrio, facturas WHERE YEAR(facturas.fecha) = '$anos[$ano]' AND vidrio.codigo_factura = facturas.codigo_factura";
+		$consulta = mysql_query($instruccion,$conexion) or die ("<SPAN CLASS='error'>Fallo en consulta precios!!</SPAN>".mysql_error());
+		$opciones = mysql_fetch_array($consulta);
+		$precios[$ano] = $opciones['precio'];
 	}
-	$pronosticos[$i] = $ano_actual;
+	//calculo de pronostico aplicando suavizamiento exponencial simple
+	$ano_actual = $precios[1];
+	$alfha = 0.5;			//constante de suavisamiento
+	$bandera = true;
+	for($i=1; $i<=$filas; $i++){
+		if($bandera){
+			$ano_anterior = $precios[1];
+			$Ft = $ano_actual + ($alfha * ($ano_anterior - $ano_actual));
+			$ano_actual = $Ft;
+			$bandera = false;
+		}
+		else{
+			$ano_anterior = $precios[$i-1];
+			$Ft = $ano_actual + ($alfha * ($ano_anterior - $ano_actual));
+			$ano_actual = $Ft;
+		}
+		$pronosticos[$i] = $ano_actual;
+	}
+}
+else{
 }
 ?>
 <HTML>
@@ -67,6 +73,24 @@ for($i=1; $i<=$filas; $i++){
 				<td align="center">
 				<img src="../../../imagenes/vical.png" width="25%" height="25%">
 				<h1 class="encabezado1">PRONOSTICOS DE COMPRAS</h1>
+<!------------------------------------------------------------------------------------------------------------------------>
+			<?php
+			if($filas == 1){
+			?>
+					<h2 class="encabezado2"><img src="../../../imagenes/icono_error.png"><br>NO SE PUDO MOSTRAR EL PRONOSTICO!!</h2>
+					<table align="center" class="alerta error centro">
+						<tr>
+							<td align="center" colspan="3">No hay valores que mostrar.<br>No hay compras de vidrio registrados en el sistema.</td>
+							<meta http-equiv ="refresh"		 content="5;url=../Nueva/frmNuevaCompra.php<?php echo "?valor_nombre_recolector=nueva_compra";?>">
+						</tr>
+					</table>
+				</td>
+			</tr>
+<!------------------------------------------------------------------------------------------------------------------------>
+			<?php
+			}
+			else{
+			?>
 				</td>
 			</tr>
 <!------------------------------------------------------------------------------------------------------------------------>
@@ -129,19 +153,19 @@ for($i=1; $i<=$filas; $i++){
 <!------------------------------------------------------------------------------------------------------------------------>
 						<tr>
 							<td colspan="3">
-								<table align="center" id="graficar_tabla" class="oculto" border bgcolor="white">
+								<table align="center" id="graficar_tabla" class="oculto">
 									<caption><h1 class="encabezado2">PRONOSTICOS<h1></caption>
 									<thead class="titulo2"><tr><td></td><th>A&Ntilde;OS BASES</th><th>PRONOSTICOS</th></tr></thead>
 									<tbody align="center">
 										<?php
-										for($i=1; $i<$filas; $i++){										
-											?>
+										for($i=1; $i<$filas; $i++){
+										?>
 										<tr>
 											<th class="titulo2" width="80"><?php echo $anos[$i];?></th>
 											<td width="100"><?php printf("%.2f",$precios[$i]);?></td>
 											<td width="100"><?php printf("%.2f",$pronosticos[$i]);?></td>
-										</tr>									
-										<?php										
+										</tr>
+										<?php
 										}
 										//imprimir pronostico del año siguiente
 										$n_ano = $anos[$filas - 1] + 1;
@@ -149,7 +173,7 @@ for($i=1; $i<=$filas; $i++){
 										?>
 										<tr>
 											<th class="titulo2" width="80"><?php echo $n_ano;?></th>
-											<td></td>
+											<td width="100"><?php echo printf("%.2f",$precios[$i-1]);?></td>
 											<td width="100"><?php echo printf("%.2f",$n_precio);?></td>
 										</tr>
 									</tbody>
@@ -167,6 +191,10 @@ for($i=1; $i<=$filas; $i++){
 					<img src="../../../imagenes/icono_volver.png" width="42" height="42" align="top" onMouseOver="toolTip('Regresar',this)" onClick="redireccionar('javascript:window.history.back()');" class="manita">
 				</td>
 			</tr>
+<!------------------------------------------------------------------------------------------------------------------------>
+		<?php
+			}
+		?>
 <!------------------------------------------------------------------------------------------------------------------------>
 		</TABLE>
 	<hr><p><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2011</center></p>

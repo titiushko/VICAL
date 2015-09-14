@@ -8,6 +8,7 @@ $centro_de_acopio = $_REQUEST['codigo'];
 $instruccion_select = "
 SELECT
 centros_de_acopio.codigo_centro_acopio,
+centros_de_acopio.nombre_centro_acopio,
 centros_de_acopio.direccion,
 centros_de_acopio.departamento,
 centros_de_acopio.telefono,
@@ -66,6 +67,11 @@ $centros_de_acopio = mysql_fetch_assoc($consulta_centro_de_acopio);
 						<tr>
 							<td align="right" class="titulo3">Codigo:</td>
 							<td class="subtitulo1"><?php echo $centros_de_acopio["codigo_centro_acopio"];?></td>
+						</tr>
+						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+						<tr>
+							<td align="right" class="titulo3">Nombre:</td>
+							<td class="subtitulo1"><?php echo $centros_de_acopio["nombre_centro_acopio"];?></td>
 						</tr>
 						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 						<tr>

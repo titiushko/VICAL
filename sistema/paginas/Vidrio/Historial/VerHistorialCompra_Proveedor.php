@@ -3,9 +3,17 @@ include "../../../loggin/BloqueSeguridad.php";
 include "../../../loggin/AccesoContador.php";
 include "../../../librerias/abrir_conexion.php";
 include "../../../librerias/funciones.php";
-$proveedor = $_REQUEST['seleccionar_proveedor'];
+switch($_GET['pagina']){
+	case 'historial':	$proveedor = $_POST['seleccionar_proveedor'];	$sucursal  = $_POST['sucursal']; break;
+	case 'proveedor':	$proveedor = $_GET['seleccionar_proveedor'];	$sucursal  = $_GET['sucursal'];  break;
+}
+if($proveedor == '' || $sucursal == '') header("Location: frmHistorialCompra.php");
 
-if($proveedor == '') header("Location: frmHistorialCompra.php");
+switch($sucursal){
+	case 'VICESA':
+	case 'VIGUA':	$Sucursal = "para ".$sucursal.""; break;
+	case 'AMBAS':	$Sucursal = ""; break;
+}
 
 $select_proveedores = "
 SELECT
@@ -55,7 +63,7 @@ $proveedores = mysql_fetch_assoc($consulta_proveedores);
 					<h2 class="encabezado2"><img src="../../../imagenes/icono_error.png"><br>NO SE PUDO MOSTRAR EL HISTORIAL DE COMPRAS!!</h2>
 					<table align="center" class="alerta error centro">
 						<tr>
-							<td align="center" colspan="3">No hay valores que mostrar.<br>No se a comprado vidrio a <?php echo $proveedores["nombre_proveedor"];?>.</td>
+							<td align="center" colspan="3">No hay valores que mostrar.<br>No se a comprado vidrio <?php echo $Sucursal." a ".$proveedores["nombre_proveedor"];?>.</td>
 							<meta http-equiv ="refresh"		 content="5;url=frmHistorialCompra.php">
 						</tr>
 					</table>
@@ -128,10 +136,10 @@ $proveedores = mysql_fetch_assoc($consulta_proveedores);
 						?>
 						<tr>
 							<td colspan="2" align="center">
-							<h2 class="encabezado2">Historial de vidrio comprado a<br><?php echo $proveedores["nombre_proveedor"];?>.</h2>
+							<h2 class="encabezado2">Historial de vidrio comprado <?php echo $Sucursal;?> a<br><?php echo $proveedores["nombre_proveedor"];?>.</h2>
 							<?php
 							$bandera = true;
-							$historial = calcularSumaMes('proveedor',$proveedor);
+							$historial = calcularSumaMes('proveedor',$proveedor,$sucursal);
 							for($i=1; $i<=$filas; $i++){
 							?>
 								<table align="center" class="rejilla" border bgcolor="white" width="50%">

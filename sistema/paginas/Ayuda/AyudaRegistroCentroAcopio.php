@@ -32,6 +32,15 @@
 								<table>
 									<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 									<tr>
+										<td align="right" class="titulo1" style="vertical-align:text-top;">Nombre del Centro de Acopio:</td>
+										<td align="justify" class="subtitulo1">
+											Escriba aqui el nombre del nuevo centro de acopio.<br>
+											No puede dejar este campo vacio.
+											<hr>
+										</td>
+									</tr>
+									<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+									<tr>
 										<td align="right" class="titulo1" style="vertical-align:text-top;">Encargado:</td>
 										<td align="justify" class="subtitulo1">
 											Seleccione de la lista el nombre del recolector que estara encargado de este centro de acopio para registrar en el sistema.<br>
@@ -63,7 +72,7 @@
 										<td align="right" class="titulo1" style="vertical-align:text-top;">Telefono:</td>
 										<td align="justify" class="subtitulo1">
 											Digite el n&uacute;mero telef&oacute;nico del centro de acopio.<br>
-											Este campo es requerido.
+											El n&uacute;mero telef&oacute;nico es un dato opcional, pero si va digitar el n&uacute;mero telef&oacute;nico no lo puede dejar inconcluso.
 											<hr>
 										</td>
 									</tr>

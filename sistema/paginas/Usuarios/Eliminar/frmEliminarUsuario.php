@@ -44,11 +44,6 @@ $tipos_usuarios = array(1=>"Administrador",2=>"Contador",3=>"Recolector");
 					<table align="center" class="alerta error centro">
 						<!------------------------------------------------------------------------>
 						<tr>
-							<td align="right"><b>Id:</b></td>
-							<td><?php echo $usuarios["id"]; ?></td>
-						</tr>
-						<!------------------------------------------------------------------------>
-						<tr>
 							<td align="right"><b>Nombre Completo:</b></td>
 							<td><?php echo $usuarios["nombre"]; ?></td>
 						</tr>

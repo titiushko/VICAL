@@ -4,10 +4,17 @@ include "../../../loggin/AccesoAdministrador.php";
 include "../../../librerias/funciones.php";
 $proveedor = $_REQUEST['valor_proveedor'];
 if($proveedor == '') header("Location: VerReporteCompra_Proveedor.php");
+
+$nombre_documento = '';
+for($i=0; $i<=strlen($proveedor); $i++){
+	$caracter = substr($proveedor,$i,1);
+	if($caracter == ' ') $nombre_documento = $nombre_documento.'_';
+	else $nombre_documento = $nombre_documento.$caracter;
+}
 ?>
 <HTML>
 	<head>
-		<title><?php echo $proveedor; ?></title>
+		<title><?php echo "REPORTE_DE_COMPRAS_A_".strtoupper($nombre_documento); ?></title>
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">

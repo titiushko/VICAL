@@ -3,33 +3,24 @@ include "../../../loggin/BloqueSeguridad.php";
 include "../../../loggin/AccesoContador.php";
 include "../../../librerias/abrir_conexion.php";
 include "../../../librerias/funciones.php";
-$nombre_mes = $_POST['seleccionar_mes'];
-$ano 		= $_POST['seleccionar_ano'];
-if($nombre_mes == '' || $ano == '') header("Location: frmHistorialCompra.php");
+$fecha_inicial = $_POST['fecha_inicial'];
+$fecha_final   = $_POST['fecha_final'];
+$sucursal 	   = $_POST['sucursal'];
+if($fecha_inicial == '' || $fecha_final == '' || $sucursal == '') header("Location: frmHistorialCompra.php");
 
-$mes = '';
-if($nombre_mes == 'Enero') 		$mes = '01';
-if($nombre_mes == 'Febrero') 	$mes = '02';
-if($nombre_mes == 'Marzo') 		$mes = '03';
-if($nombre_mes == 'Abril') 		$mes = '04';
-if($nombre_mes == 'Mayo') 		$mes = '05';
-if($nombre_mes == 'Junio') 		$mes = '06';
-if($nombre_mes == 'Julio') 		$mes = '07';
-if($nombre_mes == 'Agosto') 	$mes = '08';
-if($nombre_mes == 'Septiembre') $mes = '09';
-if($nombre_mes == 'Octubre') 	$mes = '10';
-if($nombre_mes == 'Noviembre') 	$mes = '11';
-if($nombre_mes == 'Diciembre') 	$mes = '12';
-
-$seleccionar_factura = "
-SELECT facturas.codigo_factura, proveedores.nombre_proveedor
-FROM facturas, proveedores
-WHERE facturas.fecha LIKE '$ano-$mes%'
-AND facturas.codigo_proveedor = proveedores.codigo_proveedor
-ORDER BY facturas.codigo_factura ASC";
+switch($sucursal){
+	case 'VICESA':
+	case 'VIGUA':	$Sucursal = "para ".$sucursal."";
+					$consulta_canidad = "SELECT COUNT(codigo_factura) AS cantidad FROM facturas WHERE facturas.fecha BETWEEN '$fecha_inicial' AND '$fecha_final' AND sucursal = '$sucursal'";
+					$seleccionar_factura = "SELECT facturas.codigo_factura, proveedores.nombre_proveedor FROM facturas, proveedores WHERE facturas.fecha BETWEEN '$fecha_inicial' AND '$fecha_final' AND facturas.codigo_proveedor = proveedores.codigo_proveedor AND sucursal = '$sucursal' ORDER BY facturas.codigo_factura ASC";
+					break;
+	case 'AMBAS':	$Sucursal = "";
+					$consulta_canidad = "SELECT COUNT(codigo_factura) AS cantidad FROM facturas WHERE facturas.fecha BETWEEN '$fecha_inicial' AND '$fecha_final'";
+					$seleccionar_factura = "SELECT facturas.codigo_factura, proveedores.nombre_proveedor FROM facturas, proveedores WHERE facturas.fecha BETWEEN '$fecha_inicial' AND '$fecha_final' AND facturas.codigo_proveedor = proveedores.codigo_proveedor ORDER BY facturas.codigo_factura ASC";
+					break;
+}
 $consulta_factura = mysql_query($seleccionar_factura, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_factura!!</SPAN>".mysql_error());
-
-$consulta = mysql_query("SELECT COUNT(codigo_factura) AS cantidad FROM facturas WHERE facturas.fecha LIKE '$ano-$mes%'", $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta cantidad facturas!!</SPAN>".mysql_error());
+$consulta = mysql_query($consulta_canidad, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta cantidad facturas!!</SPAN>".mysql_error());
 $cantidad = mysql_fetch_assoc($consulta);
 ?>
 <HTML>
@@ -61,7 +52,7 @@ $cantidad = mysql_fetch_assoc($consulta);
 					<h2 class="encabezado2"><img src="../../../imagenes/icono_error.png"><br>NO SE PUDO MOSTRAR EL HISTORIAL DE COMPRAS!!</h2>
 					<table align="center" class="alerta error centro">
 						<tr>
-							<td align="center" colspan="3">No hay valores que mostrar.<br>No se a comprado vidrio en <?php echo $nombre_mes." de ".$ano;?>.</td>
+							<td align="center" colspan="3">No hay valores que mostrar.<br>No se a comprado vidrio <?php echo $Sucursal." en el periodo del<br>".formatoFechaExtendida($fecha_inicial)."<br>al<br>".formatoFechaExtendida($fecha_final);?>.</td>
 							<meta http-equiv ="refresh"		 content="5;url=frmHistorialCompra.php">
 						</tr>
 					</table>
@@ -78,7 +69,7 @@ $cantidad = mysql_fetch_assoc($consulta);
 			<tr>							
 				<td align="center">
 					<table align="center" border bgcolor="white">
-						<caption><h1 class="encabezado2">Historial de vidrio comprado en <?php echo $nombre_mes." de ".$ano; ?>.</h1></caption>
+						<caption><h1 class="encabezado2">Historial de vidrio comprado <?php echo $Sucursal." en el periodo del<br>".formatoFechaExtendida($fecha_inicial)." al ".formatoFechaExtendida($fecha_final);?>.</h1></caption>
 						<thead class="titulo2">
 							<tr><th rowspan=2 colspan=2></th><th colspan=10>BOTELLA</th><th colspan=10>PLANO</th><th rowspan=1 colspan=2></th></tr>
 							<tr>
@@ -102,7 +93,7 @@ $cantidad = mysql_fetch_assoc($consulta);
 							<tr onMouseOver="bgColor='#7cbfff'" onMouseOut="bgColor='#ffffff'">
 								<td><?php echo $factura['codigo_factura'];?></td><td><?php echo $factura['nombre_proveedor'];?></td>
 							<?php
-							$vidrios = calcularSumaVidrio($factura['codigo_factura']);
+							$vidrios = calcularSumaTotalVidrio($factura['codigo_factura'],$sucursal);
 							//-------------------------------------------------------------------
 							for($j=1; $j<=5; $j++){
 								if($vidrios[$j][1] <> 0 && $vidrios[$j][2] <> 0){
@@ -130,7 +121,7 @@ $cantidad = mysql_fetch_assoc($consulta);
 								}
 							}//fin planos
 							//-------------------------------------------------------------------
-							$Totales = calcularSumaTotales(calcularSumaVidrio($factura['codigo_factura']));
+							$Totales = calcularSumaTotales(calcularSumaTotalVidrio($factura['codigo_factura'],$sucursal));
 							$TotalesCantidades	+= $Totales[1] +  $Totales[3];
 							$TotalesPrecios		+= $Totales[2] + $Totales[4];
 							if($contador == 1){
@@ -164,12 +155,12 @@ $cantidad = mysql_fetch_assoc($consulta);
 					<table align="center">
 						<tr>
 							<td>
-								<FORM ACTION="ExportarHistorialCompra_Periodo.php<?php echo "?valor_ano=$ano&valor_mes=$nombre_mes";?>" METHOD="post">
+								<FORM ACTION="ExportarHistorialCompra_Periodo.php<?php echo "?valor_fecha_inicial=$fecha_inicial&valor_fecha_final=$fecha_final&valor_sucursal=$sucursal";?>" METHOD="post">
 								<input name="Exportar" type="submit" value="Exportar" onMouseOver="toolTip('Exportar',this)" class="boton exportar">
 								</FORM>
 							</td>
 							<td>		
-								<FORM ACTION="ImprimirHistorialCompra_Periodo.php<?php echo "?valor_ano=$ano&valor_mes=$nombre_mes";?>" METHOD="post">
+								<FORM ACTION="ImprimirHistorialCompra_Periodo.php<?php echo "?valor_fecha_inicial=$fecha_inicial&valor_fecha_final=$fecha_final&valor_sucursal=$sucursal";?>" METHOD="post">
 								<input name="Imprimir" type="submit" value="Imprimir" onMouseOver="toolTip('Imprimir',this)" class="boton imprimir">
 								</FORM>
 							</td>

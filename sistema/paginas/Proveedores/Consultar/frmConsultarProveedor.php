@@ -40,6 +40,11 @@ $consulta_proveedores = mysql_query($instruccion_select, $conexion) or die ("<SP
 <!------------------------------------------------------------------------------------------------------------------------>
 			<tr>
 				<td>
+					<?php					
+					$cantidad_proveedores = mysql_query("SELECT count(codigo_proveedor) cantidad FROM proveedores", $conexion) or die ("<SPAN CLASS='error'>Fallo en cantidad_proveedores!!</SPAN>".mysql_error());
+					$cantidad = mysql_fetch_array($cantidad_proveedores);
+					if($cantidad[0] <> 0){
+					?>
 					<table align="center" class="marco">
 						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 						<tr>
@@ -119,13 +124,28 @@ $consulta_proveedores = mysql_query($instruccion_select, $conexion) or die ("<SP
 								</span>
 							</td>
 						</tr>
-						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-						<script type="text/javascript" src="../../../librerias/jquery/tinytable.js"></script>
-						<script type="text/javascript" src="../../../librerias/jquery/tinytable.options.js"></script>
-						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-						<span id="toolTipBox" width="50"></span>
-						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 					</table>
+					<?php } else{ ?>
+					<h2 align="center" class="encabezado2"><img src="../../../imagenes/icono_error.png"><br>NO SE PUDO GENERAR LA LISTA DE PROVEEDORES!!</h2>
+					<table align="center" class="alerta error centro">
+						<tr>
+							<td align="center" colspan="3">
+								No hay proveedores registrados en el sistema.<br><br>
+								<?php if($_SESSION["tipo_usuario"] == "1"){ ?>
+								Desea realizar el Registro de un Nuevo Proveedor?.<br>
+								<img src="../../../imagenes/icono_agregar.png" align="top" onClick="redireccionar('../Nuevo/frmNuevoProveedor.php')" onMouseOver="toolTip('Agregar un nuevo Proveedor',this)" class="manita">
+								<?php } ?>
+								<img src="../../../imagenes/icono_cancelar.png" align="top" onClick="redireccionar('../../../interfaz/frame_contenido.php')" onMouseOver="toolTip('Cancelra, volver al Inicio',this)" class="manita">
+							</td>
+						</tr>
+					</table>
+					<?php } ?>
+					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+					<script type="text/javascript" src="../../../librerias/jquery/tinytable.js"></script>
+					<script type="text/javascript" src="../../../librerias/jquery/tinytable.options.js"></script>
+					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+					<span id="toolTipBox" width="50"></span>
+					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 				</td>
 			</tr>
 <!------------------------------------------------------------------------------------------------------------------------>				

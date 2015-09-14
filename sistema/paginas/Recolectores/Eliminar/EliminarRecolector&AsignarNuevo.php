@@ -67,6 +67,23 @@ if($tipo_eliminar1 == 1 && $tipo_eliminar2 == 2){
 			$instruccion_delete = "DELETE FROM vidrio WHERE codigo_vidrio = '$codigo_vidrio'";
 			mysql_query($instruccion_delete, $conexion) or die ("<SPAN CLASS='error'>Fallo eliminar_vidrio!! </SPAN>".mysql_error());
 		}
+		
+		//buscar con el codigo de factura en la tabla compras el codigo de la compra del registro que se va eliminar de la tabla compras
+		$instruccion_compra = "
+		SELECT compras.codigo_compra, facturas.codigo_factura
+		FROM compras, facturas
+		WHERE compras.codigo_factura = '$codigo_factura'
+		AND facturas.codigo_factura = compras.codigo_factura";
+		$consultar_compra = mysql_query($instruccion_compra, $conexion) or die ("<SPAN CLASS='error'>Fallo consultar_compra!! </SPAN>".mysql_error());
+		
+		while($compras = mysql_fetch_array($consultar_compra)){		
+			$codigo_compra = $compras['codigo_compra'];
+			
+			//eliminar el registro de la tabla compras con el codigo del compra que se acaba de encontrar
+			$instruccion_delete = "DELETE FROM compras WHERE codigo_compra = '$codigo_compra'";
+			mysql_query($instruccion_delete, $conexion) or die ("<SPAN CLASS='error'>Fallo eliminar_compra!! </SPAN>".mysql_error());
+		}
+	
 	}
 	
 	//eliminar el registro de la tabla facturas con el codigo del recolector que se va eliminar
@@ -104,6 +121,23 @@ if($tipo_eliminar1 == 1){
 			$instruccion_delete = "DELETE FROM vidrio WHERE codigo_vidrio = '$codigo_vidrio'";
 			mysql_query($instruccion_delete, $conexion) or die ("<SPAN CLASS='error'>Fallo eliminar_vidrio!! </SPAN>".mysql_error());
 		}
+		
+		//buscar con el codigo de factura en la tabla compras el codigo de la compra del registro que se va eliminar de la tabla compras
+		$instruccion_compra = "
+		SELECT compras.codigo_compra, facturas.codigo_factura
+		FROM compras, facturas
+		WHERE compras.codigo_factura = '$codigo_factura'
+		AND facturas.codigo_factura = compras.codigo_factura";
+		$consultar_compra = mysql_query($instruccion_compra, $conexion) or die ("<SPAN CLASS='error'>Fallo consultar_compra!! </SPAN>".mysql_error());
+		
+		while($compras = mysql_fetch_array($consultar_compra)){		
+			$codigo_compra = $compras['codigo_compra'];
+			
+			//eliminar el registro de la tabla compras con el codigo del compra que se acaba de encontrar
+			$instruccion_delete = "DELETE FROM compras WHERE codigo_compra = '$codigo_compra'";
+			mysql_query($instruccion_delete, $conexion) or die ("<SPAN CLASS='error'>Fallo eliminar_compra!! </SPAN>".mysql_error());
+		}
+	
 	}
 	
 	//eliminar el registro de la tabla facturas con el codigo del recolector que se va eliminar

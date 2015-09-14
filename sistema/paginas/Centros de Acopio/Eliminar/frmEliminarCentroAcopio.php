@@ -8,6 +8,7 @@ $direccion			= $_REQUEST['direccion'];
 $instruccion_select = "
 SELECT
 centros_de_acopio.codigo_centro_acopio,
+centros_de_acopio.nombre_centro_acopio,
 centros_de_acopio.direccion,
 centros_de_acopio.departamento,
 centros_de_acopio.telefono,
@@ -60,6 +61,13 @@ $centros_de_acopio = mysql_fetch_assoc($consulta_centro_de_acopio);
 						</tr>
 						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 						<tr>
+							<td align="right"><b>Nombre:</b></td>
+							<td>
+								<?php echo $centros_de_acopio["nombre_centro_acopio"];?>
+							</td>
+						</tr>
+						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+						<tr>
 							<td align="right"><b>Encargado:</b>
 							<td><?php echo $centros_de_acopio["nombre_recolector"];?></td>
 						</tr>
@@ -95,9 +103,26 @@ $centros_de_acopio = mysql_fetch_assoc($consulta_centro_de_acopio);
 					<!------------------------------------------------------------------------>
 					<input name="Eliminar" type="submit" value="Eliminar" onMouseOver="toolTip('Aceptar',this)" class="boton aceptar">
 					<?php
-					if($direccion == "../Consultar/VerCentroAcopioDepartamento.php") $centro_de_acopio = $centros_de_acopio["departamento"];
+					if($direccion == "../Consultar/VerCentroAcopioDepartamento.php"){
+						switch($centros_de_acopio["departamento"]){
+							case "Ahuachapan": $centro_de_acopio = 1; break;
+							case "Santa Ana": $centro_de_acopio = 2; break;
+							case "Sonsonate": $centro_de_acopio = 3; break;
+							case "Usulutan": $centro_de_acopio = 4; break;
+							case "San Miguel": $centro_de_acopio = 5; break;
+							case "Morazan": $centro_de_acopio = 6; break;
+							case "La Union": $centro_de_acopio = 7; break;
+							case "La Libertad": $centro_de_acopio = 8; break;
+							case "Chalatenango": $centro_de_acopio = 9; break;
+							case "Cuscatlan": $centro_de_acopio = 10; break;
+							case "San Salvador": $centro_de_acopio = 11; break;
+							case "La Paz": $centro_de_acopio = 12; break;
+							case "Caba&ntilde;as": $centro_de_acopio = 13; break;
+							case "San Vicente": $centro_de_acopio = 14; break;
+						}
+					}
 					?>
-					<input type="button" onMouseOver="toolTip('Cancelar',this)" class="boton cancelar" <?php echo "onClick=\"redireccionar('../Consultar/$direccion?valor=$centro_de_acopio')\"";?>>
+					<input type="button" onMouseOver="toolTip('Cancelar',this)" class="boton cancelar" <?php echo "onClick=\"redireccionar('../Consultar/$direccion?departamento=$centro_de_acopio')\"";?>>
 					<!------------------------------------------------------------------------>
 					</form>
 					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->

@@ -5,11 +5,17 @@ include "../../../librerias/funciones.php";
 $proveedor = $_REQUEST['valor_proveedor'];
 if($proveedor == '') header("Location: VerReporteCompra_Proveedor.php");
 
-header("Content-type: application/vnd.ms-word");
-header("Content-Disposition: attachment; filename=Reporte-Compra-Proveedor.doc");
-
 $recibos = calcularSumaFacturaProveedor($proveedor);
 $totales = array(1=>0,2=>0);
+
+for($i=0; $i<=strlen($proveedor); $i++){
+	$caracter = substr($proveedor,$i,1);
+	if($caracter == ' ') $nombre_documento = $nombre_documento.'_';
+	else $nombre_documento = $nombre_documento.$caracter;
+}
+
+header("Content-type: application/vnd.ms-word");
+header("Content-Disposition: attachment; filename=REPORTE_DE_COMPRAS_A_".strtoupper($nombre_documento).".doc");
 ?>
 <HTML>
 	<head>

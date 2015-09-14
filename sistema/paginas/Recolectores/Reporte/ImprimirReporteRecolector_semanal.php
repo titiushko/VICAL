@@ -24,11 +24,18 @@ if($mes=='12')	$nombre_mes="Diciembre";
 $instruccion = "SELECT codigo_recolector FROM recolectores WHERE nombre_recolector='$recolcetor'";
 $consulta = mysql_query($instruccion,$conexion) or die ("<SPAN CLASS='error'>Fallo en la consulta!!</SPAN>".mysql_error());
 $obtener = mysql_fetch_array($consulta);
-$cod_recolec=$obtener[0];	//almacena el total de vidrio claro		
+$cod_recolec=$obtener[0];	//almacena el total de vidrio claro
+
+$nombre_documento = '';
+for($i=0; $i<=strlen($recolcetor); $i++){
+	$caracter = substr($recolcetor,$i,1);
+	if($caracter == ' ') $nombre_documento = $nombre_documento.'_';
+	else $nombre_documento = $nombre_documento.$caracter;
+}
 ?>
 <HTML>
 	<head>
-		<title><?php echo $recolcetor;?></title>
+		<title><?php echo "REPORTE_DE_COMPRAS_SEMANAL_DE_".strtoupper($nombre_documento)."_EN_EL_MES_DE_".strtoupper($nombre_mes)."_DEL_".$anio;?></title>
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">

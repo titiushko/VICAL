@@ -4,6 +4,7 @@ include "../../../loggin/AccesoAdministrador.php";
 include "../../../librerias/abrir_conexion.php";
 
 $centro_de_acopio 	= $_REQUEST['centro_de_acopio'];
+$nombre_centro_acopio = $_POST['nombre_centro_acopio'];
 $nombre_recolector 	= $_POST['nombre_recolector'];
 $direccion			= $_POST['direccion'];
 $departamento 		= $_POST['departamento'];
@@ -13,7 +14,7 @@ $telefono2			= $_POST['telefono2'];
 if($telefono1 <> NULL && $telefono2 <> NULL)
 	$telefono = $telefono1."-".$telefono2;
 else
-	$telefono_proveedor1 = NULL;
+	$telefono = NULL;
 
 $instruccion_select = "
 SELECT codigo_recolector FROM recolectores WHERE nombre_recolector = '$nombre_recolector'";
@@ -25,6 +26,7 @@ $instruccion_update = "
 UPDATE centros_de_acopio
 SET
 codigo_recolector = '$codigo_recolector',
+nombre_centro_acopio = '$nombre_centro_acopio',
 direccion = '$direccion',
 departamento = '$departamento',
 telefono = '$telefono'
@@ -34,6 +36,7 @@ $actualizar_centro_de_acopio = mysql_query($instruccion_update, $conexion) or di
 $instruccion_select = "
 SELECT
 centros_de_acopio.codigo_centro_acopio,
+centros_de_acopio.nombre_centro_acopio,
 centros_de_acopio.direccion,
 centros_de_acopio.departamento,
 centros_de_acopio.telefono,
@@ -82,6 +85,11 @@ $centros_de_acopio = mysql_fetch_assoc($consulta_centro_de_acopio);
 						<tr>
 							<td align="right" class="titulo3">Codigo:</td>
 							<td class="subtitulo1"><?php echo $centros_de_acopio["codigo_centro_acopio"];?></td>
+						</tr>
+						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+						<tr>
+							<td align="right" class="titulo3">Nombre:</td>
+							<td class="subtitulo1"><?php echo $centros_de_acopio["nombre_centro_acopio"];?></td>
 						</tr>
 						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 						<tr>

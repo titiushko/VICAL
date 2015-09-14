@@ -76,6 +76,14 @@
 									</tr>
 									<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 									<tr>
+										<td align="right" class="titulo1" style="vertical-align:text-top;" width="160">Sucursal:</td>
+										<td align="justify" class="subtitulo1">
+											Seleccione de la lista la sucursal a la que se le realizo la compra de vidrio.
+											<hr>
+										</td>
+									</tr>
+									<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+									<tr>
 										<td align="right" class="titulo1" style="vertical-align:text-top;" width="160">Vidrio Comprado:</td>
 										<td align="justify" class="subtitulo1">
 											En la tabla se muestra dividido por tipos de vidrio y por colores de vidrio en la cual usted solo debe digitar la cantidad en qu&iacute;tales del detalle de la compra que se realizo. El monto de la compra ser&aacute; calculado por el sistema.<br>

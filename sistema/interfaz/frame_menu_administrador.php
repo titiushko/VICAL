@@ -39,7 +39,7 @@ if($_SESSION["autenticado"] != "SI"){
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~opcion1~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 				<li class="nivel1" tabindex="2"><span class="nivel1">Vidrio</span>
 					<ul>
-						<li class="primera"><a href="../paginas/Vidrio/Nueva/frmNuevaCompra.php" TARGET="CONTENIDO">Nueva Compra de Vidrio</a></li>
+						<li class="primera"><a href="../paginas/Vidrio/Nueva/frmNuevaCompra.php<?php echo "?valor_nombre_recolector=nueva_compra";?>" TARGET="CONTENIDO">Nueva Compra de Vidrio</a></li>
 						<li><a href="../paginas/Vidrio/Consultar/frmConsultarCompra.php" TARGET="CONTENIDO">Consultar Compras</a></li>
 						<li><a href="../paginas/Vidrio/Reporte/frmReporteCompra.php" TARGET="CONTENIDO">Reporte de Compras</a></li>
 						<li><a href="../paginas/Vidrio/Estadisticas/frmEstadisticaCompra.php" TARGET="CONTENIDO">Estadisticas de Compras</a></li>
@@ -72,6 +72,7 @@ if($_SESSION["autenticado"] != "SI"){
 						<li class="primera"><a href="../paginas/Centros de Acopio/Consultar/frmConsultarCentroAcopio.php" TARGET="CONTENIDO">Centros de Acopio</a></li>
 						<li><a href="../paginas/Tipos Empresas/Consultar/frmConsultarTipoEmpresa.php" TARGET="CONTENIDO">Tipos de Empresa</a></li>
 						<li><a href="../paginas/Usuarios/Consultar/frmConsultarUsuario.php" TARGET="CONTENIDO">Usuarios</a></li>
+						<li><a href="../paginas/Precio Unitario/Consultar/VerPrecioUnitario.php" TARGET="CONTENIDO">Precio Unitario</a></li>
 					</ul>
 				</li>
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->

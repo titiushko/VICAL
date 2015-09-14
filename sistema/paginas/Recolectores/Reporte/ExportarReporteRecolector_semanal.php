@@ -19,9 +19,6 @@ $mes		= $_REQUEST['valor_mes'];
 $anio 		= $_REQUEST['valor_ano'];
 $recolcetor = $_REQUEST['valor_recolector'];
 
-header("Content-type: application/vnd.ms-word");
-header("Content-Disposition: attachment; filename=Reporte-Recolector.doc");
-
 
 if($mes=='01')	$nombre_mes="Enero"; 		else
 if($mes=='02')	$nombre_mes="Febrero";		else
@@ -41,6 +38,16 @@ $instruccion = "SELECT codigo_recolector FROM recolectores WHERE nombre_recolect
 $consulta = mysql_query($instruccion,$conexion) or die ("<SPAN CLASS='error'>Fallo en la consulta!!</SPAN>".mysql_error());
 $obtener = mysql_fetch_array($consulta);
 $cod_recolec=$obtener[0];	//almacena el total de vidrio claro		
+
+$nombre_documento = '';
+for($i=0; $i<=strlen($recolcetor); $i++){
+	$caracter = substr($recolcetor,$i,1);
+	if($caracter == ' ') $nombre_documento = $nombre_documento.'_';
+	else $nombre_documento = $nombre_documento.$caracter;
+}
+
+header("Content-type: application/vnd.ms-word");
+header("Content-Disposition: attachment; filename=REPORTE_DE_COMPRAS_SEMANAL_DE_".strtoupper($nombre_documento)."_EN_EL_MES_DE_".strtoupper($nombre_mes)."_DEL_".$anio.".doc");
 ?>
 	<BODY class="cuerpo1">
 		<table align="center">
@@ -48,7 +55,7 @@ $cod_recolec=$obtener[0];	//almacena el total de vidrio claro
 			<tr>
 				<td align="center" colspan="3">
 					<h1 align='center' class='encabezado1'>REPORTE DE COMPRAS POR RECOLECTORES</h1>
-					<h2 align='center' class='encabezado2'>&quot;Vidrio Comprado Semanalmente por <?php echo $recolcetor; ?> en el mes de <?php echo $nombre_mes." de ".$anio; ?>"</h2>
+					<h2 align='center' class='encabezado2'>&quot;Vidrio Comprado Semanalmente por <?php echo $recolcetor; ?> en el mes de <?php echo $nombre_mes." del ".$anio; ?>"</h2>
 				</td>
 			</tr>
 			<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->

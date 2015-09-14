@@ -4,10 +4,17 @@ include "../../../loggin/AccesoContador.php";
 include "../../../librerias/abrir_conexion.php";
 include "../../../librerias/funciones.php";
 $nombre_tipo = $_POST['seleccionar_tipo'];
-if($nombre_tipo == '') header("Location: frmHistorialCompra.php");
+$sucursal  	 = $_POST['sucursal'];
+if($nombre_tipo == '' || $sucursal == '') header("Location: frmHistorialCompra.php");
 
 if($nombre_tipo == 'Botella') 	$tipo = 'TV-01';
 if($nombre_tipo == 'Plano') 	$tipo = 'TV-02';
+
+switch($sucursal){
+	case 'VICESA':
+	case 'VIGUA':	$Sucursal = " para ".$sucursal."."; break;
+	case 'AMBAS':	$Sucursal = "."; break;
+}
 
 $seleccionar_vidrio = "
 SELECT
@@ -52,7 +59,7 @@ $consulta_vidrio = mysql_query($seleccionar_vidrio, $conexion) or die ("<SPAN CL
 					<h2 class="encabezado2"><img src="../../../imagenes/icono_error.png"><br>NO SE PUDO MOSTRAR EL HISTORIAL DE COMPRAS!!</h2>
 					<table align="center" class="alerta error centro">
 						<tr>
-							<td align="center" colspan="3">No hay valores que mostrar.<br>No se a comprado vidrio <?php echo $nombre_tipo;?>.</td>
+							<td align="center" colspan="3">No hay valores que mostrar.<br>No se a comprado vidrio <?php echo $nombre_tipo.$Sucursal;?></td>
 							<meta http-equiv ="refresh"		 content="5;url=frmHistorialCompra.php">
 						</tr>
 					</table>
@@ -72,10 +79,10 @@ $consulta_vidrio = mysql_query($seleccionar_vidrio, $conexion) or die ("<SPAN CL
 					<table class="marco centro">
 						<tr>
 							<td align="center">
-								<h2 class="encabezado2">Historial de vidrio <?php echo $nombre_tipo;?> comprado.</h2>
+								<h2 class="encabezado2">Historial de vidrio <?php echo $nombre_tipo;?> comprado<?php echo $Sucursal;?></h2>
 							<?php
 							$bandera = true;
-							$historial = calcularSumaMes('tipo_vidrio',$tipo);
+							$historial = calcularSumaMes('tipo_vidrio',$tipo,$sucursal);
 							for($i=1; $i<=$filas; $i++){
 							?>
 								<table align="center" class="rejilla" border bgcolor="white" width="50%">

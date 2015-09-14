@@ -1,4 +1,5 @@
 <?php
+include "../librerias/funciones.php";
 include "../librerias/abrir_conexion.php";
 $usuario  = $_POST['usuario'];
 $password = $_POST['password'];
@@ -7,27 +8,15 @@ $consulta_usuario = mysql_query("SELECT id, nombre, nivel FROM usuarios WHERE us
 $cantidad = mysql_num_rows($consulta_usuario);
 
 $_SESSION["autenticado"]= "NO";
-if ($cantidad != 0){
-	session_start();	$_SESSION["autenticado"] = "SI";
-
-	while($usuarios = mysql_fetch_array($consulta_usuario)){
-		$_SESSION["nombre"] = $usuarios["nombre"];
-		$nivel = $usuarios["nivel"];
-		$nivel = intval($nivel);
-		
-		if($nivel == 1){
-			$_SESSION["tipo_usuario"] = "1"; 
-			header ("Location: ../inicio.php");
-		}
-		if($nivel == 2){
-			$_SESSION["tipo_usuario"] = "2";  
-			header ("Location: ../inicio.php");
-		}
-		if($nivel == 3){
-			$_SESSION["tipo_usuario"] = "3";
-			header ("Location: ../inicio.php");
-		}
-	}
+if($cantidad != 0){
+	session_start();
+	$_SESSION["autenticado"] = "SI";
+	
+	$usuarios = mysql_fetch_array($consulta_usuario);
+	$_SESSION["nombre"] = $usuarios["nombre"];
+	$_SESSION["nivel"] = $usuarios["nivel"];
+	
+	header ("Location: CargarSesion.php");
 }
 else{
 	header ("Location: frmLoggin.php?error_usuario=si");

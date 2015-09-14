@@ -4,7 +4,7 @@ include "../../../librerias/abrir_conexion.php";
 include "../../../librerias/funciones.php";
 $factura = $_REQUEST['valor'];
 $select_factura = "
-SELECT facturas.codigo_factura, facturas.fecha, recolectores.nombre_recolector, facturas.codigo_recolector, proveedores.nombre_proveedor, facturas.codigo_proveedor
+SELECT facturas.codigo_factura, facturas.sucursal, facturas.fecha, recolectores.nombre_recolector, facturas.codigo_recolector, proveedores.nombre_proveedor, facturas.codigo_proveedor
 FROM facturas, recolectores, proveedores
 WHERE facturas.codigo_factura = '$factura'
 AND facturas.codigo_recolector = recolectores.codigo_recolector
@@ -57,7 +57,6 @@ $facturas = mysql_fetch_assoc($consulta_factura);
 										<td align="right" class="titulo1">No:</td>
 										<td align="left" class="subtitulo1"><?php echo $facturas['codigo_factura'];?></td>
 									</tr>
-									<caption><h1></h1></caption>
 									<!--------------------------------RECOLECOR---------------------------------->
 									<tr>
 										<td></td>
@@ -74,6 +73,15 @@ $facturas = mysql_fetch_assoc($consulta_factura);
 										<td align="left" class="subtitulo1"><?php echo $facturas['nombre_proveedor'];?></td>
 										<td align="right" class="titulo1">Codigo:</td>
 										<td align="left" class="subtitulo1"><?php echo $facturas['codigo_proveedor'];?></td>
+										<td></td>
+									</tr>
+									<!--------------------------------SUCURSAL----------------------------------->
+									<tr>
+										<td></td>
+										<td align="right" class="titulo1">Sucursal:</td>
+										<td align="left" class="subtitulo1"><?php echo $facturas['sucursal'];?></td>
+										<td></td>
+										<td></td>
 										<td></td>
 									</tr>
 									<!--------------------------------------------------------------------------->

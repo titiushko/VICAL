@@ -4,6 +4,7 @@ include "../../../loggin/AccesoAdministrador.php";
 include "../../../librerias/abrir_conexion.php";
 
 $codigo_centro_acopio = $_POST['codigo_centro_acopio'];
+$nombre_centro_acopio = $_POST['nombre_centro_acopio'];
 $nombre_recolector	  = $_POST['nombre_recolector'];
 $direccion			  = $_POST['direccion'];
 $departamento		  = $_POST['departamento'];
@@ -62,7 +63,7 @@ if($direccion == "") $direccion = NULL;
 								</td>
 							</tr>
 						</table>
-						<meta http-equiv ="refresh"		 content="5;url=frmNuevoCentroAcopio.php">
+						<meta http-equiv ="refresh"		 content="5;url=frmNuevoCentroAcopio.php?departamento=dep">
 					</td>
 				</tr>
 <!--::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
@@ -70,8 +71,8 @@ if($direccion == "") $direccion = NULL;
 				}
 				else if($buscar[0] <> $codigo_centro_acopio){
 				$instruccion_insert = "
-				INSERT INTO vical.centros_de_acopio (CODIGO_CENTRO_ACOPIO,CODIGO_RECOLECTOR,DIRECCION,DEPARTAMENTO,TELEFONO)
-				VALUES ('$codigo_centro_acopio','$codigo_recolector','$direccion','$departamento','$telefono')";
+				INSERT INTO vical.centros_de_acopio (CODIGO_CENTRO_ACOPIO,NOMBRE_CENTRO_ACOPIO,CODIGO_RECOLECTOR,DIRECCION,DEPARTAMENTO,TELEFONO)
+				VALUES ('$codigo_centro_acopio','$nombre_centro_acopio','$codigo_recolector','$direccion','$departamento','$telefono')";
 				$registrar_centro_acopio = mysql_query($instruccion_insert, $conexion) or die ("<SPAN CLASS='error'>Fallo en la registrar_centro_acopio!! </SPAN>".mysql_error());
 				?>
 						<h2 class="encabezado2">
@@ -90,6 +91,11 @@ if($direccion == "") $direccion = NULL;
 								<td align="right"><span class="titulo1">Codigo:</span>
 								</td>
 								<td align="left"><input type="text" size=4 disabled="disabled" value="<?php echo $codigo_centro_acopio;?>"></td>
+							</tr>
+							<!--------------------------------RECOLECOR---------------------------------->
+							<tr>
+								<td align="right"><span class="titulo1">Nombre del Centro de Acopio:</span></td>
+								<td align="left"><input type="text" size=37 disabled="disabled" value="<?php echo $nombre_centro_acopio;?>"></td>
 							</tr>
 							<!--------------------------------RECOLECOR---------------------------------->
 							<tr>
@@ -113,13 +119,19 @@ if($direccion == "") $direccion = NULL;
 							}
 							?>
 							<!--------------------------------TELEFONO---------------------------------->
+							<?php
+							if($telefono <> NULL){
+							?>
 							<tr>
 								<td align="right"><span class="titulo1">Telefono:</span></td>
 								<td align="left"><input type="text" size=7 disabled="disabled" value="<?php echo $telefono;?>"></td>
 							</tr>
+							<?php
+							}
+							?>
 							<!------------------------------------------------------------------------>
 						</table>
-						<meta http-equiv ="refresh"		 content="5;url=frmNuevoCentroAcopio.php">
+						<meta http-equiv ="refresh"		 content="5;url=frmNuevoCentroAcopio.php?departamento=dep">
 					</td>
 				</tr>
 				<?php

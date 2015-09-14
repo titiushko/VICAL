@@ -3,37 +3,44 @@ include "../../../loggin/BloqueSeguridad.php";
 include "../../../loggin/AccesoAdministrador.php";
 include "../../../librerias/abrir_conexion.php";
 include "../../../librerias/funciones.php";
-$nombre_mes = $_REQUEST['valor_mes'];
-$ano 		= $_REQUEST['valor_ano'];
-if($nombre_mes== '' || $ano == '') header("Location: VerHistorialCompra_Periodo.php");
+$fecha_inicial = $_REQUEST['valor_fecha_inicial'];
+$fecha_final   = $_REQUEST['valor_fecha_final'];
+$sucursal	   = $_REQUEST['valor_sucursal'];
+if($fecha_inicial== '' || $fecha_final == '' || $sucursal == '') header("Location: VerHistorialCompra_Periodo.php");
 
-header("Content-type: application/vnd.ms-word");
-header("Content-Disposition: attachment; filename=Historial-Compra-$nombre_mes$ano.doc");
-
-$mes = '';
-if($nombre_mes == 'Enero') $mes = '01';
-if($nombre_mes == 'Febrero') $mes = '02';
-if($nombre_mes == 'Marzo') $mes = '03';
-if($nombre_mes == 'Abril') $mes = '04';
-if($nombre_mes == 'Mayo') $mes = '05';
-if($nombre_mes == 'Junio') $mes = '06';
-if($nombre_mes == 'Julio') $mes = '07';
-if($nombre_mes == 'Agosto') $mes = '08';
-if($nombre_mes == 'Septiembre') $mes = '09';
-if($nombre_mes == 'Octubre') $mes = '10';
-if($nombre_mes == 'Noviembre') $mes = '11';
-if($nombre_mes == 'Diciembre') $mes = '12';
+switch($sucursal){
+	case 'VICESA':
+	case 'VIGUA':	$Sucursal = "para ".$sucursal.""; break;
+	case 'AMBAS':	$Sucursal = ""; break;
+}
 
 $seleccionar_factura = "
 SELECT facturas.codigo_factura, proveedores.nombre_proveedor
 FROM facturas, proveedores
-WHERE facturas.fecha LIKE '$ano-$mes%'
+WHERE facturas.fecha BETWEEN '$fecha_inicial' AND '$fecha_final'
 AND facturas.codigo_proveedor = proveedores.codigo_proveedor
 ORDER BY facturas.codigo_factura ASC";
 $consulta_factura = mysql_query($seleccionar_factura, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_factura!!</SPAN>".mysql_error());
 
-$consulta = mysql_query("SELECT COUNT(codigo_factura) AS cantidad FROM facturas WHERE facturas.fecha LIKE '$ano-$mes%'", $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta cantidad facturas!!</SPAN>".mysql_error());
+$consulta = mysql_query("SELECT COUNT(codigo_factura) AS cantidad FROM facturas WHERE facturas.fecha BETWEEN '$fecha_inicial' AND '$fecha_final'", $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta cantidad facturas!!</SPAN>".mysql_error());
 $cantidad = mysql_fetch_assoc($consulta);
+
+function transformarFecha($fecha){
+	$bandera = false;
+	$nombre_fecha = '';
+	for($i=0; $i<=strlen($fecha); $i++){
+		$caracter = substr($fecha,$i,1);
+		if($caracter == ' ')
+			if(!$bandera) $bandera = true;
+			else $nombre_fecha = $nombre_fecha.'_';
+		else
+			if($bandera) $nombre_fecha = $nombre_fecha.$caracter;
+	}
+	return strtoupper($nombre_fecha);
+}
+
+header("Content-type: application/vnd.ms-word");
+header("Content-Disposition: attachment; filename=HISTORIAL_DE_COMPRAS_DEL_".transformarFecha(formatoFechaExtendida($fecha_inicial))."_AL_".transformarFecha(formatoFechaExtendida($fecha_final)).".doc");
 ?>
 <HTML>
 	<head>
@@ -57,7 +64,7 @@ $cantidad = mysql_fetch_assoc($consulta);
 				<td align="center">
 					<br>
 					<table align="center" border bgcolor="white">
-						<caption><h1>Historial de vidrio comprado en <?php echo $nombre_mes." de ".$ano; ?>.</h1></caption>
+						<caption><h1 class="encabezado2">Historial de vidrio comprado <?php echo $Sucursal." en el periodo del<br>".formatoFechaExtendida($fecha_inicial)." al ".formatoFechaExtendida($fecha_final);?>.</h1></caption>
 						<thead>
 							<tr><th rowspan=2 colspan=2></th><th colspan=10>BOTELLA</th><th colspan=10>PLANO</th><th rowspan=1 colspan=2></th></tr>
 							<tr>
@@ -81,7 +88,7 @@ $cantidad = mysql_fetch_assoc($consulta);
 							<tr align="center">
 								<td><?php echo $factura['codigo_factura'];?></td><td><?php echo $factura['nombre_proveedor'];?></td>
 							<?php
-							$vidrios = calcularSumaVidrio($factura['codigo_factura']);
+							$vidrios = calcularSumaTotalVidrio($factura['codigo_factura'],$sucursal);
 							//-------------------------------------------------------------------
 							for($j=1; $j<=5; $j++){
 								if($vidrios[$j][1] <> 0 && $vidrios[$j][2] <> 0){
@@ -109,7 +116,7 @@ $cantidad = mysql_fetch_assoc($consulta);
 								}
 							}//fin planos
 							//-------------------------------------------------------------------
-							$Totales = calcularSumaTotales(calcularSumaVidrio($factura['codigo_factura']));
+							$Totales = calcularSumaTotales(calcularSumaTotalVidrio($factura['codigo_factura'],$sucursal));
 							$TotalesCantidades	+= $Totales[1] +  $Totales[3];
 							$TotalesPrecios		+= $Totales[2] + $Totales[4];
 							if($contador == 1){

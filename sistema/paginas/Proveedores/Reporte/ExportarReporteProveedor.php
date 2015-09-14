@@ -3,8 +3,6 @@ include "../../../loggin/BloqueSeguridad.php";
 include "../../../loggin/AccesoAdministrador.php";
 include "../../../librerias/abrir_conexion.php";
 include "../../../librerias/funciones.php";
-header("Content-type: application/vnd.ms-word");
-header("Content-Disposition: attachment; filename=Proveedores.doc");
 
 $instruccion_select = "
 SELECT
@@ -24,7 +22,9 @@ tipos_empresas
 WHERE tipos_empresas.codigo_tipo_empresa = proveedores.codigo_tipo_empresa
 ORDER BY codigo_proveedor ASC";
 $consulta_proveedores = mysql_query($instruccion_select, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_proveedores!!</SPAN>".mysql_error());
-?>
+
+header("Content-type: application/vnd.ms-word");
+header("Content-Disposition: attachment; filename=REPORTE_DE_PROVEEDORES.doc");?>
 <HTML>
 	<head>
 		<title>Proveedores</title>
@@ -42,7 +42,7 @@ $consulta_proveedores = mysql_query($instruccion_select, $conexion) or die ("<SP
 			<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 			<tr>
 				<td align="center" colspan="3">
-					<h1 align='center' class='encabezado1'>REPORTE DE PROVEEDORES</h1>
+					<h1 align='center'>REPORTE DE PROVEEDORES</h1>
 				</td>
 			</tr>
 			<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->

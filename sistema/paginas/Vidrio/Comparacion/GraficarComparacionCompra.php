@@ -8,9 +8,10 @@ $mes1		= $_POST['mes1'];
 $ano2		= $_POST['ano2'];
 $mes2		= $_POST['mes2'];
 $mostrar	= $_POST['mostrar'];
+$sucursal 	= $_POST['sucursal'];
 
 //VERIFICAR QUE NO SE HAN DEJADO ELEMENTOS SIN SELECCIONAR
-if($ano1=="" || $mes1=="" || $ano2=="" || $mes2=="" || $mostrar=="") header("Location: frmComparacionCompra.php");
+if($ano1=="" || $mes1=="" || $ano2=="" || $mes2=="" || $mostrar=="" || $sucursal=="") header("Location: frmComparacionCompra.php");
 
 //BUSCAR EL MES
 $lista_meses = array(1 => "Enero", 2 => "Febrero", 3 => "Marzo", 4 => "Abril", 5 => "Mayo", 6 => "Junio", 7 => "Julio", 8 => "Agosto", 9 => "Septiembre", 10 => "Octubre", 11 => "Noviembre", 12 => "Diciembre");
@@ -18,16 +19,24 @@ for($i=1;$i<=12;$i++){
 	if($mes1 == $i) $nombre_mes1 = $lista_meses[$i];
 	if($mes2 == $i) $nombre_mes2 = $lista_meses[$i];
 }
+
+//TITULO DE LA SUCURSAL
+switch($sucursal){
+	case 'VICESA':
+	case 'VIGUA':	$Sucursal = "para ".$sucursal; break;
+	case 'AMBAS':	$Sucursal = ""; break;
+}
+
 $no_valores_periodo1 = false; $no_valores_periodo2 = false;
 $mensaje1 = "";	$mensaje2 = "";
 
 if($mostrar == 'cantidad'){
 	$titulo = "Cantidades";		$fila1 = "Cantidad";		$fila2 = "Monto";
 	
-	$Sumas = calcularSumaTotales(calcularSumaCompras($mes1,$ano1));
+	$Sumas = calcularSumaTotales(calcularSumaCompras($mes1,$ano1,$sucursal));
 	$periodo1['cantidades'] = $Sumas[1] + $Sumas[3];	$periodo1['precios'] = $Sumas[2] + $Sumas[4];
 	
-	$Sumas = calcularSumaTotales(calcularSumaCompras($mes2,$ano2));
+	$Sumas = calcularSumaTotales(calcularSumaCompras($mes2,$ano2,$sucursal));
 	$periodo2['cantidades'] = $Sumas[1] + $Sumas[3];	$periodo2['precios'] = $Sumas[2] + $Sumas[4];
 	
 	//verificar si hay valores
@@ -41,10 +50,10 @@ if($mostrar == 'cantidad'){
 if($mostrar == 'tipo'){
 	$titulo = "Tipo de Vidrio";	$filas = array(1 => "Botella", 2 => "Plano");
 	
-	$Sumas = calcularSumaTotales(calcularSumaCompras($mes1,$ano1));
+	$Sumas = calcularSumaTotales(calcularSumaCompras($mes1,$ano1,$sucursal));
 	$periodo1[1]['cantidades'] = $Sumas[1];		$periodo1[2]['cantidades'] = $Sumas[3];
 	
-	$Sumas = calcularSumaTotales(calcularSumaCompras($mes2,$ano2));
+	$Sumas = calcularSumaTotales(calcularSumaCompras($mes2,$ano2,$sucursal));
 	$periodo2[1]['cantidades'] = $Sumas[1];		$periodo2[2]['cantidades'] = $Sumas[3];
 	
 	//verificar si hay valores
@@ -58,10 +67,10 @@ if($mostrar == 'tipo'){
 if($mostrar == 'color'){
 	$titulo = "Color de Vidrio";	$filas = array(1 => "Verde", 2 => "Cristalino", 3 => "Cafe", 4 => "Bronce", 5 => "Reflectivo");
 	
-	$Sumas = calcularSumaCompras($mes1,$ano1);
+	$Sumas = calcularSumaCompras($mes1,$ano1,$sucursal);
 	for($i=1; $i<=5; $i++)	$periodo1[$i]['cantidades'] = $Sumas[$i][1] + $Sumas[$i+5][1];
 	
-	$Sumas = calcularSumaCompras($mes2,$ano2);
+	$Sumas = calcularSumaCompras($mes2,$ano2,$sucursal);
 	for($i=1; $i<=5; $i++)	$periodo2[$i]['cantidades'] = $Sumas[$i][1] + $Sumas[$i+5][1];
 	
 	//verificar si hay valores
@@ -113,8 +122,9 @@ if($mostrar == 'color'){
 					<table align="center" class="alerta error centro">
 						<tr>
 							<td align="center" colspan="3">
-							No hay valores que mostrar.<br>No hay compras realizadas 
+							No hay valores que mostrar.<br>No hay compras de vidrio realizadas 
 							<?php
+							echo $Sucursal." ";
 							if($mensaje1 <> "" && $mensaje2 <> "") echo $mensaje1." y ".$mensaje2;
 							else if($mensaje1 <> "") echo $mensaje1;
 							else if($mensaje2 <> "") echo $mensaje2;
@@ -141,7 +151,7 @@ if($mostrar == 'color'){
 								<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 								<!--			esta tabla no se grafica porque tiene caracteres en las sumas de vidrio			 -->
 								<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-								<h2 align="center" class="encabezado2">Comparacion de compras por <?php echo $titulo;?>.</h2>
+								<h2 align="center" class="encabezado2">Comparacion de compras de vidrio <?php echo $Sucursal." por ".$titulo;?>.</h2>
 								<table align="center" border bgcolor="white">
 									<thead class="titulo2">
 										<tr>

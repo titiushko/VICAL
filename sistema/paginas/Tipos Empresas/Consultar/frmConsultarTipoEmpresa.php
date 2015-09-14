@@ -33,6 +33,11 @@ $consulta_tipo_empresa = mysql_query($instruccion_select, $conexion) or die ("<S
 <!------------------------------------------------------------------------------------------------------------------------>
 			<tr>
 				<td>
+					<?php					
+					$cantidad_tipos_empresas = mysql_query("SELECT count(codigo_tipo_empresa) cantidad FROM tipos_empresas", $conexion) or die ("<SPAN CLASS='error'>Fallo en cantidad_tipos_empresas!!</SPAN>".mysql_error());
+					$cantidad = mysql_fetch_array($cantidad_tipos_empresas);
+					if($cantidad[0] <> 0){
+					?>
 					<table align="center" class="marco">
 						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 						<tr>
@@ -111,13 +116,26 @@ $consulta_tipo_empresa = mysql_query($instruccion_select, $conexion) or die ("<S
 								</span>
 							</td>
 						</tr>
-						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-						<script type="text/javascript" src="../../../librerias/jquery/tinytable.js"></script>
-						<script type="text/javascript" src="../../../librerias/jquery/tinytable.options.js"></script>
-						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-						<span id="toolTipBox" width="50"></span>
-						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 					</table>
+					<?php } else{ ?>
+					<h2 align="center" class="encabezado2"><img src="../../../imagenes/icono_error.png"><br>NO SE PUDO GENERAR LA LISTA DE TIPOS DE EMPRESAS!!</h2>
+					<table align="center" class="alerta error centro">
+						<tr>
+							<td align="center" colspan="3">
+								No hay tipos de empresas registradas en el sistema.<br><br>
+								Desea realizar el Registro de un Nuevo Tipo de Empresa?.<br>
+								<img src="../../../imagenes/icono_agregar.png" align="top" onClick="redireccionar('../Nuevo/frmNuevoTipoEmpresa.php')" onMouseOver="toolTip('Agregar un nuevo Tipo de Empresa',this)" class="manita">
+								<img src="../../../imagenes/icono_cancelar.png" align="top" onClick="redireccionar('../../../interfaz/frame_contenido.php')" onMouseOver="toolTip('Cancelra, volver al Inicio',this)" class="manita">
+							</td>
+						</tr>
+					</table>
+					<?php } ?>
+					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+					<script type="text/javascript" src="../../../librerias/jquery/tinytable.js"></script>
+					<script type="text/javascript" src="../../../librerias/jquery/tinytable.options.js"></script>
+					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+					<span id="toolTipBox" width="50"></span>
+					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 				</td>
 			</tr>
 <!------------------------------------------------------------------------------------------------------------------------>				

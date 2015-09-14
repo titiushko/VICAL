@@ -5,6 +5,7 @@ $direccion = "../Consultar/frmConsultarCentroAcopio.php";
 $instruccion_select = "
 SELECT
 codigo_centro_acopio,
+nombre_centro_acopio,
 departamento,
 recolectores.nombre_recolector
 FROM
@@ -54,6 +55,11 @@ $consulta_centros_de_acopio = mysql_query($instruccion_select, $conexion) or die
 <!--::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
 			<tr>
 				<td align="center">
+				<?php
+				$cantidad_centros_de_acopio = mysql_query("SELECT count(codigo_centro_acopio) cantidad FROM centros_de_acopio", $conexion) or die ("<SPAN CLASS='error'>Fallo en cantidad_centros_de_acopio!!</SPAN>".mysql_error());
+				$cantidad = mysql_fetch_array($cantidad_centros_de_acopio);
+				if($cantidad[0] <> 0){
+				?>
 <!---------------------------------------------------------------------------------------------------------------------------------->
 				<table id="main" class="marco"><tr><td>
 <!---------------------------------------------------------------------------------------------------------------------------------->
@@ -87,6 +93,7 @@ $consulta_centros_de_acopio = mysql_query($instruccion_select, $conexion) or die
 									<thead class="titulo1">
 										<tr>
 											<th onMouseOver="toolTip('Ordenar por codigo',this)"><h3>Codigo</h3></th>
+											<th onMouseOver="toolTip('Ordenar por nombre',this)"><h3>Nombre</h3></th>
 											<th onMouseOver="toolTip('Ordenar por departamento',this)"><h3>Departamento</h3></th>
 											<th onMouseOver="toolTip('Ordenar por encargado',this)"><h3>Encargado</h3></th>
 											<?php if($_SESSION["tipo_usuario"] == "1"){ ?>
@@ -97,9 +104,10 @@ $consulta_centros_de_acopio = mysql_query($instruccion_select, $conexion) or die
 									<tbody class="subtitulo2">
 										<?php while ($centros_de_acopio = mysql_fetch_array($consulta_centros_de_acopio)){ ?>
 										<tr align="center">
-											<td><?php echo "<a title='Ver' style='color: black;'href='VerCentroAcopio.php?valor=$centros_de_acopio[0]'>".$centros_de_acopio[0]."</a>";?></td>
-											<td><?php echo "<a title='Ver' style='color: black;'href='VerCentroAcopio.php?valor=$centros_de_acopio[0]'>".$centros_de_acopio[1]."</a>";?></td>
-											<td><?php echo "<a title='Ver' style='color: black;'href='VerCentroAcopio.php?valor=$centros_de_acopio[0]'>".$centros_de_acopio[2]."</a>";?></td>
+											<td><?php echo "<a title='Ver' style='color: black;'href='VerCentroAcopio.php?departamento=$centros_de_acopio[0]'>".$centros_de_acopio[0]."</a>";?></td>
+											<td><?php echo "<a title='Ver' style='color: black;'href='VerCentroAcopio.php?departamento=$centros_de_acopio[0]'>".$centros_de_acopio[1]."</a>";?></td>
+											<td><?php echo "<a title='Ver' style='color: black;'href='VerCentroAcopio.php?departamento=$centros_de_acopio[0]'>".$centros_de_acopio[2]."</a>";?></td>
+											<td><?php echo "<a title='Ver' style='color: black;'href='VerCentroAcopio.php?departamento=$centros_de_acopio[0]'>".$centros_de_acopio[3]."</a>";?></td>
 											<?php if($_SESSION["tipo_usuario"] == "1"){ ?>
 											<td>
 												<img src="../../../imagenes/icono_modificar.png" align="top" title="Modificar" <?php echo "onClick=\"redireccionar('../Modificar/frmModificarCentroAcopio.php?modificar_centro_de_acopio=$centros_de_acopio[0]&direccion=$direccion');\"";?> class="manita">
@@ -126,7 +134,7 @@ $consulta_centros_de_acopio = mysql_query($instruccion_select, $conexion) or die
 							</td>
 							<td>
 								<?php if($_SESSION["tipo_usuario"] == "1"){ ?>
-								<img src="../../../imagenes/icono_agregar.png" align="top" onClick="redireccionar('../Nuevo/frmNuevoCentroAcopio.php')" onMouseOver="toolTip('Agregar un nuevo Centro de Acopio',this)" class="manita">
+								<img src="../../../imagenes/icono_agregar.png" align="top" onClick="redireccionar('../Nuevo/frmNuevoCentroAcopio.php?departamento=dep')" onMouseOver="toolTip('Agregar un nuevo Centro de Acopio',this)" class="manita">
 								<?php } ?>
 								<img src="../../../imagenes/icono_recargar.png" align="top" onClick="redireccionar('frmConsultarCentroAcopio.php');" onMouseOver="toolTip('Actualizar',this)" class="manita">
 								<img src="../../../imagenes/icono_cancelar.png" align="top" onClick="redireccionar('../../../interfaz/frame_contenido.php')" onMouseOver="toolTip('Cancelra, volver al Inicio',this)" class="manita">
@@ -158,20 +166,20 @@ $consulta_centros_de_acopio = mysql_query($instruccion_select, $conexion) or die
 					<div style="display: none;" id="mapa">
 						<br>
 						<map name="el_salvador" id="el_salvador">
-							<area class="showTip L1" href="VerCentroAcopioDepartamento.php<?php echo "?valor=Ahuachapan";?>"		shape="circle" 	coords="74,268,40"/>
-							<area class="showTip L2" href="VerCentroAcopioDepartamento.php<?php echo "?valor=Santa Ana";?>"			shape="circle" 	coords="186,204,40"/>
-							<area class="showTip L3" href="VerCentroAcopioDepartamento.php<?php echo "?valor=Sonsonate";?>"			shape="circle" 	coords="154,313,40"/>
-							<area class="showTip L4" href="VerCentroAcopioDepartamento.php<?php echo "?valor=Usulutan";?>"			shape="circle" 	coords="511,393,40"/>
-							<area class="showTip L5" href="VerCentroAcopioDepartamento.php<?php echo "?valor=San Miguel";?>"		shape="circle" 	coords="615,386,40"/>
-							<area class="showTip L6" href="VerCentroAcopioDepartamento.php<?php echo "?valor=Morazan";?>"			shape="circle" 	coords="647,289,40"/>
-							<area class="showTip L7" href="VerCentroAcopioDepartamento.php<?php echo "?valor=La Union";?>"			shape="circle" 	coords="704,367,40"/>
-							<area class="showTip L8" href="VerCentroAcopioDepartamento.php<?php echo "?valor=La Libertad";?>" 		shape="circle" 	coords="244,329,40"/>
-							<area class="showTip L9" href="VerCentroAcopioDepartamento.php<?php echo "?valor=Chalatenango";?>"		shape="circle" 	coords="332,152,40"/>
-							<area class="showTip L10" href="VerCentroAcopioDepartamento.php<?php echo "?valor=Cuscatlan";?>" 		shape="circle" 	coords="370,288,30"/>
-							<area class="showTip L11" href="VerCentroAcopioDepartamento.php<?php echo "?valor=San Salvador";?>" 	shape="circle" 	coords="311,302,30"/>
-							<area class="showTip L12" href="VerCentroAcopioDepartamento.php<?php echo "?valor=La Paz";?>" 			shape="circle" 	coords="371,376,40"/>
-							<area class="showTip L13" href="VerCentroAcopioDepartamento.php<?php echo "?valor=Caba&ntilde;as";?>"	shape="circle" 	coords="467,248,40"/>
-							<area class="showTip L14" href="VerCentroAcopioDepartamento.php<?php echo "?valor=San Vicente";?>" 		shape="circle" 	coords="447,327,40"/>
+							<area class="showTip L1" href="VerCentroAcopioDepartamento.php<?php echo "?departamento=1";?>"		shape="circle" 	coords="74,268,40"/>
+							<area class="showTip L2" href="VerCentroAcopioDepartamento.php<?php echo "?departamento=2";?>"		shape="circle" 	coords="186,204,40"/>
+							<area class="showTip L3" href="VerCentroAcopioDepartamento.php<?php echo "?departamento=3";?>"		shape="circle" 	coords="154,313,40"/>
+							<area class="showTip L4" href="VerCentroAcopioDepartamento.php<?php echo "?departamento=4";?>"		shape="circle" 	coords="511,393,40"/>
+							<area class="showTip L5" href="VerCentroAcopioDepartamento.php<?php echo "?departamento=5";?>"		shape="circle" 	coords="615,386,40"/>
+							<area class="showTip L6" href="VerCentroAcopioDepartamento.php<?php echo "?departamento=6";?>"		shape="circle" 	coords="647,289,40"/>
+							<area class="showTip L7" href="VerCentroAcopioDepartamento.php<?php echo "?departamento=7";?>"		shape="circle" 	coords="704,367,40"/>
+							<area class="showTip L8" href="VerCentroAcopioDepartamento.php<?php echo "?departamento=8";?>" 		shape="circle" 	coords="244,329,40"/>
+							<area class="showTip L9" href="VerCentroAcopioDepartamento.php<?php echo "?departamento=9";?>"		shape="circle" 	coords="332,152,40"/>
+							<area class="showTip L10" href="VerCentroAcopioDepartamento.php<?php echo "?departamento=10";?>" 	shape="circle" 	coords="370,288,30"/>
+							<area class="showTip L11" href="VerCentroAcopioDepartamento.php<?php echo "?departamento=11";?>" 	shape="circle" 	coords="311,302,30"/>
+							<area class="showTip L12" href="VerCentroAcopioDepartamento.php<?php echo "?departamento=12";?>" 	shape="circle" 	coords="371,376,40"/>
+							<area class="showTip L13" href="VerCentroAcopioDepartamento.php<?php echo "?departamento=13";?>"	shape="circle" 	coords="467,248,40"/>
+							<area class="showTip L14" href="VerCentroAcopioDepartamento.php<?php echo "?departamento=14";?>" 	shape="circle" 	coords="447,327,40"/>
 						</map>
 						<img src="../../../imagenes/mapa.png" width="780" height="580" usemap="#el_salvador"/>
 						<!--<a href="/cgi-bin/imagemap/mimapa"><img src="../../../imagenes/mapa.png" width="790" height="590" ismap></a>-->
@@ -179,6 +187,27 @@ $consulta_centros_de_acopio = mysql_query($instruccion_select, $conexion) or die
 					<br>
 <!---------------------------------------------------------------------------------------------------------------------------------->
 				</td></tr></table>
+				<?php } else{ ?>
+				<h2 align="center" class="encabezado2"><img src="../../../imagenes/icono_error.png"><br>NO SE PUDO GENERAR LA LISTA DE CENTROS DE ACOPIO!!</h2>
+				<table align="center" class="alerta error centro">
+					<tr>
+						<td align="center" colspan="3">
+							No hay centros de acopio registrados en el sistema.<br><br>
+							<?php if($_SESSION["tipo_usuario"] == "1"){ ?>
+							Desea realizar el Registro de un Nuevo Centro de Acopio?.<br>
+							<img src="../../../imagenes/icono_agregar.png" align="top" onClick="redireccionar('../Nuevo/frmNuevoCentroAcopio.php?departamento=dep')" onMouseOver="toolTip('Agregar un nuevo Centro de Acopio',this)" class="manita">
+							<?php } ?>
+							<img src="../../../imagenes/icono_cancelar.png" align="top" onClick="redireccionar('../../../interfaz/frame_contenido.php')" onMouseOver="toolTip('Cancelra, volver al Inicio',this)" class="manita">
+						</td>
+					</tr>
+				</table>
+				<?php } ?>
+				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+				<script type="text/javascript" src="../../../librerias/jquery/tinytable.js"></script>
+				<script type="text/javascript" src="../../../librerias/jquery/tinytable.options.js"></script>
+				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+				<span id="toolTipBox" width="50"></span>
+				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <!---------------------------------------------------------------------------------------------------------------------------------->
 				</td>
 			</tr>

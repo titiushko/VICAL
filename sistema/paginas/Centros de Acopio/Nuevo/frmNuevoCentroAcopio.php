@@ -2,6 +2,7 @@
 include "../../../loggin/BloqueSeguridad.php";
 include "../../../loggin/AccesoAdministrador.php";
 include "../../../librerias/abrir_conexion.php";
+$departamento  = $_REQUEST['departamento'];
 $departamentos = array("Ahuachapan","Santa Ana","Sonsonate","Usulutan","San Miguel","Morazan","La Union","La Libertad","Chalatenango","Cuscatlan","San Salvador","La Paz","Caba&ntilde;as","San Vicente");
 
 //Obtener cantidad de datos
@@ -56,7 +57,7 @@ while($contador <= $cantidad){
 <!------------------------------------------------------------------------------------------------------------------------>
 			<tr>
 				<td>
-					<form name="formulario" action="RegistrarCentroAcopio.php" method="POST" onSubmit="return validarNuevoCentroAcopio(this,3);">
+					<form name="formulario" action="RegistrarCentroAcopio.php" method="POST" onSubmit="return validarNuevoCentroAcopio(this,4);">
 						<table align="center" class="marco">
 						<!--------------------------------CODIGO---------------------------------->
 							<tr>
@@ -65,14 +66,22 @@ while($contador <= $cantidad){
 									<input name="codigo_centro_acopio" type="text" size=4 readonly value="<?php echo $nuevo_codigo;?>">
 								</td>
 							</tr>
+							<!--------------------------------NOMBRE---------------------------------->
+							<tr>
+								<td align="right"><span class="titulo1">Nombre del Centro de Acopio:</span></td>
+								<td align="left">						
+									<input name="nombre_centro_acopio" id="id1" class="requiredo" type="text" size=39 onKeyPress="return soloLetras(event)" onBlur="borrarMensaje(4),  elementosVacios(5);" onClick="borrarMensaje(4), elementosVacios(5);">
+									<span class="obligatorio">*</span>
+								</td>
+							</tr>
 							<!--------------------------------RECOLECOR---------------------------------->
 							<tr>
 								<td align="right">
-									<img src="../../../imagenes/icono_agregar.png" width="20%" height="20%" align="top" onMouseOver="toolTip('Nuevo recolector',this)" onClick="redireccionar('../../recolectores/Nuevo/frmNuevorecolector.php')" class="manita">
+									<img src="../../../imagenes/icono_agregar.png" width="10%" height="10%" align="top" onMouseOver="toolTip('Nuevo recolector',this)" onClick="redireccionar('../../recolectores/Nuevo/frmNuevorecolector.php')" class="manita">
 									<span class="titulo1">Encargado:</span>
 								</td>
 								<td align="left">
-									<select name="nombre_recolector" id="id1" class="requiredo lista nombre" size="1" onBlur="borrarMensaje(3), elementosVacios(4);" onClick="borrarMensaje(3), elementosVacios(4);">
+									<select name="nombre_recolector" id="id2" class="requiredo lista nombre" size="1" onBlur="borrarMensaje(4), elementosVacios(5);" onClick="borrarMensaje(4), elementosVacios(5);">
 										<option selected value="">.:Recolectores:.</option>
 										<?php
 										$instruccion = "SELECT nombre_recolector FROM recolectores ORDER BY nombre_recolector ASC";
@@ -99,14 +108,23 @@ while($contador <= $cantidad){
 									<span class="titulo1">Departamento:</span>
 								</td>
 								<td align="left">
-									<select name="departamento" id="id2" class="requiredo lista opcion" onBlur="borrarMensaje(3), elementosVacios(4);" onClick="borrarMensaje(3), elementosVacios(4);">
+									<?php
+									if($departamento == "dep"){
+									?>
+									<select name="departamento" id="id3" class="requiredo lista opcion" onBlur="borrarMensaje(4), elementosVacios(5);" onClick="borrarMensaje(4), elementosVacios(5);">
 										<option selected value="">.:Opciones:.</option>
 										<?php
 										for($contador=0;$contador<14;$contador++){
 											echo "<option>".$departamentos[$contador]."</option>";
 										}
-										?>
-									</select>
+									echo "</select>";
+									}
+									else{
+									?>
+									<input value="<?php echo $departamento;?>" readonly name="departamento" id="id2" class="requiredo lista opcion" onBlur="borrarMensaje(4), elementosVacios(5);" onClick="borrarMensaje(4), elementosVacios(5);">
+									<?php
+									}
+									?>
 									<span class="obligatorio">*</span>
 								</td>
 							</tr>
@@ -116,10 +134,9 @@ while($contador <= $cantidad){
 									<span class="titulo1">Telefono:</span>
 								</td>
 								<td align="left">
-									<input name="telefono1" id="id3" class="requiredo" type="text" maxLength=4 size=1 onKeyup="autoTab(event.keyCode,this.name,3);" onKeyPress="return soloNumeros(event)" onBlur="borrarMensaje(3), elementosVacios(4);" onClick="borrarMensaje(3), elementosVacios(4);">
+									<input name="telefono1" id="id4" class="requiredo" type="text" maxLength=4 size=1 onKeyup="autoTab(event.keyCode,this.name,3);" onKeyPress="return soloNumeros(event)" onBlur="borrarMensaje(4), elementosVacios(5);" onClick="borrarMensaje(4), elementosVacios(5);">
 									<span class="titulo1">-</span>
-									<input name="telefono2" id="id4" class="requiredo" type="text" maxLength=4 size=1 onKeyup="autoTab(event.keyCode,this.name,3);" onKeyPress="return soloNumeros(event)" onBlur="borrarMensaje(3), elementosVacios(4);" onClick="borrarMensaje(3), elementosVacios(4);">
-									<span class="obligatorio">*</span>
+									<input name="telefono2" id="id5" class="requiredo" type="text" maxLength=4 size=1 onKeyup="autoTab(event.keyCode,this.name,3);" onKeyPress="return soloNumeros(event)" onBlur="borrarMensaje(4), elementosVacios(5);" onClick="borrarMensaje(4), elementosVacios(5);">
 								</td>
 							</tr>
 							<!---------------------------------BOTONES----------------------------------->
@@ -129,7 +146,7 @@ while($contador <= $cantidad){
 								<span id="toolTipBox" width="50"></span>
 								<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 									<input name="Registrar" type="submit" value="Registrar" onMouseOver="toolTip('Registrar',this)" class="boton aceptar">
-									<input name="Limpiar" type="reset" value="Limpiar" onMouseOver="toolTip('Limpiar',this)" class="boton limpiar" onClick="borrarMensaje(3), elementosVacios(4);">
+									<input name="Limpiar" type="reset" value="Limpiar" onMouseOver="toolTip('Limpiar',this)" class="boton limpiar" onClick="borrarMensaje(4), elementosVacios(5);">
 									<input type="button" onMouseOver="toolTip('Cancelar',this)" class="boton cancelar" onClick="redireccionar('../../../interfaz/frame_contenido.php')">
 									<input type="button" onMouseOver="toolTip('Ayuda',this)" class="boton ayuda" onClick="redireccionar('../../Ayuda/AyudaRegistroCentroAcopio.php')">
 								</td>
@@ -139,9 +156,10 @@ while($contador <= $cantidad){
 					</form>
 					<center>
 						<span class="obligatorio">* Datos requeridos</span>
-						<div id="mensaje1" class="oculto"><span class="alerta error">&nbsp;&nbsp;Falta el seleccionar el nombre del recolector!!&nbsp;&nbsp;</span></div>
-						<div id="mensaje2" class="oculto"><span class="alerta error">&nbsp;&nbsp;Falta seleccionar el departamento!!&nbsp;&nbsp;</span></div>
-						<div id="mensaje3" class="oculto"><span class="alerta error">&nbsp;&nbsp;Falta seleccionar el numero telefonico!!&nbsp;&nbsp;</span></div>
+						<div id="mensaje1" class="oculto"><span class="alerta error">&nbsp;&nbsp;Falta escribir el nombre del dentro de acopio!!&nbsp;&nbsp;</span></div>
+						<div id="mensaje2" class="oculto"><span class="alerta error">&nbsp;&nbsp;Falta el seleccionar el nombre del recolector!!&nbsp;&nbsp;</span></div>
+						<div id="mensaje3" class="oculto"><span class="alerta error">&nbsp;&nbsp;Falta seleccionar el departamento!!&nbsp;&nbsp;</span></div>
+						<div id="mensaje4" class="oculto"><span class="alerta error">&nbsp;&nbsp;El numero telefonico esta incompleto!!&nbsp;&nbsp;</span></div>
 					</center>
 				</td>
 			</tr>

@@ -129,7 +129,7 @@ $proveedores = mysql_fetch_assoc($consulta_proveedores);
 					<hr width="270">
 					<img src="../../../imagenes/icono_graficar.png" align="bottom" <?php echo "onMouseOver=\"toolTip('Ver Estadisticas de ".$proveedores["nombre_proveedor"]."',this)\" onClick=\"redireccionar('../Estadisticas/frmEstadisticaProveedor.php?valor=".$proveedores['nombre_proveedor']."');\"";?> class="manita">
 					<?php } if($_SESSION["tipo_usuario"] == "1" || $_SESSION["tipo_usuario"] == "2"){ ?>
-					<img src="../../../imagenes/icono_historial.png" align="top" <?php echo "onMouseOver=\"toolTip('Ver Historial de ".$proveedores["nombre_proveedor"]."',this)\" onClick=\"redireccionar('../../Vidrio/Historial/VerHistorialCompra_Proveedor.php?seleccionar_proveedor=".$proveedores['codigo_proveedor']."');\"";?> class="manita">
+					<img src="../../../imagenes/icono_historial.png" align="top" onMouseOver="toolTip('Ver Historial de <?php echo $proveedores["nombre_proveedor"];?>',this);" onClick="redireccionar('../../Vidrio/Historial/VerHistorialCompra_Proveedor.php<?php echo "?pagina=proveedor&seleccionar_proveedor=".$proveedores['codigo_proveedor']."&sucursal=AMBAS";?>');" class="manita">
 					<?php } ?>
 					<img src="../../../imagenes/icono_reporte.png" align="top" <?php echo "onMouseOver=\"toolTip('Ver Reporte de ".$proveedores["nombre_proveedor"]."',this)\" onClick=\"redireccionar('../../Vidrio/Reporte/VerReporteCompra_Proveedor.php?seleccionar_proveedor=".$proveedores['nombre_proveedor']."');\"";?> class="manita">
 					<br>

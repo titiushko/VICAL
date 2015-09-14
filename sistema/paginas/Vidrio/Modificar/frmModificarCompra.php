@@ -5,13 +5,17 @@ include "../../../librerias/abrir_conexion.php";
 include "../../../librerias/funciones.php";
 $factura = $_REQUEST['modificar_factura'];
 $select_factura = "
-SELECT facturas.codigo_factura, facturas.fecha, recolectores.nombre_recolector, facturas.codigo_recolector, proveedores.nombre_proveedor, facturas.codigo_proveedor
+SELECT facturas.codigo_factura, facturas.sucursal, facturas.fecha, recolectores.nombre_recolector, facturas.codigo_recolector, proveedores.nombre_proveedor, facturas.codigo_proveedor
 FROM facturas, recolectores, proveedores
 WHERE facturas.codigo_factura = '$factura'
 AND facturas.codigo_recolector = recolectores.codigo_recolector
 AND facturas.codigo_proveedor = proveedores.codigo_proveedor";
 $consulta_factura = mysql_query($select_factura, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_factura!!</SPAN>".mysql_error());
 $facturas = mysql_fetch_assoc($consulta_factura);
+
+$instruccion_select = "SELECT precio_unitario FROM precio";
+$consulta_precio = mysql_query($instruccion_select, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_precio!!</SPAN>".mysql_error());
+$precio = mysql_fetch_assoc($consulta_precio);
 ?>
 <HTML>
 	<head>
@@ -31,6 +35,7 @@ $facturas = mysql_fetch_assoc($consulta_factura);
 		<script type="text/javascript" 	 src="../../../librerias/funciones.js"></script>
 		<script type="text/javascript" 	 src="../../../librerias/validaciones.js"></script>
 		<script type="text/javascript">
+			var precio = <?php echo $precio['precio_unitario'];?>;	//precio unitario
 			//vector con los recolectores
 			var recolectores = new Array;										
 			<?php
@@ -65,7 +70,7 @@ $facturas = mysql_fetch_assoc($consulta_factura);
 <!------------------------------------------------------------------------------------------------------------------------>				
 			<tr>
 				<td align="center">
-					<form name="modificar_compra_vidrio" action="ModificarCompra.php" method="post" onSubmit="return validarModificarCompra(this,2);">
+					<form name="formulario" action="ModificarCompra.php" method="post" onSubmit="return validarModificarCompra(this,2);">
 					<table class="marco">
 						<tr>
 							<td>
@@ -75,7 +80,7 @@ $facturas = mysql_fetch_assoc($consulta_factura);
 										<td align="right" class="titulo1">Fecha:</td>
 										<td align="left">
 											<input name="fecha" class="subtitulo1 fondo1" type="text" readonly size=7 value="<?php echo $facturas['fecha'];?>">
-											<img src="../../../imagenes/icono_calendario.png" onMouseOver="toolTip('Calendario',this)" onClick="displayCalendar(document.modificar_compra_vidrio.fecha,'yyyy-mm-dd',this),borrarMensaje(2);" class="manita">
+											<img src="../../../imagenes/icono_calendario.png" onMouseOver="toolTip('Calendario',this)" onClick="displayCalendar(document.formulario.fecha,'yyyy-mm-dd',this),borrarMensaje(2);" class="manita">
 										</td>
 										<td>
 											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -90,7 +95,6 @@ $facturas = mysql_fetch_assoc($consulta_factura);
 											<input name="factura" class="subtitulo1 fondo1" type="text" readonly size="2" value="<?php echo $facturas['codigo_factura'];?>">
 										</td>
 									</tr>
-									<caption><h1></h1></caption>
 									<!--------------------------------RECOLECOR---------------------------------->
 									<tr>
 										<td></td>
@@ -161,6 +165,26 @@ $facturas = mysql_fetch_assoc($consulta_factura);
 										</td>
 										<td></td>
 									</tr>
+									<!--------------------------------SUCURSAL----------------------------------->
+									<tr>
+										<td></td>
+										<td align="right" class="titulo1">Sucursal:</td>
+										<td align="left">
+											<select name="sucursal" id="id7" class="subtitulo1 fondo lista opcion" size="1" onBlur="borrarMensaje(7), elementosVacios(8);" onClick="borrarMensaje(7), elementosVacios(8);">
+											<?php
+											$sucursales = array('VICESA','VIGUA');
+											for($i=0;$i<2;$i++){
+												if($sucursales[$i] == $facturas["sucursal"])
+													echo "<option selected>".$sucursales[$i]."</option>";
+												else
+													echo "<option>".$sucursales[$i]."</option>";
+											}
+											?>
+											</select>
+										</td>
+										<td></td>
+										<td></td>
+									</tr>
 									<!--------------------------------------------------------------------------->
 								</table>
 								<!---->
@@ -206,13 +230,13 @@ $facturas = mysql_fetch_assoc($consulta_factura);
 											for($i=1; $i<=5; $i++){
 												if($Compra[$i][1] <> 0 && $Compra[$i][2] <> 0){
 											?>
-											<td><input name="Vc<?php echo $i;?>" class="fondo" type="text" size="4" value="<?php printf("%.2f",$Compra[$i][1]);?>" onBlur="calcularMonto('modificar_compra_vidrio','Vc<?php echo $i;?>','Vp<?php echo $i;?>'),borrarMensaje(2);" onKeyPress="return soloNumerosFloat(event)" onClick="borrarMensaje(2);"></td>
+											<td><input name="Vc<?php echo $i;?>" class="fondo" type="text" size="4" value="<?php printf("%.2f",$Compra[$i][1]);?>" onBlur="calcularMonto(),borrarMensaje(2);" onKeyPress="return soloNumerosFloat(event)" onClick="borrarMensaje(2);"></td>
 											<td><input name="Vp<?php echo $i;?>" class="fondo1" type="text" readonly size="4" value="<?php printf("%.2f",$Compra[$i][2]);?>"></td>
 											<?php
 												}
 												else{
 											?>
-											<td><input name="Vc<?php echo $i;?>" class="fondo" type="text" size="4" onBlur="calcularMonto('modificar_compra_vidrio','Vc<?php echo $i;?>','Vp<?php echo $i;?>'),borrarMensaje(2);" onKeyPress="return soloNumerosFloat(event)" onClick="borrarMensaje(2);"></td>
+											<td><input name="Vc<?php echo $i;?>" class="fondo" type="text" size="4" onBlur="calcularMonto(),borrarMensaje(2);" onKeyPress="return soloNumerosFloat(event)" onClick="borrarMensaje(2);"></td>
 											<td><input name="Vp<?php echo $i;?>" class="fondo1" type="text" readonly size="4"></td>
 											<?php
 												}
@@ -226,7 +250,7 @@ $facturas = mysql_fetch_assoc($consulta_factura);
 											else{
 											?>
 											<td><input name="BTo1" class="fondo1" type="text" size="4" readonly></td>
-											<td"><input name="BTo2 class="fondo1" type="text" size="4" readonly></td>
+											<td"><input name="BTo2" class="fondo1" type="text" size="4" readonly></td>
 											<?php
 											}
 											?>
@@ -237,13 +261,13 @@ $facturas = mysql_fetch_assoc($consulta_factura);
 											for($i=6; $i<=10; $i++){
 												if($Compra[$i][1] <> 0 && $Compra[$i][2] <> 0){
 											?>
-											<td><input name="Vc<?php echo $i?>" class="fondo" type="text" size="4" value="<?php printf("%.2f",$Compra[$i][1]);?>" onBlur="calcularMonto('modificar_compra_vidrio','Vc<?php echo $i;?>','Vp<?php echo $i;?>');" onKeyPress="return soloNumerosFloat(event)"></td>
+											<td><input name="Vc<?php echo $i?>" class="fondo" type="text" size="4" value="<?php printf("%.2f",$Compra[$i][1]);?>" onBlur="calcularMonto();" onKeyPress="return soloNumerosFloat(event)"></td>
 											<td><input name="Vp<?php echo $i?>" class="fondo1" type="text" readonly size="4" value="<?php printf("%.2f",$Compra[$i][2]);?>"></td>
 											<?php
 												}
 												else{
 											?>
-											<td><input name="Vc<?php echo $i?>" class="fondo" type="text" size="4" onBlur="calcularMonto('modificar_compra_vidrio','Vc<?php echo $i;?>','Vp<?php echo $i;?>');" onKeyPress="return soloNumerosFloat(event)"></td>
+											<td><input name="Vc<?php echo $i?>" class="fondo" type="text" size="4" onBlur="calcularMonto();" onKeyPress="return soloNumerosFloat(event)"></td>
 											<td><input name="Vp<?php echo $i?>" class="fondo1" type="text" readonly size="4"></td>
 											<?php
 												}
@@ -271,7 +295,7 @@ $facturas = mysql_fetch_assoc($consulta_factura);
 					<span id="toolTipBox" width="50"></span>
 					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 					<input name="Modificar" type="submit" value="Modificar" onMouseOver="toolTip('Modificar',this)" class="boton aceptar">
-					<input type="button" onMouseOver="toolTip('Cancelar',this)" class="boton cancelar" <?php echo "onClick=\"redireccionar('../Consultar/VerCompra.php?valor=$factura')\"";?>>				
+					<input type="button" onMouseOver="toolTip('Cancelar',this)" class="boton cancelar" onClick="redireccionar('javascript:window.history.back()');">
 					</form>
 					<center>
 						<div id="mensaje1" class="oculto"><span class="alerta error">&nbsp;&nbsp;No se pueden seleccionar fechas futuras!!&nbsp;&nbsp;</span></div>

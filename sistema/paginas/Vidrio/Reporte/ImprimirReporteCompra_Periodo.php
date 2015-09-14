@@ -22,7 +22,7 @@ if($nombre_mes == 'Diciembre') $mes = '12';
 ?>
 <HTML>
 	<head>
-		<title>Reporte <?php echo $nombre_mes." de ".$ano; ?></title>
+		<title><?php echo "REPORTE_DE_COMPRAS_EN_".strtoupper($nombre_mes)."_DEL_".$ano; ?></title>
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">

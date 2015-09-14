@@ -35,8 +35,7 @@
 									<tr>
 										<td align="right" class="titulo1" style="vertical-align:text-top;">Por Periodo:</td>
 										<td align="justify" class="subtitulo1">
-											<font color="white"><b>Mes:</b></font> Aqu&iacute; podr&aacute; seleccionar el mes del periodo en el cual desea mostrar en el historial.<br>
-											<font color="white"><b>A&ntilde;o:</b></font> Seleccione el a&ntilde;o del periodo de an&aacute;lisis para generar el historial.<br>
+											Seleccione con los calendarios la fecha en la que comienza y la fecha en la que termina el periodo.<br>
 											No puede dejar sin seleccionar el periodo.
 											<hr>
 										</td>

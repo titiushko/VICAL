@@ -2,23 +2,18 @@
 include "../../../loggin/BloqueSeguridad.php";
 include "../../../loggin/AccesoAdministrador.php";
 include "../../../librerias/abrir_conexion.php";
-$id 		= $_POST['id'];
-$nombre  	= $_POST['nombre'];
-$usuario 	= $_POST['usuario'];
-$password 	= $_POST['password'];
-$nivel 		= $_POST['nivel'];
-$instruccion_update = "UPDATE usuarios SET nombre = '$nombre', usuario = '$usuario', password = '$password', nivel = '$nivel' WHERE id = '$id'";
-$actualizar_usuario = mysql_query($instruccion_update, $conexion) or die ("<SPAN CLASS='error'>Fallo en actualizar_usuario!!</SPAN>".mysql_error());
+$precio = $_POST['precio'];
+$instruccion_update = "UPDATE precio SET precio_unitario = '$precio'";
+$actualizar_precio = mysql_query($instruccion_update, $conexion) or die ("<SPAN CLASS='error'>Fallo en actualizar_precio!!</SPAN>".mysql_error());
 
-$instruccion_select = "SELECT id, nombre, usuario, password, nivel FROM usuarios WHERE id = '$id'";
-$consulta_usuario = mysql_query($instruccion_select, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_usuario!!</SPAN>".mysql_error());
-$usuarios = mysql_fetch_array($consulta_usuario);
-$tipos_usuarios = array(1=>"Administrador",2=>"Contador",3=>"Recolector");
+$instruccion_select = "SELECT precio_unitario FROM precio";
+$consulta_precio = mysql_query($instruccion_select, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_precio!!</SPAN>".mysql_error());
+$precio = mysql_fetch_array($consulta_precio);
 ?>
 <HTML>
 	<head>
 		<title>.:SC&CPVES:.</title>
-		<meta http-equiv ="refresh"		 content="5;url=../Consultar/frmConsultarUsuario.php">
+		<meta http-equiv ="refresh"		 content="5;url=../Consultar/VerPrecioUnitario.php">
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -36,11 +31,11 @@ $tipos_usuarios = array(1=>"Administrador",2=>"Contador",3=>"Recolector");
 			<tr>
 				<td align="center">
 					<img src="../../../imagenes/vical.png" width="25%" height="25%">
-					<h1 class="encabezado1">MODIFICAR USUARIO</h1>
+					<h1 class="encabezado1">MODIFICAR PRECIO DE COMPRA UNITARIO</h1>
 					<h2 class="encabezado2">
 						<img src="../../../imagenes/icono_informacion.png">
 						<br>
-						SE MODIFICO EL USUARIO EXITOSAMENTE!!
+						SE MODIFICO EXITOSAMENTE EL PRECIO DE COMPRA UNITARIO!!
 					</h2>
 				</td>
 			</tr>
@@ -48,26 +43,12 @@ $tipos_usuarios = array(1=>"Administrador",2=>"Contador",3=>"Recolector");
 			<tr>
 				<td align="center">
 					<table class="resultado centro">
-						<!------------------------------------------------------------------------>
 						<tr>
-							<td align="right"><b>Nombre Completo:</b></td>
-							<td><?php echo $usuarios["nombre"]; ?></td>
+							<td align="right"><b>Precio Unitario:</b></td>
+							<td align="left">						
+								<input name="precio" class="subtitulo1 fondo3" readonly value="<?php echo $precio['precio_unitario'];?>" type="text" size=4 maxLength=4 onKeyPress="return soloNumerosFloat(event)" onBlur="borrarMensaje();" onClick="borrarMensaje();">&nbsp;&nbsp;&nbsp;&nbsp;
+							</td>
 						</tr>
-						<tr>
-							<td align="right"><b>Nombre de Usuario:</b></td>
-							<td><?php echo $usuarios["usuario"]; ?></td>
-						</tr>
-						<!------------------------------------------------------------------------>
-						<tr>
-							<td align="right"><b>Contrase&ntilde;a:</b></td>
-							<td><input class="subtitulo1 fondo3" type="password" readonly value="<?php echo $usuarios['password'];?>"></td>
-						</tr>
-						<!------------------------------------------------------------------------>
-						<tr>
-							<td align="right"><b>Tipo de Usuario:</b></td>
-							<td><?php echo $tipos_usuarios[$usuarios["nivel"]]; ?></td>
-						</tr>
-						<!------------------------------------------------------------------------>
 					</table>
 				</td>
 			</tr>

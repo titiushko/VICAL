@@ -49,13 +49,10 @@ $tipos_usuarios = array(1=>"Administrador",2=>"Contador",3=>"Recolector");
 <!------------------------------------------------------------------------------------------------------------------------>				
 			<tr>
 				<td align="center">
-					<form name="modificar_tipo_empresa" action="ModificarUsuario.php" method="post" enctype="multipart/form-data" onSubmit="return validarModificarUsuario(this);">
+					<form name="modificar_usuario" action="ModificarUsuario.php" method="post" enctype="multipart/form-data" onSubmit="return validarModificarUsuario(this);">
 					<table class="marco centro">
 						<!--------------------------------CODIGO---------------------------------->
-						<tr>
-							<td align="right" class="titulo1">Id:</td>
-							<td align="left"><input name="id" class="subtitulo1 fondo1" type="text" size=1 readonly value="<?php echo $id;?>"></td>
-						</tr>
+						<input name="id" class="oculto" type="text" value="<?php echo $id;?>">
 						<!--------------------------------NOMBRE---------------------------------->
 						<tr>
 							<td align="right" class="titulo1">Nombre Completo:</td>
@@ -85,9 +82,9 @@ $tipos_usuarios = array(1=>"Administrador",2=>"Contador",3=>"Recolector");
 									<?php
 									for($i=1;$i<=3;$i++){
 										if($i == $usuarios["nivel"])
-												echo "<option selected value=\"$i\">".$tipos_usuarios[$i]."</option>";
-											else
-												echo "<option value=\"$i\">".$tipos_usuarios[$i]."</option>";
+											echo "<option selected value=\"$i\">".$tipos_usuarios[$i]."</option>";
+										else
+											echo "<option value=\"$i\">".$tipos_usuarios[$i]."</option>";
 									}
 									?>
 								</select>

@@ -3,7 +3,7 @@ include "../../../loggin/BloqueSeguridad.php";
 include "../../../librerias/abrir_conexion.php";
 
 $instruccion_select = "
-SELECT facturas.codigo_factura, facturas.fecha, recolectores.nombre_recolector, proveedores.nombre_proveedor
+SELECT facturas.codigo_factura, facturas.fecha, recolectores.nombre_recolector, proveedores.nombre_proveedor, facturas.sucursal
 FROM facturas, recolectores, proveedores
 WHERE facturas.codigo_recolector = recolectores.codigo_recolector
 AND facturas.codigo_proveedor = proveedores.codigo_proveedor";
@@ -36,6 +36,11 @@ $consulta_factura = mysql_query($instruccion_select, $conexion) or die ("<SPAN C
 <!------------------------------------------------------------------------------------------------------------------------>
 			<tr>
 				<td>
+					<?php					
+					$cantidad_facturas = mysql_query("SELECT count(codigo_factura) cantidad FROM facturas", $conexion) or die ("<SPAN CLASS='error'>Fallo en cantidad_facturas!!</SPAN>".mysql_error());
+					$cantidad = mysql_fetch_array($cantidad_facturas);
+					if($cantidad[0] <> 0){
+					?>
 					<table align="center" class="marco">
 						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 						<tr>
@@ -62,6 +67,7 @@ $consulta_factura = mysql_query($instruccion_select, $conexion) or die ("<SPAN C
 											<th onMouseOver="toolTip('Ordenar por fecha',this)" width="120"><h3>Fecha</h3></th>
 											<th onMouseOver="toolTip('Ordenar por recolector',this)" width="155"><h3>Recolector</h3></th>
 											<th onMouseOver="toolTip('Ordenar por proveedor',this)" width="285"><h3>Proveedor</h3></th>
+											<th onMouseOver="toolTip('Ordenar por sucursal',this)" width="285"><h3>Sucursal</h3></th>
 										</tr>
 									</thead>
 									<tbody class="subtitulo2">
@@ -73,6 +79,7 @@ $consulta_factura = mysql_query($instruccion_select, $conexion) or die ("<SPAN C
 											<td><?php echo "<a title='Ver' style='color: black;'href='VerCompra.php?valor=$facturas[0]'>".$facturas[1]."</a>";?></td>
 											<td><?php echo "<a title='Ver' style='color: black;'href='VerCompra.php?valor=$facturas[0]'>".$facturas[2]."</a>";?></td>
 											<td><?php echo "<a title='Ver' style='color: black;'href='VerCompra.php?valor=$facturas[0]'>".$facturas[3]."</a>";?></td>
+											<td><?php echo "<a title='Ver' style='color: black;'href='VerCompra.php?valor=$facturas[0]'>".$facturas[4]."</a>";?></td>
 										</tr>
 										<?php
 										}
@@ -95,7 +102,7 @@ $consulta_factura = mysql_query($instruccion_select, $conexion) or die ("<SPAN C
 							</td>
 							<td>
 								<?php if($_SESSION["tipo_usuario"] == "1"){ ?>
-								<img src="../../../imagenes/icono_agregar.png" align="top" onClick="redireccionar('../Nueva/frmNuevaCompra.php')" onMouseOver="toolTip('Agregar una nueva Compra de Vidrio',this)" class="manita">
+								<img src="../../../imagenes/icono_agregar.png" align="top" onClick="redireccionar('../Nueva/frmNuevaCompra.php<?php echo "?valor_nombre_recolector=nueva_compra";?>')" onMouseOver="toolTip('Agregar una nueva Compra de Vidrio',this)" class="manita">
 								<?php } ?>
 								<img src="../../../imagenes/icono_recargar.png" align="top" onClick="redireccionar('frmConsultarCompra.php');" onMouseOver="toolTip('Actualizar',this)" class="manita">
 								<img src="../../../imagenes/icono_cancelar.png" align="top" onClick="redireccionar('../../../interfaz/frame_contenido.php')" onMouseOver="toolTip('Cancelra, volver al Inicio',this)" class="manita">
@@ -115,13 +122,28 @@ $consulta_factura = mysql_query($instruccion_select, $conexion) or die ("<SPAN C
 								</span>
 							</td>
 						</tr>
-						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-						<script type="text/javascript" src="../../../librerias/jquery/tinytable.js"></script>
-						<script type="text/javascript" src="../../../librerias/jquery/tinytable.options.js"></script>
-						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-						<span id="toolTipBox" width="50"></span>
-						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 					</table>
+					<?php } else{ ?>
+					<h2 align="center" class="encabezado2"><img src="../../../imagenes/icono_error.png"><br>NO SE PUDO GENERAR LA LISTA DE COMPRAS DE VIDRIO!!</h2>
+					<table align="center" class="alerta error centro">
+						<tr>
+							<td align="center" colspan="3">
+								No hay compras de vidrio registradas en el sistema.<br><br>
+								<?php if($_SESSION["tipo_usuario"] == "1"){ ?>
+								Desea realizar el Registro de una Nueva Compra de Vidrio?.<br>
+								<img src="../../../imagenes/icono_agregar.png" align="top" onClick="redireccionar('../Nueva/frmNuevaCompra.php<?php echo "?valor_nombre_recolector=nueva_compra";?>')" onMouseOver="toolTip('Agregar una nueva Compra de Vidrio',this)" class="manita">
+								<?php } ?>
+								<img src="../../../imagenes/icono_cancelar.png" align="top" onClick="redireccionar('../../../interfaz/frame_contenido.php')" onMouseOver="toolTip('Cancelra, volver al Inicio',this)" class="manita">
+							</td>
+						</tr>
+					</table>
+					<?php } ?>
+					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+					<script type="text/javascript" src="../../../librerias/jquery/tinytable.js"></script>
+					<script type="text/javascript" src="../../../librerias/jquery/tinytable.options.js"></script>
+					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+					<span id="toolTipBox" width="50"></span>
+					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 				</td>
 			</tr>
 <!------------------------------------------------------------------------------------------------------------------------>				

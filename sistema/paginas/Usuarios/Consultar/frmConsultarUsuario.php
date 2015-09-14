@@ -32,6 +32,11 @@ $tipos_usuarios = array(1=>"Administrador",2=>"Contador",3=>"Recolector");
 <!------------------------------------------------------------------------------------------------------------------------>
 			<tr>
 				<td>
+					<?php					
+					$cantidad_usuarios = mysql_query("SELECT count(id) cantidad FROM usuarios WHERE id <> 1", $conexion) or die ("<SPAN CLASS='error'>Fallo en cantidad_usuarios!!</SPAN>".mysql_error());
+					$cantidad = mysql_fetch_array($cantidad_usuarios);
+					if($cantidad[0] <> 0){
+					?>
 					<table align="center" class="marco">
 						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 						<tr>
@@ -61,7 +66,12 @@ $tipos_usuarios = array(1=>"Administrador",2=>"Contador",3=>"Recolector");
 									</thead>
 									<tbody class="subtitulo2">
 										<?php
+										$bandera = true;
 										while ($usuarios = mysql_fetch_array($consulta_usuario)){
+											if($bandera){
+												$bandera = false;
+											}
+											else{
 										?>
 										<tr align="center">
 											<td><?php echo $usuarios[1];?></td>
@@ -72,6 +82,7 @@ $tipos_usuarios = array(1=>"Administrador",2=>"Contador",3=>"Recolector");
 											</td>
 										</tr>
 										<?php
+											}
 										}
 										?>
 									</tbody>
@@ -110,13 +121,26 @@ $tipos_usuarios = array(1=>"Administrador",2=>"Contador",3=>"Recolector");
 								</span>
 							</td>
 						</tr>
-						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-						<script type="text/javascript" src="../../../librerias/jquery/tinytable.js"></script>
-						<script type="text/javascript" src="../../../librerias/jquery/tinytable.options.js"></script>
-						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-						<span id="toolTipBox" width="50"></span>
-						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 					</table>
+					<?php } else{ ?>
+					<h2 align="center" class="encabezado2"><img src="../../../imagenes/icono_error.png"><br>NO SE PUDO GENERAR LA LISTA DE USUARIOS!!</h2>
+					<table align="center" class="alerta error centro">
+						<tr>
+							<td align="center" colspan="3">
+								No hay usuarios registrados en el sistema.<br><br>
+								Desea realizar el Registro de un Nuevo Usuario?.<br>
+								<img src="../../../imagenes/icono_agregar.png" align="top" onClick="redireccionar('../Nuevo/frmNuevoUsuario.php')" onMouseOver="toolTip('Agregar un nuevo Usuario',this)" class="manita">
+								<img src="../../../imagenes/icono_cancelar.png" align="top" onClick="redireccionar('../../../interfaz/frame_contenido.php')" onMouseOver="toolTip('Cancelra, volver al Inicio',this)" class="manita">
+							</td>
+						</tr>
+					</table>
+					<?php } ?>
+					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+					<script type="text/javascript" src="../../../librerias/jquery/tinytable.js"></script>
+					<script type="text/javascript" src="../../../librerias/jquery/tinytable.options.js"></script>
+					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+					<span id="toolTipBox" width="50"></span>
+					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 				</td>
 			</tr>
 <!------------------------------------------------------------------------------------------------------------------------>				

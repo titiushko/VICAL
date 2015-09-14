@@ -119,10 +119,10 @@ $nombre_recolector = $_REQUEST['valor'];
 					<span id="toolTipBox" width="50"></span>
 					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 					<center>
-					<div id="mensaje1" class="oculto"><span class="alerta error">&nbsp;&nbsp;Falta seleccionar el a&ntilde;o del periodo!!&nbsp;&nbsp;</span></div>
-					<div id="mensaje2" class="oculto"><span class="alerta error">&nbsp;&nbsp;Falta seleccionar el recolector a mostrar!!&nbsp;&nbsp;</span></div>
-					<div id="mensaje3" class="oculto"><span class="alerta error">&nbsp;&nbsp;Falta seleccionar el tipo de cantidad a mostrar!!&nbsp;&nbsp;</span></div>
-					<div id="mensaje4" class="oculto"><span class="alerta error">&nbsp;&nbsp;Falta seleccionar el tipo de vidrio!!&nbsp;&nbsp;</span></div>
+						<div id="mensaje1" class="oculto"><span class="alerta error">&nbsp;&nbsp;Falta seleccionar el a&ntilde;o del periodo!!&nbsp;&nbsp;</span></div>
+						<div id="mensaje2" class="oculto"><span class="alerta error">&nbsp;&nbsp;Falta seleccionar el recolector a mostrar!!&nbsp;&nbsp;</span></div>
+						<div id="mensaje3" class="oculto"><span class="alerta error">&nbsp;&nbsp;Falta seleccionar el tipo de cantidad a mostrar!!&nbsp;&nbsp;</span></div>
+						<div id="mensaje4" class="oculto"><span class="alerta error">&nbsp;&nbsp;Falta seleccionar el tipo de vidrio!!&nbsp;&nbsp;</span></div>
 					</center>
 				</td>
 			</tr>
