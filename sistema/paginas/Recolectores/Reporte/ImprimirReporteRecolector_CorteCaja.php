@@ -3,10 +3,9 @@ include "../../../loggin/BloqueSeguridad.php";
 include "../../../loggin/AccesoAdministrador.php";
 include "../../../librerias/abrir_conexion.php";
 include "../../../librerias/funciones.php";
-$nombre_recolector 	= $_REQUEST['valor_nombre_recolector'];
-$nom_p 				= $_REQUEST['nom_p'];
-$nom_ca				= $_REQUEST['nom_ca'];
-$top				= $_SESSION["cuenta_compras"];
+$nombre_recolector 		= $_REQUEST['valor_nombre_recolector'];
+$nombre_centro_acopio 	= $_REQUEST['valor_nombre_centro_acopio'];
+$top					= $_SESSION["cuenta_compras"];
 
 $instruccion_select = "
 SELECT codigo_recolector, nombre_recolector, dui_recolector, nit_recolector, direccion_recolector, telefono_recolector
@@ -43,7 +42,7 @@ for($j=1; $j<=5; $j++)
 	if($coloresVidrioComprado[$j] != ''){
 		$COLORES = $COLORES.$coloresVidrioComprado[$j];
 		if($j < 5)
-			if($coloresVidrioComprado[$j+1] != '')
+			//if($coloresVidrioComprado[$j+1] != '')
 				$COLORES = $COLORES.", ";
 	}
 
@@ -97,17 +96,17 @@ for($i=0; $i<=strlen($nombre_recolector); $i++){
 						<tr>
 							<td align="left" colspan="6" class="subtitulo1">
 								RECIBI DE&nbsp;
-								<input class="subtitulo3 sublin" value="<?php echo $nom_p;?>" readonly size="70">&nbsp;
+								<input class="subtitulo3 sublin" value="<?php echo "COMERCIAL AGUIRREURRETA, S.A DE C.V";?>" readonly size="70">&nbsp;
 								LA CANTIDAD DE:<br>
-								<input class="subtitulo3 sublin" value="<?php echo numeroLetras($TotalesPrecios);?>" readonly size="80">&nbsp;
+								<input class="subtitulo3 sublin" value="<?php echo numeroLetras($TotalesPrecios);?>" readonly size="82">&nbsp;
 								($&nbsp;
 								<input class="subtitulo3 sublin" value="<?php echo number_format($TotalesPrecios,2,'.',',');?>" readonly size="10">
 								)<br>
-								EN CONCEPTO DE CANCELACON DE TRANSPORTE DE DERECHOS DE VIDRIO<br>
-								PROCEDENTES DE PROVEEDORES, A CENTROS DE ACOPIO DE:<br>
-								<input class="subtitulo3 sublin" value="<?php echo $nom_ca;?>" readonly size="30">&nbsp;
+								EN CONCEPTO DE CANCELACON DE TRANSPORTE DE DERECHOS DE VIDRIO PROCEDENTES DE<br>
+								PROVEEDORES, A CENTROS DE ACOPIO DE:<br>								
+								<input class="subtitulo3 sublin" value="<?php echo $nombre_centro_acopio;?>" readonly size="85"><br>
 								COLOR&nbsp;
-								<input class="subtitulo3 sublin" value="<?php echo $COLORES;?>" readonly size="55"><br>
+								<input class="subtitulo3 sublin" value="<?php echo $COLORES;?>" readonly size="75"><br>
 								POR LA CANTIDAD DE:&nbsp;
 								<input class="subtitulo3 sublin" value="<?php echo number_format($TotalesCantidades,2,'.',',');?>" readonly size="10">&nbsp;
 								QUINTALES SEGUN DETALLE:

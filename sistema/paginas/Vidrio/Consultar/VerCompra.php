@@ -4,11 +4,12 @@ include "../../../librerias/abrir_conexion.php";
 include "../../../librerias/funciones.php";
 $factura = $_REQUEST['valor'];
 $select_factura = "
-SELECT facturas.codigo_factura, facturas.sucursal, facturas.fecha, recolectores.nombre_recolector, facturas.codigo_recolector, proveedores.nombre_proveedor, facturas.codigo_proveedor
-FROM facturas, recolectores, proveedores
+SELECT facturas.codigo_factura, facturas.fecha, recolectores.nombre_recolector, facturas.codigo_recolector, proveedores.nombre_proveedor, facturas.codigo_proveedor, facturas.sucursal, centros_de_acopio.nombre_centro_acopio, facturas.precio_compra
+FROM facturas, recolectores, proveedores, centros_de_acopio
 WHERE facturas.codigo_factura = '$factura'
 AND facturas.codigo_recolector = recolectores.codigo_recolector
-AND facturas.codigo_proveedor = proveedores.codigo_proveedor";
+AND facturas.codigo_proveedor = proveedores.codigo_proveedor
+AND facturas.codigo_centro_acopio = centros_de_acopio.codigo_centro_acopio";
 $consulta_factura = mysql_query($select_factura, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_factura!!</SPAN>".mysql_error());
 $facturas = mysql_fetch_assoc($consulta_factura);
 ?>
@@ -39,156 +40,166 @@ $facturas = mysql_fetch_assoc($consulta_factura);
 			<tr>
 				<td align="center">
 					<table class="marco">
+					<tr>
+					<td>
+						<!--------------------------------FECHA/No---------------------------------->
 						<tr>
+							<td align="right" class="titulo1">Fecha:</td>
+							<td align="left" class="subtitulo1"><?php echo $facturas['fecha'];?></td>
 							<td>
-								<table align="center">
-									<!--------------------------------FECHA/No---------------------------------->
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</td>
+							<td>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</td>
+							<td align="right" class="titulo1">No:</td>
+							<td align="left" class="subtitulo1"><?php echo $facturas['codigo_factura'];?></td>
+						</tr>
+						<!--------------------------------RECOLECOR---------------------------------->
+						<tr>
+							<td>&nbsp;</td>
+							<td align="right" class="titulo1">Recolector:</td>
+							<td align="left" class="subtitulo1"><?php echo $facturas['nombre_recolector'];?></td>
+							<td align="right" class="titulo1">Codigo:</td>
+							<td align="left" class="subtitulo1"><?php echo $facturas['codigo_recolector'];?></td>
+							<td>&nbsp;</td>
+						</tr>
+						<!--------------------------------PROVEEDOR---------------------------------->
+						<tr>
+							<td>&nbsp;</td>
+							<td align="right" class="titulo1">Proveedor:</td>
+							<td align="left" class="subtitulo1"><?php echo $facturas['nombre_proveedor'];?></td>
+							<td align="right" class="titulo1">Codigo:</td>
+							<td align="left" class="subtitulo1"><?php echo $facturas['codigo_proveedor'];?></td>
+							<td>&nbsp;</td>
+						</tr>
+						<!--------------------------------PRECIO----------------------------------->
+						<tr>
+							<td>&nbsp;</td>
+							<td align="right"><span class="titulo1">Precio:</span></td>
+							<td align="left" class="subtitulo1"><?php echo "$".number_format($facturas['precio_compra'],2,'.',',');?></td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+						</tr>
+						<!---------------------------------VIDRIO------------------------------------>
+						<tr>
+							<td colspan="6">
+							<table align="center" border class="rejilla" width="60%">
+								<thead class="titulo2">
 									<tr>
-										<td align="right" class="titulo1">Fecha:</td>
-										<td align="left" class="subtitulo1"><?php echo $facturas['fecha'];?></td>
-										<td>
-											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										</td>
-										<td>
-											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										</td>
-										<td align="right" class="titulo1">No:</td>
-										<td align="left" class="subtitulo1"><?php echo $facturas['codigo_factura'];?></td>
+										<th rowspan=2 colspan=1></th>
+										<th colspan=2>VERDE</th>
+										<th colspan=2>CRISTALINO</th>
+										<th colspan=2>CAFE</th>
+										<th colspan=2>BRONCE</th>
+										<th colspan=2>REFLECTIVO</th>
+								<th colspan=2>TOTAL</th><!--total por tipo de vidrio-->
 									</tr>
-									<!--------------------------------RECOLECOR---------------------------------->
 									<tr>
-										<td></td>
-										<td align="right" class="titulo1">Recolector:</td>
-										<td align="left" class="subtitulo1"><?php echo $facturas['nombre_recolector'];?></td>
-										<td align="right" class="titulo1">Codigo:</td>
-										<td align="left" class="subtitulo1"><?php echo $facturas['codigo_recolector'];?></td>
-										<td></td>
+										<!--VERDE-->
+										<th>QQ</th>
+										<th>$$</th>
+										<!--CRISTALINO-->
+										<th>QQ</th>
+										<th>$$</th>
+										<!--CAFE-->
+										<th>QQ</th>
+										<th>$$</th>
+										<!--BRONCE-->
+										<th>QQ</th>
+										<th>$$</th>
+										<!--REFLECTIVO-->
+										<th>QQ</th>
+										<th>$$</th>
+										<!--TOTAL-->
+										<th>QQ</th>
+										<th>$$</th>
 									</tr>
-									<!--------------------------------PROVEEDOR---------------------------------->
+								</thead>
+								<tbody>
 									<tr>
-										<td></td>
-										<td align="right" class="titulo1">Proveedor:</td>
-										<td align="left" class="subtitulo1"><?php echo $facturas['nombre_proveedor'];?></td>
-										<td align="right" class="titulo1">Codigo:</td>
-										<td align="left" class="subtitulo1"><?php echo $facturas['codigo_proveedor'];?></td>
-										<td></td>
-									</tr>
-									<!--------------------------------SUCURSAL----------------------------------->
-									<tr>
-										<td></td>
-										<td align="right" class="titulo1">Sucursal:</td>
-										<td align="left" class="subtitulo1"><?php echo $facturas['sucursal'];?></td>
-										<td></td>
-										<td></td>
-										<td></td>
-									</tr>
-									<!--------------------------------------------------------------------------->
-								</table>
-								<!---->
-								<table align="center" border class="rejilla" width="60%">
-									<caption><h1></h1></caption>
-									<thead class="titulo2">
-										<tr>
-											<th rowspan=2 colspan=1></th>
-											<th colspan=2>VERDE</th>
-											<th colspan=2>CRISTALINO</th>
-											<th colspan=2>CAFE</th>
-											<th colspan=2>BRONCE</th>
-											<th colspan=2>REFLECTIVO</th>
-									<th colspan=2>TOTAL</th><!--total por tipo de vidrio-->
-										</tr>
-										<tr>
-											<!--VERDE-->
-											<th>QQ</th>
-											<th>$$</th>
-											<!--CRISTALINO-->
-											<th>QQ</th>
-											<th>$$</th>
-											<!--CAFE-->
-											<th>QQ</th>
-											<th>$$</th>
-											<!--BRONCE-->
-											<th>QQ</th>
-											<th>$$</th>
-											<!--REFLECTIVO-->
-											<th>QQ</th>
-											<th>$$</th>
-											<!--TOTAL-->
-											<th>QQ</th>
-											<th>$$</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<th class="titulo2">BOTELLA</th>
-											<?php
-											$Compra = calcularSumaVidrio($factura);
-											$Totales = calcularSumaTotales($Compra);
-											for($i=1; $i<=5; $i++){
-												for($j=1; $j<=2; $j++){
-													if($Compra[$i][$j] <> 0){
-											?>
-											<td><input class="fondo1" type="text" size="4" readonly value="<?php printf("%.2f",$Compra[$i][$j]);?>"></td>
-											<?php
-													}
-													else{
-											?>
-											<td class="subtitulo1"><input class="fondo1" type="text" size="4" readonly></td>
-											<?php
-													}
+										<th class="titulo2">BOTELLA</th>
+										<?php
+										$Compra = calcularSumaVidrio($factura);
+										$Totales = calcularSumaTotales($Compra);
+										for($i=1; $i<=5; $i++){
+											for($j=1; $j<=2; $j++){
+												if($Compra[$i][$j] <> 0){
+										?>
+										<td><input class="fondo1" type="text" size="4" readonly value="<?php printf("%.2f",$Compra[$i][$j]);?>"></td>
+										<?php
+												}
+												else{
+										?>
+										<td class="subtitulo1"><input class="fondo1" type="text" size="4" readonly></td>
+										<?php
 												}
 											}
-											if($Totales[1] <> 0 && $Totales[2] <> 0){
-											?>
-											<td><input class="fondo1" type="text" size=3 readonly value="<?php printf("%.2f",$Totales[1]);?>"></td><!--total por tipo de vidrio-->
-											<td><input class="fondo1" type="text" size=3 readonly value="<?php printf("%.2f",$Totales[2]);?>"></td><!--total por tipo de vidrio-->
-											<?php
-											}
-											else{
-											?>
-											<td><input class="fondo1" type="text" size="4" readonly></td>
-											<td><input class="fondo1" type="text" size="4" readonly></td>
-											<?php
-											}
-											?>
-										</tr>
-										<tr>
-											<th class="titulo2">PLANO</th>
-											<?php
-											for($i=6; $i<=10; $i++){
-												for($j=1; $j<=2; $j++){
-													if($Compra[$i][$j] <> 0){
-											?>
-											<td><input class="fondo1" type="text" size="4" readonly value="<?php printf("%.2f",$Compra[$i][$j]);?>"></td>
-											<?php
-													}
-													else{
-											?>
-											<td class="subtitulo1"><input class="fondo1" type="text" size="4" readonly></td>
-											<?php
-													}
+										}
+										if($Totales[1] <> 0 && $Totales[2] <> 0){
+										?>
+										<td><input class="fondo1" type="text" size=3 readonly value="<?php printf("%.2f",$Totales[1]);?>"></td><!--total por tipo de vidrio-->
+										<td><input class="fondo1" type="text" size=3 readonly value="<?php printf("%.2f",$Totales[2]);?>"></td><!--total por tipo de vidrio-->
+										<?php
+										}
+										else{
+										?>
+										<td><input class="fondo1" type="text" size="4" readonly></td>
+										<td><input class="fondo1" type="text" size="4" readonly></td>
+										<?php
+										}
+										?>
+									</tr>
+									<tr>
+										<th class="titulo2">PLANO</th>
+										<?php
+										for($i=6; $i<=10; $i++){
+											for($j=1; $j<=2; $j++){
+												if($Compra[$i][$j] <> 0){
+										?>
+										<td><input class="fondo1" type="text" size="4" readonly value="<?php printf("%.2f",$Compra[$i][$j]);?>"></td>
+										<?php
+												}
+												else{
+										?>
+										<td class="subtitulo1"><input class="fondo1" type="text" size="4" readonly></td>
+										<?php
 												}
 											}
-											if($Totales[3] <> 0 && $Totales[4] <> 0){
-											?>
-											<td><input class="fondo1" type="text" size=3 readonly value="<?php printf("%.2f",$Totales[3]);?>"></td><!--total por tipo de vidrio-->
-											<td><input class="fondo1" type="text" size=3 readonly value="<?php printf("%.2f",$Totales[4]);?>"></td><!--total por tipo de vidrio-->
-											<?php
-											}
-											else{
-											?>
-											<td><input class="fondo1" type="text" size="4" readonly></td>
-											<td><input class="fondo1" type="text" size="4" readonly></td>
-											<?php
-											}
-											?>
-										</tr>
-									</tbody>
-								</table>
+										}
+										if($Totales[3] <> 0 && $Totales[4] <> 0){
+										?>
+										<td><input class="fondo1" type="text" size=3 readonly value="<?php printf("%.2f",$Totales[3]);?>"></td><!--total por tipo de vidrio-->
+										<td><input class="fondo1" type="text" size=3 readonly value="<?php printf("%.2f",$Totales[4]);?>"></td><!--total por tipo de vidrio-->
+										<?php
+										}
+										else{
+										?>
+										<td><input class="fondo1" type="text" size="4" readonly></td>
+										<td><input class="fondo1" type="text" size="4" readonly></td>
+										<?php
+										}
+										?>
+									</tr>
+								</tbody>
+							</table>
 							</td>
 						</tr>
+						<!-----------------------------SUCURSAL Y CA--------------------------------->
+						<tr>
+							<td>&nbsp;</td>
+							<td align="center" colspan="4">
+								<span class="titulo1">Sucursal:</span>
+								<span class="subtitulo1"><?php echo $facturas['sucursal'];?></span>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<span class="titulo1">Centro de Acopio:</span>
+								<span class="subtitulo1"><?php echo $facturas['nombre_centro_acopio'];?></span>
+							</td>
+						</tr>
+					</td>
+					</tr>
 					</table>
 					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 					<span id="toolTipBox" width="50"></span>

@@ -9,7 +9,7 @@ facturas.fecha,
 centros_de_acopio.departamento,
 proveedores.nombre_proveedor,
 vidrio.cantidad_vidrio,
-vidrio.precio
+vidrio.precio_vidrio
 FROM
 facturas,
 vidrio,

@@ -15,7 +15,7 @@ if($ano=="" || $recolector=="" || $mostrar=='' || $vidrio=='') header("Location:
 
 //PARA ASIGNARLE VALORES A LA CONSULTA
 if($mostrar == "VIDRIO"){$valor = "cantidad_vidrio"; $titulo = "CANTIDAD (Quintales)";}
-if($mostrar == "MONTO"){$valor = "precio"; $titulo = "CANTIDAD ($)";}
+if($mostrar == "MONTO"){$valor = "precio_vidrio"; $titulo = "CANTIDAD ($)";}
 if($vidrio == "BOTELLA") $tipo='TV-01';
 if($vidrio == "PLANO") $tipo='TV-02';
 
@@ -28,7 +28,7 @@ $intruccion_vidrio = "
 SELECT
 DISTINCT MONTH(facturas.fecha) AS mes,
 vidrio.cantidad_vidrio,
-vidrio.precio
+vidrio.precio_vidrio
 FROM vidrio, facturas, recolectores
 WHERE recolectores.nombre_recolector = '$recolector'
 AND facturas.codigo_recolector = recolectores.codigo_recolector

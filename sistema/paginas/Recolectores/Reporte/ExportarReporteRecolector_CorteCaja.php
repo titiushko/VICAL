@@ -3,9 +3,9 @@ include "../../../loggin/BloqueSeguridad.php";
 include "../../../loggin/AccesoAdministrador.php";
 include "../../../librerias/abrir_conexion.php";
 include "../../../librerias/funciones.php";
-
-$nombre_recolector 	= $_REQUEST['valor_nombre_recolector'];
-$top				= $_SESSION["cuenta_compras"];
+$nombre_recolector 		= $_REQUEST['valor_nombre_recolector'];
+$nombre_centro_acopio 	= $_REQUEST['valor_nombre_centro_acopio'];
+$top					= $_SESSION["cuenta_compras"];
 
 $instruccion_select = "
 SELECT codigo_recolector, nombre_recolector, dui_recolector, nit_recolector, direccion_recolector, telefono_recolector
@@ -42,7 +42,7 @@ for($j=1; $j<=5; $j++)
 	if($coloresVidrioComprado[$j] != ''){
 		$COLORES = $COLORES.$coloresVidrioComprado[$j];
 		if($j < 5)
-			if($coloresVidrioComprado[$j+1] != '')
+			//if($coloresVidrioComprado[$j+1] != '')
 				$COLORES = $COLORES.", ";
 	}
 
@@ -104,7 +104,7 @@ header("Content-Disposition: attachment; filename=HOJA_DE_FLETE_PARA_".strtouppe
 								)<br>
 								EN CONCEPTO DE CANCELACON DE TRANSPORTE DE DERECHOS DE VIDRIO<br>
 								PROCEDENTES DE PROVEEDORES, A CENTROS DE ACOPIO DE:<br>
-								<b><?php echo "Aragua";?></b>&nbsp;
+								<b><?php echo $nombre_centro_acopio;?></b>&nbsp;
 								COLOR&nbsp;
 								<b><?php echo $COLORES;?></b><br>
 								POR LA CANTIDAD DE:&nbsp;

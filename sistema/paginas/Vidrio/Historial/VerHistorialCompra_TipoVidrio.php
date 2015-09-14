@@ -21,7 +21,7 @@ SELECT
 YEAR(fecha) AS ano,
 MONTH(fecha) AS mes,
 vidrio.cantidad_vidrio,
-vidrio.precio
+vidrio.precio_vidrio
 FROM facturas, vidrio
 WHERE facturas.codigo_factura = vidrio.codigo_factura
 AND vidrio.codigo_tipo = '$tipo'

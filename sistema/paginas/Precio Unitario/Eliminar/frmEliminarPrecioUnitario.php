@@ -2,11 +2,11 @@
 include "../../../loggin/BloqueSeguridad.php";
 include "../../../loggin/AccesoAdministrador.php";
 include "../../../librerias/abrir_conexion.php";
-$id = $_REQUEST['eliminar_usuario'];
-$instruccion_select = "SELECT id, nombre, usuario, password, nivel FROM usuarios WHERE id = '$id'";
-$consulta_usuario = mysql_query($instruccion_select, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_usuario!!</SPAN>".mysql_error());
-$usuarios = mysql_fetch_array($consulta_usuario);
-$tipos_usuarios = array(1=>"Administrador",2=>"Contador",3=>"Recolector");
+$codigo_precio = $_REQUEST['eliminar_precio'];
+
+$instruccion_select = "SELECT precio_unitario FROM precios WHERE codigo_precio = '$codigo_precio'";
+$consulta_precio = mysql_query($instruccion_select, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_precio!!</SPAN>".mysql_error());
+$precio = mysql_fetch_array($consulta_precio);
 ?>
 <!----------------------------------------------------------------------------------------------------------------->
 <HTML>
@@ -29,43 +29,30 @@ $tipos_usuarios = array(1=>"Administrador",2=>"Contador",3=>"Recolector");
 			<tr>
 				<td align="center">
 					<img src="../../../imagenes/vical.png" width="25%" height="25%">
-					<h1 class="encabezado1">ELIMINAR USUARIO</h1>
+					<h1 class="encabezado1">ELIMINAR PRECIO UNITARIO</h1>
 					<h2 class="encabezado2">
 						<img src="../../../imagenes/icono_alerta.png">
 						<br>
-						REALMENTE DESEA ELIMINAR EL USUARIO!!
+						REALMENTE DESEA ELIMINAR EL PRECIO UNITARIO!!
 					</h2>
 				</td>
 			</tr>
 <!------------------------------------------------------------------------------------------------------------------------>
 			<tr>
 				<td align="center">
-					<form name="borrar_usuario" <?php echo "action=\"EliminarUsuario.php?codigo=$id\"";?> method="post" enctype="multipart/form-data">
+					<form name="borrar_tipo_empresa" <?php echo "action=\"EliminarPrecioUnitario.php?codigo_precio=$codigo_precio\"";?> method="post" enctype="multipart/form-data">
 					<table align="center" class="alerta error centro">
-						<!------------------------------------------------------------------------>
 						<tr>
-							<td align="right"><b>Nombre Completo:</b></td>
-							<td><?php echo $usuarios["nombre"]; ?></td>
+							<td align="right"><b>Precio Unitario:</b></td>
+							<td align="left">						
+								<input name="codigo_precio" class="oculto" value="<?php echo $codigo_precio;?>" type="text">
+								<input name="precio_unitario" class="subtitulo1 fondo2 error" readonly value="<?php echo "$".number_format($precio['precio_unitario'],2,'.',',');?>" type="text" size=4 maxLength=4>&nbsp;&nbsp;&nbsp;&nbsp;
+							</td>
 						</tr>
-						<tr>
-							<td align="right"><b>Nombre de Usuario:</b></td>
-							<td><?php echo $usuarios["usuario"]; ?></td>
-						</tr>
-						<!------------------------------------------------------------------------>
-						<tr>
-							<td align="right"><b>Contrase&ntilde;a:</b></td>
-							<td><input class="subtitulo1 fondo2 error" type="password" readonly value="<?php echo $usuarios['password'];?>"></td>
-						</tr>
-						<!------------------------------------------------------------------------>
-						<tr>
-							<td align="right"><b>Tipo de Usuario:</b></td>
-							<td><?php echo $tipos_usuarios[$usuarios["nivel"]]; ?></td>
-						</tr>
-						<!------------------------------------------------------------------------>
 					</table>
 					<!------------------------------------------------------------------------>
 					<input name="Eliminar" type="submit" value="Eliminar" onMouseOver="toolTip('Aceptar',this)" class="boton aceptar">
-					<input type="button" onMouseOver="toolTip('Cancelar',this)" class="boton cancelar" onClick="redireccionar('../Consultar/frmConsultarUsuario.php')">
+					<input type="button" onMouseOver="toolTip('Cancelar',this)" class="boton cancelar" onClick="redireccionar('../Consultar/frmConsultarPrecioUnitario.php')">
 					<!------------------------------------------------------------------------>
 					</form>
 					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->

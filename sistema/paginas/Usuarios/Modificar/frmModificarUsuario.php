@@ -96,7 +96,7 @@ $tipos_usuarios = array(1=>"Administrador",2=>"Contador",3=>"Recolector");
 					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 					<!------------------------------------------------------------------------>
 					<input name="Modificar" type="submit" value="Modificar" onMouseOver="toolTip('Modificar',this)" class="boton aceptar">
-					<input type="button" onMouseOver="toolTip('Cancelar',this)" class="boton cancelar" <?php echo "onClick=\"redireccionar('../Consultar/frmConsultarUsuario.php?valor=$id')\"";?>>
+					<input type="button" onMouseOver="toolTip('Cancelar',this)" class="boton cancelar" onClick="redireccionar('../Consultar/frmConsultarUsuario.php')">
 					<!------------------------------------------------------------------------>
 					</form>
 					<center>

@@ -42,6 +42,7 @@ $consulta_centros_de_acopio = mysql_query($instruccion_select, $conexion) or die
 				L8: 'La Libertad',	L9: 'Chalatenango',	L10: 'Cuscatlan',	L11: 'San Salvador',	L12: 'La Paz',	L13: 'Caba&ntilde;as',	L14: 'San Vicente'
 			}
 		</script>
+		<style>.tinytable{width: 80%;}</style>
 	</head>
 	<BODY class="cuerpo1">
 		<table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -92,12 +93,12 @@ $consulta_centros_de_acopio = mysql_query($instruccion_select, $conexion) or die
 								<table cellpadding="0" cellspacing="0" id="table" class="tinytable">
 									<thead class="titulo1">
 										<tr>
-											<th onMouseOver="toolTip('Ordenar por codigo',this)"><h3>Codigo</h3></th>
-											<th onMouseOver="toolTip('Ordenar por nombre',this)"><h3>Nombre</h3></th>
-											<th onMouseOver="toolTip('Ordenar por departamento',this)"><h3>Departamento</h3></th>
-											<th onMouseOver="toolTip('Ordenar por encargado',this)"><h3>Encargado</h3></th>
+											<th onMouseOver="toolTip('Ordenar por codigo',this)" width="120"><h3>Codigo</h3></th>
+											<th onMouseOver="toolTip('Ordenar por nombre',this)" width="280"><h3>Nombre</h3></th>
+											<th onMouseOver="toolTip('Ordenar por departamento',this)" width="180"><h3>Departamento</h3></th>
+											<th onMouseOver="toolTip('Ordenar por encargado',this)" width="280"><h3>Encargado</h3></th>
 											<?php if($_SESSION["tipo_usuario"] == "1"){ ?>
-											<th class="nosort"><h3></h3></th>
+											<th class="nosort" width="100"><h3></h3></th>
 											<?php } ?>
 										</tr>
 									</thead>

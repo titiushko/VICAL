@@ -43,7 +43,7 @@
 									<tr>
 										<td align="right" class="titulo1" style="vertical-align:text-top;">Nombre de Usuario:</td>
 										<td align="justify" class="subtitulo1">
-											En este campo asigne el nombre de &uacute;nico de usuario o identificador que tendra el nuevo usuario para conectarce a su sesion. Ejemplo: <i>afernandez</i> &oacute; <i>alfredo</i> &oacute; <i>fernandez</i>, etc.<br>
+											En este campo asigne el nombre de &uacute;nico de usuario o identificador (alias) que tendra el nuevo usuario para conectarce a su sesion. Ejemplo: <i>afernandez</i> &oacute; <i>alfredo</i> &oacute; <i>fernandez</i>, etc.<br>
 											El campo nombre de usuario es obligatorio.
 											<hr>
 										</td>

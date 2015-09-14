@@ -2,6 +2,7 @@
 include "../../../loggin/BloqueSeguridad.php";
 include "../../../loggin/AccesoAdministrador.php";
 include "../../../librerias/abrir_conexion.php";
+include "../../../librerias/funciones.php";
 
 $tipo_eliminar1 		= $_GET['tipo1'];
 $tipo_eliminar2 		= $_GET['tipo2'];
@@ -50,53 +51,17 @@ AND facturas.codigo_recolector = recolectores.codigo_recolector";
 if($tipo_eliminar1 == 1 && $tipo_eliminar2 == 2){
 	$consulta_factura = mysql_query($instruccion_factura, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_factura!! </SPAN>".mysql_error());	
 	while($facturas = mysql_fetch_array($consulta_factura)){
-		$codigo_factura = $facturas['codigo_factura'];
-		
-		//buscar con el codigo de factura en la tabla vidrios el codigo del vidrio del registro que se va eliminar de la tabla vidrios
-		$instruccion_vidrio = "
-		SELECT vidrio.codigo_vidrio, facturas.codigo_factura
-		FROM vidrio, facturas
-		WHERE vidrio.codigo_factura = '$codigo_factura'
-		AND facturas.codigo_factura = vidrio.codigo_factura";
-		$consultar_vidrio = mysql_query($instruccion_vidrio, $conexion) or die ("<SPAN CLASS='error'>Fallo consultar_vidrio!! </SPAN>".mysql_error());
-		
-		while($vidrios = mysql_fetch_array($consultar_vidrio)){		
-			$codigo_vidrio = $vidrios['codigo_vidrio'];
-			
-			//eliminar el registro de la tabla vidrios con el codigo del vidrio que se acaba de encontrar
-			$instruccion_delete = "DELETE FROM vidrio WHERE codigo_vidrio = '$codigo_vidrio'";
-			mysql_query($instruccion_delete, $conexion) or die ("<SPAN CLASS='error'>Fallo eliminar_vidrio!! </SPAN>".mysql_error());
-		}
-		
-		//buscar con el codigo de factura en la tabla compras el codigo de la compra del registro que se va eliminar de la tabla compras
-		$instruccion_compra = "
-		SELECT compras.codigo_compra, facturas.codigo_factura
-		FROM compras, facturas
-		WHERE compras.codigo_factura = '$codigo_factura'
-		AND facturas.codigo_factura = compras.codigo_factura";
-		$consultar_compra = mysql_query($instruccion_compra, $conexion) or die ("<SPAN CLASS='error'>Fallo consultar_compra!! </SPAN>".mysql_error());
-		
-		while($compras = mysql_fetch_array($consultar_compra)){		
-			$codigo_compra = $compras['codigo_compra'];
-			
-			//eliminar el registro de la tabla compras con el codigo del compra que se acaba de encontrar
-			$instruccion_delete = "DELETE FROM compras WHERE codigo_compra = '$codigo_compra'";
-			mysql_query($instruccion_delete, $conexion) or die ("<SPAN CLASS='error'>Fallo eliminar_compra!! </SPAN>".mysql_error());
-		}
-	
+		eliminarVidrios_y_Compras($facturas['codigo_factura']);	
 	}
 	
 	//eliminar el registro de la tabla facturas con el codigo del recolector que se va eliminar
 	$instruccion_delete = "DELETE FROM facturas WHERE codigo_recolector = '$codigo_recolector'";
 	mysql_query($instruccion_delete, $conexion) or die ("<SPAN CLASS='error'>Fallo eliminar_factura!! </SPAN>".mysql_error());
 	
+	//actualiza el registro de la tabla centros de acopio con el codigo del centro de acopio que se acaba de encontrar
 	$consulta_centro_de_acopio = mysql_query($instruccion_centro_de_acopio, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_centro_de_acopio!!</SPAN>".mysql_error());
 	while($centros_de_acopio = mysql_fetch_assoc($consulta_centro_de_acopio)){
-		$centro_acopio = $centros_de_acopio['codigo_centro_acopio'];
-		
-		//actualiza el registro de la tabla centros de acopio con el codigo del centro de acopio que se acaba de encontrar
-		$instruccion_update = "UPDATE centros_de_acopio SET codigo_recolector = '$nuevo_recolector' WHERE codigo_centro_acopio = '$centro_acopio'";
-		mysql_query($instruccion_update, $conexion) or die ("<SPAN CLASS='error'>Fallo actualizar_centro_de_acopio!! </SPAN>".mysql_error());
+		actualizarCentrosAcopio($centros_de_acopio['codigo_centro_acopio'],$nuevo_recolector);
 	}
 }
 
@@ -104,40 +69,7 @@ if($tipo_eliminar1 == 1 && $tipo_eliminar2 == 2){
 if($tipo_eliminar1 == 1){
 	$consulta_factura = mysql_query($instruccion_factura, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_factura!! </SPAN>".mysql_error());	
 	while($facturas = mysql_fetch_array($consulta_factura)){
-		$codigo_factura = $facturas['codigo_factura'];
-		
-		//buscar con el codigo de factura en la tabla vidrios el codigo del vidrio del registro que se va eliminar de la tabla vidrios
-		$instruccion_vidrio = "
-		SELECT vidrio.codigo_vidrio, facturas.codigo_factura
-		FROM vidrio, facturas
-		WHERE vidrio.codigo_factura = '$codigo_factura'
-		AND facturas.codigo_factura = vidrio.codigo_factura";
-		$consultar_vidrio = mysql_query($instruccion_vidrio, $conexion) or die ("<SPAN CLASS='error'>Fallo consultar_vidrio!! </SPAN>".mysql_error());
-		
-		while($vidrios = mysql_fetch_array($consultar_vidrio)){		
-			$codigo_vidrio = $vidrios['codigo_vidrio'];
-			
-			//eliminar el registro de la tabla vidrios con el codigo del vidrio que se acaba de encontrar
-			$instruccion_delete = "DELETE FROM vidrio WHERE codigo_vidrio = '$codigo_vidrio'";
-			mysql_query($instruccion_delete, $conexion) or die ("<SPAN CLASS='error'>Fallo eliminar_vidrio!! </SPAN>".mysql_error());
-		}
-		
-		//buscar con el codigo de factura en la tabla compras el codigo de la compra del registro que se va eliminar de la tabla compras
-		$instruccion_compra = "
-		SELECT compras.codigo_compra, facturas.codigo_factura
-		FROM compras, facturas
-		WHERE compras.codigo_factura = '$codigo_factura'
-		AND facturas.codigo_factura = compras.codigo_factura";
-		$consultar_compra = mysql_query($instruccion_compra, $conexion) or die ("<SPAN CLASS='error'>Fallo consultar_compra!! </SPAN>".mysql_error());
-		
-		while($compras = mysql_fetch_array($consultar_compra)){		
-			$codigo_compra = $compras['codigo_compra'];
-			
-			//eliminar el registro de la tabla compras con el codigo del compra que se acaba de encontrar
-			$instruccion_delete = "DELETE FROM compras WHERE codigo_compra = '$codigo_compra'";
-			mysql_query($instruccion_delete, $conexion) or die ("<SPAN CLASS='error'>Fallo eliminar_compra!! </SPAN>".mysql_error());
-		}
-	
+		eliminarVidrios_y_Compras($facturas['codigo_factura']);
 	}
 	
 	//eliminar el registro de la tabla facturas con el codigo del recolector que se va eliminar
@@ -147,14 +79,11 @@ if($tipo_eliminar1 == 1){
 
 /*eliminar centros de acopio*/
 if($tipo_eliminar2 == 2){
+	//actualiza el registro de la tabla centros de acopio con el codigo del centro de acopio que se acaba de encontrar
 	$consulta_centro_de_acopio = mysql_query($instruccion_centro_de_acopio, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_centro_de_acopio!!</SPAN>".mysql_error());
 	while($centros_de_acopio = mysql_fetch_assoc($consulta_centro_de_acopio)){
-		$centro_acopio = $centros_de_acopio['codigo_centro_acopio'];
-		
-		//actualiza el registro de la tabla centros de acopio con el codigo del centro de acopio que se acaba de encontrar
-		$instruccion_update = "UPDATE centros_de_acopio SET codigo_recolector = '$nuevo_recolector' WHERE codigo_centro_acopio = '$centro_acopio'";
-		mysql_query($instruccion_update, $conexion) or die ("<SPAN CLASS='error'>Fallo actualizar_centro_de_acopio!! </SPAN>".mysql_error());
-	}	
+		actualizarCentrosAcopio($centros_de_acopio['codigo_centro_acopio'],$nuevo_recolector);
+	}
 }
 
 //eliminar el registro de la tabla recolectores con el codigo del recolector que se va eliminar
@@ -254,7 +183,7 @@ mysql_query($instruccion_delete, $conexion) or die ("<SPAN CLASS='error'>Fallo e
 								<?php
 								$consulta = mysql_query("SELECT nombre_recolector FROM recolectores WHERE codigo_recolector = '$nuevo_recolector'",$conexion) or die ("<SPAN CLASS='error'>Fallo en la consulta!!</SPAN>".mysql_error());
 								$opciones = mysql_fetch_array($consulta);
-								echo "Se reasigno a ".$opciones [0]." como encargado ";
+								echo "Se transfirio a ".$opciones [0]." como encargado ";
 								if($recolectores["cantidad_centros_acopio"] > 1) echo "de los Centros de Acopio.";
 								else echo "del Centros de Acopio.";
 								?>
