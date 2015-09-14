@@ -8,6 +8,8 @@ if (!isset($_SESSION["cuenta_compras"])){
 }
 
 $nombre_recolector = $_REQUEST['valor_nombre_recolector'];
+
+date_default_timezone_set('America/El_Salvador');
 ?>
 <HTML>
 	<head>
@@ -49,6 +51,26 @@ $nombre_recolector = $_REQUEST['valor_nombre_recolector'];
 				$contador++;
 			}
 			?>
+			//vector con los recolectores
+			var recolectores = new Array;
+			<?php
+			$consulta = mysql_query("SELECT codigo_recolector, nombre_recolector FROM recolectores ORDER BY codigo_recolector ASC",$conexion) or die ("<SPAN CLASS='error'>Fallo en recolectores!!</SPAN>".mysql_error());
+			$contador = 0;
+			while($opciones = mysql_fetch_array($consulta)){
+				echo "recolectores[$contador] = new Array ('".$opciones[0]."','".$opciones[1]."');";
+				$contador++;
+			}
+			?>
+			//vectores con los proveedores
+			var proveedores = new Array;
+			<?php
+			$consulta = mysql_query("SELECT codigo_proveedor, nombre_proveedor FROM proveedores ORDER BY codigo_proveedor ASC",$conexion) or die ("<SPAN CLASS='error'>Fallo en proveedores!!</SPAN>".mysql_error());
+			$contador = 0;
+			while($opciones = mysql_fetch_array($consulta)){
+				echo "proveedores[$contador] = new Array ('".$opciones[0]."','".$opciones[1]."');";
+				$contador++;
+			}
+			?>
 		</script>
 	</head>
 	<BODY class="cuerpo1">
@@ -69,8 +91,8 @@ $nombre_recolector = $_REQUEST['valor_nombre_recolector'];
 						<tr>
 							<td align="right"><span class="titulo1">Fecha:</span></td>
 							<td align="left">						
-								<input name="fecha" id="id1" class="requerido" type="text" size=7 readonly value="<?php echo date("Y-m-d");?>" onBlur="borrarMensaje(9), elementosVacios(7);" onClick="borrarMensaje(9), elementosVacios(7);">
-								<img src="../../../imagenes/icono_calendario.png" onMouseOver="toolTip('Calendario',this)" onClick="displayCalendar(document.formulario.fecha,'yyyy-mm-dd',this),borrarMensaje(9), elementosVacios(7);" class="manita">
+								<input name="fecha" id="id1" class="requerido" type="text" size=7 readonly value="<?php echo date("Y-m-d");?>" onBlur="borrarMensaje(9), elementosVacios(10);" onClick="borrarMensaje(9), elementosVacios(10);">
+								<img src="../../../imagenes/icono_calendario.png" onMouseOver="toolTip('Calendario',this)" onClick="displayCalendar(document.formulario.fecha,'yyyy-mm-dd',this),borrarMensaje(9), elementosVacios(10);" class="manita">
 								<span class="obligatorio">*</span>
 							</td>
 							<td>&nbsp;</td>
@@ -78,7 +100,7 @@ $nombre_recolector = $_REQUEST['valor_nombre_recolector'];
 								<span class="titulo1">No:</span>
 							</td>
 							<td align="left">
-								<input name="factura" id="id2" class="requerido" type="text" maxLength=4 size=1 onKeyPress="return soloNumeros(event)" onBlur="borrarMensaje(9), elementosVacios(7);" onClick="borrarMensaje(9), elementosVacios(7);">
+								<input name="factura" id="id2" class="requerido" type="text" maxLength=4 size=1 onKeyPress="return soloNumeros(event)" onBlur="borrarMensaje(9), elementosVacios(10);" onClick="borrarMensaje(9), elementosVacios(10);">
 								<span class="obligatorio">*</span>
 							</td>
 						</tr>
@@ -89,21 +111,28 @@ $nombre_recolector = $_REQUEST['valor_nombre_recolector'];
 								<img src="../../../imagenes/icono_agregar.png" width="20" height="20" align="top" onMouseOver="toolTip('Nuevo Recolector',this)" onClick="redireccionar('../../Recolectores/Nuevo/frmNuevoRecolector.php')" class="manita">
 								Recolector:
 							</td>
-							<td align="left">
 							<?php
 							if($nombre_recolector == 'nueva_compra'){
 							?>
-								<select name="codigo_recolector" id="id3" class="requerido lista nombre" size="1" onBlur="borrarMensaje(9), elementosVacios(7);" onClick="borrarMensaje(9), elementosVacios(7);">
+							<td align="left">
+								<select name="nombre_recolector" id="id3" class="requerido lista nombre" size="1" onBlur="borrarMensaje(9), elementosVacios(10);" onClick="borrarMensaje(9), elementosVacios(10);">
 									<option selected value="">.:Recolectores:.</option>
 									<?php
-									$instruccion_recolector = "SELECT codigo_recolector, nombre_recolector FROM recolectores ORDER BY nombre_recolector ASC";
+									$instruccion_recolector = "SELECT nombre_recolector FROM recolectores ORDER BY nombre_recolector ASC";
 									$consulta_recolector = mysql_query($instruccion_recolector,$conexion) or die ("<SPAN CLASS='error'>Fallo en la consulta_recolector!!</SPAN>".mysql_error());
 									while($nombres_recolectores = mysql_fetch_array($consulta_recolector)){
-										echo "<option value=\"".$nombres_recolectores[0]."\">".$nombres_recolectores[1]."</option>";												
+										echo "<option onClick=\"ponerCodRecolector(this.form);\">".$nombres_recolectores[0]."</option>";												
 									}
 									?>
 								</select>
 								<span class="obligatorio">*</span>
+							</td>
+							<td align="right" class="titulo1">
+								Codigo:
+							</td>
+							<td align="left">
+								<input name="codigo_recolector" id="id4" class="requerido lista codigo" readonly onBlur="borrarMensaje(9), elementosVacios(10);" onClick="borrarMensaje(9), elementosVacios(10);">
+							</td>
 							<?php
 							}
 							else{
@@ -111,35 +140,47 @@ $nombre_recolector = $_REQUEST['valor_nombre_recolector'];
 							$consulta_recolector = mysql_query($instruccion_recolector,$conexion) or die ("<SPAN CLASS='error'>Fallo en la consulta_recolector!!</SPAN>".mysql_error());
 							$codigo_recolector = mysql_fetch_array($consulta_recolector);
 							?>
-								<input name="nombre_recolector" id="id3" class="requerido lista nombre" readonly value="<?php echo $nombre_recolector;?>" onBlur="borrarMensaje(9), elementosVacios(7);" onClick="borrarMensaje(9), elementosVacios(7);">
-								<input name="codigo_recolector" class="oculto" value="<?php echo $codigo_recolector[0];?>">
+							<td align="left">
+								<input name="nombre_recolector" id="id3" class="requerido lista nombre" readonly value="<?php echo $nombre_recolector;?>" onBlur="borrarMensaje(9), elementosVacios(10);" onClick="borrarMensaje(9), elementosVacios(10);">
+							</td>
+							<td align="right" class="titulo1">
+								Codigo:
+							</td>
+							<td align="left">
+								<input name="codigo_recolector" id="id4" class="requerido lista codigo" readonly value="<?php echo $codigo_recolector[0];?>" onBlur="borrarMensaje(9), elementosVacios(10);" onClick="borrarMensaje(9), elementosVacios(10);">
+							</td>
 							<?php
 							}
 							?>
-							</td>
-							<td colspan="3">&nbsp;</td>
+							<td>&nbsp;</td>
 						</tr>
 						<!--------------------------------PROVEEDOR---------------------------------->
 						<tr>
 							<td>&nbsp;</td>
 							<td align="right" class="titulo1">
-								<img src="../../../imagenes/icono_agregar.png" width="20" height="20" align="top" onMouseOver="toolTip('Nuevo Proveedor',this)" onClick="redireccionar('../../Proveedores/Nuevo/frmNuevoProveedor.php')" class="manita">&nbsp;
+								<img src="../../../imagenes/icono_agregar.png" width="20" height="20" align="top" onMouseOver="toolTip('Nuevo proveedor',this)" onClick="redireccionar('../../proveedores/Nuevo/frmNuevoproveedor.php')" class="manita">
 								Proveedor:
 							</td>
 							<td align="left">
-								<select name="codigo_proveedor" id="id4" class="requerido lista nombre" size="1" onBlur="borrarMensaje(9), elementosVacios(7);" onClick="borrarMensaje(9), elementosVacios(7);">
+								<select name="nombre_proveedor" id="id5" class="requerido lista nombre" size="1" onBlur="borrarMensaje(9), elementosVacios(10);" onClick="borrarMensaje(9), elementosVacios(10);">
 									<option selected value="">.:Proveedores:.</option>
 									<?php
-									$instruccion_proveedor = "SELECT codigo_proveedor, nombre_proveedor FROM proveedores ORDER BY nombre_proveedor ASC";
+									$instruccion_proveedor = "SELECT nombre_proveedor FROM proveedores ORDER BY nombre_proveedor ASC";
 									$consulta_proveedor = mysql_query($instruccion_proveedor,$conexion) or die ("<SPAN CLASS='error'>Fallo en la consulta_proveedor!!</SPAN>".mysql_error());
 									while($nombres_proveedores = mysql_fetch_array($consulta_proveedor)){
-										echo "<option value=\"".$nombres_proveedores[0]."\">".$nombres_proveedores[1]."</option>";												
+										echo "<option onClick=\"ponerCodProveedor(this.form);\">".$nombres_proveedores[0]."</option>";												
 									}
 									?>
 								</select>
 								<span class="obligatorio">*</span>
 							</td>
-							<td colspan="3">&nbsp;</td>
+							<td align="right" class="titulo1">
+								Codigo:
+							</td>
+							<td align="left">
+								<input name="codigo_proveedor" id="id6" class="requerido lista codigo" readonly onBlur="borrarMensaje(9), elementosVacios(10);" onClick="borrarMensaje(9), elementosVacios(10);">
+							</td>
+							<td>&nbsp;</td>
 						</tr>
 						<!---------------------------------PRECIO------------------------------------>
 						<tr>
@@ -148,7 +189,7 @@ $nombre_recolector = $_REQUEST['valor_nombre_recolector'];
 								Precio:
 							</td>
 							<td align="left">
-								<select name="precio_compra" class="lista opcion" size="1" onBlur="borrarMensaje(9), elementosVacios(7);" onClick="borrarMensaje(9), elementosVacios(7);">
+								<select name="precio_compra" class="lista opcion" size="1" onBlur="borrarMensaje(9), elementosVacios(10);" onClick="borrarMensaje(9), elementosVacios(10);">
 									<?php
 									$consulta_precio = mysql_query("SELECT codigo_precio, precio_unitario FROM precios ORDER BY precio_unitario ASC",$conexion) or die ("<SPAN CLASS='error'>Fallo en la consulta_precio!!</SPAN>".mysql_error());
 									$contador = 0;
@@ -164,25 +205,59 @@ $nombre_recolector = $_REQUEST['valor_nombre_recolector'];
 						<!---------------------------------VIDRIO------------------------------------>
 						<tr>
 							<td colspan="6">
-							<table id="id5" class="requerido" align="center" border bgcolor="white" width="60%">
-								<thead class="titulo2">
+							<table id="id7" class="requerido" align="center" border bgcolor="white" width="60%">
+								<thead id="id_b0" class="titulo2">
 									<tr>
-										<th rowspan=2 colspan=1></th>
+										<th rowspan=2></th>
+										<th colspan=2>CLARO</th>
 										<th colspan=2>VERDE</th>
-										<th colspan=2>CRISTALINO</th>
 										<th colspan=2>CAFE</th>
+										<th colspan=2>TOTAL</th><!--total por tipo de vidrio-->
+									</tr>
+									<tr>
+										<!--CLARO-->
+										<th>QQ</th>
+										<th>$$</th>
+										<!--VERDE-->
+										<th>QQ</th>
+										<th>$$</th>
+										<!--CAFE-->
+										<th>QQ</th>
+										<th>$$</th>
+										<!--TOTAL-->
+										<th>QQ</th>
+										<th>$$</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<th id="id_b1" class="titulo2">BOTELLA</th>
+										<td align="center"><input id="id_b2" name="Bc1" class="compra fondo4" type="text" size=3 onBlur="calcularMonto(), borrarMensaje(9), elementosVacios(10);" onKeyPress="return soloNumerosFloat(event)" onClick="borrarMensaje(9), elementosVacios(10);"><input name="cbc" class="oculto" type="text" size=3></td>
+										<td align="center"><input id="id_b3" name="Bp1" class="subtitulo4 fondo4" type="text" size=3 disabled="disabled"><input name="pbc" class="oculto" type="text" size=3></td>
+										<td align="center"><input id="id_b4" name="Bc2" class="compra fondo4" type="text" size=3 onBlur="calcularMonto();" onKeyPress="return soloNumerosFloat(event)"><input name="cbv" class="oculto" type="text" size=3></td>
+										<td align="center"><input id="id_b5" name="Bp2" class="subtitulo4 fondo4" type="text" size=3 disabled="disabled"><input name="pbv" class="oculto" type="text" size=3></td>
+										<td align="center"><input id="id_b6" name="Bc3" class="compra fondo4" type="text" size=3 onBlur="calcularMonto();" onKeyPress="return soloNumerosFloat(event)"><input name="cbf" class="oculto" type="text" size=3></td>
+										<td align="center"><input id="id_b7" name="Bp3" class="subtitulo4 fondo4" type="text" size=3 disabled="disabled"><input name="pbf" class="oculto" type="text" size=3></td>
+										<td align="center"><input id="id_b8" name="TBc" class="subtitulo4 fondo4" type="text" size=3 disabled="disabled"><input name="cbt" class="oculto" type="text" size=3></td><!--total cantidad botella-->
+										<td align="center"><input id="id_b9" name="TBp" class="subtitulo4 fondo4" type="text" size=3 disabled="disabled"><input name="pbt" class="oculto" type="text" size=3></td><!--total precio botella-->
+									</tr>
+								</tbody>
+							</table>
+							</td>
+						</tr>						
+						<tr>
+							<td colspan="6">
+							<table id="id8" class="requerido" align="center" border bgcolor="white" width="60%">
+								<thead id="id_p0" class="titulo2">
+									<tr>
+										<th rowspan=2></th>
+										<th colspan=2>CLARO</th>
 										<th colspan=2>BRONCE</th>
 										<th colspan=2>REFLECTIVO</th>
 										<th colspan=2>TOTAL</th><!--total por tipo de vidrio-->
 									</tr>
 									<tr>
-										<!--VERDE-->
-										<th>QQ</th>
-										<th>$$</th>
-										<!--CRISTALINO-->
-										<th>QQ</th>
-										<th>$$</th>
-										<!--CAFE-->
+										<!--CLARO-->
 										<th>QQ</th>
 										<th>$$</th>
 										<!--BRONCE-->
@@ -198,34 +273,15 @@ $nombre_recolector = $_REQUEST['valor_nombre_recolector'];
 								</thead>
 								<tbody>
 									<tr>
-										<th class="titulo2">BOTELLA</th>
-										<td><input name="Vc1" class="compra" type="text" size=3 onBlur="calcularMonto(),borrarMensaje(9), elementosVacios(7);" onKeyPress="return soloNumerosFloat(event)" onClick="borrarMensaje(9), elementosVacios(7);"></td>
-										<td><input name="Vp1" type="text" size=3 readonly></td>
-										<td><input name="Vc2" class="compra" type="text" size=3 onBlur="calcularMonto();" onKeyPress="return soloNumerosFloat(event)"></td>
-										<td><input name="Vp2" type="text" size=3 readonly></td>
-										<td><input name="Vc3" class="compra" type="text" size=3 onBlur="calcularMonto();" onKeyPress="return soloNumerosFloat(event)"></td>
-										<td><input name="Vp3" type="text" size=3 readonly></td>
-										<td><input name="Vc4" class="compra" type="text" size=3 onBlur="calcularMonto();" onKeyPress="return soloNumerosFloat(event)"></td>
-										<td><input name="Vp4" type="text" size=3 readonly></td>
-										<td><input name="Vc5" class="compra" type="text" size=3 onBlur="calcularMonto();" onKeyPress="return soloNumerosFloat(event)"></td>
-										<td><input name="Vp5" type="text" size=3 readonly></td>
-										<td><input name="BTo1" type="text" size=3 readonly></td><!--total por tipo de vidrio-->
-										<td><input name="BTo2" type="text" size=3 readonly></td><!--total por tipo de vidrio-->
-									</tr>
-									<tr>
-										<th class="titulo2">PLANO</th>
-										<td><input name="Vc6" class="compra" type="text" size=3 onBlur="calcularMonto();" onKeyPress="return soloNumerosFloat(event)"></td>
-										<td><input name="Vp6" type="text" size=3 readonly></td>
-										<td><input name="Vc7" class="compra" type="text" size=3 onBlur="calcularMonto();" onKeyPress="return soloNumerosFloat(event)"></td>
-										<td><input name="Vp7" type="text" size=3 readonly></td>
-										<td><input name="Vc8" class="compra" type="text" size=3 onBlur="calcularMonto();" onKeyPress="return soloNumerosFloat(event)"></td>
-										<td><input name="Vp8" type="text" size=3 readonly></td>
-										<td><input name="Vc9" class="compra" type="text" size=3 onBlur="calcularMonto();" onKeyPress="return soloNumerosFloat(event)"></td>
-										<td><input name="Vp9" type="text" size=3 readonly></td>
-										<td><input name="Vc10" class="compra" type="text" size=3 onBlur="calcularMonto();" onKeyPress="return soloNumerosFloat(event)"></td>
-										<td><input name="Vp10" type="text" size=3 readonly></td>
-										<td><input name="PTo1" type="text" size=3 readonly></td><!--total por tipo de vidrio-->
-										<td><input name="PTo2" type="text" size=3 readonly></td><!--total por tipo de vidrio-->
+										<th id="id_p1" class="titulo2">PLANO</th>
+										<td align="center"><input id="id_p2" name="Pc1" class="compra fondo4" type="text" size=3 onBlur="calcularMonto();" onKeyPress="return soloNumerosFloat(event)"><input name="cpc" class="oculto" type="text" size=3></td>
+										<td align="center"><input id="id_p3" name="Pp1" class="subtitulo4 fondo4" type="text" size=3 disabled="disabled"><input name="ppc" class="oculto" type="text" size=3></td>
+										<td align="center"><input id="id_p4" name="Pc2" class="compra fondo4" type="text" size=3 onBlur="calcularMonto();" onKeyPress="return soloNumerosFloat(event)"><input name="cpb" class="oculto" type="text" size=3></td>
+										<td align="center"><input id="id_p5" name="Pp2" class="subtitulo4 fondo4" type="text" size=3 disabled="disabled"><input name="ppb" class="oculto" type="text" size=3></td>
+										<td align="center"><input id="id_p6" name="Pc3" class="compra fondo4" type="text" size=3 onBlur="calcularMonto();" onKeyPress="return soloNumerosFloat(event)"><input name="cpr" class="oculto" type="text" size=3></td>
+										<td align="center"><input id="id_p7" name="Pp3" class="subtitulo4 fondo4" type="text" size=3 disabled="disabled"><input name="ppr" class="oculto" type="text" size=3></td>
+										<td align="center"><input id="id_p8" name="TPc" class="subtitulo4 fondo4" type="text" size=3 disabled="disabled"><input name="cpt" class="oculto" type="text" size=3></td><!--total cantidad plano-->
+										<td align="center"><input id="id_p9" name="TPp" class="subtitulo4 fondo4" type="text" size=3 disabled="disabled"><input name="ppt" class="oculto" type="text" size=3></td><!--total precio plano-->
 									</tr>
 								</tbody>
 							</table>
@@ -236,7 +292,7 @@ $nombre_recolector = $_REQUEST['valor_nombre_recolector'];
 							<td>&nbsp;</td>
 							<td align="center" class="titulo1" colspan="4">
 								Sucursal:
-								<select name="sucursal" id="id6" class="requerido lista opcion" size="1" onBlur="borrarMensaje(9), elementosVacios(7);" onClick="borrarMensaje(9), elementosVacios(7);">
+								<select name="sucursal" id="id9" class="requerido lista opcion" size="1" onBlur="borrarMensaje(9), elementosVacios(10);" onClick="borrarMensaje(9), elementosVacios(10);">
 									<option selected value="">.:Opciones:.</option>
 									<option>VICESA</option>
 									<option>VIGUA</option>
@@ -245,7 +301,7 @@ $nombre_recolector = $_REQUEST['valor_nombre_recolector'];
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<img src="../../../imagenes/icono_agregar.png" width="20" height="20" align="top" onMouseOver="toolTip('Nuevo Centro de Acopio',this)" onClick="redireccionar('../../Centros de Acopio/Nuevo/frmNuevoCentroAcopio.php?departamento=dep')" class="manita">
 								Centro de Acopio:
-								<select name="codigo_centro_acopio" id="id7" class="requerido lista" size="1" style="width: 160px;" onBlur="borrarMensaje(9), elementosVacios(7);" onClick="borrarMensaje(9), elementosVacios(7);">
+								<select name="codigo_centro_acopio" id="id10" class="requerido lista" size="1" style="width: 160px;" onBlur="borrarMensaje(9), elementosVacios(10);" onClick="borrarMensaje(9), elementosVacios(10);">
 									<option selected value="">.:Opciones:.</option>
 									<?php
 									$consulta_centro_de_acopio = mysql_query("SELECT codigo_centro_acopio, nombre_centro_acopio FROM centros_de_acopio ORDER BY nombre_centro_acopio ASC",$conexion) or die ("<SPAN CLASS='error'>Fallo en la consulta_centro_de_acopio!!</SPAN>".mysql_error());
@@ -262,7 +318,7 @@ $nombre_recolector = $_REQUEST['valor_nombre_recolector'];
 						<tr>
 							<td align="center" colspan="6">
 								<input name="Registrar" type="submit" value="Registrar" onMouseOver="toolTip('Registrar',this)" class="boton aceptar">
-								<input name="Limpiar" type="reset" value="Limpiar" onMouseOver="toolTip('Limpiar',this)" class="boton limpiar" onClick="borrarMensaje(9), elementosVacios(7);">
+								<input name="Limpiar" type="reset" value="Limpiar" onMouseOver="toolTip('Limpiar',this)" class="boton limpiar" onClick="borrarMensaje(9), elementosVacios(10);">
 								<input type="button" onMouseOver="toolTip('Cancelar',this)" class="boton cancelar" onClick="redireccionar('../../../interfaz/frame_contenido.php')">
 								<input type="button" onMouseOver="toolTip('Ayuda',this)" class="boton ayuda" onClick="redireccionar('../../Ayuda/AyudaRegistroCompra.php')">
 							</td>

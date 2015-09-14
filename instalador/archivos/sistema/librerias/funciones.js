@@ -3,64 +3,65 @@
 //------------------------------------------------------------------------------------
 function calcularMonto(){
 with (document.forms["formulario"]){
-	var totalVc1,totalVc2,totalVc3,totalVc4,totalVc5,totalVc6,totalVc7,totalVc8,totalVc9,totalVc10;
+	var totalBc1,totalBc2,totalBc3,totalPc1,totalPc2,totalPc3;
 	
-	totalVc1 = Number(Vc1.value)*precio;
-	if(Vc1.value != "") {Vc1.value = redondear(Vc1.value,2); Vp1.value = redondear(totalVc1,2);}
-	else Vp1.value = "";
+	totalBc1 = Number(Bc1.value)*precio;
+	if(Bc1.value != "") {Bc1.value = redondear(Bc1.value,2); Bp1.value = redondear(totalBc1,2);}
+	else Bp1.value = "";
+	cbc.value = Bc1.value;	//cantidad botella clara
+	pbc.value = Bp1.value;	//precio botella clara
 	
-	totalVc2 = Number(Vc2.value)*precio;
-	if(Vc2.value != "") {Vc2.value = redondear(Vc2.value,2); Vp2.value = redondear(totalVc2,2);}
-	else Vp2.value = "";
+	totalBc2 = Number(Bc2.value)*precio;
+	if(Bc2.value != "") {Bc2.value = redondear(Bc2.value,2); Bp2.value = redondear(totalBc2,2);}
+	else Bp2.value = "";
+	cbv.value = Bc2.value;	//cantidad botella verde
+	pbv.value = Bp2.value;	//precio botella verde
 	
-	totalVc3 = Number(Vc3.value)*precio;
-	if(Vc3.value != "") {Vc3.value = redondear(Vc3.value,2); Vp3.value = redondear(totalVc3,2);}
-	else Vp3.value = "";
-	
-	totalVc4 = Number(Vc4.value)*precio;
-	if(Vc4.value != "") {Vc4.value = redondear(Vc4.value,2); Vp4.value = redondear(totalVc4,2);}
-	else Vp4.value = "";
-	
-	totalVc5 = Number(Vc5.value)*precio;
-	if(Vc5.value != "") {Vc5.value = redondear(Vc5.value,2); Vp5.value = redondear(totalVc5,2);}
-	else Vp5.value = "";
+	totalBc3 = Number(Bc3.value)*precio;
+	if(Bc3.value != "") {Bc3.value = redondear(Bc3.value,2); Bp3.value = redondear(totalBc3,2);}
+	else Bp3.value = "";
+	cbf.value = Bc3.value;	//cantidad botella cafe
+	pbf.value = Bp3.value;	//precio botella cafe
 	
 	//para plano
-	totalVc6 = Number(Vc6.value)*precio;
-	if(Vc6.value != "") {Vc6.value = redondear(Vc6.value,2); Vp6.value = redondear(totalVc6,2);}
-	else Vp6.value = "";
+	totalPc1 = Number(Pc1.value)*precio;
+	if(Pc1.value != "") {Pc1.value = redondear(Pc1.value,2); Pp1.value = redondear(totalPc1,2);}
+	else Pp1.value = "";
+	cpc.value = Pc1.value;	//cantidad plano claro
+	ppc.value = Pp1.value;	//precio plano claro
 	
-	totalVc7 = Number(Vc7.value)*precio;
-	if(Vc7.value != "") {Vc7.value = redondear(Vc7.value,2); Vp7.value = redondear(totalVc7,2);}
-	else Vp7.value = "";
+	totalPc2 = Number(Pc2.value)*precio;
+	if(Pc2.value != "") {Pc2.value = redondear(Pc2.value,2); Pp2.value = redondear(totalPc2,2);}
+	else Pp2.value = "";
+	cpb.value = Pc2.value;	//cantidad plano bronce
+	ppb.value = Pp2.value;	//precio plano bronce
 	
-	totalVc8 = Number(Vc8.value)*precio;
-	if(Vc8.value != "") {Vc8.value = redondear(Vc8.value,2); Vp8.value = redondear(totalVc8,2);}
-	else Vp8.value = "";
+	totalPc3 = Number(Pc3.value)*precio;
+	if(Pc3.value != "") {Pc3.value = redondear(Pc3.value,2); Pp3.value = redondear(totalPc3,2);}
+	else Pp3.value = "";
+	cpr.value = Pc3.value;	//cantidad plano reflectivo
+	ppr.value = Pp3.value;	//precio plano reflectivo
 	
-	totalVc9 = Number(Vc9.value)*precio;
-	if(Vc9.value != "") {Vc9.value = redondear(Vc9.value,2); Vp9.value = redondear(totalVc9,2);}
-	else Vp9.value = "";
+	//totales
+	var totalCantidadBotella = Number(Bc1.value)+Number(Bc2.value)+Number(Bc3.value);
+	if(totalCantidadBotella == 0.0) TBc.value = "";
+	else TBc.value = redondear(totalCantidadBotella,2);
+	cbt.value = TBc.value;	//cantidad botella total
 	
-	totalVc10 = Number(Vc10.value)*precio;
-	if(Vc10.value != "") {Vc10.value = redondear(Vc10.value,2); Vp10.value = redondear(totalVc10,2);}
-	else Vp10.value = "";
+	var totalMontoBotella = Number(Bp1.value)+Number(Bp2.value)+Number(Bp3.value);
+	if(totalMontoBotella == 0.0) TBp.value = "";
+	else TBp.value = redondear(totalMontoBotella,2);
+	pbt.value = TBp.value;	//precio botella total
 	
-	var totalCantidadBotella = Number(Vc1.value)+Number(Vc2.value)+Number(Vc3.value)+Number(Vc4.value)+Number(Vc5.value);
-	if(totalCantidadBotella == 0.0) BTo1.value = "";
-	else BTo1.value = redondear(totalCantidadBotella,2);
+	var totalCantidadPlano = Number(Pc1.value)+Number(Pc2.value)+Number(Pc3.value);
+	if(totalCantidadPlano == 0.0) TPc.value = "";
+	else TPc.value = redondear(totalCantidadPlano,2);
+	cpt.value = TPc.value;	//cantidad plano total
 	
-	var totalMontoBotella = Number(Vp1.value)+Number(Vp2.value)+Number(Vp3.value)+Number(Vp4.value)+Number(Vp5.value);
-	if(totalMontoBotella == 0.0) BTo2.value = "";
-	else BTo2.value = redondear(totalMontoBotella,2);
-	
-	var totalCantidadPlano = Number(Vc6.value)+Number(Vc7.value)+Number(Vc8.value)+Number(Vc9.value)+Number(Vc10.value);
-	if(totalCantidadPlano == 0.0) PTo1.value = "";
-	else PTo1.value = redondear(totalCantidadPlano,2);
-	
-	var totalMontoPlano = Number(Vp6.value)+Number(Vp7.value)+Number(Vp8.value)+Number(Vp9.value)+Number(Vp10.value);
-	if(totalMontoPlano == 0.0) PTo2.value = "";
-	else PTo2.value = redondear(totalMontoPlano,2);
+	var totalMontoPlano = Number(Pp1.value)+Number(Pp2.value)+Number(Pp3.value);
+	if(totalMontoPlano == 0.0) TPp.value = "";
+	else TPp.value = redondear(totalMontoPlano,2);
+	ppt.value = TPp.value;	//precio plano total
 	}
 }
 //------------------------------------------------------------------------------------
@@ -71,10 +72,28 @@ function cambiarPrecio(indice){
 	calcularMonto();
 }
 //------------------------------------------------------------------------------------
-//						cambiar el type text a password
+//					muestra los codigos de los recolectores y proveedores
+//------------------------------------------------------------------------------------
+//recolectores
+function ponerCodRecolector(F){
+	for(i=0; i<recolectores.length; i++)
+		//buscar en el vector el nombre del recolector seleccionado en la lista nombre_recolector
+		if(recolectores[i][1] == F.nombre_recolector.value)
+			//se encontro el nombre del recolector, con el indice "i" se coloca el codigo del recolector en el campo codigo_recolector
+				F.codigo_recolector.value = recolectores[i][0];
+}
+//proveedores
+function ponerCodProveedor(F){
+	for(i=0; i<proveedores.length; i++)
+		//buscar en el vector el nombre del proveedor seleccionado en la lista nombre_proveedor
+		if(proveedores[i][1] == F.nombre_proveedor.value)
+			//se encontro el nombre del proveedor, con el indice "i" se coloca el codigo del proveedor en el campo codigo_proveedor
+				F.codigo_proveedor.value = proveedores[i][0];
+}
+//------------------------------------------------------------------------------------
+//							cambiar el type text a password
 //------------------------------------------------------------------------------------
 function cambiarTypeTextPassword(F){
-	// formulario: nombre del formulario
 	// password: nombre del campo tipo password
 	// cambiar: nombre del checkbox
     var input_formulario = F.password;

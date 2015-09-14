@@ -4,28 +4,23 @@ include "../../../login/BloqueSeguridad.php";
 include "../../../login/AccesoAdministrador.php";
 $fecha					= $_POST['fecha'];
 $codigo_factura			= $_POST['factura'];
-$codigo_recolector		= $_POST['codigo_recolector']; $consulta =  mysql_fetch_array(mysql_query("SELECT nombre_recolector FROM recolectores WHERE codigo_recolector = '$codigo_recolector'", $conexion));
-$nombre_recolector		= $consulta[0];
-$codigo_proveedor		= $_POST['codigo_proveedor']; $consulta =  mysql_fetch_array(mysql_query("SELECT nombre_proveedor FROM proveedores WHERE codigo_proveedor = '$codigo_proveedor'", $conexion));
-$nombre_proveedor		= $consulta[0];
-$sucursal				= $_POST['sucursal'];
+$nombre_recolector		= $_POST['nombre_recolector'];
+$codigo_recolector		= $_POST['codigo_recolector'];
+$nombre_proveedor		= $_POST['nombre_proveedor'];
+$codigo_proveedor		= $_POST['codigo_proveedor'];
 $precio_compra			= $_POST['precio_compra'];
+$sucursal				= $_POST['sucursal'];
 $codigo_centro_acopio	= $_POST['codigo_centro_acopio'];
 
-$Bcompra[1][1] = $_POST['Vc1'];	$Bcompra[1][2] = $_POST['Vp1'];	//botella verde
-$Bcompra[2][1] = $_POST['Vc2'];	$Bcompra[2][2] = $_POST['Vp2'];	//botella cristalino
-$Bcompra[3][1] = $_POST['Vc3'];	$Bcompra[3][2] = $_POST['Vp3'];	//botella cafe
-$Bcompra[4][1] = $_POST['Vc4'];	$Bcompra[4][2] = $_POST['Vp4'];	//botella bronce
-$Bcompra[5][1] = $_POST['Vc5'];	$Bcompra[5][2] = $_POST['Vp5'];	//botella reflectivo
-
-$Pcompra[1][1] = $_POST['Vc6'];	$Pcompra[1][2] = $_POST['Vp6'];	//plano verde
-$Pcompra[2][1] = $_POST['Vc7'];	$Pcompra[2][2] = $_POST['Vp7'];	//plano cristalino
-$Pcompra[3][1] = $_POST['Vc8'];	$Pcompra[3][2] = $_POST['Vp8'];	//plano cafe
-$Pcompra[4][1] = $_POST['Vc9'];	$Pcompra[4][2] = $_POST['Vp9'];	//plano bronce
-$Pcompra[5][1] = $_POST['Vc10'];	$Pcompra[5][2] = $_POST['Vp10'];	//plano reflectivo
-
-$Totales[1][1] = $_POST['BTo1'];	$Totales[1][2] = $_POST['BTo2'];
-$Totales[2][1] = $_POST['PTo1'];	$Totales[2][2] = $_POST['PTo2'];
+//					cantidad						precio
+$Bcompra[1][1] = $_POST['cbc'];	$Bcompra[1][2] = $_POST['pbc'];	//botella claro
+$Bcompra[2][1] = $_POST['cbv'];	$Bcompra[2][2] = $_POST['pbv'];	//botella verde
+$Bcompra[3][1] = $_POST['cbf'];	$Bcompra[3][2] = $_POST['pbf'];	//botella cafe
+$Pcompra[1][1] = $_POST['cpc'];	$Pcompra[1][2] = $_POST['ppc'];	//plano claro
+$Pcompra[2][1] = $_POST['cpb'];	$Pcompra[2][2] = $_POST['ppb'];	//plano bronce
+$Pcompra[3][1] = $_POST['cpr'];	$Pcompra[3][2] = $_POST['ppr'];	//plano reflectivo
+$Totales[1][1] = $_POST['cbt'];	$Totales[1][2] = $_POST['pbt'];	//botella total
+$Totales[2][1] = $_POST['cpt'];	$Totales[2][2] = $_POST['ppt'];	//plano total
 ?>
 <HTML>
 	<head>
@@ -40,6 +35,7 @@ $Totales[2][1] = $_POST['PTo1'];	$Totales[2][2] = $_POST['PTo2'];
 		<link rel="shortcut icon" 		 href="../../../imagenes/vical.ico" />
 		<link rel="stylesheet" type="text/css" href="../../../librerias/formato.css"></link>
 		<script type="text/javascript" 	 src="../../../librerias/funciones.js"></script>
+		<style>.tamano{width:40;}</style>
 	</head>
 	<BODY class="cuerpo1">
 		<table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -85,7 +81,7 @@ $Totales[2][1] = $_POST['PTo1'];	$Totales[2][2] = $_POST['PTo2'];
 			
 			mysql_query("INSERT INTO vical.compras (CODIGO_FACTURA) VALUES ('$codigo_factura')", $conexion) or die ("<SPAN CLASS='error'>Fallo en registrar_ultima_compra!! </SPAN>".mysql_error());
 			
-			for($i=1; $i<=5; $i++){	//$i --> colores
+			for($i=1; $i<=3; $i++){	//$i --> colores
 				//registrar vidrios tipo botella
 				if($Bcompra[$i][1] <> 0 && $Bcompra[$i][2] <> 0){
 					$registrar_vidrio = "
@@ -162,22 +158,66 @@ $Totales[2][1] = $_POST['PTo1'];	$Totales[2][2] = $_POST['PTo2'];
 							<table align="center" border bgcolor="white" width="60%">
 								<thead class="titulo2">
 									<tr>
-										<th rowspan=2 colspan=1></th>
+										<th rowspan=2></th>
+										<th colspan=2>CLARO</th>
 										<th colspan=2>VERDE</th>
-										<th colspan=2>CRISTALINO</th>
 										<th colspan=2>CAFE</th>
-										<th colspan=2>BRONCE</th>
-										<th colspan=2>REFLECTIVO</th>
-										<th colspan=2>TOTAL</th><!--total por tipo de vidrio-->
+										<th colspan=2>TOTAL</th>
 									</tr>
 									<tr>
+										<!--CLARO-->
+										<th>QQ</th>
+										<th>$$</th>
 										<!--VERDE-->
 										<th>QQ</th>
 										<th>$$</th>
-										<!--CRISTALINO-->
+										<!--CAFE-->
 										<th>QQ</th>
 										<th>$$</th>
-										<!--CAFE-->
+										<!--TOTAL-->
+										<th>QQ</th>
+										<th>$$</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<th class="titulo2">BOTELLA</th>
+										<?php
+										for($i=1; $i<=3; $i++){
+											for($j=1; $j<=2; $j++){
+												if($Bcompra[$i][$j] <> 0){
+										?>
+										<td><input type="text" class="tamano" size=3 disabled="disabled" value="<?php echo $Bcompra[$i][$j];?>"></td>
+										<?php
+												}
+												else{
+										?>
+										<td><input type="text" class="tamano" size=3 disabled="disabled"></td>
+										<?php
+												}
+											}
+										}
+										?>
+										<td><input type="text" class="tamano" size=3 disabled="disabled" value="<?php echo $Totales[1][1];?>"></td>
+										<td><input type="text"  class="tamano"size=3 disabled="disabled" value="<?php echo $Totales[1][2];?>"></td>
+									</tr>
+								</tbody>
+							</table>
+							</td>
+						</tr>									
+						<tr>
+							<td colspan="6">
+							<table align="center" border bgcolor="white" width="60%">
+								<thead class="titulo2">
+									<tr>
+										<th rowspan=2></th>
+										<th colspan=2>CLARO</th>
+										<th colspan=2>BRONCE</th>
+										<th colspan=2>REFLECTIVO</th>
+										<th colspan=2>TOTAL</th>
+									</tr>
+									<tr>
+										<!--CLARO-->
 										<th>QQ</th>
 										<th>$$</th>
 										<!--BRONCE-->
@@ -193,46 +233,25 @@ $Totales[2][1] = $_POST['PTo1'];	$Totales[2][2] = $_POST['PTo2'];
 								</thead>
 								<tbody>
 									<tr>
-										<th class="titulo2">BOTELLA</th>
-										<?php
-										for($i=1; $i<=5; $i++){
-											for($j=1; $j<=2; $j++){
-												if($Bcompra[$i][$j] <> 0){
-										?>
-										<td><input type="text" size=3 disabled="disabled" value="<?php printf("%.2f",$Bcompra[$i][$j]);?>"></td>
-										<?php
-												}
-												else{
-										?>
-										<td><input type="text" size=3 disabled="disabled"></td>
-										<?php
-												}
-											}
-										}
-										?>
-										<td><input type="text" size=3 disabled="disabled" value="<?php printf("%.2f",$Totales[1][1]);?>"></td><!--total por tipo de vidrio-->
-										<td><input type="text" size=3 disabled="disabled" value="<?php printf("%.2f",$Totales[1][2]);?>"></td><!--total por tipo de vidrio-->
-									</tr>
-									<tr>
 										<th class="titulo2">PLANO</th>
 										<?php
-										for($i=1; $i<=5; $i++){
+										for($i=1; $i<=3; $i++){
 											for($j=1; $j<=2; $j++){
 												if($Pcompra[$i][$j] <> 0){
 										?>
-										<td><input type="text" size=3 disabled="disabled" value="<?php printf("%.2f",$Pcompra[$i][$j]);?>"></td>
+										<td><input type="text" class="tamano" size=3 disabled="disabled" value="<?php echo $Pcompra[$i][$j];?>"></td>
 										<?php
 												}
 												else{
 										?>
-										<td><input type="text" size=3 disabled="disabled"></td>
+										<td><input type="text" class="tamano" size=3 disabled="disabled"></td>
 										<?php
 												}
 											}
 										}
 										?>
-										<td><input type="text" size=3 disabled="disabled" value="<?php printf("%.2f",$Totales[2][1]);?>"></td><!--total por tipo de vidrio-->
-										<td><input type="text" size=3 disabled="disabled" value="<?php printf("%.2f",$Totales[2][2]);?>"></td><!--total por tipo de vidrio-->
+										<td><input type="text" class="tamano" size=3 disabled="disabled" value="<?php echo $Totales[2][1];?>"></td>
+										<td><input type="text" class="tamano" size=3 disabled="disabled" value="<?php echo $Totales[2][2];?>"></td>
 									</tr>
 								</tbody>
 							</table>

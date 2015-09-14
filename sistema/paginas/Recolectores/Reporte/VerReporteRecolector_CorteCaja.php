@@ -30,8 +30,8 @@ while($facturas = mysql_fetch_assoc($consulta_facturas)){
 
 for($j=1; $j<=5; $j++)	$coloresVidrioComprado[$j] = '';
 for($k=1; $k<=$i; $k++){
-	if($coloresVidrio[$k][1] == 1)	$coloresVidrioComprado[1] = 'VERDE';
-	if($coloresVidrio[$k][2] == 1)	$coloresVidrioComprado[2] = 'CRISTALINO';
+	if($coloresVidrio[$k][1] == 1)	$coloresVidrioComprado[1] = 'CLARO';
+	if($coloresVidrio[$k][2] == 1)	$coloresVidrioComprado[2] = 'VERDE';
 	if($coloresVidrio[$k][3] == 1)	$coloresVidrioComprado[3] = 'CAFE';
 	if($coloresVidrio[$k][4] == 1)	$coloresVidrioComprado[4] = 'BRONCE';
 	if($coloresVidrio[$k][5] == 1)	$coloresVidrioComprado[5] = 'REFLECTIVO';
@@ -180,26 +180,34 @@ $fecha_hoy = fechaHoy();
 								NOMBRE
 							</td>
 							<td align="left" colspan="5">
-								<input class="subtitulo3 sinsublin" value="<?php echo $recolector['nombre_recolector'];?>" readonly size="70">
+								<span class="subtitulo3"><?php echo $recolector['nombre_recolector'];?></span>
 							</td>
 						</tr>
+						<?php
+						if($recolector['dui_recolector']<>'-'){
+						?>
 						<tr>
 							<td align="left" class="subtitulo1">
 								DUI
 							</td>
 							<td align="left" colspan="5">
-								<input class="subtitulo3 sinsublin" value="<?php echo $recolector['dui_recolector'];?>" readonly size="70">
+								<span class="subtitulo3"><?php echo $recolector['dui_recolector'];?></span>
 							</td>
 						</tr>
+						<?php
+						}
+						if($recolector['nit_recolector']<>'---'){
+						?>
 						<tr>
 							<td align="left" class="subtitulo1">
 								NIT
 							</td>
 							<td align="left" colspan="5">
-								<input class="subtitulo3 sinsublin" value="<?php echo $recolector['nit_recolector'];?>" readonly size="70">
+								<span class="subtitulo3"><?php echo $recolector['nit_recolector'];?></span>
 							</td>
 						</tr>
 						<?php
+						}
 						if($recolector['direccion_recolector']<>NULL){
 						?>
 						<tr>
@@ -207,7 +215,7 @@ $fecha_hoy = fechaHoy();
 								DIRECCION
 							</td>
 							<td align="left" colspan="5">
-								<input class="subtitulo3 sinsublin" value="<?php echo $recolector['direccion_recolector'];?>" readonly size="70">
+								<span class="subtitulo3"><?php echo $recolector['direccion_recolector'];?></span>
 							</td>
 						</tr>
 						<?php

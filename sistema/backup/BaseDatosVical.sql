@@ -178,8 +178,8 @@ INSERT INTO TIPOS_VIDRIO (CODIGO_TIPO, NOMBRE_TIPO) VALUES
 /* Table: COLORES_VIDRIO                                        */
 /*==============================================================*/
 INSERT INTO COLORES_VIDRIO (CODIGO_COLOR, NOMBRE_COLOR) VALUES
-('CV-01', 'CLARO'),
-('CV-02', 'VERDE'),
+('CV-01', 'VERDE'),
+('CV-02', 'CRISTALINO'),
 ('CV-03', 'CAFE'),
 ('CV-04', 'BRONCE'),
 ('CV-05', 'REFLECTIVO');

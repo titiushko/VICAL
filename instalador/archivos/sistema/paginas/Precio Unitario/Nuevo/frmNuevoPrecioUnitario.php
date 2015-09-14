@@ -29,6 +29,7 @@ include "../../../login/AccesoAdministrador.php";
 				$contador++;
 			}
 			?>
+			function restablecerPrecio(campo){campo.value = redondear(campo.value,2);}
 		</script>
 	</head>
 	<BODY class="cuerpo1">
@@ -49,7 +50,7 @@ include "../../../login/AccesoAdministrador.php";
 							<tr>
 								<td align="right"><span class="titulo1">Precio Unitario:</span></td>
 								<td align="left">
-									<input name="precio_unitario" id="id1" class="requiredo" type="text" size=4 onKeyPress="return soloNumerosFloat(event)" onBlur="borrarMensaje(2), elementosVacios(2);" onClick="borrarMensaje(2), elementosVacios(2);">
+									<input name="precio_unitario" id="id1" class="requiredo" type="text" size=4 onKeyPress="return soloNumerosFloat(event)" onBlur="restablecerPrecio(this); borrarMensaje(2), elementosVacios(2);" onClick="borrarMensaje(2), elementosVacios(2);">
 									<span class="obligatorio">*</span>&nbsp;&nbsp;
 								</td>
 							</tr>

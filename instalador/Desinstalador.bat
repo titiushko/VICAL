@@ -3,37 +3,37 @@
 echo :::::::::::::::::::::::::::::::::::::::::::::::::
 echo ::					       ::
 echo ::  BIENVENIDO AL PROGRAMA DE DESINSTALACION   ::
-echo ::           DEL SISTEMA DE COMPRAS            ::
-echo ::          Y CONTROL DE PROVEEDORES           ::
-echo ::     DE LA EMPRESA VICAL DE EL SALVADOR      ::
-echo ::                  (SCYCPVES)                 ::
+echo ::   SISTEMA INFORMATICO PARA AYUDAR EN EL     ::
+echo ::   REGISTRO DE COMPRAS DE VIDRIO Y EN EL     ::
+echo ::      CONTROL DE PROVEEDORES DE VICAL        ::
+echo ::          EL SALVADOR (COMVICONPRO)          ::
 echo ::					       ::
 echo :::::::::::::::::::::::::::::::::::::::::::::::::
 echo .
 echo .
-echo Este programa desinstalara SCYCPVES de su computadora.
+echo Este programa desinstalara COMVICONPRO de su computadora.
 echo .
 echo .
 echo Creando Respaldo de la Base de Datos, espere porfavor . . .
-c:\wamp\bin\mysql\mysql5.5.16\bin\mysqldump.exe -uroot --password= --opt vical > respaldo_base_datos\respaldo_base_datos.sql
+c:\wamp\bin\mysql\mysql5.5.16\bin\mysqldump.exe -uvidrio --password=ciclopentanoperhidrofenantreno --opt vical > respaldo_base_datos\respaldo_base_datos.sql
 cls
 echo :::::::::::::::::::::::::::::::::::::::::::::::::
 echo ::					       ::
 echo ::  BIENVENIDO AL PROGRAMA DE DESINSTALACION   ::
-echo ::           DEL SISTEMA DE COMPRAS            ::
-echo ::          Y CONTROL DE PROVEEDORES           ::
-echo ::     DE LA EMPRESA VICAL DE EL SALVADOR      ::
-echo ::                  (SCYCPVES)                 ::
+echo ::   SISTEMA INFORMATICO PARA AYUDAR EN EL     ::
+echo ::   REGISTRO DE COMPRAS DE VIDRIO Y EN EL     ::
+echo ::      CONTROL DE PROVEEDORES DE VICAL        ::
+echo ::          EL SALVADOR (COMVICONPRO)          ::
 echo ::					       ::
 echo :::::::::::::::::::::::::::::::::::::::::::::::::
 echo .
 echo .
-echo Este programa desinstalara SCYCPVES de su computadora.
+echo Este programa desinstalara COMVICONPRO de su computadora.
 echo .
 echo .
 echo Respaldo de la Base de Datos creada con exito!
 echo El Respaldo de la Base de Datos se creo en:
-echo "Instalador SCYCPVES\respaldo_base_datos\respaldo_base_datos.sql"
+echo "Instalador COMVICONPRO\respaldo_base_datos\respaldo_base_datos.sql"
 echo .
 echo .
 echo Desinstalando WampServer, espere porfavor . . .
@@ -42,51 +42,51 @@ cls
 echo :::::::::::::::::::::::::::::::::::::::::::::::::
 echo ::					       ::
 echo ::  BIENVENIDO AL PROGRAMA DE DESINSTALACION   ::
-echo ::           DEL SISTEMA DE COMPRAS            ::
-echo ::          Y CONTROL DE PROVEEDORES           ::
-echo ::     DE LA EMPRESA VICAL DE EL SALVADOR      ::
-echo ::                  (SCYCPVES)                 ::
+echo ::   SISTEMA INFORMATICO PARA AYUDAR EN EL     ::
+echo ::   REGISTRO DE COMPRAS DE VIDRIO Y EN EL     ::
+echo ::      CONTROL DE PROVEEDORES DE VICAL        ::
+echo ::          EL SALVADOR (COMVICONPRO)          ::
 echo ::					       ::
 echo :::::::::::::::::::::::::::::::::::::::::::::::::
 echo .
 echo .
-echo Este programa desinstalara SCYCPVES de su computadora.
+echo Este programa desinstalara COMVICONPRO de su computadora.
 echo .
 echo .
 echo Respaldo de la Base de Datos creada con exito!
 echo El Respaldo de la Base de Datos se creo en:
-echo "Instalador SCYCPVES\respaldo_base_datos\respaldo_base_datos.sql"
+echo "Instalador COMVICONPRO\respaldo_base_datos\respaldo_base_datos.sql"
 echo .
 echo .
 echo WampServer se ha desinstalado con exito!
 echo .
 echo .
-echo Desinstalando SCYCPVES, espere porfavor . . .
+echo Desinstalando COMVICONPRO, espere porfavor . . .
 rd c:\wamp\ /S /Q
 cls
 echo :::::::::::::::::::::::::::::::::::::::::::::::::
 echo ::					       ::
 echo ::  BIENVENIDO AL PROGRAMA DE DESINSTALACION   ::
-echo ::           DEL SISTEMA DE COMPRAS            ::
-echo ::          Y CONTROL DE PROVEEDORES           ::
-echo ::     DE LA EMPRESA VICAL DE EL SALVADOR      ::
-echo ::                  (SCYCPVES)                 ::
+echo ::   SISTEMA INFORMATICO PARA AYUDAR EN EL     ::
+echo ::   REGISTRO DE COMPRAS DE VIDRIO Y EN EL     ::
+echo ::      CONTROL DE PROVEEDORES DE VICAL        ::
+echo ::          EL SALVADOR (COMVICONPRO)          ::
 echo ::					       ::
 echo :::::::::::::::::::::::::::::::::::::::::::::::::
 echo .
 echo .
-echo Este programa desinstalara SCYCPVES de su computadora.
+echo Este programa desinstalara COMVICONPRO de su computadora.
 echo .
 echo .
 echo Respaldo de la Base de Datos creada con exito!
 echo El Respaldo de la Base de Datos se creo en:
-echo "Instalador SCYCPVES\respaldo_base_datos\respaldo_base_datos.sql"
+echo "Instalador COMVICONPRO\respaldo_base_datos\respaldo_base_datos.sql"
 echo .
 echo .
 echo WampServer se ha desinstalado con exito!
 echo .
 echo .
-echo SCYCPVES se ha desinstalado con exito!
+echo COMVICONPRO se ha desinstalado con exito!
 echo .
 echo .
 echo :::::::::::::::::::::::::::::::::::::::::::::::::

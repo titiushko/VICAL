@@ -80,6 +80,12 @@
     border-left: 0px #fff;
     border-right: 0px #fff;
 }
+
+.subtitulo4{
+    color: black;
+    font-size: 13px;
+    font-weight: normal;
+}
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /*									estilo de la letra en una seccion										*/
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -279,10 +285,6 @@
     border-bottom: solid 1px #000;
 }
 
-.sinsublin{
-    border-bottom: solid 1px #fff;
-}
-
 /*fondo para inputs (puede ser para cualquier elemento pero los uso en los inputs)*/
 .fondo{
     background-color: #76a5d3;
@@ -297,7 +299,7 @@
     background-color: #8BB5DF;	/*mas claro*/    
 }
 
-/*fondos con inputs no modificables*/
+/*fondos de los inputs*/
 .fondo1{
     background-color: #76a5d3;	/*azul cielo*/
     border: none;
@@ -311,6 +313,13 @@
 .fondo3{
     background-color: #E5E5E5;	/*gris*/
     border: none;
+}
+
+.fondo4{	/*inputs nuevas compra*/
+	text-align: center;
+    background-color: #FFFFFF;	/*blanco*/
+    border: none;
+	width: 40px;
 }
 
 .lista{

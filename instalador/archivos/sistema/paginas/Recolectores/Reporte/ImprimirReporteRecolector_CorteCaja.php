@@ -176,26 +176,34 @@ for($i=0; $i<=strlen($nombre_recolector); $i++){
 								NOMBRE
 							</td>
 							<td align="left" colspan="5">
-								<input class="subtitulo3 sinsublin" value="<?php echo $recolector['nombre_recolector'];?>" readonly size="70">
+								<span class="subtitulo3"><?php echo $recolector['nombre_recolector'];?></span>
 							</td>
 						</tr>
+						<?php
+						if($recolector['dui_recolector']<>'-'){
+						?>
 						<tr>
 							<td align="left" class="subtitulo1">
 								DUI
 							</td>
 							<td align="left" colspan="5">
-								<input class="subtitulo3 sinsublin" value="<?php echo $recolector['dui_recolector'];?>" readonly size="70">
+								<span class="subtitulo3"><?php echo $recolector['dui_recolector'];?></span>
 							</td>
 						</tr>
+						<?php
+						}
+						if($recolector['nit_recolector']<>'---'){
+						?>
 						<tr>
 							<td align="left" class="subtitulo1">
 								NIT
 							</td>
 							<td align="left" colspan="5">
-								<input class="subtitulo3 sinsublin" value="<?php echo $recolector['nit_recolector'];?>" readonly size="70">
+								<span class="subtitulo3"><?php echo $recolector['nit_recolector'];?></span>
 							</td>
 						</tr>
 						<?php
+						}
 						if($recolector['direccion_recolector']<>NULL){
 						?>
 						<tr>
@@ -203,7 +211,7 @@ for($i=0; $i<=strlen($nombre_recolector); $i++){
 								DIRECCION
 							</td>
 							<td align="left" colspan="5">
-								<input class="subtitulo3 sinsublin" value="<?php echo $recolector['direccion_recolector'];?>" readonly size="70">
+								<span class="subtitulo3"><?php echo $recolector['direccion_recolector'];?></span>
 							</td>
 						</tr>
 						<?php

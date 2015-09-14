@@ -179,16 +179,23 @@ header("Content-Disposition: attachment; filename=HOJA_DE_FLETE_PARA_".strtouppe
 								<b><?php echo $recolector['nombre_recolector'];?></b>
 							</td>
 						</tr>
+						<?php
+						if($recolector['dui_recolector']<>'-'){
+						?>
 						<tr>
-							<td align="left">
+							<td align="left" class="subtitulo1">
 								DUI
 							</td>
 							<td align="left" colspan="5">
 								<b><?php echo $recolector['dui_recolector'];?></b>
 							</td>
 						</tr>
+						<?php
+						}
+						if($recolector['nit_recolector']<>'---'){
+						?>
 						<tr>
-							<td align="left">
+							<td align="left" class="subtitulo1">
 								NIT
 							</td>
 							<td align="left" colspan="5">
@@ -196,6 +203,7 @@ header("Content-Disposition: attachment; filename=HOJA_DE_FLETE_PARA_".strtouppe
 							</td>
 						</tr>
 						<?php
+						}
 						if($recolector['direccion_recolector']<>NULL){
 						?>
 						<tr>
@@ -203,7 +211,7 @@ header("Content-Disposition: attachment; filename=HOJA_DE_FLETE_PARA_".strtouppe
 								DIRECCION
 							</td>
 							<td align="left" colspan="5">
-								<input class="subtitulo3 sinsublin" value="<?php echo $recolector['direccion_recolector'];?>" readonly size="70">
+								<b><?php echo $recolector['direccion_recolector'];?></b>
 							</td>
 						</tr>
 						<?php
