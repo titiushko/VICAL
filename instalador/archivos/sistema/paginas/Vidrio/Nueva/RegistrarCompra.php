@@ -13,25 +13,25 @@ $sucursal				= $_POST['sucursal'];
 $codigo_centro_acopio	= $_POST['codigo_centro_acopio'];
 
 //					cantidad						precio
-$Bcompra[1][1] = $_POST['cbc'];	$Bcompra[1][2] = $_POST['pbc'];	//botella claro
-$Bcompra[2][1] = $_POST['cbv'];	$Bcompra[2][2] = $_POST['pbv'];	//botella verde
-$Bcompra[3][1] = $_POST['cbf'];	$Bcompra[3][2] = $_POST['pbf'];	//botella cafe
-$Pcompra[1][1] = $_POST['cpc'];	$Pcompra[1][2] = $_POST['ppc'];	//plano claro
-$Pcompra[2][1] = $_POST['cpb'];	$Pcompra[2][2] = $_POST['ppb'];	//plano bronce
-$Pcompra[3][1] = $_POST['cpr'];	$Pcompra[3][2] = $_POST['ppr'];	//plano reflectivo
-$Totales[1][1] = $_POST['cbt'];	$Totales[1][2] = $_POST['pbt'];	//botella total
-$Totales[2][1] = $_POST['cpt'];	$Totales[2][2] = $_POST['ppt'];	//plano total
+$Bcompra[1][1] = $_POST['Vc1'];	$Bcompra[1][2] = $_POST['Vp1'];	//botella claro
+$Bcompra[2][1] = $_POST['Vc2'];	$Bcompra[2][2] = $_POST['Vp2'];	//botella verde
+$Bcompra[3][1] = $_POST['Vc3'];	$Bcompra[3][2] = $_POST['Vp3'];	//botella cafe
+$Pcompra[1][1] = $_POST['Vc4'];	$Pcompra[1][2] = $_POST['Vp4'];	//plano claro
+$Pcompra[2][1] = $_POST['Vc5'];	$Pcompra[2][2] = $_POST['Vp5'];	//plano bronce
+$Pcompra[3][1] = $_POST['Vc6'];	$Pcompra[3][2] = $_POST['Vp6'];	//plano reflectivo
+$Totales[1][1] = $_POST['BTc'];	$Totales[1][2] = $_POST['BTp'];	//botella total
+$Totales[2][1] = $_POST['PTc'];	$Totales[2][2] = $_POST['PTp'];	//plano total
 ?>
 <HTML>
 	<head>
-		<title>SCYCPVES</title>
+		<title>COMVICONPRO</title>
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">
 		<meta http-equiv="pragma"        content="nocache">
 		<meta name="author"              content="TITIUSHKO">
 		<meta name="keywords"            content="ejercicio, estilo, html">
-		<meta name="description"         content="Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador">
+		<meta name="description"         content="Sistema Inform&aacute;tico para Ayudar en el Registro de Compras de Vidrio y en el Control de Proveedores de VICAL El Salvador (COMVICONPRO).">
 		<link rel="shortcut icon" 		 href="../../../imagenes/vical.ico" />
 		<link rel="stylesheet" type="text/css" href="../../../librerias/formato.css"></link>
 		<script type="text/javascript" 	 src="../../../librerias/funciones.js"></script>
@@ -74,29 +74,18 @@ $Totales[2][1] = $_POST['cpt'];	$Totales[2][2] = $_POST['ppt'];	//plano total
 			}
 			else if($buscar[0] <> $codigo_factura){
 			//registrar una nueva factura
-			$instruccion_insert = "
-			INSERT INTO vical.facturas (CODIGO_FACTURA,CODIGO_PROVEEDOR,CODIGO_RECOLECTOR,SUCURSAL,CODIGO_CENTRO_ACOPIO,PRECIO_COMPRA,FECHA)
-			VALUES ('$codigo_factura','$codigo_proveedor','$codigo_recolector','$sucursal','$codigo_centro_acopio','$precio_compra','$fecha')";
-			mysql_query($instruccion_insert, $conexion) or die ("<SPAN CLASS='error'>Fallo en la registrar_factura!! </SPAN>".mysql_error());
-			
+			mysql_query("INSERT INTO vical.facturas (CODIGO_FACTURA,CODIGO_PROVEEDOR,CODIGO_RECOLECTOR,SUCURSAL,CODIGO_CENTRO_ACOPIO,PRECIO_COMPRA,FECHA) VALUES ('$codigo_factura','$codigo_proveedor','$codigo_recolector','$sucursal','$codigo_centro_acopio','$precio_compra','$fecha')", $conexion) or die ("<SPAN CLASS='error'>Fallo en la registrar_factura!! </SPAN>".mysql_error());
+			//guardar el numero de compra
 			mysql_query("INSERT INTO vical.compras (CODIGO_FACTURA) VALUES ('$codigo_factura')", $conexion) or die ("<SPAN CLASS='error'>Fallo en registrar_ultima_compra!! </SPAN>".mysql_error());
-			
-			for($i=1; $i<=3; $i++){	//$i --> colores
-				//registrar vidrios tipo botella
-				if($Bcompra[$i][1] <> 0 && $Bcompra[$i][2] <> 0){
-					$registrar_vidrio = "
-					INSERT INTO vical.vidrio (CODIGO_TIPO,CODIGO_COLOR,CODIGO_FACTURA,CANTIDAD_VIDRIO,PRECIO_VIDRIO)
-					VALUES ('TV-01','CV-0$i','$codigo_factura','".$Bcompra[$i][1]."','".$Bcompra[$i][2]."')";
-					mysql_query($registrar_vidrio, $conexion) or die ("<SPAN CLASS='error'>Fallo en la registrar_vidrio!! </SPAN>".mysql_error());
-				}
-				//registrar vidrios tipo plano
-				if($Pcompra[$i][1] <> 0 && $Pcompra[$i][2] <> 0){
-					$registrar_vidrio = "
-					INSERT INTO vical.vidrio (CODIGO_TIPO,CODIGO_COLOR,CODIGO_FACTURA,CANTIDAD_VIDRIO,PRECIO_VIDRIO)
-					VALUES ('TV-02','CV-0$i','$codigo_factura','".$Pcompra[$i][1]."','".$Pcompra[$i][2]."')";
-					mysql_query($registrar_vidrio, $conexion) or die ("<SPAN CLASS='error'>Fallo en la registrar_vidrio!! </SPAN>".mysql_error());
-				}
-			}
+			//registrar en la tabla vidrio
+			//botella
+			if($Bcompra[1][1] != 0 && $Bcompra[1][2] != 0){mysql_query("INSERT INTO vical.vidrio (CODIGO_TIPO,CODIGO_COLOR,CODIGO_FACTURA,CANTIDAD_VIDRIO,PRECIO_VIDRIO) VALUES ('TV-01','CV-01','$codigo_factura','".$Bcompra[1][1]."','".$Bcompra[1][2]."')", $conexion) or die ("<SPAN CLASS='error'>Fallo en la registrar_vidrio_botella_claro!! </SPAN>".mysql_error());}
+			if($Bcompra[2][1] != 0 && $Bcompra[2][2] != 0){mysql_query("INSERT INTO vical.vidrio (CODIGO_TIPO,CODIGO_COLOR,CODIGO_FACTURA,CANTIDAD_VIDRIO,PRECIO_VIDRIO) VALUES ('TV-01','CV-02','$codigo_factura','".$Bcompra[2][1]."','".$Bcompra[2][2]."')", $conexion) or die ("<SPAN CLASS='error'>Fallo en la registrar_vidrio_botella_verde!! </SPAN>".mysql_error());}
+			if($Bcompra[3][1] != 0 && $Bcompra[3][2] != 0){mysql_query("INSERT INTO vical.vidrio (CODIGO_TIPO,CODIGO_COLOR,CODIGO_FACTURA,CANTIDAD_VIDRIO,PRECIO_VIDRIO) VALUES ('TV-01','CV-03','$codigo_factura','".$Bcompra[3][1]."','".$Bcompra[3][2]."')", $conexion) or die ("<SPAN CLASS='error'>Fallo en la registrar_vidrio_botella_cafe!! </SPAN>".mysql_error());}
+			//plano
+			if($Pcompra[1][1] != 0 && $Pcompra[1][2] != 0){mysql_query("INSERT INTO vical.vidrio (CODIGO_TIPO,CODIGO_COLOR,CODIGO_FACTURA,CANTIDAD_VIDRIO,PRECIO_VIDRIO) VALUES ('TV-02','CV-01','$codigo_factura','".$Pcompra[1][1]."','".$Pcompra[1][2]."')", $conexion) or die ("<SPAN CLASS='error'>Fallo en la registrar_vidrio_plano_claro!! </SPAN>".mysql_error());}
+			if($Pcompra[2][1] != 0 && $Pcompra[2][2] != 0){mysql_query("INSERT INTO vical.vidrio (CODIGO_TIPO,CODIGO_COLOR,CODIGO_FACTURA,CANTIDAD_VIDRIO,PRECIO_VIDRIO) VALUES ('TV-02','CV-04','$codigo_factura','".$Pcompra[2][1]."','".$Pcompra[2][2]."')", $conexion) or die ("<SPAN CLASS='error'>Fallo en la registrar_vidrio_plano_bronce!! </SPAN>".mysql_error());}
+			if($Pcompra[3][1] != 0 && $Pcompra[3][2] != 0){mysql_query("INSERT INTO vical.vidrio (CODIGO_TIPO,CODIGO_COLOR,CODIGO_FACTURA,CANTIDAD_VIDRIO,PRECIO_VIDRIO) VALUES ('TV-02','CV-05','$codigo_factura','".$Pcompra[3][1]."','".$Pcompra[3][2]."')", $conexion) or die ("<SPAN CLASS='error'>Fallo en la registrar_vidrio_plano_reflectivo!! </SPAN>".mysql_error());}
 			?>
 					<h2 class="encabezado2">
 						<img src="../../../imagenes/icono_informacion.png">
@@ -187,19 +176,19 @@ $Totales[2][1] = $_POST['cpt'];	$Totales[2][2] = $_POST['ppt'];	//plano total
 											for($j=1; $j<=2; $j++){
 												if($Bcompra[$i][$j] <> 0){
 										?>
-										<td><input type="text" class="tamano" size=3 disabled="disabled" value="<?php echo $Bcompra[$i][$j];?>"></td>
+										<td align="center"><input type="text" class="tamano" size=3 disabled="disabled" value="<?php echo $Bcompra[$i][$j];?>"></td>
 										<?php
 												}
 												else{
 										?>
-										<td><input type="text" class="tamano" size=3 disabled="disabled"></td>
+										<td align="center"><input type="text" class="tamano" size=3 disabled="disabled"></td>
 										<?php
 												}
 											}
 										}
 										?>
-										<td><input type="text" class="tamano" size=3 disabled="disabled" value="<?php echo $Totales[1][1];?>"></td>
-										<td><input type="text"  class="tamano"size=3 disabled="disabled" value="<?php echo $Totales[1][2];?>"></td>
+										<td align="center"><input type="text" class="tamano" size=3 disabled="disabled" value="<?php echo $Totales[1][1];?>"></td>
+										<td align="center"><input type="text" class="tamano" size=3 disabled="disabled" value="<?php echo $Totales[1][2];?>"></td>
 									</tr>
 								</tbody>
 							</table>
@@ -239,19 +228,19 @@ $Totales[2][1] = $_POST['cpt'];	$Totales[2][2] = $_POST['ppt'];	//plano total
 											for($j=1; $j<=2; $j++){
 												if($Pcompra[$i][$j] <> 0){
 										?>
-										<td><input type="text" class="tamano" size=3 disabled="disabled" value="<?php echo $Pcompra[$i][$j];?>"></td>
+										<td align="center"><input type="text" class="tamano" size=3 disabled="disabled" value="<?php echo $Pcompra[$i][$j];?>"></td>
 										<?php
 												}
 												else{
 										?>
-										<td><input type="text" class="tamano" size=3 disabled="disabled"></td>
+										<td align="center"><input type="text" class="tamano" size=3 disabled="disabled"></td>
 										<?php
 												}
 											}
 										}
 										?>
-										<td><input type="text" class="tamano" size=3 disabled="disabled" value="<?php echo $Totales[2][1];?>"></td>
-										<td><input type="text" class="tamano" size=3 disabled="disabled" value="<?php echo $Totales[2][2];?>"></td>
+										<td align="center"><input type="text" class="tamano" size=3 disabled="disabled" value="<?php echo $Totales[2][1];?>"></td>
+										<td align="center"><input type="text" class="tamano" size=3 disabled="disabled" value="<?php echo $Totales[2][2];?>"></td>
 									</tr>
 								</tbody>
 							</table>
@@ -300,7 +289,7 @@ $Totales[2][1] = $_POST['cpt'];	$Totales[2][2] = $_POST['ppt'];	//plano total
 			?>
 <!------------------------------------------------------------------------------------------------------------------------>				
 		</table>
-		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2012</center>
+		<hr><center>Sistema Inform&aacute;tico para Ayudar en el Registro de Compras de Vidrio y en el Control de Proveedores de VICAL El Salvador (COMVICONPRO). &#8226; Derechos Reservados 2012</center>
 	</BODY>
 </HTML>
 <?php include "../../../librerias/cerrar_conexion.php"; ?>

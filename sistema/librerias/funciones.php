@@ -1,10 +1,10 @@
 <?php
 $filas = 1;		//variable global
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-//funcion que calcula la suma de las cantidades y precio_vidrios de vidrio comprado por factura para un determinado mes y año
+//funcion que calcula la suma de cantidad_vidrio y precio_vidrio de vidrio comprado por factura para un determinado mes y año
 //scripts que la utilizan: GraficarEstadisticaCompra, GraficarComparacionCompra
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-function calcularSumaCompras($mes,$ano,$sucursal){
+function calcularSumaVidrioComprado($mes,$ano,$sucursal){
 	include "abrir_conexion.php";
 	
 	switch($sucursal){
@@ -17,7 +17,7 @@ function calcularSumaCompras($mes,$ano,$sucursal){
 	$consulta_factura = mysql_query($select_factura, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_factura!!</SPAN>".mysql_error());
 
 	$Bsuma_cantidad = 0;	$Bsuma_precio_vidrio = 0;
-	for($i=1; $i<=10; $i++)
+	for($i=1; $i<=6; $i++)
 		for($j=1; $j<=2; $j++)
 			$Compras[$i][$j] = 0;
 	while($facturas = mysql_fetch_assoc($consulta_factura)){
@@ -40,22 +40,14 @@ function calcularSumaCompras($mes,$ano,$sucursal){
 			//-------------------------------------------------
 				if($vidrios['codigo_color'] == 'CV-03'){$Compras[3][1] += $vidrios['cantidad_vidrio'];	$Compras[3][2] += $vidrios['precio_vidrio'];}
 			//-------------------------------------------------
-				if($vidrios['codigo_color'] == 'CV-04'){$Compras[4][1] += $vidrios['cantidad_vidrio'];	$Compras[4][2] += $vidrios['precio_vidrio'];}
-			//-------------------------------------------------
-				if($vidrios['codigo_color'] == 'CV-05'){$Compras[5][1] += $vidrios['cantidad_vidrio'];	$Compras[5][2] += $vidrios['precio_vidrio'];}
-			//-------------------------------------------------
 			}
 			if($vidrios['codigo_tipo'] == 'TV-02'){
 			//-------------------------------------------------
-				if($vidrios['codigo_color'] == 'CV-01'){$Compras[6][1] += $vidrios['cantidad_vidrio'];	$Compras[6][2] += $vidrios['precio_vidrio'];}
+				if($vidrios['codigo_color'] == 'CV-01'){$Compras[4][1] += $vidrios['cantidad_vidrio'];	$Compras[4][2] += $vidrios['precio_vidrio'];}
 			//-------------------------------------------------
-				if($vidrios['codigo_color'] == 'CV-02'){$Compras[7][1] += $vidrios['cantidad_vidrio'];	$Compras[7][2] += $vidrios['precio_vidrio'];}
+				if($vidrios['codigo_color'] == 'CV-04'){$Compras[5][1] += $vidrios['cantidad_vidrio'];	$Compras[5][2] += $vidrios['precio_vidrio'];}
 			//-------------------------------------------------
-				if($vidrios['codigo_color'] == 'CV-03'){$Compras[8][1] += $vidrios['cantidad_vidrio'];	$Compras[8][2] += $vidrios['precio_vidrio'];}
-			//-------------------------------------------------
-				if($vidrios['codigo_color'] == 'CV-04'){$Compras[9][1] += $vidrios['cantidad_vidrio'];	$Compras[9][2] += $vidrios['precio_vidrio'];}
-			//-------------------------------------------------
-				if($vidrios['codigo_color'] == 'CV-05'){$Compras[10][1] += $vidrios['cantidad_vidrio'];	$Compras[10][2] += $vidrios['precio_vidrio'];}
+				if($vidrios['codigo_color'] == 'CV-05'){$Compras[6][1] += $vidrios['cantidad_vidrio'];	$Compras[6][2] += $vidrios['precio_vidrio'];}
 			//-------------------------------------------------
 			}
 		}
@@ -64,20 +56,67 @@ function calcularSumaCompras($mes,$ano,$sucursal){
 	return $Compras;	//devuelve una matriz 10x2
 }
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+//funcion que calcula la suma de cantidad_vidrio y precio_vidrio de vidrio comprado por factura
+//scripts que la utilizan: HistorialCompra_Periodo
+//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+function calcularSumaVidrio($codigo_factura,$sucursal){
+	include "abrir_conexion.php";
+	
+	switch($sucursal){
+		case 'VICESA':
+		case 'VIGUA':	$select_vidrio = "SELECT vidrio.codigo_tipo, vidrio.codigo_color, vidrio.cantidad_vidrio, vidrio.precio_vidrio FROM vidrio, facturas WHERE facturas.codigo_factura = '$codigo_factura' AND facturas.codigo_factura = vidrio.codigo_factura AND sucursal = '$sucursal' ORDER BY codigo_vidrio ASC";
+						break;
+		case 'AMBAS':	$select_vidrio = "SELECT vidrio.codigo_tipo, vidrio.codigo_color, vidrio.cantidad_vidrio, vidrio.precio_vidrio FROM vidrio, facturas WHERE facturas.codigo_factura = '$codigo_factura' AND facturas.codigo_factura = vidrio.codigo_factura ORDER BY codigo_vidrio ASC";
+						break;
+	}
+	$consulta_vidrio = mysql_query($select_vidrio, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_vidrio!!</SPAN>".mysql_error());
+
+	for($i=1; $i<=6; $i++)
+		for($j=1; $j<=2; $j++)
+			$SumaVidrios[$i][$j] = 0;
+	while($vidrios = mysql_fetch_assoc($consulta_vidrio)){
+		if($vidrios['codigo_tipo'] == 'TV-01'){
+		//-------------------------------------------------
+			if($vidrios['codigo_color'] == 'CV-01'){$SumaVidrios[1][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[1][2] += $vidrios['precio_vidrio'];}
+		//-------------------------------------------------
+			else
+			if($vidrios['codigo_color'] == 'CV-02'){$SumaVidrios[2][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[2][2] += $vidrios['precio_vidrio'];}
+		//-------------------------------------------------
+			else
+			if($vidrios['codigo_color'] == 'CV-03'){$SumaVidrios[3][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[3][2] += $vidrios['precio_vidrio'];}		
+		//-------------------------------------------------
+		}
+		else
+		if($vidrios['codigo_tipo'] == 'TV-02'){
+		//-------------------------------------------------
+			if($vidrios['codigo_color'] == 'CV-01'){$SumaVidrios[4][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[4][2] += $vidrios['precio_vidrio'];}
+		//-------------------------------------------------
+			else
+			if($vidrios['codigo_color'] == 'CV-04'){$SumaVidrios[5][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[5][2] += $vidrios['precio_vidrio'];}
+		//-------------------------------------------------
+			else
+			if($vidrios['codigo_color'] == 'CV-05'){$SumaVidrios[6][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[6][2] += $vidrios['precio_vidrio'];}
+		//-------------------------------------------------
+		}
+	}
+	include "cerrar_conexion.php";
+	return $SumaVidrios;	//devuelve una matriz 10x2, de la fila 1 a la 5 es botella, de la fila 1 a la 5 es plano, columna 1 es cantidad, columna 2 es precio_vidrio
+}
+//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 //funcion que calcula la suma de los totales de cantida y precio_vidrios de vidrio por tipo de vidrio
 //scripts que la utilizan: GraficarEstadisticaCompra, GraficarComparacionCompra, HistorialCompra_Periodo
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-function calcularSumaTotales($Compras){
+function calcularSumaVidrioTotal($Compras){
 	for($i=1; $i<=4; $i++)	$Totales[$i] = 0;
-	for($i=1; $i<=5; $i++){$Totales[1] += $Compras[$i][1];	$Totales[2] += $Compras[$i][2];}
-	for($i=6; $i<=10; $i++){$Totales[3] += $Compras[$i][1];	$Totales[4] += $Compras[$i][2];}
+	for($i=1; $i<=3; $i++){$Totales[1] += $Compras[$i][1];	$Totales[2] += $Compras[$i][2];}
+	for($i=4; $i<=6; $i++){$Totales[3] += $Compras[$i][1];	$Totales[4] += $Compras[$i][2];}
 	return $Totales;	//devuelve un vector de cuatro elementos
 }
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-//funcion que calcula la suma total de las cantidades y precio_vidrios de cada mes por tipo de vidrio o por proveedor
-//scripts que la utilizan: HistorialCompra_Proveedor, HistorialCompra_TipoVidrio
+//funcion que calcula la suma total de cantidad_vidrio y precio_vidrio de cada mes por tipo de vidrio o por proveedor
+//scripts que la utilizan: HistorialCompra_TipoVidrio, HistorialCompra_Proveedor
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-function calcularSumaMes($tabla,$buscar,$sucursal){
+function calcularSumaVidrioMes($tabla,$buscar,$sucursal){
 	include "abrir_conexion.php";
 	switch($tabla){
 		case 'tipo_vidrio':	$buscar_por = "AND vidrio.codigo_tipo = '$buscar'";	break;
@@ -122,16 +161,16 @@ function calcularSumaMes($tabla,$buscar,$sucursal){
 	return $comprasMes;		//devuelve un vector con [ano][mes][cantidad][precio_vidrio] por cada año, matriz Nx4
 }
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-//funcion que calcula la suma de las cantidades y precio_vidrios de vidrio comprado por factura
-//scripts que la utilizan: verCompra, frmModificarCompra, frmEliminarCompra, EliminarCompra
+//funcion que calcula la suma de cantidad_vidrio y precio_vidrio de vidrio comprado por factura
+//scripts que la utilizan: verCompra, frmModificarCompra, frmEliminarCompra, EliminarCompra, frame_contenido
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-function calcularSumaVidrio($codigo_factura){
+function calcularSumaVidrioFactura($codigo_factura){
 	include "abrir_conexion.php";
 	
 	$select_vidrio = "SELECT vidrio.codigo_tipo, vidrio.codigo_color, vidrio.cantidad_vidrio, vidrio.precio_vidrio FROM vidrio, facturas WHERE facturas.codigo_factura = '$codigo_factura' AND facturas.codigo_factura = vidrio.codigo_factura ORDER BY codigo_vidrio ASC";
 	$consulta_vidrio = mysql_query($select_vidrio, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_vidrio!!</SPAN>".mysql_error());
 
-	for($i=1; $i<=10; $i++)
+	for($i=1; $i<=6; $i++)
 		for($j=1; $j<=2; $j++)
 			$SumaVidrios[$i][$j] = 0;
 	while($vidrios = mysql_fetch_assoc($consulta_vidrio)){
@@ -145,29 +184,17 @@ function calcularSumaVidrio($codigo_factura){
 			else
 			if($vidrios['codigo_color'] == 'CV-03'){$SumaVidrios[3][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[3][2] += $vidrios['precio_vidrio'];}
 		//-------------------------------------------------
-			else
-			if($vidrios['codigo_color'] == 'CV-04'){$SumaVidrios[4][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[4][2] += $vidrios['precio_vidrio'];}
-		//-------------------------------------------------
-			else
-			if($vidrios['codigo_color'] == 'CV-05'){$SumaVidrios[5][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[5][2] += $vidrios['precio_vidrio'];}
-		//-------------------------------------------------
 		}
 		else
 		if($vidrios['codigo_tipo'] == 'TV-02'){
 		//-------------------------------------------------
-			if($vidrios['codigo_color'] == 'CV-01'){$SumaVidrios[6][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[6][2] += $vidrios['precio_vidrio'];}
+			if($vidrios['codigo_color'] == 'CV-01'){$SumaVidrios[4][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[4][2] += $vidrios['precio_vidrio'];}
 		//-------------------------------------------------
 			else
-			if($vidrios['codigo_color'] == 'CV-02'){$SumaVidrios[7][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[7][2] += $vidrios['precio_vidrio'];}
+			if($vidrios['codigo_color'] == 'CV-04'){$SumaVidrios[5][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[5][2] += $vidrios['precio_vidrio'];}
 		//-------------------------------------------------
 			else
-			if($vidrios['codigo_color'] == 'CV-03'){$SumaVidrios[8][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[8][2] += $vidrios['precio_vidrio'];}
-		//-------------------------------------------------
-			else
-			if($vidrios['codigo_color'] == 'CV-04'){$SumaVidrios[9][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[9][2] += $vidrios['precio_vidrio'];}
-		//-------------------------------------------------
-			else
-			if($vidrios['codigo_color'] == 'CV-05'){$SumaVidrios[10][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[10][2] += $vidrios['precio_vidrio'];}
+			if($vidrios['codigo_color'] == 'CV-05'){$SumaVidrios[6][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[6][2] += $vidrios['precio_vidrio'];}
 		//-------------------------------------------------
 		}
 	}
@@ -175,66 +202,7 @@ function calcularSumaVidrio($codigo_factura){
 	return $SumaVidrios;	//devuelve una matriz 10x2, de la fila 1 a la 5 es botella, de la fila 1 a la 5 es plano, columna 1 es cantidad, columna 2 es precio_vidrio
 }
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-//funcion que calcula la suma de las cantidades y precio_vidrios de vidrio comprado por factura
-//scripts que la utilizan: HistorialCompra_Periodo
-//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-function calcularSumaTotalVidrio($codigo_factura,$sucursal){
-	include "abrir_conexion.php";
-	
-	switch($sucursal){
-		case 'VICESA':
-		case 'VIGUA':	$select_vidrio = "SELECT vidrio.codigo_tipo, vidrio.codigo_color, vidrio.cantidad_vidrio, vidrio.precio_vidrio FROM vidrio, facturas WHERE facturas.codigo_factura = '$codigo_factura' AND facturas.codigo_factura = vidrio.codigo_factura AND sucursal = '$sucursal' ORDER BY codigo_vidrio ASC";
-						break;
-		case 'AMBAS':	$select_vidrio = "SELECT vidrio.codigo_tipo, vidrio.codigo_color, vidrio.cantidad_vidrio, vidrio.precio_vidrio FROM vidrio, facturas WHERE facturas.codigo_factura = '$codigo_factura' AND facturas.codigo_factura = vidrio.codigo_factura ORDER BY codigo_vidrio ASC";
-						break;
-	}
-	$consulta_vidrio = mysql_query($select_vidrio, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_vidrio!!</SPAN>".mysql_error());
-
-	for($i=1; $i<=10; $i++)
-		for($j=1; $j<=2; $j++)
-			$SumaVidrios[$i][$j] = 0;
-	while($vidrios = mysql_fetch_assoc($consulta_vidrio)){
-		if($vidrios['codigo_tipo'] == 'TV-01'){
-		//-------------------------------------------------
-			if($vidrios['codigo_color'] == 'CV-01'){$SumaVidrios[1][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[1][2] += $vidrios['precio_vidrio'];}
-		//-------------------------------------------------
-			else
-			if($vidrios['codigo_color'] == 'CV-02'){$SumaVidrios[2][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[2][2] += $vidrios['precio_vidrio'];}
-		//-------------------------------------------------
-			else
-			if($vidrios['codigo_color'] == 'CV-03'){$SumaVidrios[3][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[3][2] += $vidrios['precio_vidrio'];}
-		//-------------------------------------------------
-			else
-			if($vidrios['codigo_color'] == 'CV-04'){$SumaVidrios[4][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[4][2] += $vidrios['precio_vidrio'];}
-		//-------------------------------------------------
-			else
-			if($vidrios['codigo_color'] == 'CV-05'){$SumaVidrios[5][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[5][2] += $vidrios['precio_vidrio'];}
-		//-------------------------------------------------
-		}
-		else
-		if($vidrios['codigo_tipo'] == 'TV-02'){
-		//-------------------------------------------------
-			if($vidrios['codigo_color'] == 'CV-01'){$SumaVidrios[6][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[6][2] += $vidrios['precio_vidrio'];}
-		//-------------------------------------------------
-			else
-			if($vidrios['codigo_color'] == 'CV-02'){$SumaVidrios[7][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[7][2] += $vidrios['precio_vidrio'];}
-		//-------------------------------------------------
-			else
-			if($vidrios['codigo_color'] == 'CV-03'){$SumaVidrios[8][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[8][2] += $vidrios['precio_vidrio'];}
-		//-------------------------------------------------
-			else
-			if($vidrios['codigo_color'] == 'CV-04'){$SumaVidrios[9][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[9][2] += $vidrios['precio_vidrio'];}
-		//-------------------------------------------------
-			else
-			if($vidrios['codigo_color'] == 'CV-05'){$SumaVidrios[10][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[10][2] += $vidrios['precio_vidrio'];}
-		//-------------------------------------------------
-		}
-	}
-	include "cerrar_conexion.php";
-	return $SumaVidrios;	//devuelve una matriz 10x2, de la fila 1 a la 5 es botella, de la fila 1 a la 5 es plano, columna 1 es cantidad, columna 2 es precio_vidrio
-}
-//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-//funcion que calcula la suma total de las cantidades y precio_vidrios de cada factura por periodo
+//funcion que calcula la suma total de cantidad_vidrio y precio_vidrio de cada factura por periodo
 //scripts que la utilizan: VerReporteCompra_Periodo, ExportarReporteCompra_Periodo, ImprimirReporteCompra_Periodo,
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 function calcularSumaFacturaPeriodo($mes,$ano){
@@ -251,6 +219,7 @@ function calcularSumaFacturaPeriodo($mes,$ano){
 	for($i=1; $i<=1000; $i++)
 		for($j=1; $j<=4; $j++)
 			$facturasPeriodo[$i][$j] = '';
+	
 	global $filas; $bandera = true;
 	while($vidrios = mysql_fetch_assoc($consulta_factura)){
 		if($bandera){
@@ -276,7 +245,7 @@ function calcularSumaFacturaPeriodo($mes,$ano){
 	return $facturasPeriodo;		//devuelve un vector con [factura][proveedor][cantidad][precio_vidrio] por cada factura, matriz Nx4
 }
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-//funcion que calcula la suma total de las cantidades y precio_vidrios de cada factura por proveedor
+//funcion que calcula la suma total de cantidad_vidrio y precio_vidrio de cada factura por proveedor
 //scripts que la utilizan: VerReporteCompra_Proveedor, ExportarReporteCompra_Proveedor, ImprimirReporteCompra_Proveedor,
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 function calcularSumaFacturaProveedor($proveedor){
@@ -500,7 +469,7 @@ function formatoFechaCompactada($fecha){
 //funcion que recibe una fecha con el formato "Y/m/d G:i:s" y la devuelve con el formato "dia numero_dia de nombre_mes de ano - hora:minuto"
 //scripts que la utilizan: RecuperacionBaseDatos, EliminarRespaldoBaseDatos, funciones.php
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-function transformasFecha($fecha){
+function transformarFecha($fecha){
 	date_default_timezone_set('America/El_Salvador');
 	$fecha = strtotime($fecha);
 	$ano = date('Y',$fecha);
@@ -555,7 +524,7 @@ function informacionArchivo($dir){
 	$i = 1;
 	while ($archivo = readdir($directorio)){
 		if($archivo != '.' && $archivo != '..'){
-			$informacion[$i]['fecha'] = transformasFecha(date('Y/m/d G:i:s',filemtime($dir.$archivo)));
+			$informacion[$i]['fecha'] = transformarFecha(date('Y/m/d G:i:s',filemtime($dir.$archivo)));
 			$informacion[$i]['tamano'] = tamanoArchivo(filesize($dir.$archivo));
 			$informacion[$i]['nombre'] = $archivo;
 			$i++;

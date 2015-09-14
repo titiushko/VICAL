@@ -12,14 +12,14 @@ $consulta_factura = mysql_query($instruccion_select, $conexion) or die ("<SPAN C
 ?>
 <HTML>
 	<head>
-		<title>SCYCPVES</title>
+		<title>COMVICONPRO</title>
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">
 		<meta http-equiv="pragma"        content="nocache">
 		<meta name="author"              content="TITIUSHKO">
 		<meta name="keywords"            content="ejercicio, estilo, html">
-		<meta name="description"         content="Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador">
+		<meta name="description"         content="Sistema Inform&aacute;tico para Ayudar en el Registro de Compras de Vidrio y en el Control de Proveedores de VICAL El Salvador (COMVICONPRO).">
 		<link rel="shortcut icon" 		 href="../../../imagenes/vical.ico">
 		<link rel="stylesheet" 			 href="../../../librerias/formato.css" type="text/css"></link>
 		<script type="text/javascript" 	 src="../../../librerias/funciones.js"></script>
@@ -77,14 +77,14 @@ $consulta_factura = mysql_query($instruccion_select, $conexion) or die ("<SPAN C
 										<?php
 										while ($facturas = mysql_fetch_array($consulta_factura)){
 										?>
-										<tr align="center">
-											<td><?php echo "<a title='Ver' style='color: black;'href='VerCompra.php?valor=$facturas[0]'>".$facturas[0]."</a>";?></td>
-											<td><?php echo "<a title='Ver' style='color: black;'href='VerCompra.php?valor=$facturas[0]'>".$facturas[1]."</a>";?></td>
-											<td><?php echo "<a title='Ver' style='color: black;'href='VerCompra.php?valor=$facturas[0]'>".$facturas[2]."</a>";?></td>
-											<td><?php echo "<a title='Ver' style='color: black;'href='VerCompra.php?valor=$facturas[0]'>".$facturas[3]."</a>";?></td>
-											<td><?php echo "<a title='Ver' style='color: black;'href='VerCompra.php?valor=$facturas[0]'>".$facturas[4]."</a>";?></td>
-											<td><?php echo "<a title='Ver' style='color: black;'href='VerCompra.php?valor=$facturas[0]'>".$facturas[5]."</a>";?></td>
-											<td><?php echo "<a title='Ver' style='color: black;'href='VerCompra.php?valor=$facturas[0]'>$".number_format($facturas[6],2,'.',',')."</a>";?></td>
+										<tr align="center" title="Click para ver la factura" onClick="redireccionar('VerCompra.php?valor=<?php echo $facturas[0]?>');">
+											<td><span class="manita"><?php echo $facturas[0];?></span></td>
+											<td><span class="manita"><?php echo $facturas[1];?></span></td>
+											<td><span class="manita"><?php echo $facturas[2];?></span></td>
+											<td><span class="manita"><?php echo $facturas[3];?></span></td>
+											<td><span class="manita"><?php echo $facturas[4];?></span></td>
+											<td><span class="manita"><?php echo $facturas[5];?></span></td>
+											<td><span class="manita"><?php echo "$".number_format($facturas[6],2,'.',',');?></span></td>
 										</tr>
 										<?php
 										}
@@ -153,7 +153,7 @@ $consulta_factura = mysql_query($instruccion_select, $conexion) or die ("<SPAN C
 			</tr>
 <!------------------------------------------------------------------------------------------------------------------------>				
 		</table>
-		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2012</center>
+		<hr><center>Sistema Inform&aacute;tico para Ayudar en el Registro de Compras de Vidrio y en el Control de Proveedores de VICAL El Salvador (COMVICONPRO). &#8226; Derechos Reservados 2012</center>
 	</BODY>
 </HTML>
 <?php include "../../../librerias/cerrar_conexion.php"; ?>

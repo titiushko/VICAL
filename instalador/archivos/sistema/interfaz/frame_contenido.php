@@ -2,9 +2,13 @@
 include "../librerias/funciones.php";
 include "../librerias/abrir_conexion.php";
 session_start();
-if($_SESSION["autenticado"] != "SI"){
-	session_destroy();
-	header("Location: ../loggin/Denegado/CargarDenegado.php");
+$consulta_usuario = mysql_query("SELECT estado FROM usuarios WHERE id = '".$_SESSION["id"]."'",$conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_usuario!!</SPAN>".mysql_error());
+$usuarios = mysql_fetch_array($consulta_usuario);
+$autorisacion = false;
+if($_SESSION["autenticado"] == "SI" && $usuarios["estado"] == "online")	$autorisacion = true;
+if(!$autorisacion){
+	//session_destroy();
+	header("Location: ../login/Denegado/CargarDenegado.php");
 	exit();
 }
 //SELECT MAX(codigo_ultima_compra) AS ultima, codigo_factura FROM ultima_compra
@@ -35,14 +39,14 @@ for($i=1;$i<=5;$i++){
 <!DOCTYPE html PUBLIC "-//WRC//DTD HTML 4.01 Transitional//EN">
 <HTML>
 	<head>
-		<title>SCYCPVES</title>
+		<title>COMVICONPRO</title>
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">
 		<meta http-equiv="pragma"        content="nocache">
 		<meta name="author"              content="Tito">
 		<meta name="keywords"            content="ejercicio, estilo, html">
-		<meta name="description"         content="Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador">
+		<meta name="description"         content="Sistema Inform&aacute;tico para Ayudar en el Registro de Compras de Vidrio y en el Control de Proveedores de VICAL El Salvador (COMVICONPRO).">
 		<link rel="shortcut icon" 		 href="../imagenes/vical.ico"/>
 		<link rel="stylesheet"			 href="../librerias/formato.css" type="text/css"></link>
 		<link rel="stylesheet"			 href="../librerias/jquery/grafica/css/visualize.css" type="text/css">
@@ -67,7 +71,7 @@ for($i=1;$i<=5;$i++){
 	</head>
 	<BODY class="cuerpo1">	
 		<CENTER>
-		<h1 class="encabezado1">SISTEMA DE COMPRAS Y CONTROL DE PROVEEDORES DE LA EMPRESA VICAL DE EL SALVADOR</h1>
+		<h1 class="encabezado1">Sistema Inform&aacute;tico para Ayudar en el Registro de Compras de Vidrio y en el Control de Proveedores de VICAL El Salvador (COMVICONPRO).</h1>
 		<h1 class="encabezado1">Bienvenid@ <font color="#ffff00"><?php echo $_SESSION["nombre"]."";?></font></h1>
 		<br>
 		<img SRC="../imagenes/vidrio.png">
@@ -159,27 +163,19 @@ for($i=1;$i<=5;$i++){
 									<thead class="titulo3">
 										<tr>
 											<th rowspan=2 colspan=1></th>
+											<th colspan=2>CLARO</th>
 											<th colspan=2>VERDE</th>
-											<th colspan=2>CRISTALINO</th>
 											<th colspan=2>CAFE</th>
-											<th colspan=2>BRONCE</th>
-											<th colspan=2>REFLECTIVO</th>
 											<th colspan=2>TOTAL</th><!--total por tipo de vidrio-->
 										</tr>
 										<tr>
+											<!--CLARO-->
+											<th>QQ</th>
+											<th>$$</th>
 											<!--VERDE-->
 											<th>QQ</th>
 											<th>$$</th>
-											<!--CRISTALINO-->
-											<th>QQ</th>
-											<th>$$</th>
 											<!--CAFE-->
-											<th>QQ</th>
-											<th>$$</th>
-											<!--BRONCE-->
-											<th>QQ</th>
-											<th>$$</th>
-											<!--REFLECTIVO-->
 											<th>QQ</th>
 											<th>$$</th>
 											<!--TOTAL-->
@@ -191,9 +187,9 @@ for($i=1;$i<=5;$i++){
 										<tr>
 											<th class="titulo3">BOTELLA</th>
 											<?php
-											$Compra = calcularSumaVidrio($codigo_factura);
-											$Totales = calcularSumaTotales($Compra);
-											for($i=1; $i<=5; $i++){
+											$Compra = calcularSumaVidrioFactura($codigo_factura);
+											$Totales = calcularSumaVidrioTotal($Compra);
+											for($i=1; $i<=3; $i++){
 												for($j=1; $j<=2; $j++){
 													if($Compra[$i][$j] <> 0){
 											?>
@@ -221,10 +217,41 @@ for($i=1;$i<=5;$i++){
 											}
 											?>
 										</tr>
+									</tbody>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="6">
+								<table align="center" border class="rejilla" width="60%">
+									<thead class="titulo3">
+										<tr>
+											<th rowspan=2 colspan=1></th>
+											<th colspan=2>CLARO</th>
+											<th colspan=2>BRONCE</th>
+											<th colspan=2>REFLECTIVO</th>
+											<th colspan=2>TOTAL</th><!--total por tipo de vidrio-->
+										</tr>
+										<tr>
+											<!--CLARO-->
+											<th>QQ</th>
+											<th>$$</th>
+											<!--BRONCE-->
+											<th>QQ</th>
+											<th>$$</th>
+											<!--REFLECTIVO-->
+											<th>QQ</th>
+											<th>$$</th>
+											<!--TOTAL-->
+											<th>QQ</th>
+											<th>$$</th>
+										</tr>
+									</thead>
+									<tbody>
 										<tr>
 											<th class="titulo3">PLANO</th>
 											<?php
-											for($i=6; $i<=10; $i++){
+											for($i=4; $i<=6; $i++){
 												for($j=1; $j<=2; $j++){
 													if($Compra[$i][$j] <> 0){
 											?>
@@ -283,7 +310,7 @@ for($i=1;$i<=5;$i++){
 		</table>
 		<?php } ?>
 <!------------------------------------------------------------------------------------------------------------------------>
-		<hr><p><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2012</center></p>
+		<hr><p><center>Sistema Inform&aacute;tico para Ayudar en el Registro de Compras de Vidrio y en el Control de Proveedores de VICAL El Salvador (COMVICONPRO). &#8226; Derechos Reservados 2012</center></p>
 	</BODY>
 </HTML>
 <?php

@@ -4,7 +4,7 @@ session_start();
 <!DOCTYPE html PUBLIC "-//WRC//DTD HTML 4.01 Transitional//EN">
 <HTML>
 	<head>
-		<title>SCYCPVES</title>
+		<title>COMVICONPRO</title>
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">

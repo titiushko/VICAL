@@ -16,14 +16,14 @@ $consulta_centros_de_acopio = mysql_query($instruccion_select, $conexion) or die
 ?>
 <HTML>
 	<head>
-		<title>SCYCPVES</title>
+		<title>COMVICONPRO</title>
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">
 		<meta http-equiv="pragma"        content="nocache">
 		<meta name="author"              content="TITIUSHKO">
 		<meta name="keywords"            content="ejercicio, estilo, html">
-		<meta name="description"         content="Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador">
+		<meta name="description"         content="Sistema Inform&aacute;tico para Ayudar en el Registro de Compras de Vidrio y en el Control de Proveedores de VICAL El Salvador (COMVICONPRO).">
 		<link rel="shortcut icon" 		 href="../../../imagenes/vical.ico">
 		<link rel="stylesheet" 			 href="../../../librerias/formato.css" type="text/css"></link>
 		<script type="text/javascript" 	 src="../../../librerias/funciones.js"></script>
@@ -105,10 +105,10 @@ $consulta_centros_de_acopio = mysql_query($instruccion_select, $conexion) or die
 									<tbody class="subtitulo2">
 										<?php while ($centros_de_acopio = mysql_fetch_array($consulta_centros_de_acopio)){ ?>
 										<tr align="center">
-											<td><?php echo "<a title='Ver' style='color: black;'href='VerCentroAcopio.php?departamento=$centros_de_acopio[0]'>".$centros_de_acopio[0]."</a>";?></td>
-											<td><?php echo "<a title='Ver' style='color: black;'href='VerCentroAcopio.php?departamento=$centros_de_acopio[0]'>".$centros_de_acopio[1]."</a>";?></td>
-											<td><?php echo "<a title='Ver' style='color: black;'href='VerCentroAcopio.php?departamento=$centros_de_acopio[0]'>".$centros_de_acopio[2]."</a>";?></td>
-											<td><?php echo "<a title='Ver' style='color: black;'href='VerCentroAcopio.php?departamento=$centros_de_acopio[0]'>".$centros_de_acopio[3]."</a>";?></td>
+											<td><span class="manita" title="Click para ver el centro de acopio" onClick="redireccionar('VerCentroAcopio.php?departamento=<?php echo $centros_de_acopio[0]?>');"><?php echo $centros_de_acopio[0];?></span></td>
+											<td><span class="manita" title="Click para ver el centro de acopio" onClick="redireccionar('VerCentroAcopio.php?departamento=<?php echo $centros_de_acopio[0]?>');"><?php echo $centros_de_acopio[1];?></span></td>
+											<td><span class="manita" title="Click para ver el centro de acopio" onClick="redireccionar('VerCentroAcopio.php?departamento=<?php echo $centros_de_acopio[0]?>');"><?php echo $centros_de_acopio[2];?></span></td>
+											<td><span class="manita" title="Click para ver el centro de acopio" onClick="redireccionar('VerCentroAcopio.php?departamento=<?php echo $centros_de_acopio[0]?>');"><?php echo $centros_de_acopio[3];?></span></td>
 											<?php if($_SESSION["tipo_usuario"] == "1"){ ?>
 											<td>
 												<img src="../../../imagenes/icono_modificar.png" align="top" title="Modificar" <?php echo "onClick=\"redireccionar('../Modificar/frmModificarCentroAcopio.php?modificar_centro_de_acopio=$centros_de_acopio[0]&direccion=$direccion');\"";?> class="manita">
@@ -214,7 +214,7 @@ $consulta_centros_de_acopio = mysql_query($instruccion_select, $conexion) or die
 			</tr>
 <!--::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
 		</table>
-		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2012</center>
+		<hr><center>Sistema Inform&aacute;tico para Ayudar en el Registro de Compras de Vidrio y en el Control de Proveedores de VICAL El Salvador (COMVICONPRO). &#8226; Derechos Reservados 2012</center>
 	</BODY>
 </HTML>
 <?php include "../../../librerias/cerrar_conexion.php"; ?>

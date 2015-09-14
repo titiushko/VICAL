@@ -34,10 +34,10 @@ $mensaje1 = "";	$mensaje2 = "";
 if($mostrar == 'cantidad'){
 	$titulo = "Cantidades";		$fila1 = "Cantidad";		$fila2 = "Monto";
 	
-	$Sumas = calcularSumaTotales(calcularSumaCompras($mes1,$ano1,$sucursal));
+	$Sumas = calcularSumaVidrioTotal(calcularSumaVidrioComprado($mes1,$ano1,$sucursal));
 	$periodo1['cantidades'] = $Sumas[1] + $Sumas[3];	$periodo1['precios'] = $Sumas[2] + $Sumas[4];
 	
-	$Sumas = calcularSumaTotales(calcularSumaCompras($mes2,$ano2,$sucursal));
+	$Sumas = calcularSumaVidrioTotal(calcularSumaVidrioComprado($mes2,$ano2,$sucursal));
 	$periodo2['cantidades'] = $Sumas[1] + $Sumas[3];	$periodo2['precios'] = $Sumas[2] + $Sumas[4];
 	
 	//verificar si hay valores
@@ -51,10 +51,10 @@ if($mostrar == 'cantidad'){
 if($mostrar == 'tipo'){
 	$titulo = "Tipo de Vidrio";	$filas = array(1 => "Botella", 2 => "Plano");
 	
-	$Sumas = calcularSumaTotales(calcularSumaCompras($mes1,$ano1,$sucursal));
+	$Sumas = calcularSumaVidrioTotal(calcularSumaVidrioComprado($mes1,$ano1,$sucursal));
 	$periodo1[1]['cantidades'] = $Sumas[1];		$periodo1[2]['cantidades'] = $Sumas[3];
 	
-	$Sumas = calcularSumaTotales(calcularSumaCompras($mes2,$ano2,$sucursal));
+	$Sumas = calcularSumaVidrioTotal(calcularSumaVidrioComprado($mes2,$ano2,$sucursal));
 	$periodo2[1]['cantidades'] = $Sumas[1];		$periodo2[2]['cantidades'] = $Sumas[3];
 	
 	//verificar si hay valores
@@ -68,10 +68,10 @@ if($mostrar == 'tipo'){
 if($mostrar == 'color'){
 	$titulo = "Color de Vidrio";	$filas = array(1 => "Verde", 2 => "Cristalino", 3 => "Cafe", 4 => "Bronce", 5 => "Reflectivo");
 	
-	$Sumas = calcularSumaCompras($mes1,$ano1,$sucursal);
+	$Sumas = calcularSumaVidrioComprado($mes1,$ano1,$sucursal);
 	for($i=1; $i<=5; $i++)	$periodo1[$i]['cantidades'] = $Sumas[$i][1] + $Sumas[$i+5][1];
 	
-	$Sumas = calcularSumaCompras($mes2,$ano2,$sucursal);
+	$Sumas = calcularSumaVidrioComprado($mes2,$ano2,$sucursal);
 	for($i=1; $i<=5; $i++)	$periodo2[$i]['cantidades'] = $Sumas[$i][1] + $Sumas[$i+5][1];
 	
 	//verificar si hay valores
@@ -84,14 +84,14 @@ if($mostrar == 'color'){
 ?>
 <HTML>
 	<head>
-		<title>SCYCPVES</title>
+		<title>COMVICONPRO</title>
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">
 		<meta http-equiv="pragma"        content="nocache">
 		<meta name="author"              content="TITIUSHKO">
 		<meta name="keywords"            content="ejercicio, estilo, html">
-		<meta name="description"         content="Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador">
+		<meta name="description"         content="Sistema Inform&aacute;tico para Ayudar en el Registro de Compras de Vidrio y en el Control de Proveedores de VICAL El Salvador (COMVICONPRO).">
 		<link rel="shortcut icon" 		 href="../../../imagenes/vical.ico">
 		<link rel="stylesheet" 			 href="../../../librerias/formato.css" type="text/css"></link>
 		<script type="text/javascript"	 src="../../../librerias/funciones.js"></script>
@@ -276,7 +276,7 @@ if($mostrar == 'color'){
 			?>
 <!------------------------------------------------------------------------------------------------------------------------>
 		</TABLE>
-	<hr><p><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2012</center></p>
+	<hr><p><center>Sistema Inform&aacute;tico para Ayudar en el Registro de Compras de Vidrio y en el Control de Proveedores de VICAL El Salvador (COMVICONPRO). &#8226; Derechos Reservados 2012</center></p>
 	</BODY>
 </HTML>
 <?php include "../../../librerias/cerrar_conexion.php"; ?>

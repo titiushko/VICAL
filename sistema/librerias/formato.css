@@ -196,8 +196,13 @@
 	background-repeat: no-repeat;
 	background-position: center;
 }
-.exportar{
-	background: transparent url(../imagenes/icono_exportar.png);
+.exportar_word{
+	background: transparent url(../imagenes/icono_exportar_word.png);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+.exportar_excel{
+	background: transparent url(../imagenes/icono_exportar_excel.png);
 	background-repeat: no-repeat;
 	background-position: center;
 }
@@ -285,7 +290,7 @@
     border-bottom: solid 1px #000;
 }
 
-/*fondo para inputs (puede ser para cualquier elemento pero los uso en los inputs)*/
+/*fondo para inputs de formularios de modificacion*/
 .fondo{
     background-color: #76a5d3;
     border: none;
@@ -299,23 +304,29 @@
     background-color: #8BB5DF;	/*mas claro*/    
 }
 
-/*fondos de los inputs*/
-.fondo1{
+.fondo1{	/*inputs de verCompra.php, frmModificarCompra.php*/
+	color: #000000;
+	text-align: center;
     background-color: #76a5d3;	/*azul cielo*/
     border: none;
+	width: 40px;
 }
 
-.fondo2{
+.fondo2{	/*inputs de frmEliminarCompra.php*/
+	text-align: center;
     background-color: #FFFFA3;	/*rojo*/
     border: none;
+	width: 40px;
 }
 
-.fondo3{
+.fondo3{	/*inputs de ModificarCompra.php, EliminarCompra.php*/
+	text-align: center;
     background-color: #E5E5E5;	/*gris*/
     border: none;
+	width: 40px;
 }
 
-.fondo4{	/*inputs nuevas compra*/
+.fondo4{	/*inputs de frmNuevaCompra.php*/
 	text-align: center;
     background-color: #FFFFFF;	/*blanco*/
     border: none;

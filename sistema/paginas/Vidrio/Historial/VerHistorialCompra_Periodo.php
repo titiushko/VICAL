@@ -9,34 +9,42 @@ $sucursal			  = $_POST['sucursal'];
 $codigo_centro_acopio = $_POST['codigo_centro_acopio'];
 if($fecha_inicial == '' || $fecha_final == '' || $sucursal == '' || $codigo_centro_acopio == '') header("Location: frmHistorialCompra.php");
 
+if($codigo_centro_acopio == 'Todos los Centros de Acopio'){
+	$lugar_deposiotado = $codigo_centro_acopio;
+	$buscar_centro_acopio = "";
+}
+else{
+	$consulta_centro_de_acopio = mysql_query("SELECT nombre_centro_acopio FROM centros_de_acopio WHERE codigo_centro_acopio = '$codigo_centro_acopio'",$conexion) or die ("<SPAN CLASS='error'>Fallo en la consulta_centro_de_acopio!!</SPAN>".mysql_error());
+	$nombre_centro_acopio = mysql_fetch_assoc($consulta_centro_de_acopio);
+	$lugar_deposiotado = "el centro de acopio de ".$nombre_centro_acopio['nombre_centro_acopio'];
+	$buscar_centro_acopio = "AND codigo_centro_acopio = '$codigo_centro_acopio'";
+}
+
 switch($sucursal){
 	case 'VICESA':
 	case 'VIGUA':	$Sucursal = "para ".$sucursal."";
-					$consulta_canidad = "SELECT COUNT(codigo_factura) AS cantidad FROM facturas WHERE facturas.fecha BETWEEN '$fecha_inicial' AND '$fecha_final' AND sucursal = '$sucursal' AND codigo_centro_acopio = '$codigo_centro_acopio'";
-					$seleccionar_factura = "SELECT facturas.codigo_factura, proveedores.nombre_proveedor FROM facturas, proveedores WHERE facturas.fecha BETWEEN '$fecha_inicial' AND '$fecha_final' AND facturas.codigo_proveedor = proveedores.codigo_proveedor AND sucursal = '$sucursal' AND codigo_centro_acopio = '$codigo_centro_acopio' ORDER BY facturas.codigo_factura ASC";
+					$consulta_canidad = "SELECT COUNT(codigo_factura) AS cantidad FROM facturas WHERE facturas.fecha BETWEEN '$fecha_inicial' AND '$fecha_final' AND sucursal = '$sucursal' $buscar_centro_acopio";
+					$seleccionar_factura = "SELECT facturas.codigo_factura, proveedores.nombre_proveedor FROM facturas, proveedores WHERE facturas.fecha BETWEEN '$fecha_inicial' AND '$fecha_final' AND facturas.codigo_proveedor = proveedores.codigo_proveedor AND sucursal = '$sucursal' $buscar_centro_acopio ORDER BY facturas.codigo_factura ASC";
 					break;
 	case 'AMBAS':	$Sucursal = "";
-					$consulta_canidad = "SELECT COUNT(codigo_factura) AS cantidad FROM facturas WHERE facturas.fecha BETWEEN '$fecha_inicial' AND '$fecha_final' AND codigo_centro_acopio = '$codigo_centro_acopio'";
-					$seleccionar_factura = "SELECT facturas.codigo_factura, proveedores.nombre_proveedor FROM facturas, proveedores WHERE facturas.fecha BETWEEN '$fecha_inicial' AND '$fecha_final' AND facturas.codigo_proveedor = proveedores.codigo_proveedor AND codigo_centro_acopio = '$codigo_centro_acopio' ORDER BY facturas.codigo_factura ASC";
+					$consulta_canidad = "SELECT COUNT(codigo_factura) AS cantidad FROM facturas WHERE facturas.fecha BETWEEN '$fecha_inicial' AND '$fecha_final' $buscar_centro_acopio";
+					$seleccionar_factura = "SELECT facturas.codigo_factura, proveedores.nombre_proveedor FROM facturas, proveedores WHERE facturas.fecha BETWEEN '$fecha_inicial' AND '$fecha_final' AND facturas.codigo_proveedor = proveedores.codigo_proveedor $buscar_centro_acopio ORDER BY facturas.codigo_factura ASC";
 					break;
 }
 $consulta_factura = mysql_query($seleccionar_factura, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_factura!!</SPAN>".mysql_error());
 $consulta = mysql_query($consulta_canidad, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta cantidad facturas!!</SPAN>".mysql_error());
 $cantidad = mysql_fetch_assoc($consulta);
-
-$consulta_centro_de_acopio = mysql_query("SELECT nombre_centro_acopio FROM centros_de_acopio WHERE codigo_centro_acopio = '$codigo_centro_acopio'",$conexion) or die ("<SPAN CLASS='error'>Fallo en la consulta_centro_de_acopio!!</SPAN>".mysql_error());
-$nombre_centro_acopio = mysql_fetch_assoc($consulta_centro_de_acopio);
 ?>
 <HTML>
 	<head>
-		<title>SCYCPVES</title>
+		<title>COMVICONPRO</title>
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">
 		<meta http-equiv="pragma"        content="nocache">
 		<meta name="author"              content="TITIUSHKO">
 		<meta name="keywords"            content="ejercicio, estilo, html">
-		<meta name="description"         content="Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador">
+		<meta name="description"         content="Sistema Inform&aacute;tico para Ayudar en el Registro de Compras de Vidrio y en el Control de Proveedores de VICAL El Salvador (COMVICONPRO).">
 		<link rel="shortcut icon" 		 href="../../../imagenes/vical.ico" />
 		<link rel="stylesheet" 			 href="../../../librerias/formato.css" type="text/css"></link>
 		<script type="text/javascript" src="../../../librerias/funciones.js"></script>
@@ -56,7 +64,7 @@ $nombre_centro_acopio = mysql_fetch_assoc($consulta_centro_de_acopio);
 					<h2 class="encabezado2"><img src="../../../imagenes/icono_error.png"><br>NO SE PUDO MOSTRAR EL HISTORIAL DE COMPRAS!!</h2>
 					<table align="center" class="alerta error centro">
 						<tr>
-							<td align="center" colspan="3">No hay valores que mostrar.<br>No se a comprado vidrio <?php echo $Sucursal." en el periodo del<br>".formatoFechaExtendida($fecha_inicial)."<br>al<br>".formatoFechaExtendida($fecha_final);?> deposiotado para el centro de acopio de <?php echo $nombre_centro_acopio['nombre_centro_acopio'];?>.</td>
+							<td align="center" colspan="3">No hay valores que mostrar.<br>No se a comprado vidrio <?php echo $Sucursal." en el periodo del<br>".formatoFechaExtendida($fecha_inicial)."<br>al<br>".formatoFechaExtendida($fecha_final);?> deposiotado para <?php echo $lugar_deposiotado;?>.</td>
 							<meta http-equiv ="refresh"		 content="5;url=frmHistorialCompra.php">
 						</tr>
 					</table>
@@ -73,36 +81,43 @@ $nombre_centro_acopio = mysql_fetch_assoc($consulta_centro_de_acopio);
 			<tr>							
 				<td align="center">
 					<table align="center" border bgcolor="white">
-						<caption><h1 class="encabezado2">Historial de vidrio comprado <?php echo $Sucursal." en el periodo del<br>".formatoFechaExtendida($fecha_inicial)." al ".formatoFechaExtendida($fecha_final);?> deposiotado en el centro de acopio de <?php echo $nombre_centro_acopio['nombre_centro_acopio'];?>.</h1></caption>
+						<caption><h1 class="encabezado2">Historial de vidrio comprado <?php echo $Sucursal." en el periodo del<br>".formatoFechaExtendida($fecha_inicial)." al ".formatoFechaExtendida($fecha_final);?> deposiotado en <?php echo $lugar_deposiotado;?>.</h1></caption>
 						<thead class="titulo2">
-							<tr><th rowspan=2 colspan=2></th><th colspan=10>BOTELLA</th><th colspan=10>PLANO</th><th rowspan=1 colspan=2></th></tr>
 							<tr>
-								<th colspan=2>VERDE</th><th colspan=2>CRISTALINO</th><th colspan=2>CAFE</th><th colspan=2>BRONCE</th><th colspan=2>REFLECTIVO</th>
-								<th colspan=2>VERDE</th><th colspan=2>CRISTALINO</th><th colspan=2>CAFE</th><th colspan=2>BRONCE</th><th colspan=2>REFLECTIVO</th>
-								<th colspan=2>TOTAL</th>
+								<th rowspan=2 colspan=2></th><th colspan=6>BOTELLA</th><th colspan=6>PLANO</th><th rowspan=1 colspan=2></th>
+							</tr>
+							<tr>
+								<th colspan=2>CLARO</th><th colspan=2>VERDE</th><th colspan=2>CAFE</th>
+								<th colspan=2>CLARO</th><th colspan=2>BRONCE</th><th colspan=2>REFLECTIVO</th>
+								<th colspan=2>TOTAL POR RECIBO</th>
 							</tr>
 							<tr>
 								<th>RECIBOS</th><th>PROVEEDORES</th>
-								<th>QQ</th><th>$$</th><th>QQ</th><th>$$</th><th>QQ</th><th>$$</th><th>QQ</th><th>$$</th><th>QQ</th><th>$$</th>
-								<th>QQ</th><th>$$</th><th>QQ</th><th>$$</th><th>QQ</th><th>$$</th><th>QQ</th><th>$$</th><th>QQ</th><th>$$</th>
+								<th>QQ</th><th>$$</th><th>QQ</th><th>$$</th><th>QQ</th><th>$$</th>
+								<th>QQ</th><th>$$</th><th>QQ</th><th>$$</th><th>QQ</th><th>$$</th>
 								<th>QQ</th><th>$$</th>
 							</tr>
 						</thead>
 						<tbody align="center" class="subtitulo1">
 						<?php
-						$contador = 1;
-						$TotalesCantidades = 0;	$TotalesPrecios = 0;
+						$TotalVidrioCantidad	  = 0;	$TotalVidrioPrecio 	 = 0;
+						for($i=1; $i<=6; $i++){$TotalColumnaCantidad[$i] = 0;	$TotalColumnaPrecio[$i] = 0;}
 						while($factura = mysql_fetch_assoc($consulta_factura)){
 						?>
 							<tr onMouseOver="bgColor='#7cbfff'" onMouseOut="bgColor='#ffffff'">
 								<td><?php echo $factura['codigo_factura'];?></td><td><?php echo $factura['nombre_proveedor'];?></td>
 							<?php
-							$vidrios = calcularSumaTotalVidrio($factura['codigo_factura'],$sucursal);
+							$Vidrios   	 = calcularSumaVidrio($factura['codigo_factura'],$sucursal);
+							$TotalVidrio = calcularSumaVidrioTotal($Vidrios);
+							$TotalVidrioCantidad	+= $TotalVidrio[1] + $TotalVidrio[3];
+							$TotalVidrioPrecio		+= $TotalVidrio[2] + $TotalVidrio[4];
 							//-------------------------------------------------------------------
-							for($j=1; $j<=5; $j++){
-								if($vidrios[$j][1] <> 0 && $vidrios[$j][2] <> 0){
+							for($i=1; $i<=3; $i++){
+								if($Vidrios[$i][1] <> 0 && $Vidrios[$i][2] <> 0){
+								$TotalColumnaCantidad[$i] += $Vidrios[$i][1];
+								$TotalColumnaPrecio[$i]	  += $Vidrios[$i][2];
 							?>								
-								<td><?php echo $vidrios[$j][1];?></td><td><?php echo $vidrios[$j][2];?></td>
+								<td><?php echo number_format($Vidrios[$i][1],2,'.',',');?></td><td><?php echo number_format($Vidrios[$i][2],2,'.',',');?></td>
 							<?php
 								}
 								else{
@@ -112,10 +127,12 @@ $nombre_centro_acopio = mysql_fetch_assoc($consulta_centro_de_acopio);
 								}
 							}//fin botellas
 							//-------------------------------------------------------------------
-							for($j=6; $j<=10; $j++){
-								if($vidrios[$j][1] <> 0 && $vidrios[$j][2] <> 0){
-							?>								
-								<td><?php echo $vidrios[$j][1];?></td><td><?php echo $vidrios[$j][2];?></td>
+							for($i=4; $i<=6; $i++){
+								if($Vidrios[$i][1] <> 0 && $Vidrios[$i][2] <> 0){
+								$TotalColumnaCantidad[$i] += $Vidrios[$i][1];
+								$TotalColumnaPrecio[$i]	  += $Vidrios[$i][2];
+							?>
+								<td><?php echo number_format($Vidrios[$i][1],2,'.',',');?></td><td><?php echo number_format($Vidrios[$i][2],2,'.',',');?></td>
 							<?php
 								}
 								else{
@@ -125,32 +142,48 @@ $nombre_centro_acopio = mysql_fetch_assoc($consulta_centro_de_acopio);
 								}
 							}//fin planos
 							//-------------------------------------------------------------------
-							$Totales = calcularSumaTotales(calcularSumaTotalVidrio($factura['codigo_factura'],$sucursal));
-							$TotalesCantidades	+= $Totales[1] +  $Totales[3];
-							$TotalesPrecios		+= $Totales[2] + $Totales[4];
-							if($contador == 1){
 							?>
-								<td rowspan="<?php echo ($cantidad['cantidad']-1);?>" colspan="2">&nbsp;</td>
+								<td><?php echo number_format(($TotalVidrio[1] +  $TotalVidrio[3]),2,'.',',');?></td><td><?php echo number_format(($TotalVidrio[2] +  $TotalVidrio[4]),2,'.',',');?></td>
 							</tr>
-							<?php
-							}
-							if($contador < $cantidad['cantidad']){
-							?>
-								<!--<td><?php echo ($Totales[1] +  $Totales[3]);?></td><td><?php echo ($Totales[2] +  $Totales[4]);?></td>-->
-							<!--</tr>-->
-							<?php
-							}
-							else{									
-							?>
-								<th><?php echo number_format($TotalesCantidades,2,'.',',');?></th>
-								<th><?php echo "$".number_format($TotalesPrecios,2,'.',',');?></th>
-							</tr>
-							<?php
-							}
-							//-------------------------------------------------------------------								
-							$contador++;
+						<?php
 						}//fin while que recorre los registros
 						?>
+							<tr>
+								<th align="right" colspan=2>TOTAL POR TIPO Y COLOR DE VIDRIO</th>
+								<?php
+								for($i=1; $i<=6; $i++){
+									if($TotalColumnaCantidad[$i] != 0 && $TotalColumnaPrecio[$i] != 0){
+								?>
+								<th><?php echo number_format($TotalColumnaCantidad[$i],2,'.',',');?></th><th><?php echo "$".number_format($TotalColumnaPrecio[$i],2,'.',',');?></th>
+								<?php
+									}
+									else{
+								?>
+								<td>&nbsp;</td><td>&nbsp;</td>
+								<?php
+									}
+								}
+								?>
+								<th><?php echo number_format($TotalVidrioCantidad,2,'.',',');?></th><th><?php echo "$".number_format($TotalVidrioPrecio,2,'.',',');?></th>
+							</tr>
+							<tr>
+								<th align="right" colspan=2>TOTAL EN TONELADAS</th>
+								<?php
+								for($i=1; $i<=6; $i++){
+									if($TotalColumnaCantidad[$i] != 0 && $TotalColumnaPrecio[$i] != 0){
+								?>
+								<th><?php echo number_format($TotalColumnaCantidad[$i]/22,2,'.',',');?></th><th>&nbsp;</th>
+								<?php
+									}
+									else{
+								?>
+								<td>&nbsp;</td><td>&nbsp;</td>
+								<?php
+									}
+								}
+								?>
+								<th><?php echo number_format($TotalVidrioCantidad/22,2,'.',',');?></th><th>&nbsp;</th>
+							</tr>
 						</tbody>
 					</table>
 					<br><center><?php echo hoyEs();?></center>
@@ -159,8 +192,13 @@ $nombre_centro_acopio = mysql_fetch_assoc($consulta_centro_de_acopio);
 					<table align="center">
 						<tr>
 							<td>
-								<FORM ACTION="ExportarHistorialCompra_Periodo.php<?php echo "?valor_fecha_inicial=$fecha_inicial&valor_fecha_final=$fecha_final&valor_sucursal=$sucursal&valor_codigo_centro_acopio=$codigo_centro_acopio";?>" METHOD="post">
-								<input name="Exportar" type="submit" value="Exportar" onMouseOver="toolTip('Exportar',this)" class="boton exportar">
+								<FORM ACTION="ExportarWordHistorialCompra_Periodo.php<?php echo "?valor_fecha_inicial=$fecha_inicial&valor_fecha_final=$fecha_final&valor_sucursal=$sucursal&valor_codigo_centro_acopio=$codigo_centro_acopio";?>" METHOD="post">
+								<input name="Exportar" type="submit" value="Exportar" onMouseOver="toolTip('Exportar',this)" class="boton exportar_word">
+								</FORM>
+							</td>
+							<td>
+								<FORM ACTION="ExportarExcelHistorialCompra_Periodo.php<?php echo "?valor_fecha_inicial=$fecha_inicial&valor_fecha_final=$fecha_final&valor_sucursal=$sucursal&valor_codigo_centro_acopio=$codigo_centro_acopio";?>" METHOD="post">
+								<input name="Exportar" type="submit" value="Exportar" onMouseOver="toolTip('Exportar',this)" class="boton exportar_excel">
 								</FORM>
 							</td>
 							<td>		
@@ -182,7 +220,7 @@ $nombre_centro_acopio = mysql_fetch_assoc($consulta_centro_de_acopio);
 			?>
 <!------------------------------------------------------------------------------------------------------------------------>
 		</table>
-		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2012</center>
+		<hr><center>Sistema Inform&aacute;tico para Ayudar en el Registro de Compras de Vidrio y en el Control de Proveedores de VICAL El Salvador (COMVICONPRO). &#8226; Derechos Reservados 2012</center>
 	</BODY>
 </HTML>
 <?php include "../../../librerias/cerrar_conexion.php"; ?>

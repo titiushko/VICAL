@@ -14,17 +14,20 @@ AND facturas.codigo_proveedor = proveedores.codigo_proveedor
 AND facturas.codigo_centro_acopio = centros_de_acopio.codigo_centro_acopio";
 $consulta_factura = mysql_query($select_factura, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_factura!!</SPAN>".mysql_error());
 $facturas = mysql_fetch_assoc($consulta_factura);
+
+$Compra = calcularSumaVidrioFactura($factura);
+$Totales = calcularSumaVidrioTotal($Compra);
 ?>
 <HTML>
 	<head>
-		<title>SCYCPVES</title>
+		<title>COMVICONPRO</title>
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">
 		<meta http-equiv="pragma"        content="nocache">
 		<meta name="author"              content="TITIUSHKO">
 		<meta name="keywords"            content="ejercicio, estilo, html">
-		<meta name="description"         content="Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador">
+		<meta name="description"         content="Sistema Inform&aacute;tico para Ayudar en el Registro de Compras de Vidrio y en el Control de Proveedores de VICAL El Salvador (COMVICONPRO).">
 		<link rel="shortcut icon" 		 href="../../../imagenes/vical.ico">
 		<link rel="stylesheet" 			 href="../../../librerias/formato.css" type="text/css"></link>
 		<link rel="stylesheet" 			 href="../../../librerias/calendario.css" type="text/css" media="screen"></link>
@@ -100,27 +103,19 @@ $facturas = mysql_fetch_assoc($consulta_factura);
 								<thead>
 									<tr>
 										<th rowspan=2 colspan=1></th>
+										<th colspan=2>CLARO</th>
 										<th colspan=2>VERDE</th>
-										<th colspan=2>CRISTALINO</th>
 										<th colspan=2>CAFE</th>
-										<th colspan=2>BRONCE</th>
-										<th colspan=2>REFLECTIVO</th>
 								<th colspan=2>TOTAL</th><!--total por tipo de vidrio-->
 									</tr>
 									<tr>
+										<!--CLARO-->
+										<th>QQ</th>
+										<th>$$</th>
 										<!--VERDE-->
 										<th>QQ</th>
 										<th>$$</th>
-										<!--CRISTALINO-->
-										<th>QQ</th>
-										<th>$$</th>
 										<!--CAFE-->
-										<th>QQ</th>
-										<th>$$</th>
-										<!--BRONCE-->
-										<th>QQ</th>
-										<th>$$</th>
-										<!--REFLECTIVO-->
 										<th>QQ</th>
 										<th>$$</th>
 										<!--TOTAL-->
@@ -131,10 +126,8 @@ $facturas = mysql_fetch_assoc($consulta_factura);
 								<tbody>
 									<tr>
 										<th>BOTELLA</th>
-										<?php
-										$Compra = calcularSumaVidrio($factura);
-										$Totales = calcularSumaTotales($Compra);
-										for($i=1; $i<=5; $i++){
+										<?php										
+										for($i=1; $i<=3; $i++){
 											for($j=1; $j<=2; $j++){
 												if($Compra[$i][$j] <> 0){
 										?>
@@ -162,10 +155,41 @@ $facturas = mysql_fetch_assoc($consulta_factura);
 										}
 										?>
 									</tr>
+								</tbody>
+							</table>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="6">
+							<table align="center" border class="error rejilla" width="60%">
+								<thead>
+									<tr>
+										<th rowspan=2 colspan=1></th>
+										<th colspan=2>CLARO</th>
+										<th colspan=2>BRONCE</th>
+										<th colspan=2>REFLECTIVO</th>
+								<th colspan=2>TOTAL</th><!--total por tipo de vidrio-->
+									</tr>
+									<tr>
+										<!--CLARO-->
+										<th>QQ</th>
+										<th>$$</th>
+										<!--BRONCE-->
+										<th>QQ</th>
+										<th>$$</th>
+										<!--REFLECTIVO-->
+										<th>QQ</th>
+										<th>$$</th>
+										<!--TOTAL-->
+										<th>QQ</th>
+										<th>$$</th>
+									</tr>
+								</thead>
+								<tbody>
 									<tr>
 										<th>PLANO</th>
 										<?php
-										for($i=6; $i<=10; $i++){
+										for($i=4; $i<=6; $i++){
 											for($j=1; $j<=2; $j++){
 												if($Compra[$i][$j] <> 0){
 										?>
@@ -223,7 +247,7 @@ $facturas = mysql_fetch_assoc($consulta_factura);
 			</tr>
 <!------------------------------------------------------------------------------------------------------------------------>				
 		</table>
-		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2012</center>
+		<hr><center>Sistema Inform&aacute;tico para Ayudar en el Registro de Compras de Vidrio y en el Control de Proveedores de VICAL El Salvador (COMVICONPRO). &#8226; Derechos Reservados 2012</center>
 	</BODY>
 </HTML>
 <?php include "../../../librerias/cerrar_conexion.php"; ?>

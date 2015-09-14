@@ -15,14 +15,14 @@ $consulta_proveedores = mysql_query($instruccion_select, $conexion) or die ("<SP
 ?>
 <HTML>
 	<head>
-		<title>SCYCPVES</title>
+		<title>COMVICONPRO</title>
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">
 		<meta http-equiv="pragma"        content="nocache">
 		<meta name="author"              content="TITIUSHKO">
 		<meta name="keywords"            content="ejercicio, estilo, html">
-		<meta name="description"         content="Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador">
+		<meta name="description"         content="Sistema Inform&aacute;tico para Ayudar en el Registro de Compras de Vidrio y en el Control de Proveedores de VICAL El Salvador (COMVICONPRO).">
 		<link rel="shortcut icon" 		 href="../../../imagenes/vical.ico">
 		<link rel="stylesheet" 			 href="../../../librerias/formato.css" type="text/css"></link>
 		<script type="text/javascript" 	 src="../../../librerias/funciones.js"></script>
@@ -77,11 +77,11 @@ $consulta_proveedores = mysql_query($instruccion_select, $conexion) or die ("<SP
 										<?php
 										while ($proveedores = mysql_fetch_array($consulta_proveedores)){
 										?>
-										<tr align="center">
-											<td><?php echo "<a title='Ver' style='color: black;'href='VerProveedor.php?valor=$proveedores[0]'>".$proveedores[0]."</a>";?></td>
-											<td><?php echo "<a title='Ver' style='color: black;'href='VerProveedor.php?valor=$proveedores[0]'>".$proveedores[1]."</a>";?></td>
-											<td><?php echo "<a title='Ver' style='color: black;'href='VerProveedor.php?valor=$proveedores[0]'>".$proveedores[2]."</a>";?></td>
-											<td><?php echo "<a title='Ver' style='color: black;'href='VerProveedor.php?valor=$proveedores[0]'>".$proveedores[3]."</a>";?></td>
+										<tr align="center" title="Click para ver el proveedor" onClick="redireccionar('VerProveedor.php?valor=<?php echo $proveedores[0]?>');">
+											<td><span class="manita"><?php echo $proveedores[0];?></span></td>
+											<td><span class="manita"><?php echo $proveedores[1];?></span></td>
+											<td><span class="manita"><?php echo $proveedores[2];?></span></td>
+											<td><span class="manita"><?php echo $proveedores[3];?></span></td>
 										</tr>
 										<?php
 										}
@@ -150,7 +150,7 @@ $consulta_proveedores = mysql_query($instruccion_select, $conexion) or die ("<SP
 			</tr>
 <!------------------------------------------------------------------------------------------------------------------------>				
 		</table>
-		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2012</center>
+		<hr><center>Sistema Inform&aacute;tico para Ayudar en el Registro de Compras de Vidrio y en el Control de Proveedores de VICAL El Salvador (COMVICONPRO). &#8226; Derechos Reservados 2012</center>
 	</BODY>
 </HTML>
 <?php include "../../../librerias/cerrar_conexion.php"; ?>

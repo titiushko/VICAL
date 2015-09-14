@@ -30,14 +30,14 @@ $consulta_vidrio = mysql_query($seleccionar_vidrio, $conexion) or die ("<SPAN CL
 ?>
 <HTML>
 	<head>
-		<title>SCYCPVES</title>
+		<title>COMVICONPRO</title>
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">
 		<meta http-equiv="pragma"        content="nocache">
 		<meta name="author"              content="TITIUSHKO">
 		<meta name="keywords"            content="ejercicio, estilo, html">
-		<meta name="description"         content="Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador">
+		<meta name="description"         content="Sistema Inform&aacute;tico para Ayudar en el Registro de Compras de Vidrio y en el Control de Proveedores de VICAL El Salvador (COMVICONPRO).">
 		<link rel="shortcut icon" 		 href="../../../imagenes/vical.ico" />
 		<link rel="stylesheet" 			 href="../../../librerias/formato.css" type="text/css"></link>
 		<script type="text/javascript" 	 src="../../../librerias/funciones.js"></script>
@@ -82,7 +82,7 @@ $consulta_vidrio = mysql_query($seleccionar_vidrio, $conexion) or die ("<SPAN CL
 								<h2 class="encabezado2">Historial de vidrio <?php echo $nombre_tipo;?> comprado<?php echo $Sucursal;?></h2>
 							<?php
 							$bandera = true;
-							$historial = calcularSumaMes('tipo_vidrio',$tipo,$sucursal);
+							$historial = calcularSumaVidrioMes('tipo_vidrio',$tipo,$sucursal);
 							for($i=1; $i<=$filas; $i++){
 							?>
 								<table align="center" class="rejilla" border bgcolor="white" width="50%">
@@ -137,7 +137,7 @@ $consulta_vidrio = mysql_query($seleccionar_vidrio, $conexion) or die ("<SPAN CL
 			?>
 <!------------------------------------------------------------------------------------------------------------------------>
 		</table>
-		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2012</center>
+		<hr><center>Sistema Inform&aacute;tico para Ayudar en el Registro de Compras de Vidrio y en el Control de Proveedores de VICAL El Salvador (COMVICONPRO). &#8226; Derechos Reservados 2012</center>
 	</BODY>
 </HTML>
 <?php include "../../../librerias/cerrar_conexion.php"; ?>

@@ -8,60 +8,60 @@ with (document.forms["formulario"]){
 	totalBc1 = Number(Bc1.value)*precio;
 	if(Bc1.value != "") {Bc1.value = redondear(Bc1.value,2); Bp1.value = redondear(totalBc1,2);}
 	else Bp1.value = "";
-	cbc.value = Bc1.value;	//cantidad botella clara
-	pbc.value = Bp1.value;	//precio botella clara
+	Vc1.value = Bc1.value;	//cantidad botella clara
+	Vp1.value = Bp1.value;	//precio botella clara
 	
 	totalBc2 = Number(Bc2.value)*precio;
 	if(Bc2.value != "") {Bc2.value = redondear(Bc2.value,2); Bp2.value = redondear(totalBc2,2);}
 	else Bp2.value = "";
-	cbv.value = Bc2.value;	//cantidad botella verde
-	pbv.value = Bp2.value;	//precio botella verde
+	Vc2.value = Bc2.value;	//cantidad botella verde
+	Vp2.value = Bp2.value;	//precio botella verde
 	
 	totalBc3 = Number(Bc3.value)*precio;
 	if(Bc3.value != "") {Bc3.value = redondear(Bc3.value,2); Bp3.value = redondear(totalBc3,2);}
 	else Bp3.value = "";
-	cbf.value = Bc3.value;	//cantidad botella cafe
-	pbf.value = Bp3.value;	//precio botella cafe
+	Vc3.value = Bc3.value;	//cantidad botella cafe
+	Vp3.value = Bp3.value;	//precio botella cafe
 	
 	//para plano
 	totalPc1 = Number(Pc1.value)*precio;
 	if(Pc1.value != "") {Pc1.value = redondear(Pc1.value,2); Pp1.value = redondear(totalPc1,2);}
 	else Pp1.value = "";
-	cpc.value = Pc1.value;	//cantidad plano claro
-	ppc.value = Pp1.value;	//precio plano claro
+	Vc4.value = Pc1.value;	//cantidad plano claro
+	Vp4.value = Pp1.value;	//precio plano claro
 	
 	totalPc2 = Number(Pc2.value)*precio;
 	if(Pc2.value != "") {Pc2.value = redondear(Pc2.value,2); Pp2.value = redondear(totalPc2,2);}
 	else Pp2.value = "";
-	cpb.value = Pc2.value;	//cantidad plano bronce
-	ppb.value = Pp2.value;	//precio plano bronce
+	Vc5.value = Pc2.value;	//cantidad plano bronce
+	Vp5.value = Pp2.value;	//precio plano bronce
 	
 	totalPc3 = Number(Pc3.value)*precio;
 	if(Pc3.value != "") {Pc3.value = redondear(Pc3.value,2); Pp3.value = redondear(totalPc3,2);}
 	else Pp3.value = "";
-	cpr.value = Pc3.value;	//cantidad plano reflectivo
-	ppr.value = Pp3.value;	//precio plano reflectivo
+	Vc6.value = Pc3.value;	//cantidad plano reflectivo
+	Vp6.value = Pp3.value;	//precio plano reflectivo
 	
 	//totales
 	var totalCantidadBotella = Number(Bc1.value)+Number(Bc2.value)+Number(Bc3.value);
 	if(totalCantidadBotella == 0.0) TBc.value = "";
 	else TBc.value = redondear(totalCantidadBotella,2);
-	cbt.value = TBc.value;	//cantidad botella total
+	BTc.value = TBc.value;	//cantidad botella total
 	
 	var totalMontoBotella = Number(Bp1.value)+Number(Bp2.value)+Number(Bp3.value);
 	if(totalMontoBotella == 0.0) TBp.value = "";
 	else TBp.value = redondear(totalMontoBotella,2);
-	pbt.value = TBp.value;	//precio botella total
+	BTp.value = TBp.value;	//precio botella total
 	
 	var totalCantidadPlano = Number(Pc1.value)+Number(Pc2.value)+Number(Pc3.value);
 	if(totalCantidadPlano == 0.0) TPc.value = "";
 	else TPc.value = redondear(totalCantidadPlano,2);
-	cpt.value = TPc.value;	//cantidad plano total
+	PTc.value = TPc.value;	//cantidad plano total
 	
 	var totalMontoPlano = Number(Pp1.value)+Number(Pp2.value)+Number(Pp3.value);
 	if(totalMontoPlano == 0.0) TPp.value = "";
 	else TPp.value = redondear(totalMontoPlano,2);
-	ppt.value = TPp.value;	//precio plano total
+	PTp.value = TPp.value;	//precio plano total
 	}
 }
 //------------------------------------------------------------------------------------

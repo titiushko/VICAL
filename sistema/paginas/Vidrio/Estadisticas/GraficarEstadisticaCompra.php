@@ -18,10 +18,10 @@ $lista_meses = array(1 => "Enero", 2 => "Febrero", 3 => "Marzo", 4 => "Abril", 5
 for($i=1;$i<=12;$i++) if($numero_mes == $i) $nombre_mes = $lista_meses[$i];
 
 //CALCULAR LAS SUMAS DE VIDRIO DE LAS FACTURAS
-$SumaCompras = calcularSumaCompras($numero_mes,$numero_ano,$sucursal);
-$SumasTotales = calcularSumaTotales($SumaCompras);
-$Bsuma_cantidad = $SumasTotales[1];	$Bsuma_precio = $SumasTotales[2];
-$Psuma_cantidad = $SumasTotales[3];	$Psuma_precio = $SumasTotales[4];
+$SumaCompras = calcularSumaVidrioComprado($numero_mes,$numero_ano,$sucursal);
+$SumaComprasTotales = calcularSumaVidrioTotal($SumaCompras);
+$Bsuma_cantidad = $SumaComprasTotales[1];	$Bsuma_precio = $SumaComprasTotales[2];
+$Psuma_cantidad = $SumaComprasTotales[3];	$Psuma_precio = $SumaComprasTotales[4];
 
 //TITULO DE LA SUCURSAL
 switch($sucursal){
@@ -32,14 +32,14 @@ switch($sucursal){
 ?>
 <HTML>
 	<head>
-		<title>SCYCPVES</title>		
+		<title>COMVICONPRO</title>		
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">
 		<meta http-equiv="pragma"        content="nocache">
 		<meta name="author"              content="TITIUSHKO">
 		<meta name="keywords"            content="ejercicio, estilo, html">
-		<meta name="description"         content="Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador">
+		<meta name="description"         content="Sistema Inform&aacute;tico para Ayudar en el Registro de Compras de Vidrio y en el Control de Proveedores de VICAL El Salvador (COMVICONPRO).">
 		<link rel="shortcut icon" 		 href="../../../imagenes/vical.ico">
 		<link rel="stylesheet"			 href="../../../librerias/formato.css" type="text/css"></link>
 		<script type="text/javascript"	 src="../../../librerias/funciones.js"></script>
@@ -175,9 +175,7 @@ switch($sucursal){
 							<table border bgcolor="white">
 								<thead class="titulo2">
 									<tr>
-										<th>CODIGO VIDRIO</th>
 										<th>TIPO VIDRIO</th>
-										<th>CODIGO COLOR</th>
 										<th>COLOR VIDRIO</th>
 										<th>CANTIDAD VIDRIO</th>
 										<th>MONTO INVERTIDO</th>
@@ -188,8 +186,8 @@ switch($sucursal){
 								<tbody class="subtitulo1" align="center">
 									<!----------------------------------->
 									<tr>
-										<td rowspan="5">TV-01</td><td rowspan="5">BOTELLA</td>
-										<td>CV-01</td><td>VERDE</td>
+										<td rowspan="3">BOTELLA</td>
+										<td>CLARO</td>
 										<?php
 										if($SumaCompras[1][1] <> 0 && $SumaCompras[1][2] <>0){
 										?>
@@ -203,12 +201,12 @@ switch($sucursal){
 										<?php
 										}
 										?>
-										<td rowspan="5"><?php echo number_format($Bsuma_cantidad,2,'.',',');?></td>
-										<td rowspan="5"><?php echo "$".number_format($Bsuma_precio,2,'.',',');?></td>
+										<td rowspan="3"><?php echo number_format($Bsuma_cantidad,2,'.',',');?></td>
+										<td rowspan="3"><?php echo "$".number_format($Bsuma_precio,2,'.',',');?></td>
 									</tr>
 									<!----------------------------------->
 									<tr>
-										<td>CV-02</td><td>CRISTALINO</td>
+										<td>VERDE</td>
 										<?php
 										if($SumaCompras[2][1] <> 0 && $SumaCompras[2][2] <>0){
 										?>
@@ -225,46 +223,12 @@ switch($sucursal){
 									</tr>
 									<!----------------------------------->
 									<tr>
-										<td>CV-03</td><td>CAFE</td>
+										<td>CAFE</td>
 										<?php
 										if($SumaCompras[3][1] <> 0 && $SumaCompras[3][2] <>0){
 										?>
 										<td><?php echo number_format($SumaCompras[3][1],2,'.',',');?></td>
 										<td><?php echo "$".number_format($SumaCompras[3][2],2,'.',',');?></td>
-										<?php
-										}
-										else{
-										?>
-										<td>&nbsp;</td><td>&nbsp;</td>
-										<?php
-										}
-										?>
-									</tr>
-									<!----------------------------------->
-									<tr>
-										<td>CV-04</td><td>BRONCE</td>
-										<?php
-										if($SumaCompras[4][1] <> 0 && $SumaCompras[4][2] <>0){
-										?>
-										<td><?php echo number_format($SumaCompras[4][1],2,'.',',');?></td>
-										<td><?php echo "$".number_format($SumaCompras[4][2],2,'.',',');?></td>
-										<?php
-										}
-										else{
-										?>
-										<td>&nbsp;</td><td>&nbsp;</td>
-										<?php
-										}
-										?>
-									</tr>
-									<!----------------------------------->
-									<tr>
-										<td>CV-05</td><td>REFLECTIVO</td>
-										<?php
-										if($SumaCompras[5][1] <> 0 && $SumaCompras[5][2] <>0){
-										?>
-										<td><?php echo number_format($SumaCompras[5][1],2,'.',',');?></td>
-										<td><?php echo "$".number_format($SumaCompras[5][2],2,'.',',');?></td>
 										<?php
 										}
 										else{
@@ -278,61 +242,8 @@ switch($sucursal){
 									<tr><td colspan="8" style="background-color: #76a5d3;">&nbsp;</td></tr>
 									<!---------------------------------------------------------------------------->
 									<tr>
-										<td rowspan="5">TV-02</td><td rowspan="5">PLANO</td>
-										<td>CV-01</td><td>VERDE</td>
-										<?php
-										if($SumaCompras[1][1] <> 0 && $SumaCompras[1][2] <>0){
-										?>
-										<td><?php echo number_format($SumaCompras[1][1],2,'.',',');?></td>
-										<td><?php echo "$".number_format($SumaCompras[1][2],2,'.',',');?></td>
-										<?php
-										}
-										else{
-										?>
-										<td>&nbsp;</td><td>&nbsp;</td>
-										<?php
-										}
-										?>
-										<td rowspan="5"><?php echo number_format($Psuma_cantidad);?></td>
-										<td rowspan="5"><?php echo "$".number_format($Psuma_precio);?></td>
-									</tr>
-									<!----------------------------------->
-									<tr>
-										<td>CV-02</td><td>CRISTALINO</td>
-										<?php
-										if($SumaCompras[2][1] <> 0 && $SumaCompras[2][2] <>0){
-										?>
-										<td><?php echo number_format($SumaCompras[2][1],2,'.',',');?></td>
-										<td><?php echo "$".number_format($SumaCompras[2][2],2,'.',',');?></td>
-										<?php
-										}
-										else{
-										?>
-										<td>&nbsp;</td><td>&nbsp;</td>
-										<?php
-										}
-										?>
-									</tr>
-									<!----------------------------------->
-									<tr>
-										<td>CV-03</td><td>CAFE</td>
-										<?php
-										if($SumaCompras[3][1] <> 0 && $SumaCompras[3][2] <>0){
-										?>
-										<td><?php echo number_format($SumaCompras[3][1],2,'.',',');?></td>
-										<td><?php echo "$".number_format($SumaCompras[3][2],2,'.',',');?></td>
-										<?php
-										}
-										else{
-										?>
-										<td>&nbsp;</td><td>&nbsp;</td>
-										<?php
-										}
-										?>
-									</tr>
-									<!----------------------------------->
-									<tr>
-										<td>CV-04</td><td>BRONCE</td>
+										<td rowspan="3">PLANO</td>
+										<td>CLARO</td>
 										<?php
 										if($SumaCompras[4][1] <> 0 && $SumaCompras[4][2] <>0){
 										?>
@@ -346,10 +257,12 @@ switch($sucursal){
 										<?php
 										}
 										?>
+										<td rowspan="3"><?php echo number_format($Psuma_cantidad,2,'.',',');?></td>
+										<td rowspan="3"><?php echo "$".number_format($Psuma_precio,2,'.',',');?></td>
 									</tr>
 									<!----------------------------------->
 									<tr>
-										<td>CV-05</td><td>REFLECTIVO</td>
+										<td>BRONCE</td>
 										<?php
 										if($SumaCompras[5][1] <> 0 && $SumaCompras[5][2] <>0){
 										?>
@@ -364,9 +277,26 @@ switch($sucursal){
 										}
 										?>
 									</tr>
+									<!----------------------------------->
+									<tr>
+										<td>REFLECTIVO</td>
+										<?php
+										if($SumaCompras[6][1] <> 0 && $SumaCompras[6][2] <>0){
+										?>
+										<td><?php echo number_format($SumaCompras[6][1],2,'.',',');?></td>
+										<td><?php echo "$".number_format($SumaCompras[6][2],2,'.',',');?></td>
+										<?php
+										}
+										else{
+										?>
+										<td>&nbsp;</td><td>&nbsp;</td>
+										<?php
+										}
+										?>
+									</tr>
 									<!---------------------------------------------------------------------------->
 									<tr>
-										<td colspan="5" style="background-color: #76a5d3;">&nbsp;</td>
+										<td colspan="3" style="background-color: #76a5d3;">&nbsp;</td>
 										<th class="titulo2">TOTALES</th>
 										<th><?php echo number_format($Bsuma_cantidad+$Psuma_cantidad,2,'.',',');?></th>
 										<th><?php echo "$".number_format($Bsuma_precio+$Psuma_precio,2,'.',',');?></th>
@@ -391,7 +321,7 @@ switch($sucursal){
 		?>
 <!------------------------------------------------------------------------------------------------------------------------>
 	</TABLE>
-	<hr><p><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2012</center></p>
+	<hr><p><center>Sistema Inform&aacute;tico para Ayudar en el Registro de Compras de Vidrio y en el Control de Proveedores de VICAL El Salvador (COMVICONPRO). &#8226; Derechos Reservados 2012</center></p>
 	</BODY>
 </HTML>
 <?php include "../../../librerias/cerrar_conexion.php"; ?>

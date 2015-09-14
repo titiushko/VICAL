@@ -13,14 +13,14 @@ date_default_timezone_set('America/El_Salvador');
 ?>
 <HTML>
 	<head>
-		<title>SCYCPVES</title>
+		<title>COMVICONPRO</title>
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">
 		<meta http-equiv="pragma"        content="nocache">
 		<meta name="author"              content="TITIUSHKO">
 		<meta name="keywords"            content="ejercicio, estilo, html">
-		<meta name="description"         content="Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador">
+		<meta name="description"         content="Sistema Inform&aacute;tico para Ayudar en el Registro de Compras de Vidrio y en el Control de Proveedores de VICAL El Salvador (COMVICONPRO).">
 		<link rel="shortcut icon" 		 href="../../../imagenes/vical.ico" />
 		<link rel="stylesheet" 			 href="../../../librerias/formato.css" type="text/css"></link>
 		<link rel="stylesheet" 			 href="../../../librerias/calendario.css" type="text/css" media="screen"></link>
@@ -232,14 +232,14 @@ date_default_timezone_set('America/El_Salvador');
 								<tbody>
 									<tr>
 										<th id="id_b1" class="titulo2">BOTELLA</th>
-										<td align="center"><input id="id_b2" name="Bc1" class="compra fondo4" type="text" size=3 onBlur="calcularMonto(), borrarMensaje(9), elementosVacios(10);" onKeyPress="return soloNumerosFloat(event)" onClick="borrarMensaje(9), elementosVacios(10);"><input name="cbc" class="oculto" type="text" size=3></td>
-										<td align="center"><input id="id_b3" name="Bp1" class="subtitulo4 fondo4" type="text" size=3 disabled="disabled"><input name="pbc" class="oculto" type="text" size=3></td>
-										<td align="center"><input id="id_b4" name="Bc2" class="compra fondo4" type="text" size=3 onBlur="calcularMonto();" onKeyPress="return soloNumerosFloat(event)"><input name="cbv" class="oculto" type="text" size=3></td>
-										<td align="center"><input id="id_b5" name="Bp2" class="subtitulo4 fondo4" type="text" size=3 disabled="disabled"><input name="pbv" class="oculto" type="text" size=3></td>
-										<td align="center"><input id="id_b6" name="Bc3" class="compra fondo4" type="text" size=3 onBlur="calcularMonto();" onKeyPress="return soloNumerosFloat(event)"><input name="cbf" class="oculto" type="text" size=3></td>
-										<td align="center"><input id="id_b7" name="Bp3" class="subtitulo4 fondo4" type="text" size=3 disabled="disabled"><input name="pbf" class="oculto" type="text" size=3></td>
-										<td align="center"><input id="id_b8" name="TBc" class="subtitulo4 fondo4" type="text" size=3 disabled="disabled"><input name="cbt" class="oculto" type="text" size=3></td><!--total cantidad botella-->
-										<td align="center"><input id="id_b9" name="TBp" class="subtitulo4 fondo4" type="text" size=3 disabled="disabled"><input name="pbt" class="oculto" type="text" size=3></td><!--total precio botella-->
+										<td align="center"><input id="id_b2" name="Bc1" class="compra fondo4" 	  type="text" size=3 onBlur="calcularMonto(), borrarMensaje(9), elementosVacios(10);" onKeyPress="return soloNumerosFloat(event)" onClick="borrarMensaje(9), elementosVacios(10);"><input name="Vc1" class="oculto" type="text" size=3></td>
+										<td align="center"><input id="id_b3" name="Bp1" class="subtitulo4 fondo4" type="text" size=3 disabled="disabled"><input name="Vp1" class="oculto" type="text" size=3></td>
+										<td align="center"><input id="id_b4" name="Bc2" class="compra fondo4" 	  type="text" size=3 onBlur="calcularMonto();" onKeyPress="return soloNumerosFloat(event)"><input name="Vc2" class="oculto" type="text" size=3></td>
+										<td align="center"><input id="id_b5" name="Bp2" class="subtitulo4 fondo4" type="text" size=3 disabled="disabled"><input name="Vp2" class="oculto" type="text" size=3></td>
+										<td align="center"><input id="id_b6" name="Bc3" class="compra fondo4" 	  type="text" size=3 onBlur="calcularMonto();" onKeyPress="return soloNumerosFloat(event)"><input name="Vc3" class="oculto" type="text" size=3></td>
+										<td align="center"><input id="id_b7" name="Bp3" class="subtitulo4 fondo4" type="text" size=3 disabled="disabled"><input name="Vp3" class="oculto" type="text" size=3></td>
+										<td align="center"><input id="id_b8" name="TBc" class="subtitulo4 fondo4" type="text" size=3 disabled="disabled"><input name="BTc" class="oculto" type="text" size=3></td><!--total cantidad botella-->
+										<td align="center"><input id="id_b9" name="TBp" class="subtitulo4 fondo4" type="text" size=3 disabled="disabled"><input name="BTp" class="oculto" type="text" size=3></td><!--total precio botella-->
 									</tr>
 								</tbody>
 							</table>
@@ -274,14 +274,14 @@ date_default_timezone_set('America/El_Salvador');
 								<tbody>
 									<tr>
 										<th id="id_p1" class="titulo2">PLANO</th>
-										<td align="center"><input id="id_p2" name="Pc1" class="compra fondo4" type="text" size=3 onBlur="calcularMonto();" onKeyPress="return soloNumerosFloat(event)"><input name="cpc" class="oculto" type="text" size=3></td>
-										<td align="center"><input id="id_p3" name="Pp1" class="subtitulo4 fondo4" type="text" size=3 disabled="disabled"><input name="ppc" class="oculto" type="text" size=3></td>
-										<td align="center"><input id="id_p4" name="Pc2" class="compra fondo4" type="text" size=3 onBlur="calcularMonto();" onKeyPress="return soloNumerosFloat(event)"><input name="cpb" class="oculto" type="text" size=3></td>
-										<td align="center"><input id="id_p5" name="Pp2" class="subtitulo4 fondo4" type="text" size=3 disabled="disabled"><input name="ppb" class="oculto" type="text" size=3></td>
-										<td align="center"><input id="id_p6" name="Pc3" class="compra fondo4" type="text" size=3 onBlur="calcularMonto();" onKeyPress="return soloNumerosFloat(event)"><input name="cpr" class="oculto" type="text" size=3></td>
-										<td align="center"><input id="id_p7" name="Pp3" class="subtitulo4 fondo4" type="text" size=3 disabled="disabled"><input name="ppr" class="oculto" type="text" size=3></td>
-										<td align="center"><input id="id_p8" name="TPc" class="subtitulo4 fondo4" type="text" size=3 disabled="disabled"><input name="cpt" class="oculto" type="text" size=3></td><!--total cantidad plano-->
-										<td align="center"><input id="id_p9" name="TPp" class="subtitulo4 fondo4" type="text" size=3 disabled="disabled"><input name="ppt" class="oculto" type="text" size=3></td><!--total precio plano-->
+										<td align="center"><input id="id_p2" name="Pc1" class="compra fondo4" 	  type="text" size=3 onBlur="calcularMonto();" onKeyPress="return soloNumerosFloat(event)"><input name="Vc4" class="oculto" type="text" size=3></td>
+										<td align="center"><input id="id_p3" name="Pp1" class="subtitulo4 fondo4" type="text" size=3 disabled="disabled"><input name="Vp4" class="oculto" type="text" size=3></td>
+										<td align="center"><input id="id_p4" name="Pc2" class="compra fondo4" 	  type="text" size=3 onBlur="calcularMonto();" onKeyPress="return soloNumerosFloat(event)"><input name="Vc5" class="oculto" type="text" size=3></td>
+										<td align="center"><input id="id_p5" name="Pp2" class="subtitulo4 fondo4" type="text" size=3 disabled="disabled"><input name="Vp5" class="oculto" type="text" size=3></td>
+										<td align="center"><input id="id_p6" name="Pc3" class="compra fondo4" 	  type="text" size=3 onBlur="calcularMonto();" onKeyPress="return soloNumerosFloat(event)"><input name="Vc6" class="oculto" type="text" size=3></td>
+										<td align="center"><input id="id_p7" name="Pp3" class="subtitulo4 fondo4" type="text" size=3 disabled="disabled"><input name="Vp6" class="oculto" type="text" size=3></td>
+										<td align="center"><input id="id_p8" name="TPc" class="subtitulo4 fondo4" type="text" size=3 disabled="disabled"><input name="PTc" class="oculto" type="text" size=3></td><!--total cantidad plano-->
+										<td align="center"><input id="id_p9" name="TPp" class="subtitulo4 fondo4" type="text" size=3 disabled="disabled"><input name="PTp" class="oculto" type="text" size=3></td><!--total precio plano-->
 									</tr>
 								</tbody>
 							</table>
@@ -301,7 +301,7 @@ date_default_timezone_set('America/El_Salvador');
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<img src="../../../imagenes/icono_agregar.png" width="20" height="20" align="top" onMouseOver="toolTip('Nuevo Centro de Acopio',this)" onClick="redireccionar('../../Centros de Acopio/Nuevo/frmNuevoCentroAcopio.php?departamento=dep')" class="manita">
 								Centro de Acopio:
-								<select name="codigo_centro_acopio" id="id10" class="requerido lista" size="1" style="width: 160px;" onBlur="borrarMensaje(9), elementosVacios(10);" onClick="borrarMensaje(9), elementosVacios(10);">
+								<select name="codigo_centro_acopio" id="id10" class="requerido lista" style="width: 160px;" size="1" onBlur="borrarMensaje(9), elementosVacios(10);" onClick="borrarMensaje(9), elementosVacios(10);">
 									<option selected value="">.:Opciones:.</option>
 									<?php
 									$consulta_centro_de_acopio = mysql_query("SELECT codigo_centro_acopio, nombre_centro_acopio FROM centros_de_acopio ORDER BY nombre_centro_acopio ASC",$conexion) or die ("<SPAN CLASS='error'>Fallo en la consulta_centro_de_acopio!!</SPAN>".mysql_error());
@@ -345,7 +345,7 @@ date_default_timezone_set('America/El_Salvador');
 			</tr>
 <!------------------------------------------------------------------------------------------------------------------------>
 		</table>
-		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2012</center>
+		<hr><center>Sistema Inform&aacute;tico para Ayudar en el Registro de Compras de Vidrio y en el Control de Proveedores de VICAL El Salvador (COMVICONPRO). &#8226; Derechos Reservados 2012</center>
 	</BODY>
 </HTML>
 <?php include "../../../librerias/cerrar_conexion.php"; ?>

@@ -304,15 +304,16 @@ function validarModificarCompra(F,cantidad){
 	}
 	var cantidad_vacios = 0;
 //campos cantidad vidrio
-	if(F.Vc1.value.length == 0) cantidad_vacios++;	if(F.Vc6.value.length == 0)  cantidad_vacios++;
-	if(F.Vc2.value.length == 0) cantidad_vacios++;	if(F.Vc7.value.length == 0)  cantidad_vacios++;
-	if(F.Vc3.value.length == 0) cantidad_vacios++;	if(F.Vc8.value.length == 0)  cantidad_vacios++;
-	if(F.Vc4.value.length == 0) cantidad_vacios++;	if(F.Vc9.value.length == 0)  cantidad_vacios++;
-	if(F.Vc5.value.length == 0) cantidad_vacios++;	if(F.Vc10.value.length == 0) cantidad_vacios++;
+	if(F.Bc1.value.length == 0) cantidad_vacios++;	if(F.Bp1.value.length == 0) cantidad_vacios++;
+	if(F.Bc2.value.length == 0) cantidad_vacios++;	if(F.Bp2.value.length == 0) cantidad_vacios++;
+	if(F.Bc3.value.length == 0) cantidad_vacios++;	if(F.Bp3.value.length == 0) cantidad_vacios++;
+	if(F.Pc1.value.length == 0) cantidad_vacios++;	if(F.Pp1.value.length == 0) cantidad_vacios++;
+	if(F.Pc2.value.length == 0) cantidad_vacios++;	if(F.Pp2.value.length == 0) cantidad_vacios++;
+	if(F.Pc3.value.length == 0) cantidad_vacios++;	if(F.Pp3.value.length == 0) cantidad_vacios++;
 //mostrar si no se registro ningun vidrio
-	if(cantidad_vacios == 10){
+	if(cantidad_vacios == 12){
 		elemento = document.getElementById('mensaje2'); elemento.addClassName("visto");
-		F.Vc1.focus();
+		F.Bc1.focus();
 		return false;
 	}
 	return true;
