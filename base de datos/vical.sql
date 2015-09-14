@@ -9,10 +9,10 @@ USE VICAL;
 /*==============================================================*/
 create table CENTROS_DE_ACOPIO
 (
-   CODIGO_CENTRO_ACOPIO char(6) not null,
+   CODIGO_CENTRO_ACOPIO	char(6) not null,
    CODIGO_RECOLECTOR    char(5) not null,
-   DEPARTAMENTO            varchar(50),
-   TELEFONO             varchar(10),
+   DEPARTAMENTO			varchar(50),
+   TELEFONO				varchar(10),
    primary key (CODIGO_CENTRO_ACOPIO)
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8; 
@@ -54,9 +54,9 @@ create table RECOLECTORES
    CODIGO_RECOLECTOR    	char(5) not null,
    NOMBRE_RECOLECTOR    	varchar(50),
    TELEFONO_RECOLECTOR  	varchar(10),
-   DUI_RECOLECTOR                      varchar(10),
-   NIT_RECOLECTOR                      varchar(17),
-   DIRECCION_RECOLECTOR                varchar(100),
+   DUI_RECOLECTOR           varchar(10),
+   NIT_RECOLECTOR           varchar(17),
+   DIRECCION_RECOLECTOR     varchar(100),
    primary key (CODIGO_RECOLECTOR)
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -101,10 +101,12 @@ ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*==============================================================*/
 create table USUARIOS
 (
+   ID	              	int(5) auto_increment not null,
+   NOMBRE	           	varchar(50) not null,
    USUARIO              varchar(15) not null,
    PASSWORD             varchar(15) not null,
-   TIPO_USUARIO          varchar(15) not null,
-   primary key (USUARIO)
+   NIVEL				int(5) not null,
+   primary key (ID)
  )
 ENGINE=InnoDB DEFAULT CHARSET=utf8; 
 
@@ -113,7 +115,7 @@ ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*==============================================================*/
 create table VIDRIO
 (
-   CODIGO_VIDRIO        	char(5) not null,
+   CODIGO_VIDRIO        	int(5) auto_increment not null,
    CODIGO_TIPO          	varchar(5) not null,
    CODIGO_COLOR         	char(5) not null,
    CODIGO_FACTURA       	char(5) not null,
@@ -5442,7 +5444,9 @@ VALUES
 /*==============================================================*/
 /* Table: USUARIOS                                               */
 /*==============================================================*/
-INSERT INTO `vical`.`usuarios` (`USUARIO`,`PASSWORD`,`TIPO_USUARIO`)
+INSERT INTO `vical`.`usuarios` (`NOMBRE`,`USUARIO`,`PASSWORD`,`NIVEL`)
 VALUES
-('Erick','erick','admin');
+('Tito Javier Francisco Miguel Galdamez','tito','tito','1'),
+('Erick Edenilson Roque Diaz','erick','erick','2'),
+('Manuel de Jesus Perez Hernandez','manuel','manuel','3');
 -- -------------------------------------------------------------------------------------
