@@ -9,7 +9,7 @@ if($_SESSION["autenticado"] != "SI"){
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 	<head>
-		<title>.:SC&CPVES:.</title>
+		<title>.:SCYCPVES:.</title>
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -28,7 +28,7 @@ if($_SESSION["autenticado"] != "SI"){
 			<img src="../imagenes/icono_contador.png"><br>
 			<?php echo $_SESSION["nombre"]."";?><br><font color="#ffff00">Contador</font>
 		</div>
-		<input onClick="redireccionar('../loggin/Salir.php')" type="submit" value="Salir" onMouseOver="toolTip('Salir',this)" class="boton salir">
+		<input onClick="redireccionar('../login/Salir.php')" type="submit" value="Salir" onMouseOver="toolTip('Salir',this)" class="boton salir">
 		</center>
 		<span id="toolTipBox" width="50"></span>
 		<div id="menu">
@@ -55,7 +55,7 @@ if($_SESSION["autenticado"] != "SI"){
 				<li class="nivel1" tabindex="4"><span class="nivel1">Recolectores</span>
 					<ul>
 						<li class="primera"><a href="../paginas/Recolectores/Consultar/frmConsultarRecolector.php" TARGET="CONTENIDO">Consultar Recolectores</a></li>
-						<li><a href="../paginas/Recolectores/Reporte/frmReporteRecolector.php<?php echo "?valor=reporte";?>" TARGET="CONTENIDO">Reporte de Recolectores</a></li>
+						<li><a href="../paginas/Recolectores/Reporte/frmReporteRecolector.php?valor=reporte" TARGET="CONTENIDO">Reporte de Recolectores</a></li>
 					</ul>
 				</li>
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->

@@ -1,6 +1,7 @@
 <?php
-include "../../../loggin/BloqueSeguridad.php";
-include "../../../loggin/AccesoAdministrador.php";
+include "../../../librerias/abrir_conexion.php";
+include "../../../login/BloqueSeguridad.php";
+include "../../../login/AccesoAdministrador.php";
 include "../../../librerias/funciones.php";
 $proveedor = $_REQUEST['valor_proveedor'];
 if($proveedor == '') header("Location: VerReporteCompra_Proveedor.php");
@@ -77,6 +78,7 @@ for($i=0; $i<=strlen($proveedor); $i++){
 		</table>
 		<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <!------------------------------------------------------------------------------------------------------------------------>
-		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2011</center>
+		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2012</center>
 	</BODY>
 </HTML>
+<?php include "../../../librerias/cerrar_conexion.php"; ?>

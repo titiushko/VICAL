@@ -1,1 +1,0 @@
-<?php header ("Location: frmLoggin.php?error_usuario=no"); ?>

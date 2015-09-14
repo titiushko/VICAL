@@ -1,6 +1,7 @@
 <?php
-include "../../../loggin/BloqueSeguridad.php";
-include "../../../loggin/AccesoAdministrador.php";
+include "../../../librerias/abrir_conexion.php";
+include "../../../login/BloqueSeguridad.php";
+include "../../../login/AccesoAdministrador.php";
 include "../../../librerias/funciones.php";
 $nombre_mes = $_REQUEST['valor_mes'];
 $ano 		= $_REQUEST['valor_ano'];
@@ -84,6 +85,7 @@ if($nombre_mes == 'Diciembre') $mes = '12';
 			</tr>
 		</table>
 <!------------------------------------------------------------------------------------------------------------------------>
-		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2011</center>
+		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2012</center>
 	</BODY>
 </HTML>
+<?php include "../../../librerias/cerrar_conexion.php"; ?>

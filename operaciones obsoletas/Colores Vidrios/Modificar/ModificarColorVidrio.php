@@ -1,0 +1,64 @@
+<?php
+include "../../../librerias/abrir_conexion.php";
+
+$codigo_color = $_REQUEST['codigo_color'];
+$nombre_color = $_POST['nombre_color'];
+
+$instruccion_update = "UPDATE colores_vidrio SET nombre_color = '$nombre_color' WHERE codigo_color = '$codigo_color'";
+$actualizar_colores_vidrio = mysql_query($instruccion_update, $conexion) or die ("<SPAN CLASS='error'>Fallo en actualizar_colores_vidrio!!</SPAN>".mysql_error());
+
+$instruccion_select = "SELECT codigo_color, nombre_color FROM colores_vidrio WHERE codigo_color = '$codigo_color'";
+$consulta_color = mysql_query($instruccion_select, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_color!!</SPAN>".mysql_error());
+$colores_vidrio = mysql_fetch_array($consulta_color);
+?>
+<HTML>
+	<head>
+		<title>.:SC&CPVES:.</title>
+		<meta http-equiv ="refresh"		 content="3;url=../Consultar/frmConsultarColorVidrio.php">
+		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
+		<meta http-equiv="expires"       content="0">
+		<meta http-equiv="cache-control" content="no-cache">
+		<meta http-equiv="pragma"        content="nocache">
+		<meta name="author"              content="TITIUSHKO">
+		<meta name="keywords"            content="ejercicio, estilo, html">
+		<meta name="description"         content="Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador">
+		<link rel="shortcut icon" 		 href="../../../imagenes/vical.ico">
+		<link rel="stylesheet" 			 href="../../../librerias/formato.css" type="text/css"></link>
+		<script type="text/javascript" 	 src="../../../librerias/funciones.js"></script>
+	</head>
+	<BODY class="cuerpo1">
+		<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<!------------------------------------------------------------------------------------------------------------------------>
+			<tr>
+				<td align="center"><!--bgcolor="#B8CEF6"-->
+					<img src="../../../imagenes/vical.png" width="25%" height="25%">
+					<h1 class="encabezado1">MODIFICAR COLOR DE VIDRIO</h1>
+					<h2 class="encabezado2">
+						<img src="../../../imagenes/icono_informacion.png">
+						<br>
+						SE MODIFICO EL COLOR DE VIDRIO EXITOSAMENTE!!
+					</h2>
+				</td>
+			</tr>
+<!------------------------------------------------------------------------------------------------------------------------>				
+			<tr>
+				<td align="center">
+					<table class="resultado centro">
+						<tr>
+							<td align="right"><b>Codigo:</b></td>
+							<td><?php echo $colores_vidrio["codigo_color"]; ?></td>
+						</tr>
+						<!------------------------------------------------------------------------>
+						<tr>
+							<td align="right"><b>Color de Vidrio:</b></td>
+							<td><?php echo $colores_vidrio["nombre_color"]; ?></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+<!------------------------------------------------------------------------------------------------------------------------>				
+		</table>
+		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2010</center>
+	</BODY>
+</HTML>
+<?php include "../../../librerias/cerrar_conexion.php"; ?>

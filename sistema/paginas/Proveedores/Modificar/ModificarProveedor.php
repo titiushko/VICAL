@@ -1,7 +1,7 @@
 <?php
-include "../../../loggin/BloqueSeguridad.php";
-include "../../../loggin/AccesoAdministrador.php";
 include "../../../librerias/abrir_conexion.php";
+include "../../../login/BloqueSeguridad.php";
+include "../../../login/AccesoAdministrador.php";
 
 $codigo_proveedor 		= $_REQUEST['codigo_proveedor'];
 $nombre_proveedor 		= $_POST['nombre_proveedor'];
@@ -69,7 +69,7 @@ $proveedores = mysql_fetch_assoc($consulta_proveedores);
 ?>
 <HTML>
 	<head>
-		<title>.:SC&CPVES:.</title>
+		<title>.:SCYCPVES:.</title>
 		<meta http-equiv ="refresh"		 content="5;url=../Consultar/frmConsultarProveedor.php">
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
@@ -177,7 +177,7 @@ $proveedores = mysql_fetch_assoc($consulta_proveedores);
 			</tr>
 <!------------------------------------------------------------------------------------------------------------------------>				
 		</table>
-		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2011</center>
+		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2012</center>
 	</BODY>
 </HTML>
 <?php include "../../../librerias/cerrar_conexion.php"; ?>

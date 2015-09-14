@@ -1,10 +1,11 @@
 <?php
-include "../../../loggin/BloqueSeguridad.php";
-include "../../../loggin/AccesoAdministrador.php";
 include "../../../librerias/abrir_conexion.php";
+include "../../../login/BloqueSeguridad.php";
+include "../../../login/AccesoAdministrador.php";
 include "../../../librerias/funciones.php";
-$nombre_recolector 	= $_REQUEST['valor_nombre_recolector'];
-$top				= $_SESSION["cuenta_compras"];	$_SESSION["cuenta_compras"] = 1;
+$nombre_recolector 		= $_REQUEST['valor_nombre_recolector'];
+$nombre_centro_acopio 	= $_REQUEST['valor_centro_acopio'];
+$top					= $_SESSION["cuenta_compras"];	$_SESSION["cuenta_compras"] = 1;
 
 $instruccion_select = "
 SELECT codigo_recolector, nombre_recolector, dui_recolector, nit_recolector, direccion_recolector, telefono_recolector
@@ -41,7 +42,7 @@ for($j=1; $j<=5; $j++)
 	if($coloresVidrioComprado[$j] != ''){
 		$COLORES = $COLORES.$coloresVidrioComprado[$j];
 		if($j < 5)
-			if($coloresVidrioComprado[$j+1] != '')
+			//if($coloresVidrioComprado[$j+1] != '')
 				$COLORES = $COLORES.", ";
 	}
 
@@ -52,7 +53,7 @@ $fecha_hoy = fechaHoy();
 ?>
 <HTML>
 	<head>
-		<title>.:SC&CPVES:.</title>
+		<title>.:SCYCPVES:.</title>
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -99,35 +100,17 @@ $fecha_hoy = fechaHoy();
 						<tr>
 							<td align="left" colspan="6" class="subtitulo1">
 								RECIBI DE&nbsp;
-								<select name="seleccionar_proveedor" class="lista subtitulo3 sublin" size="1" style="width:440px;">
-									<option selected value="">.:Proveedor:.</option>
-									<?php
-									$instruccion_proveedor = "SELECT nombre_proveedor FROM proveedores ORDER BY nombre_proveedor ASC";
-									$consulta_proveedor = mysql_query($instruccion_proveedor,$conexion) or die ("<SPAN CLASS='error'>Fallo en la consulta_proveedor!!</SPAN>".mysql_error());
-									while($nombres_proveedores = mysql_fetch_array($consulta_proveedor)){
-										echo "<option onClick='obtenerP(this);'>".$nombres_proveedores[0]."</option>";
-									}
-									?>
-								</select>&nbsp;
+								<input class="subtitulo3 sublin" value="<?php echo "COMERCIAL AGUIRREURRETA, S.A DE C.V";?>" readonly size="70">&nbsp;
 								LA CANTIDAD DE:<br>
-								<input class="subtitulo3 sublin" value="<?php echo numeroLetras($TotalesPrecios);?>" readonly size="80">&nbsp;
+								<input class="subtitulo3 sublin" value="<?php echo numeroLetras($TotalesPrecios);?>" readonly size="82">&nbsp;
 								($&nbsp;
 								<input class="subtitulo3 sublin" value="<?php echo number_format($TotalesPrecios,2,'.',',');?>" readonly size="10">
 								)<br>
-								EN CONCEPTO DE CANCELACON DE TRANSPORTE DE DERECHOS DE VIDRIO<br>
-								PROCEDENTES DE PROVEEDORES, A CENTROS DE ACOPIO DE:<br>								
-								<select name="seleccionar_centro_acopio" class="lista subtitulo3 sublin" size="1" style="width:200px;">
-									<option selected value="">.:Centro de Acopio:.</option>
-									<?php
-									$instruccion_centros_de_acopio = "SELECT nombre_centro_acopio FROM centros_de_acopio ORDER BY nombre_centro_acopio ASC";
-									$consulta_centros_de_acopio = mysql_query($instruccion_centros_de_acopio,$conexion) or die ("<SPAN CLASS='error'>Fallo en la consulta_centros_de_acopio!!</SPAN>".mysql_error());
-									while($nombres_centros_de_acopio = mysql_fetch_array($consulta_centros_de_acopio)){
-										echo "<option onClick='obtenerCA(this);'>".$nombres_centros_de_acopio[0]."</option>";
-									}
-									?>
-								</select>&nbsp;
+								EN CONCEPTO DE CANCELACON DE TRANSPORTE DE DERECHOS DE VIDRIO PROCEDENTES DE<br>
+								PROVEEDORES, A CENTROS DE ACOPIO DE:<br>								
+								<input class="subtitulo3 sublin" value="<?php echo $nombre_centro_acopio;?>" readonly size="85"><br>
 								COLOR&nbsp;
-								<input class="subtitulo3 sublin" value="<?php echo $COLORES;?>" readonly size="55"><br>
+								<input class="subtitulo3 sublin" value="<?php echo $COLORES;?>" readonly size="75"><br>
 								POR LA CANTIDAD DE:&nbsp;
 								<input class="subtitulo3 sublin" value="<?php echo number_format($TotalesCantidades,2,'.',',');?>" readonly size="10">&nbsp;
 								QUINTALES SEGUN DETALLE:
@@ -216,6 +199,9 @@ $fecha_hoy = fechaHoy();
 								<input class="subtitulo3 sinsublin" value="<?php echo $recolector['nit_recolector'];?>" readonly size="70">
 							</td>
 						</tr>
+						<?php
+						if($recolector['direccion_recolector']<>NULL){
+						?>
 						<tr>
 							<td align="left" class="subtitulo1">
 								DIRECCION
@@ -224,6 +210,9 @@ $fecha_hoy = fechaHoy();
 								<input class="subtitulo3 sinsublin" value="<?php echo $recolector['direccion_recolector'];?>" readonly size="70">
 							</td>
 						</tr>
+						<?php
+						}
+						?>
 						<tr><td colspan="6">&nbsp;</td></tr>
 					</table>
 				</td>
@@ -236,12 +225,12 @@ $fecha_hoy = fechaHoy();
 		<table align="center">
 			<tr>
 				<td>
-					<FORM onSubmit="return verificar();" ACTION="ExportarReporteRecolector_CorteCaja.php<?php echo "?valor_nombre_recolector=".$recolector['nombre_recolector']."&nom_p=nom_p&nom_ca=nom_ca"; ?>" METHOD="post">
+					<FORM ACTION="ExportarReporteRecolector_CorteCaja.php<?php echo "?valor_nombre_recolector=".$recolector['nombre_recolector']."&valor_nombre_centro_acopio=$nombre_centro_acopio"; ?>" METHOD="post">
 					<input name="Exportar" type="submit" value="Exportar" onMouseOver="toolTip('Exportar',this)" class="boton exportar">
 					</FORM>
 				</td>
 				<td>		
-					<FORM onSubmit="return verificar();" ACTION="ImprimirReporteRecolector_CorteCaja.php<?php echo "?valor_nombre_recolector=".$recolector['nombre_recolector']."&nom_p=nom_p&nom_ca=nom_ca"; ?>" METHOD="post">
+					<FORM ACTION="ImprimirReporteRecolector_CorteCaja.php<?php echo "?valor_nombre_recolector=".$recolector['nombre_recolector']."&valor_nombre_centro_acopio=$nombre_centro_acopio"; ?>" METHOD="post">
 					<input name="Imprimir" type="submit" value="Imprimir" onMouseOver="toolTip('Imprimir',this)" class="boton imprimir">
 					</FORM>
 				</td>
@@ -261,7 +250,7 @@ $fecha_hoy = fechaHoy();
 		</tr>
 		</table>
 <!------------------------------------------------------------------------------------------------------------------------>
-		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2011</center>
+		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2012</center>
 	</BODY>
 </HTML>
 <?php include "../../../librerias/cerrar_conexion.php"; ?>

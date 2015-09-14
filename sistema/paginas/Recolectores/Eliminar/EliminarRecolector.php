@@ -1,7 +1,7 @@
 <?php
-include "../../../loggin/BloqueSeguridad.php";
-include "../../../loggin/AccesoAdministrador.php";
 include "../../../librerias/abrir_conexion.php";
+include "../../../login/BloqueSeguridad.php";
+include "../../../login/AccesoAdministrador.php";
 
 $codigo_recolector = $_REQUEST['codigo'];
 
@@ -39,19 +39,19 @@ AND facturas.codigo_recolector = recolectores.codigo_recolector";
 $consulta_factura = mysql_query($instruccion_select, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_factura!! </SPAN>".mysql_error());
 $facturas = mysql_fetch_array($consulta_factura);
 
-if($centros_de_acopio["cantidad_centros_acopio"] > 1) {$mensaje1 = "&nbsp;Centros de Acopio."; $mensaje2 = "estos Centros de Acopio?.";}
-else {$mensaje1 = "&nbsp;Centro de Acopio."; $mensaje2 = "este Centro de Acopio?.";}
+if($centros_de_acopio["cantidad_centros_acopio"] > 1) {$mensaje1 = "&nbsp;centros de acopio."; $mensaje2 = "estos centros de acopio?.";}
+else {$mensaje1 = "&nbsp;centro de acopio."; $mensaje2 = "este centro de acopio?.";}
 
 $error1 = "No se puede eliminar a ".$recolectores["nombre_recolector"]." porque: ";
 $error2 = "hay compras de vidrio registradas que a realizado este recolector.";
 $error3 = "es encargado de ".$centros_de_acopio["cantidad_centros_acopio"].$mensaje1;
 $error4 = "Si elimina a ".$recolectores["nombre_recolector"]." tenga en cuenta que tambi&eacute;n se perder&aacute; la informaci&oacute;n de compras de vidrio que a realizado este recolector.";
-$error5 = "Desea eliminar a ".$recolectores["nombre_recolector"]." y asignar otro encargado a ".$mensaje2;
+$error5 = "O prefiere eliminar a ".$recolectores["nombre_recolector"]." y trasnferir a otro recolector ".$mensaje2;
 ?>
 <!----------------------------------------------------------------------------------------------------------------->
 <HTML>
 	<head>
-		<title>.:SC&CPVES:.</title>
+		<title>.:SCYCPVES:.</title>
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -62,19 +62,18 @@ $error5 = "Desea eliminar a ".$recolectores["nombre_recolector"]." y asignar otr
 		<link rel="shortcut icon" 		 href="../../../imagenes/vical.ico">
 		<link rel="stylesheet" 			 href="../../../librerias/formato.css" type="text/css"></link>
 		<script type="text/javascript" 	 src="../../../librerias/funciones.js"></script>
-		<script>
-			//validar lista recolectores
-			function borrarMensaje(){
-				var elemento = document.getElementById('mensaje'); elemento.className = "oculto";
+		<script type="text/javascript">
+		function borrarMensaje(){
+			var elemento = document.getElementById('mensaje'); elemento.className = "oculto";
+		}
+		function ValidarListaRecolector(F){
+			borrarMensaje();
+			if (F.nuevo_recolector.selectedIndex == 0){
+				var elemento = document.getElementById('mensaje'); elemento.className = "visto";
+				return false;
 			}
-			function ValidarListaRecolector(F){
-				borrarMensaje();
-				if (F.nuevo_recolector.selectedIndex == 0){
-					var elemento = document.getElementById('mensaje'); elemento.className = "visto";
-					return false;
-				}
-				return true;
-			}
+			return true;
+		}
 		</script>
 	</head>
 	<BODY class="cuerpo1">
@@ -88,96 +87,98 @@ $error5 = "Desea eliminar a ".$recolectores["nombre_recolector"]." y asignar otr
 			if( $recolectores['recolectores_codigo_recolector'] == $facturas['facturas_codigo_recolector'] && $recolectores['recolectores_codigo_recolector'] == $centros_de_acopio['centros_de_acopio_codigo_recolector'] ){
 			?>
 					<h2 class="encabezado2"><img src="../../../imagenes/icono_error.png"><br>NO SE PUDO ELIMINAR EL RECOLECTOR!!</h2>
+					<form name="borrar_recolector" <?php echo "action=\"CargarEliminarRecolector.php?codigo=$codigo_recolector&tipo1=1&tipo2=2\"";?> method="post" enctype="multipart/form-data" onSubmit="return ValidarListaRecolectores(this);">
 					<table align="center" class="alerta error centro">
-						<tr><td><?php echo $error1.$error2." Y tambien ".$error3."<br><br>".$error4."<br><br>".$error5;?></td></tr>
+						<tr>
+							<td>
+								<?php echo $error1.$error2." Y tambien ".$error3."<br><br>".$error4."<br><br>".$error5;?>
+								<div align="center">
+								Transferir a:
+								<select name="nuevo_recolector" class="lista nombre" size="1" onClick="borrarMensaje();" onBlur="borrarMensaje();">
+									<option selected value="">.:Opciones:.</option>
+									<?php
+									$instruccion = "SELECT codigo_recolector, nombre_recolector FROM recolectores ORDER BY nombre_recolector ASC";
+									$consulta = mysql_query($instruccion,$conexion) or die ("<SPAN CLASS='error'>Fallo en la consulta!!</SPAN>".mysql_error());
+									while($opciones = mysql_fetch_array($consulta)){
+										if($opciones[0] == $codigo_recolector)
+											echo "<option class=\"oculto\">".$opciones[1]."</option>";
+										else
+											echo "<option value=\"$opciones[0]\">".$opciones[1]."</option>";
+									}
+									?>
+								</select>
+								</div>
+							</td>
+						</tr>
 					</table>
-					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-					<form name="borrar_proveedor" <?php echo "action=\"EliminarRecolector&AsignarNuevo.php?codigo=$codigo_recolector&tipo1=1&tipo2=2\"";?> method="post" enctype="multipart/form-data" onSubmit="return ValidarListaRecolector(this);">
-					<!------------------------------------------------------------------------>
-					<span align="right" class="titulo1">Selceccione el nuevo encargado:</span>
-					<select name="nuevo_recolector" class="subtitulo1 fondo" size="1" onClick="borrarMensaje();">
-						<option selected value="">---Recolectores---</option>
-						<?php
-						$instruccion = "SELECT codigo_recolector, nombre_recolector FROM recolectores ORDER BY nombre_recolector ASC";
-						$consulta = mysql_query($instruccion,$conexion) or die ("<SPAN CLASS='error'>Fallo en la consulta!!</SPAN>".mysql_error());
-						while($opciones = mysql_fetch_array($consulta)){
-							if($opciones[0] == $codigo_recolector)
-								echo "<option class=\"oculto\">".$opciones[1]."</option>";
-							else
-								echo "<option value=\"$opciones[0]\">".$opciones[1]."</option>";
-						}
-						?>
-					</select>
-					<br>
-					<!------------------------------------------------------------------------>
 					<input name="Continuar" type="submit" value="Continuar" onMouseOver="toolTip('Continuar',this)" class="boton aceptar">
 					<input type="button" onMouseOver="toolTip('Regresar',this)" class="boton cancelar" <?php echo "onClick=\"redireccionar('../Consultar/VerRecolector.php?valor=$codigo_recolector')\"";?>>
-					<!------------------------------------------------------------------------>
 					</form>
 					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 					<span id="toolTipBox" width="50"></span>
 					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 					<center>
-						<div id="mensaje" class="oculto"><span class="alerta error">&nbsp;&nbsp;Falta seleccionar el nuevo encargado!!&nbsp;&nbsp;</span></div>
+					<div id="mensaje" class="oculto"><span class="alerta error">&nbsp;&nbsp;Falta seleccionar el recolector para hacer trasnferencia!!&nbsp;&nbsp;</span></div>
 					</center>
+				</td>
+			</tr>
 <!--::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
 			<?php
 			}
 			else if( $recolectores['recolectores_codigo_recolector'] == $facturas['facturas_codigo_recolector'] ){
 			?>
 					<h2 class="encabezado2"><img src="../../../imagenes/icono_error.png"><br>NO SE PUDO ELIMINAR EL RECOLECTOR!!</h2>
+					<form name="borrar_recolector" <?php echo "action=\"CargarEliminarRecolector.php?codigo=$codigo_recolector&tipo1=1&tipo2=0\"";?> method="post" enctype="multipart/form-data">
 					<table align="center" class="alerta error centro">
 						<tr><td><?php echo $error1.$error2."<br><br>".$error4;?></td></tr>
 					</table>
-					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-					<form name="borrar_proveedor" <?php echo "action=\"EliminarRecolector&AsignarNuevo.php?codigo=$codigo_recolector&tipo1=1&tipo2=0\"";?> method="post" enctype="multipart/form-data">
-					<input name="nuevo_recolector" class="oculto" type="text" value="falso">
-					<!------------------------------------------------------------------------>					
+					<input name="nuevo_recolector" type="text" class="oculto" value="falso">
 					<input name="Continuar" type="submit" value="Continuar" onMouseOver="toolTip('Continuar',this)" class="boton aceptar">
 					<input type="button" onMouseOver="toolTip('Regresar',this)" class="boton cancelar" <?php echo "onClick=\"redireccionar('../Consultar/VerRecolector.php?valor=$codigo_recolector')\"";?>>
-					<!------------------------------------------------------------------------>
 					</form>
-					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-					<span id="toolTipBox" width="50"></span>
-					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+				</td>
+			</tr>
 <!--::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
 			<?php
 			}
 			else if( $recolectores['recolectores_codigo_recolector'] == $centros_de_acopio['centros_de_acopio_codigo_recolector'] ){
 			?>
 					<h2 class="encabezado2"><img src="../../../imagenes/icono_error.png"><br>NO SE PUDO ELIMINAR EL RECOLECTOR!!</h2>
+					<form name="borrar_recolector" <?php echo "action=\"CargarEliminarRecolector.php?codigo=$codigo_recolector&tipo1=1&tipo2=2\"";?> method="post" enctype="multipart/form-data" onSubmit="return ValidarListaRecolectores(this);">
 					<table align="center" class="alerta error centro">
-						<tr><td><?php echo $error1.$error3."<br><br>".$error5;?></td></tr>
+						<tr>
+							<td>
+								<?php echo $error1.$error3."<br><br>".$error5;?>
+								<div align="center">
+								Transferir a:
+								<select name="nuevo_recolector" class="lista nombre" size="1" onClick="borrarMensaje();" onBlur="borrarMensaje();">
+									<option selected value="">.:Opciones:.</option>
+									<?php
+									$instruccion = "SELECT codigo_recolector, nombre_recolector FROM recolectores ORDER BY nombre_recolector ASC";
+									$consulta = mysql_query($instruccion,$conexion) or die ("<SPAN CLASS='error'>Fallo en la consulta!!</SPAN>".mysql_error());
+									while($opciones = mysql_fetch_array($consulta)){
+										if($opciones[0] == $codigo_recolector)
+											echo "<option class=\"oculto\">".$opciones[1]."</option>";
+										else
+											echo "<option value=\"$opciones[0]\">".$opciones[1]."</option>";
+									}
+									?>
+								</select>
+								</div>
+							</td>
+						</tr>
 					</table>
-					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-					<form name="borrar_proveedor" <?php echo "action=\"EliminarRecolector&AsignarNuevo.php?codigo=$codigo_recolector&tipo1=0&tipo2=2\"";?> method="post" enctype="multipart/form-data" onSubmit="return ValidarListaRecolector(this);">
-					<!------------------------------------------------------------------------>
-					<span align="right" class="titulo1">Selceccione el nuevo encargado:</span>
-					<select name="nuevo_recolector" class="subtitulo1 fondo" size="1" onClick="borrarMensaje();">
-						<option selected value="">---Recolectores---</option>
-						<?php
-						$instruccion = "SELECT codigo_recolector, nombre_recolector FROM recolectores ORDER BY nombre_recolector ASC";
-						$consulta = mysql_query($instruccion,$conexion) or die ("<SPAN CLASS='error'>Fallo en la consulta!!</SPAN>".mysql_error());
-						while($opciones = mysql_fetch_array($consulta)){
-							if($opciones[0] == $codigo_recolector)
-								echo "<option class=\"oculto\">".$opciones[1]."</option>";
-							else
-								echo "<option value=\"$opciones[0]\">".$opciones[1]."</option>";
-						}
-						?>
-					</select>
-					<br>
-					<!------------------------------------------------------------------------>
 					<input name="Continuar" type="submit" value="Continuar" onMouseOver="toolTip('Continuar',this)" class="boton aceptar">
 					<input type="button" onMouseOver="toolTip('Regresar',this)" class="boton cancelar" <?php echo "onClick=\"redireccionar('../Consultar/VerRecolector.php?valor=$codigo_recolector')\"";?>>
-					<!------------------------------------------------------------------------>
 					</form>
 					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 					<span id="toolTipBox" width="50"></span>
 					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 					<center>
-						<div id="mensaje" class="oculto"><span class="alerta error">&nbsp;&nbsp;Falta seleccionar el nuevo encargado!!&nbsp;&nbsp;</span></div>
+					<div id="mensaje" class="oculto"><span class="alerta error">&nbsp;&nbsp;Falta seleccionar el recolector para hacer trasnferencia!!&nbsp;&nbsp;</span></div>
 					</center>
+				</td>
+			</tr>
 <!--::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
 			<?php
 			}
@@ -243,7 +244,7 @@ $error5 = "Desea eliminar a ".$recolectores["nombre_recolector"]." y asignar otr
 			?>
 <!--::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
 		</table>
-		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2011</center>
+		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2012</center>
 	</BODY>
 </HTML>
 <?php include "../../../librerias/cerrar_conexion.php"; ?>

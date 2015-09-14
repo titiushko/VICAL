@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//WRC//DTD HTML 4.01 Transitional//EN">
 <HTML> 
 	<head>
-		<title>.:SC&CPVES:.</title>
+		<title>.:SCYCPVES:.</title>
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -15,7 +15,7 @@
 		<frame name="CABECERA" src="interfaz/frame_cabecera.html" scrolling="no" noresize marginwidth="0" marginheight="0">
 		<frameset rows="7,*" cols="*" frameborder="no" border="0" framespacing="0">
 			<frame name="FRANJA" src="interfaz/frame_franja.html" scrolling="no" noresize marginwidth="0" marginheight="0">
-			<frame name="LOGGIN" src="loggin/CargarLoggin.php" scrolling="no" noresize marginwidth="0" marginheight="0">
+			<frame name="LOGGIN" src="instalador/VerificarBaseDatos.php" scrolling="no" noresize marginwidth="0" marginheight="0">
 		</frameset>
 	</frameset>
 </HTML>

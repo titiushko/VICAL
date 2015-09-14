@@ -1,6 +1,6 @@
 <?php
-include "../../../loggin/BloqueSeguridad.php";
 include "../../../librerias/abrir_conexion.php";
+include "../../../login/BloqueSeguridad.php";
 $direccion = "../Consultar/frmConsultarCentroAcopio.php";
 $instruccion_select = "
 SELECT
@@ -16,7 +16,7 @@ $consulta_centros_de_acopio = mysql_query($instruccion_select, $conexion) or die
 ?>
 <HTML>
 	<head>
-		<title>.:SC&CPVES:.</title>
+		<title>.:SCYCPVES:.</title>
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -42,6 +42,7 @@ $consulta_centros_de_acopio = mysql_query($instruccion_select, $conexion) or die
 				L8: 'La Libertad',	L9: 'Chalatenango',	L10: 'Cuscatlan',	L11: 'San Salvador',	L12: 'La Paz',	L13: 'Caba&ntilde;as',	L14: 'San Vicente'
 			}
 		</script>
+		<style>.tinytable{width: 80%;}</style>
 	</head>
 	<BODY class="cuerpo1">
 		<table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -61,7 +62,7 @@ $consulta_centros_de_acopio = mysql_query($instruccion_select, $conexion) or die
 				if($cantidad[0] <> 0){
 				?>
 <!---------------------------------------------------------------------------------------------------------------------------------->
-				<table id="main" class="marco"><tr><td>
+				<table id="main" class="marco" width="100%"><tr><td>
 <!---------------------------------------------------------------------------------------------------------------------------------->
 					<br>
 					<ul id="criterios" class="subsection_tabs">
@@ -92,12 +93,12 @@ $consulta_centros_de_acopio = mysql_query($instruccion_select, $conexion) or die
 								<table cellpadding="0" cellspacing="0" id="table" class="tinytable">
 									<thead class="titulo1">
 										<tr>
-											<th onMouseOver="toolTip('Ordenar por codigo',this)"><h3>Codigo</h3></th>
-											<th onMouseOver="toolTip('Ordenar por nombre',this)"><h3>Nombre</h3></th>
-											<th onMouseOver="toolTip('Ordenar por departamento',this)"><h3>Departamento</h3></th>
-											<th onMouseOver="toolTip('Ordenar por encargado',this)"><h3>Encargado</h3></th>
+											<th onMouseOver="toolTip('Ordenar por codigo',this)" width="120"><h3>Codigo</h3></th>
+											<th onMouseOver="toolTip('Ordenar por nombre',this)" width="280"><h3>Nombre</h3></th>
+											<th onMouseOver="toolTip('Ordenar por departamento',this)" width="180"><h3>Departamento</h3></th>
+											<th onMouseOver="toolTip('Ordenar por encargado',this)" width="280"><h3>Encargado</h3></th>
 											<?php if($_SESSION["tipo_usuario"] == "1"){ ?>
-											<th class="nosort"><h3></h3></th>
+											<th class="nosort" width="100"><h3></h3></th>
 											<?php } ?>
 										</tr>
 									</thead>
@@ -163,7 +164,7 @@ $consulta_centros_de_acopio = mysql_query($instruccion_select, $conexion) or die
 					</table>
 					</div>
 <!---------------------------------------------------------------------------------------------------------------------------------->
-					<div style="display: none;" id="mapa">
+					<div style="display: none;" id="mapa" align="center">
 						<br>
 						<map name="el_salvador" id="el_salvador">
 							<area class="showTip L1" href="VerCentroAcopioDepartamento.php<?php echo "?departamento=1";?>"		shape="circle" 	coords="74,268,40"/>
@@ -213,7 +214,7 @@ $consulta_centros_de_acopio = mysql_query($instruccion_select, $conexion) or die
 			</tr>
 <!--::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
 		</table>
-		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2011</center>
+		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2012</center>
 	</BODY>
 </HTML>
 <?php include "../../../librerias/cerrar_conexion.php"; ?>

@@ -1,12 +1,12 @@
 <?php
-include "../../../loggin/BloqueSeguridad.php";
 include "../../../librerias/abrir_conexion.php";
+include "../../../login/BloqueSeguridad.php";
 $nombre_recolector = $_REQUEST['valor'];
 $lista_mes = array(1 => "Enero", 2 => "Febrero", 3 => "Marzo", 4 => "Abril", 5 => "Mayo", 6 => "Junio", 7 => "Julio", 8 => "Agosto", 9 => "Septiembre", 10 => "Octubre", 11 => "Noviembre", 12 => "Diciembre");
 ?>
 <HTML>
 	<head>
-		<title>.:SC&CPVES:.</title>
+		<title>.:SCYCPVES:.</title>
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -83,7 +83,7 @@ $lista_mes = array(1 => "Enero", 2 => "Febrero", 3 => "Marzo", 4 => "Abril", 5 =
 											<select name="seleccionar_mes" class="lista opcion" size="1" onClick="borrarMensaje(3);">
 												<option selected value="">.:Opciones:.</option>
 												<?php
-												for($i=1;$i<12;$i++){
+												for($i=1;$i<=12;$i++){
 												echo "<option value=\"$i\">".$lista_mes[$i]."</option>";
 												}
 												?>
@@ -188,7 +188,7 @@ $lista_mes = array(1 => "Enero", 2 => "Febrero", 3 => "Marzo", 4 => "Abril", 5 =
 			</tr>
 <!------------------------------------------------------------------------------------------------------------------------>				
 		</table>
-		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2011</center>
+		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2012</center>
 	</BODY>
 </HTML>
 <?php include "../../../librerias/cerrar_conexion.php"; ?>

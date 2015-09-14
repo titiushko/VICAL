@@ -1,7 +1,7 @@
 <?php
-include "../../../loggin/BloqueSeguridad.php";
-include "../../../loggin/AccesoAdministrador.php";
 include "../../../librerias/abrir_conexion.php";
+include "../../../login/BloqueSeguridad.php";
+include "../../../login/AccesoAdministrador.php";
 $recolcetor = $_REQUEST['valor_recolector'];
 $instruccion = "
 SELECT
@@ -9,7 +9,7 @@ facturas.fecha,
 centros_de_acopio.departamento,
 proveedores.nombre_proveedor,
 vidrio.cantidad_vidrio,
-vidrio.precio
+vidrio.precio_vidrio
 FROM
 facturas,
 vidrio,
@@ -82,7 +82,7 @@ $recolectores = mysql_fetch_array($consulta);
 			</tr>
 		</table>
 <!------------------------------------------------------------------------------------------------------------------------>
-		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2011</center>
+		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2012</center>
 	</BODY>
 </HTML>
 <?php include "../../../librerias/cerrar_conexion.php"; ?>

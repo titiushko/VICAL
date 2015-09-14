@@ -1,7 +1,7 @@
 <?php
-include "../../../loggin/BloqueSeguridad.php";
-include "../../../loggin/AccesoAdministrador.php";
 include "../../../librerias/abrir_conexion.php";
+include "../../../login/BloqueSeguridad.php";
+include "../../../login/AccesoAdministrador.php";
 //oobtener variables para realizar la consulta
 $nombre		= $_POST['nombre'];
 $usuario	= $_POST['usuario'];
@@ -9,13 +9,13 @@ $password	= $_POST['password'];
 $nivel		= $_POST['nivel'];
 $tipos_usuarios = array(1=>"Administrador",2=>"Contador",3=>"Recolector");
 $instruccion_insert = "
-INSERT INTO usuarios(NOMBRE,USUARIO,PASSWORD,nivel)
-VALUES ('$nombre','$usuario','$password','$nivel')";
+INSERT INTO usuarios(NOMBRE,USUARIO,PASSWORD,NIVEL,ESTADO)
+VALUES ('$nombre','$usuario','$password','$nivel','offline')";
 mysql_query ($instruccion_insert, $conexion) or die ("<SPAN CLASS='error'>Fallo en registrar_usuario!!</SPAN>".mysql_error());
 ?>
 <HTML>
 	<head>
-		<title>.:SC&CPVES:.</title>
+		<title>.:SCYCPVES:.</title>
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -71,7 +71,7 @@ mysql_query ($instruccion_insert, $conexion) or die ("<SPAN CLASS='error'>Fallo 
 				</tr>
 <!------------------------------------------------------------------------------------------------------------------------>				
 		</table>
-		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2011</center>
+		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2012</center>
 	</BODY>
 </HTML>
 <?php include "../../../librerias/cerrar_conexion.php"; ?>

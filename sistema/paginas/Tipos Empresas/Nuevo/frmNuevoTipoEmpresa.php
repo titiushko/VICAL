@@ -1,7 +1,7 @@
 <?php
-include "../../../loggin/BloqueSeguridad.php";
-include "../../../loggin/AccesoAdministrador.php";
 include "../../../librerias/abrir_conexion.php";
+include "../../../login/BloqueSeguridad.php";
+include "../../../login/AccesoAdministrador.php";
 //Obtener cantidad de datos
 $consulta_tipo_empresa = mysql_query("SELECT COUNT(codigo_tipo_empresa) AS cantidad FROM tipos_empresas", $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_tipo_empresa!! </SPAN>".mysql_error());
 $tipo_empresa = mysql_fetch_array($consulta_tipo_empresa);
@@ -28,7 +28,7 @@ while($contador <= $cantidad){
 ?>
 <HTML>
 	<head>
-		<title>.:SC&CPVES:.</title>
+		<title>.:SCYCPVES:.</title>
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -103,13 +103,13 @@ while($contador <= $cantidad){
 					</form>
 					<center>
 						<span class="obligatorio">* Datos requeridos</span>
-						<div id="mensaje" class="oculto"><span class="alerta error">&nbsp;&nbsp;Falta el nombre del tipo de empresa!!&nbsp;&nbsp;</span></div>
+						<div id="mensaje" class="oculto"><br><br><span class="alerta error">&nbsp;&nbsp;Falta el nombre del tipo de empresa!!&nbsp;&nbsp;</span></div>
 					</center>
 				</td>
 			</tr>
 <!------------------------------------------------------------------------------------------------------------------------>
 		</table>
-		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2011</center>
+		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2012</center>
 	</BODY>
 </HTML>
 <?php include "../../../librerias/cerrar_conexion.php"; ?>

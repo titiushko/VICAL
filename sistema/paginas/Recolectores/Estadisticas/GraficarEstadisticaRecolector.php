@@ -1,7 +1,7 @@
 <?php
-include "../../../loggin/BloqueSeguridad.php";
-include "../../../loggin/AccesoAdministrador.php";
 include "../../../librerias/abrir_conexion.php";
+include "../../../login/BloqueSeguridad.php";
+include "../../../login/AccesoAdministrador.php";
 include "../../../librerias/funciones.php";
 
 //RECUPERRAR VALORES DEL FORMULARIO
@@ -15,7 +15,7 @@ if($ano=="" || $recolector=="" || $mostrar=='' || $vidrio=='') header("Location:
 
 //PARA ASIGNARLE VALORES A LA CONSULTA
 if($mostrar == "VIDRIO"){$valor = "cantidad_vidrio"; $titulo = "CANTIDAD (Quintales)";}
-if($mostrar == "MONTO"){$valor = "precio"; $titulo = "CANTIDAD ($)";}
+if($mostrar == "MONTO"){$valor = "precio_vidrio"; $titulo = "CANTIDAD ($)";}
 if($vidrio == "BOTELLA") $tipo='TV-01';
 if($vidrio == "PLANO") $tipo='TV-02';
 
@@ -28,7 +28,7 @@ $intruccion_vidrio = "
 SELECT
 DISTINCT MONTH(facturas.fecha) AS mes,
 vidrio.cantidad_vidrio,
-vidrio.precio
+vidrio.precio_vidrio
 FROM vidrio, facturas, recolectores
 WHERE recolectores.nombre_recolector = '$recolector'
 AND facturas.codigo_recolector = recolectores.codigo_recolector
@@ -64,7 +64,7 @@ for($i=1;$i<=12;$i++)
 ?>
 <HTML>
 	<head>
-		<title>.:SC&CPVES:.</title>
+		<title>.:SCYCPVES:.</title>
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">

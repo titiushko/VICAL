@@ -1,7 +1,7 @@
 <?php
-include "../../../loggin/BloqueSeguridad.php";
-include "../../../loggin/AccesoAdministrador.php";
 include "../../../librerias/abrir_conexion.php";
+include "../../../login/BloqueSeguridad.php";
+include "../../../login/AccesoAdministrador.php";
 include "../../../librerias/funciones.php";
 $mes		= $_REQUEST['valor_mes'];
 $anio 		= $_REQUEST['valor_ano'];
@@ -72,7 +72,7 @@ for($i=0; $i<=strlen($recolcetor); $i++){
 						</thead>
 						<tbody align="center">
 <?php
-//generar las consultas que devuelven las suma de precios de vidrio comprado por semanas
+//generar las consultas que devuelven las suma de precio_vidrios de vidrio comprado por semanas
 $i=1;$posicion="&nbsp;";$semana=1;$v_claro=$v_ambar=$v_verde=$p_claro=0;
 while($i <= 31)
 {
@@ -84,7 +84,7 @@ $inicio=$i;
 $vidrio_claro=$vidrio_ambar=$vidrio_verde=$plano_claro=0;
 
 //para tipo de vidrio Botella Claro
-$instruccion = "SELECT SUM(precio) AS precio FROM vidrio WHERE codigo_tipo='TV-01' AND codigo_color='CV-02' AND codigo_factura IN 
+$instruccion = "SELECT SUM(precio_vidrio) AS precio_vidrio FROM vidrio WHERE codigo_tipo='TV-01' AND codigo_color='CV-02' AND codigo_factura IN 
 				(SELECT codigo_factura FROM facturas WHERE codigo_recolector='$cod_recolec' AND fecha BETWEEN '$anio-$mes-$inicio' AND '$anio-$mes-$final')";
 $consulta = mysql_query($instruccion,$conexion) or die ("<SPAN CLASS='error'>Fallo en la consulta!!</SPAN>".mysql_error());
 $obtener = mysql_fetch_array($consulta);
@@ -92,7 +92,7 @@ $vidrio_claro=number_format($obtener[0],2,'.',',');	//almacena el total de vidri
 $v_claro += $vidrio_claro;	
 
 //para tipo de vidrio Botella Ambar
-$instruccion = "SELECT SUM(precio) AS precio FROM vidrio WHERE codigo_tipo='TV-01' AND codigo_color='CV-03' AND codigo_factura IN 
+$instruccion = "SELECT SUM(precio_vidrio) AS precio_vidrio FROM vidrio WHERE codigo_tipo='TV-01' AND codigo_color='CV-03' AND codigo_factura IN 
 				(SELECT codigo_factura FROM facturas WHERE codigo_recolector='$cod_recolec' AND fecha BETWEEN '$anio-$mes-$inicio' AND '$anio-$mes-$final')";
 $consulta = mysql_query($instruccion,$conexion) or die ("<SPAN CLASS='error'>Fallo en la consulta!!</SPAN>".mysql_error());
 $obtener = mysql_fetch_array($consulta);
@@ -100,7 +100,7 @@ $vidrio_ambar=number_format($obtener[0],2,'.',',');	//almacena el total de vidri
 $v_ambar += $vidrio_ambar;				
 
 //para tipo de vidrio Botella Verde
-$instruccion = "SELECT SUM(precio) AS precio FROM vidrio WHERE codigo_tipo='TV-01' AND codigo_color='CV-01' AND codigo_factura IN 
+$instruccion = "SELECT SUM(precio_vidrio) AS precio_vidrio FROM vidrio WHERE codigo_tipo='TV-01' AND codigo_color='CV-01' AND codigo_factura IN 
 				(SELECT codigo_factura FROM facturas WHERE codigo_recolector='$cod_recolec' AND fecha BETWEEN '$anio-$mes-$inicio' AND '$anio-$mes-$final')";
 $consulta = mysql_query($instruccion,$conexion) or die ("<SPAN CLASS='error'>Fallo en la consulta!!</SPAN>".mysql_error());
 $obtener = mysql_fetch_array($consulta);
@@ -108,7 +108,7 @@ $vidrio_verde=number_format($obtener[0],2,'.',',');	//almacena el total de vidri
 $v_verde += $vidrio_verde;
 
 //para tipo de vidrio Plano Claro
-$instruccion = "SELECT SUM(precio) AS precio FROM vidrio WHERE codigo_tipo='TV-02' AND codigo_color='CV-02' AND codigo_factura IN 
+$instruccion = "SELECT SUM(precio_vidrio) AS precio_vidrio FROM vidrio WHERE codigo_tipo='TV-02' AND codigo_color='CV-02' AND codigo_factura IN 
 				(SELECT codigo_factura FROM facturas WHERE codigo_recolector='$cod_recolec' AND fecha BETWEEN '$anio-$mes-$inicio' AND '$anio-$mes-$final')";
 $consulta = mysql_query($instruccion,$conexion) or die ("<SPAN CLASS='error'>Fallo en la consulta!!</SPAN>".mysql_error());
 $obtener = mysql_fetch_array($consulta);
@@ -150,7 +150,7 @@ $total_horizontal=$vidrio_claro + $vidrio_ambar + $vidrio_verde + $plano_claro;
 			<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 		</table>
 <!------------------------------------------------------------------------------------------------------------------------>
-		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2011</center>
+		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2012</center>
 	</BODY>
 </HTML>
 <?php include "../../../librerias/cerrar_conexion.php"; ?>

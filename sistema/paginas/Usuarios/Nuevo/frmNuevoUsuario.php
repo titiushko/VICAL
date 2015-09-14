@@ -1,11 +1,11 @@
 <?php
-include "../../../loggin/BloqueSeguridad.php";
-include "../../../loggin/AccesoAdministrador.php";
 include "../../../librerias/abrir_conexion.php";
+include "../../../login/BloqueSeguridad.php";
+include "../../../login/AccesoAdministrador.php";
 ?>
 <HTML>
 	<head>
-		<title>.:SC&CPVES:.</title>
+		<title>.:SCYCPVES:.</title>
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -19,10 +19,10 @@ include "../../../librerias/abrir_conexion.php";
 		<script type="text/javascript" 	 src="../../../librerias/funciones.js"></script>
 		<script type="text/javascript" 	 src="../../../librerias/validaciones.js"></script>
 		<script type="text/javascript">
-			//vector con los nombres de usuarios
-			var usuarios = new Array;										
+			//vector con los usuarios
+			var usuarios = new Array;
 			<?php
-			$consulta = mysql_query("SELECT usuario FROM usuarios ORDER BY id ASC",$conexion) or die ("<SPAN CLASS='error'>Fallo en facturas!!</SPAN>".mysql_error());
+			$consulta = mysql_query("SELECT usuario FROM usuarios ORDER BY usuario ASC",$conexion) or die ("<SPAN CLASS='error'>Fallo en usuarios!!</SPAN>".mysql_error());
 			$contador = 0;
 			while($opciones = mysql_fetch_array($consulta)){
 				echo "usuarios[$contador] = '".$opciones[0]."';";
@@ -66,6 +66,7 @@ include "../../../librerias/abrir_conexion.php";
 								<td align="right"><span class="titulo1">Contrase&ntilde;a:</span></td>
 								<td align="left">						
 									<input name="password" id="id3" class="requiredo" type="password" size=18 onBlur="borrarMensaje(5), elementosVacios(4);" onClick="borrarMensaje(5), elementosVacios(4);">
+									<input name="cambiar" type="checkbox" onClick="cambiarTypeTextPassword(this.form);" onMouseOver="toolTip('Mostrar la contrase&ntilde;a',this)">
 									<span class="obligatorio">*</span>
 								</td>
 							</tr>
@@ -102,17 +103,17 @@ include "../../../librerias/abrir_conexion.php";
 					</form>
 					<center>
 						<span class="obligatorio">* Datos requeridos</span>
-						<div id="mensaje1" class="oculto"><span class="alerta error">&nbsp;&nbsp;Falta llenar el nombre completo!!&nbsp;&nbsp;</span></div>
-						<div id="mensaje2" class="oculto"><span class="alerta error">&nbsp;&nbsp;Falta el nombre de usuario!!&nbsp;&nbsp;</span></div>
-						<div id="mensaje3" class="oculto"><span class="alerta error">&nbsp;&nbsp;Ese nombre de usuario ya esta registrado!!&nbsp;&nbsp;</span></div>
-						<div id="mensaje4" class="oculto"><span class="alerta error">&nbsp;&nbsp;Falta la contrase&ntilde;a!!&nbsp;&nbsp;</span></div>
-						<div id="mensaje5" class="oculto"><span class="alerta error">&nbsp;&nbsp;Falta seleccionar el tipo de usuario!!&nbsp;&nbsp;</span></div>
+						<div id="mensaje1" class="oculto"><br><br><span class="alerta error">&nbsp;&nbsp;Falta llenar el nombre completo!!&nbsp;&nbsp;</span></div>
+						<div id="mensaje2" class="oculto"><br><br><span class="alerta error">&nbsp;&nbsp;Falta el nombre de usuario!!&nbsp;&nbsp;</span></div>
+						<div id="mensaje3" class="oculto"><br><br><span class="alerta error">&nbsp;&nbsp;Ese nombre de usuario ya esta registrado!!&nbsp;&nbsp;</span></div>
+						<div id="mensaje4" class="oculto"><br><br><span class="alerta error">&nbsp;&nbsp;Falta la contrase&ntilde;a!!&nbsp;&nbsp;</span></div>
+						<div id="mensaje5" class="oculto"><br><br><span class="alerta error">&nbsp;&nbsp;Falta seleccionar el tipo de usuario!!&nbsp;&nbsp;</span></div>
 					</center>
 				</td>
 			</tr>
 <!------------------------------------------------------------------------------------------------------------------------>
 		</table>
-		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2011</center>
+		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2012</center>
 	</BODY>
 </HTML>
 <?php include "../../../librerias/cerrar_conexion.php"; ?>

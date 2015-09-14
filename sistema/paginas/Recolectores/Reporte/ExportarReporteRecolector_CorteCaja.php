@@ -1,11 +1,11 @@
 <?php
-include "../../../loggin/BloqueSeguridad.php";
-include "../../../loggin/AccesoAdministrador.php";
 include "../../../librerias/abrir_conexion.php";
+include "../../../login/BloqueSeguridad.php";
+include "../../../login/AccesoAdministrador.php";
 include "../../../librerias/funciones.php";
-
-$nombre_recolector 	= $_REQUEST['valor_nombre_recolector'];
-$top				= $_SESSION["cuenta_compras"];
+$nombre_recolector 		= $_REQUEST['valor_nombre_recolector'];
+$nombre_centro_acopio 	= $_REQUEST['valor_nombre_centro_acopio'];
+$top					= $_SESSION["cuenta_compras"];
 
 $instruccion_select = "
 SELECT codigo_recolector, nombre_recolector, dui_recolector, nit_recolector, direccion_recolector, telefono_recolector
@@ -42,7 +42,7 @@ for($j=1; $j<=5; $j++)
 	if($coloresVidrioComprado[$j] != ''){
 		$COLORES = $COLORES.$coloresVidrioComprado[$j];
 		if($j < 5)
-			if($coloresVidrioComprado[$j+1] != '')
+			//if($coloresVidrioComprado[$j+1] != '')
 				$COLORES = $COLORES.", ";
 	}
 
@@ -104,7 +104,7 @@ header("Content-Disposition: attachment; filename=HOJA_DE_FLETE_PARA_".strtouppe
 								)<br>
 								EN CONCEPTO DE CANCELACON DE TRANSPORTE DE DERECHOS DE VIDRIO<br>
 								PROCEDENTES DE PROVEEDORES, A CENTROS DE ACOPIO DE:<br>
-								<b><?php echo "Aragua";?></b>&nbsp;
+								<b><?php echo $nombre_centro_acopio;?></b>&nbsp;
 								COLOR&nbsp;
 								<b><?php echo $COLORES;?></b><br>
 								POR LA CANTIDAD DE:&nbsp;
@@ -195,21 +195,27 @@ header("Content-Disposition: attachment; filename=HOJA_DE_FLETE_PARA_".strtouppe
 								<b><?php echo $recolector['nit_recolector'];?></b>
 							</td>
 						</tr>
+						<?php
+						if($recolector['direccion_recolector']<>NULL){
+						?>
 						<tr>
-							<td align="left">
+							<td align="left" class="subtitulo1">
 								DIRECCION
 							</td>
 							<td align="left" colspan="5">
-								<b><?php echo $recolector['direccion_recolector'];?></b>
+								<input class="subtitulo3 sinsublin" value="<?php echo $recolector['direccion_recolector'];?>" readonly size="70">
 							</td>
 						</tr>
+						<?php
+						}
+						?>
 						<tr><td colspan="6">&nbsp;</td></tr>
 					</table>
 				</td>
 			</tr>
 		</table>
 <!------------------------------------------------------------------------------------------------------------------------>
-		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2011</center>
+		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2012</center>
 	</BODY>
 </HTML>
 <?php include "../../../librerias/cerrar_conexion.php"; ?>

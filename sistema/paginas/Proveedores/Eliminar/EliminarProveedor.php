@@ -1,7 +1,7 @@
 <?php
-include "../../../loggin/BloqueSeguridad.php";
-include "../../../loggin/AccesoAdministrador.php";
 include "../../../librerias/abrir_conexion.php";
+include "../../../login/BloqueSeguridad.php";
+include "../../../login/AccesoAdministrador.php";
 
 $codigo_proveedor = $_REQUEST['codigo'];
 
@@ -36,7 +36,7 @@ $facturas = mysql_fetch_array($consulta_factura);
 <!----------------------------------------------------------------------------------------------------------------->
 <HTML>
 	<head>
-		<title>.:SC&CPVES:.</title>		
+		<title>.:SCYCPVES:.</title>		
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -74,7 +74,7 @@ $facturas = mysql_fetch_array($consulta_factura);
 							</td>
 						</tr>
 					</table>
-					<form name="borrar_proveedor" <?php echo "action=\"EliminarProveedor&CompraVidrio.php?codigo=$codigo_proveedor\"";?> method="post" enctype="multipart/form-data">
+					<form name="borrar_proveedor" <?php echo "action=\"CargarEliminarProveedor.php?codigo=$codigo_proveedor\"";?> method="post" enctype="multipart/form-data">
 					<!------------------------------------------------------------------------>
 					<input name="Continuar" type="submit" value="Continuar" onMouseOver="toolTip('Continuar',this)" class="boton aceptar">
 					<input type="button" onMouseOver="toolTip('Regresar',this)" class="boton cancelar" <?php echo "onClick=\"redireccionar('../Consultar/VerProveedor.php?valor=$codigo_proveedor')\"";?>>
@@ -183,13 +183,13 @@ $facturas = mysql_fetch_array($consulta_factura);
 					</table>
 					<meta http-equiv ="refresh"		 content="5;url=../Consultar/frmConsultarProveedor.php">
 				</td>
-			</tr>			
+			</tr>
 			<?php
 			}
 			?>
 <!--::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-->
 		</table>
-		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2011</center>
+		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2012</center>
 	</BODY>
 </HTML>
 <?php include "../../../librerias/cerrar_conexion.php"; ?>

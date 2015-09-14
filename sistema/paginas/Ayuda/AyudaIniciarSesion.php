@@ -1,6 +1,6 @@
 <HTML>
 	<head>
-		<title>.:SC&CPVES:.</title>
+		<title>.:SCYCPVES:.</title>
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -33,7 +33,7 @@
 									<tr>
 										<td align="right" class="titulo1" style="vertical-align:text-top;">Nombre de Usuario:</td>
 										<td align="justify" class="subtitulo1">
-											Digite en este campo su nombre &uacute;nico de usuario o identificador.<br>
+											Digite en este campo su nombre corto &uacute;nico de usuario o identificador de usuario (alias).<br>
 											Es necesario identificarse para entrar y cargar su cuenta de usuario.
 											<hr>
 										</td>
@@ -65,6 +65,6 @@
 			</tr>
 <!------------------------------------------------------------------------------------------------------------------------>
 		</table>
-		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2011</center>
+		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2012</center>
 	</BODY>
 </HTML>

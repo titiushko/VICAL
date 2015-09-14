@@ -1,7 +1,7 @@
 <?php
-include "../../../loggin/BloqueSeguridad.php";
-include "../../../loggin/AccesoAdministrador.php";
 include "../../../librerias/abrir_conexion.php";
+include "../../../login/BloqueSeguridad.php";
+include "../../../login/AccesoAdministrador.php";
 $departamento  = $_REQUEST['departamento'];
 $departamentos = array("Ahuachapan","Santa Ana","Sonsonate","Usulutan","San Miguel","Morazan","La Union","La Libertad","Chalatenango","Cuscatlan","San Salvador","La Paz","Caba&ntilde;as","San Vicente");
 
@@ -31,7 +31,7 @@ while($contador <= $cantidad){
 ?>
 <HTML>
 	<head>
-		<title>.:SC&CPVES:.</title>
+		<title>.:SCYCPVES:.</title>
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -156,16 +156,16 @@ while($contador <= $cantidad){
 					</form>
 					<center>
 						<span class="obligatorio">* Datos requeridos</span>
-						<div id="mensaje1" class="oculto"><span class="alerta error">&nbsp;&nbsp;Falta escribir el nombre del dentro de acopio!!&nbsp;&nbsp;</span></div>
-						<div id="mensaje2" class="oculto"><span class="alerta error">&nbsp;&nbsp;Falta el seleccionar el nombre del recolector!!&nbsp;&nbsp;</span></div>
-						<div id="mensaje3" class="oculto"><span class="alerta error">&nbsp;&nbsp;Falta seleccionar el departamento!!&nbsp;&nbsp;</span></div>
-						<div id="mensaje4" class="oculto"><span class="alerta error">&nbsp;&nbsp;El numero telefonico esta incompleto!!&nbsp;&nbsp;</span></div>
+						<div id="mensaje1" class="oculto"><br><br><span class="alerta error">&nbsp;&nbsp;Falta escribir el nombre del dentro de acopio!!&nbsp;&nbsp;</span></div>
+						<div id="mensaje2" class="oculto"><br><br><span class="alerta error">&nbsp;&nbsp;Falta el seleccionar el nombre del recolector!!&nbsp;&nbsp;</span></div>
+						<div id="mensaje3" class="oculto"><br><br><span class="alerta error">&nbsp;&nbsp;Falta seleccionar el departamento!!&nbsp;&nbsp;</span></div>
+						<div id="mensaje4" class="oculto"><br><br><span class="alerta error">&nbsp;&nbsp;El numero telefonico esta incompleto!!&nbsp;&nbsp;</span></div>
 					</center>
 				</td>
 			</tr>
 <!------------------------------------------------------------------------------------------------------------------------>
 		</table>
-		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2011</center>
+		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2012</center>
 	</BODY>
 </HTML>
 <?php include "../../../librerias/cerrar_conexion.php"; ?>

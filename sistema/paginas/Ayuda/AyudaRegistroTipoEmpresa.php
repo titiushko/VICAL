@@ -1,7 +1,7 @@
 <?php include "VerificarAcceso.php"; ?>
 <HTML>
 	<head>
-		<title>.:SC&CPVES:.</title>
+		<title>.:SCYCPVES:.</title>
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -43,8 +43,8 @@
 									<tr>
 										<td align="right" class="titulo1" style="vertical-align:text-top;" width="160">Registrar el Tipo de Empresa:</td>
 										<td align="justify" class="subtitulo1">
-											Cuando haya terminado de llenar los campos del formulario que se requieren, haga click en el bot&oacute;n Registrar <img src="../../imagenes/icono_aceptar.png" width="3%" height="4%"> para terminar con el registro de un nuevo tipo de empresa.<br>
-											Si desea reestablecer todos los campos del formulario de click en el bot&oacute;n Limpiar <img src="../../imagenes/icono_limpiar.png" width="3%" height="4%"> o click al bot&oacute;n Cancelar <img src="../../imagenes/icono_cancelar.png" width="3%" height="4%"> para salir del formulario.
+											Cuando haya terminado de llenar el campo del formulario que se requieren, haga click en el bot&oacute;n Registrar <img src="../../imagenes/icono_aceptar.png" width="3%" height="4%"> para terminar con el registro de un nuevo tipo de empresa.<br>
+											Si desea reestablecer todos el campo del formulario de click en el bot&oacute;n Limpiar <img src="../../imagenes/icono_limpiar.png" width="3%" height="4%"> o click al bot&oacute;n Cancelar <img src="../../imagenes/icono_cancelar.png" width="3%" height="4%"> para salir del formulario.
 										</td>
 									</tr>
 									<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
@@ -59,6 +59,6 @@
 			</tr>
 <!------------------------------------------------------------------------------------------------------------------------>
 		</table>
-		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2011</center>
+		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2012</center>
 	</BODY>
 </HTML>

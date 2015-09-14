@@ -1,14 +1,16 @@
 <?php
-include "../../../loggin/BloqueSeguridad.php";
-include "../../../loggin/AccesoAdministrador.php";
 include "../../../librerias/abrir_conexion.php";
-$instruccion_select = "SELECT precio_unitario FROM precio";
+include "../../../login/BloqueSeguridad.php";
+include "../../../login/AccesoAdministrador.php";
+$codigo_precio = $_REQUEST['modificar_precio'];
+
+$instruccion_select = "SELECT precio_unitario FROM precios WHERE codigo_precio = '$codigo_precio'";
 $consulta_precio = mysql_query($instruccion_select, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_precio!!</SPAN>".mysql_error());
-$precio = mysql_fetch_assoc($consulta_precio);
+$precio = mysql_fetch_array($consulta_precio);
 ?>
 <HTML>
 	<head>
-		<title>.:SC&CPVES:.</title>
+		<title>.:SCYCPVES:.</title>
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -21,11 +23,14 @@ $precio = mysql_fetch_assoc($consulta_precio);
 		<script type="text/javascript" 	 src="../../../librerias/jquery/prototype.js"></script>
 		<script type="text/javascript" 	 src="../../../librerias/funciones.js"></script>
 		<script type="text/javascript">
-			function borrarMensaje(){var elemento = document.getElementById('mensaje'); elemento.removeClassName("visto");}
+			function borrarMensaje(){
+				var elemento;
+				elemento = document.getElementById('mensaje'); elemento.removeClassName("visto");
+			}
 			function validarModificarPrecioUnitario(F){
 				var elemento;
 				borrarMensaje();
-				if(F.precio.value == ""){elemento = document.getElementById('mensaje'); elemento.addClassName("visto");return false;}
+				if(F.precio_unitario.value == ""){elemento = document.getElementById('mensaje'); elemento.addClassName("visto");return false;}
 				return true;
 			}
 		</script>
@@ -36,27 +41,30 @@ $precio = mysql_fetch_assoc($consulta_precio);
 			<tr>
 				<td align="center">
 					<img src="../../../imagenes/vical.png" width="25%" height="25%">
-					<h1 class="encabezado1">MODIFICAR PRECIO DE COMPRA UNITARIO</h1>
+					<h1 class="encabezado1">MODIFICAR PRECIO UNITARIO</h1>
 				</td>
 			</tr>
 <!------------------------------------------------------------------------------------------------------------------------>				
 			<tr>
 				<td align="center">
-					<form name="modificar_precio" action="ModificarPrecioUnitario.php" method="post" enctype="multipart/form-data" onSubmit="return validarModificarPrecioUnitario(this);">
+					<form name="modificar_precio_unitario" action="ModificarPrecioUnitario.php" method="post" enctype="multipart/form-data" onSubmit="return validarModificarPrecioUnitario(this);">
 					<table class="marco centro">
+						<!----------------------------PRECIO UNITARIO----------------------------->
 						<tr>
 							<td align="right" class="titulo1">Precio Unitario:</td>
-							<td align="left">						
-								<input name="precio" class="subtitulo1 fondo" value="<?php echo $precio['precio_unitario'];?>" type="text" size=4 onKeyPress="return soloNumerosFloat(event)" onBlur="borrarMensaje();" onClick="borrarMensaje();">&nbsp;&nbsp;&nbsp;&nbsp;
+							<td align="left">
+								<input name="codigo_precio" class="oculto" value="<?php echo $codigo_precio;?>" type="text">
+								<input name="precio_unitario" class="subtitulo1 fondo" value="<?php echo $precio['precio_unitario'];?>" type="text" size=4 onKeyPress="return soloNumerosFloat(event)" onBlur="borrarMensaje();" onClick="borrarMensaje();">&nbsp;&nbsp;&nbsp;&nbsp;
 							</td>
 						</tr>
+						<!------------------------------------------------------------------------>
 					</table>
 					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 					<span id="toolTipBox" width="50"></span>
 					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 					<!------------------------------------------------------------------------>
 					<input name="Modificar" type="submit" value="Modificar" onMouseOver="toolTip('Modificar',this)" class="boton aceptar">
-					<input type="button" onMouseOver="toolTip('Cancelar',this)" class="boton cancelar" onClick="redireccionar('../Consultar/VerPrecioUnitario.php')">
+					<input type="button" onMouseOver="toolTip('Cancelar',this)" class="boton cancelar" onClick="redireccionar('../Consultar/frmConsultarPrecioUnitario.php')">
 					<!------------------------------------------------------------------------>
 					</form>
 					<center>
@@ -66,7 +74,7 @@ $precio = mysql_fetch_assoc($consulta_precio);
 			</tr>
 <!------------------------------------------------------------------------------------------------------------------------>				
 		</table>
-		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2011</center>
+		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2012</center>
 	</BODY>
 </HTML>
 <?php include "../../../librerias/cerrar_conexion.php"; ?>

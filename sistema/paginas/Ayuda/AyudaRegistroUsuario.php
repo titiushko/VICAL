@@ -1,7 +1,7 @@
 <?php include "VerificarAcceso.php"; ?>
 <HTML>
 	<head>
-		<title>.:SC&CPVES:.</title>
+		<title>.:SCYCPVES:.</title>
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -34,7 +34,7 @@
 									<tr>
 										<td align="right" class="titulo1" style="vertical-align:text-top;">Nombre Completo:</td>
 										<td align="justify" class="subtitulo1">
-											Digite el nombre completo de nuevo usuario a registrar en el sistema. Ejemplo: <i>Alfredo Fernandez</i><br>
+											Digite el nombre completo (persona real) del nuevo usuario a registrar en el sistema. Ejemplo: <i>Alfredo Fernandez</i> &oacute; <i>Alfredo Mario Fernandez Gutierres</i>, etc.<br>
 											El campo del nombre del nuevo usuario es obligatorio.
 											<hr>
 										</td>
@@ -43,7 +43,8 @@
 									<tr>
 										<td align="right" class="titulo1" style="vertical-align:text-top;">Nombre de Usuario:</td>
 										<td align="justify" class="subtitulo1">
-											En este campo asigne el nombre de &uacute;nico de usuario o identificador que tendra el nuevo usuario para conectarce a su sesion. Ejemplo: <i>afernandez</i> &oacute; <i>alfredo</i> &oacute; <i>fernandez</i>, etc.<br>
+											En este campo asigne un nombre corto &uacute;nico de usuario o identificador de usuario (alias) que tendra el nuevo usuario para conectarce a su sesion. Ejemplo: <i>afernandez</i> &oacute; <i>alfredo</i> &oacute; <i>fernandez</i>, etc.<br>
+											El nombre de usuario si lo desea puede contener may&uacute;sculas, min&uacute;sculas, n&uacute;meros &oacute; s&iacute;mbolos para volverlo &uacute;nico de los dem&aacute;s nombres de usuarios. Ejemplo: <i>Afernandez</i> &oacute; <i>alfredo123</i> &oacute; <i>f3rn4ndez_100</i>, etc.<br>
 											El campo nombre de usuario es obligatorio.
 											<hr>
 										</td>
@@ -52,7 +53,7 @@
 									<tr>
 										<td align="right" class="titulo1" style="vertical-align:text-top;">Contrase&ntilde;a:</td>
 										<td align="justify" class="subtitulo1">
-											Escriba la contrase&ntilde;a que le asignara junto con nombre de usuario.<br>
+											Escriba la contrase&ntilde;a que le asignara junto con el nombre de usuario.<br>
 											La contrase&ntilde;a es importante.
 											<hr>
 										</td>
@@ -86,6 +87,6 @@
 			</tr>
 <!------------------------------------------------------------------------------------------------------------------------>
 		</table>
-		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2011</center>
+		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2012</center>
 	</BODY>
 </HTML>

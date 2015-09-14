@@ -1,19 +1,20 @@
 <?php
-include "../../../loggin/BloqueSeguridad.php";
-include "../../../loggin/AccesoAdministrador.php";
 include "../../../librerias/abrir_conexion.php";
+include "../../../login/BloqueSeguridad.php";
+include "../../../login/AccesoAdministrador.php";
 $id = $_REQUEST['codigo'];
 $instruccion_select = "SELECT id, nombre, usuario, password, nivel FROM usuarios WHERE id = '$id'";
 $consulta_usuario = mysql_query($instruccion_select, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_usuario!!</SPAN>".mysql_error());
 $usuarios = mysql_fetch_array($consulta_usuario);
-//eliminar usuario
-mysql_query("DELETE FROM usuarios WHERE id = '$id'", $conexion) or die ("<SPAN CLASS='error'>Fallo eliminar_usuario!! </SPAN>".mysql_error());
 $tipos_usuarios = array(1=>"Administrador",2=>"Contador",3=>"Recolector");
+
+$bandera = true;
+if($usuarios["id"] == $_SESSION["id"])	$bandera = false;
 ?>
 <!----------------------------------------------------------------------------------------------------------------->
 <HTML>
 	<head>
-		<title>.:SC&CPVES:.</title>
+		<title>.:SCYCPVES:.</title>
 		<meta http-equiv ="refresh"		 content="5;url=../Consultar/frmConsultarUsuario.php">
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
@@ -32,6 +33,31 @@ $tipos_usuarios = array(1=>"Administrador",2=>"Contador",3=>"Recolector");
 				<td align="center">
 					<img src="../../../imagenes/vical.png" width="25%" height="25%">
 					<h1 class="encabezado1">ELIMINAR USUARIO</h1>
+<!------------------------------------------------------------------------------------------------------------------------>
+<?php
+if(!$bandera){
+?>
+					<h2 class="encabezado2">
+						<img src="../../../imagenes/icono_error.png">
+						<br>
+						NO SE PUDO ELIMINAR EL USUARIO!!
+					</h2>
+					<table align="center" class="alerta error centro">
+						<tr>
+							<td align="justify">
+								No se puede eliminar el usuario <?php echo $usuarios["nombre"]; ?> por que este usuario a iniciado sesion y se encuentra actualmente en uso.<br>
+								Inicie sesion en el sistema con otra cuenta de administrador para poder eliminar al usuario <?php echo $usuarios["nombre"]; ?>.
+							</td>
+						</tr>
+					</table>
+				</td>
+<?php
+}
+else{
+//eliminar usuario
+mysql_query("DELETE FROM usuarios WHERE id = '$id'", $conexion) or die ("<SPAN CLASS='error'>Fallo eliminar_usuario!! </SPAN>".mysql_error());
+?>
+<!------------------------------------------------------------------------------------------------------------------------>
 					<h2 class="encabezado2">
 						<img src="../../../imagenes/icono_informacion.png">
 						<br>
@@ -43,7 +69,6 @@ $tipos_usuarios = array(1=>"Administrador",2=>"Contador",3=>"Recolector");
 			<tr>
 				<td align="center">
 					<table align="center" class="resultado centro">
-						<!------------------------------------------------------------------------>
 						<tr>
 							<td align="right"><b>Nombre Completo:</b></td>
 							<td><?php echo $usuarios["nombre"]; ?></td>
@@ -52,26 +77,24 @@ $tipos_usuarios = array(1=>"Administrador",2=>"Contador",3=>"Recolector");
 							<td align="right"><b>Nombre de Usuario:</b></td>
 							<td><?php echo $usuarios["usuario"]; ?></td>
 						</tr>
-						<!------------------------------------------------------------------------>
 						<tr>
 							<td align="right"><b>Contrase&ntilde;a:</b></td>
 							<td><input class="subtitulo1 fondo3" type="password" readonly value="<?php echo $usuarios['password'];?>"></td>
 						</tr>
-						<!------------------------------------------------------------------------>
 						<tr>
 							<td align="right"><b>Tipo de Usuario:</b></td>
 							<td><?php echo $tipos_usuarios[$usuarios["nivel"]];?></td>
 						</tr>
-						<!------------------------------------------------------------------------>
 					</table>
-					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 					<span id="toolTipBox" width="50"></span>
-					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 				</td>
 			</tr>
 <!------------------------------------------------------------------------------------------------------------------------>
+<?php
+}
+?>
 		</table>
-		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2011</center>
+		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2012</center>
 	</BODY>
 </HTML>
 <?php include "../../../librerias/cerrar_conexion.php"; ?>

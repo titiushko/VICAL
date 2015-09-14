@@ -1,17 +1,18 @@
 <?php
-include "../../../loggin/BloqueSeguridad.php";
 include "../../../librerias/abrir_conexion.php";
+include "../../../login/BloqueSeguridad.php";
 
 $instruccion_select = "
-SELECT facturas.codigo_factura, facturas.fecha, recolectores.nombre_recolector, proveedores.nombre_proveedor, facturas.sucursal
-FROM facturas, recolectores, proveedores
+SELECT facturas.codigo_factura, facturas.fecha, recolectores.nombre_recolector, proveedores.nombre_proveedor, facturas.sucursal, centros_de_acopio.nombre_centro_acopio, facturas.precio_compra
+FROM facturas, recolectores, proveedores, centros_de_acopio
 WHERE facturas.codigo_recolector = recolectores.codigo_recolector
-AND facturas.codigo_proveedor = proveedores.codigo_proveedor";
+AND facturas.codigo_proveedor = proveedores.codigo_proveedor
+AND facturas.codigo_centro_acopio = centros_de_acopio.codigo_centro_acopio";
 $consulta_factura = mysql_query($instruccion_select, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_factura!!</SPAN>".mysql_error());
 ?>
 <HTML>
 	<head>
-		<title>.:SC&CPVES:.</title>
+		<title>.:SCYCPVES:.</title>
 		<meta http-equiv="content-type"  content="text/html;charset=utf-8">
 		<meta http-equiv="expires"       content="0">
 		<meta http-equiv="cache-control" content="no-cache">
@@ -22,7 +23,7 @@ $consulta_factura = mysql_query($instruccion_select, $conexion) or die ("<SPAN C
 		<link rel="shortcut icon" 		 href="../../../imagenes/vical.ico">
 		<link rel="stylesheet" 			 href="../../../librerias/formato.css" type="text/css"></link>
 		<script type="text/javascript" 	 src="../../../librerias/funciones.js"></script>
-		<style>.tinytable{width: 82%;}</style>
+		<style>.tinytable{width: 100%;}</style>
 	</head>
 	<BODY class="cuerpo1">
 		<table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -63,11 +64,13 @@ $consulta_factura = mysql_query($instruccion_select, $conexion) or die ("<SPAN C
 								<table cellpadding="0" cellspacing="0" id="table" class="tinytable">
 									<thead class="titulo1">
 										<tr>
-											<th onMouseOver="toolTip('Ordenar por factura',this)" width="125"><h3>No Factura</h3></th>
+											<th onMouseOver="toolTip('Ordenar por factura',this)" width="125"><h3>Factura</h3></th>
 											<th onMouseOver="toolTip('Ordenar por fecha',this)" width="120"><h3>Fecha</h3></th>
-											<th onMouseOver="toolTip('Ordenar por recolector',this)" width="155"><h3>Recolector</h3></th>
+											<th onMouseOver="toolTip('Ordenar por recolector',this)" width="285"><h3>Recolector</h3></th>
 											<th onMouseOver="toolTip('Ordenar por proveedor',this)" width="285"><h3>Proveedor</h3></th>
-											<th onMouseOver="toolTip('Ordenar por sucursal',this)" width="285"><h3>Sucursal</h3></th>
+											<th onMouseOver="toolTip('Ordenar por sucursal',this)" width="125"><h3>Sucursal</h3></th>
+											<th onMouseOver="toolTip('Ordenar por c. acopio',this)" width="200"><h3>C. Acopio</h3></th>
+											<th onMouseOver="toolTip('Ordenar por precio',this)" width="125"><h3>Precio</h3></th>
 										</tr>
 									</thead>
 									<tbody class="subtitulo2">
@@ -80,6 +83,8 @@ $consulta_factura = mysql_query($instruccion_select, $conexion) or die ("<SPAN C
 											<td><?php echo "<a title='Ver' style='color: black;'href='VerCompra.php?valor=$facturas[0]'>".$facturas[2]."</a>";?></td>
 											<td><?php echo "<a title='Ver' style='color: black;'href='VerCompra.php?valor=$facturas[0]'>".$facturas[3]."</a>";?></td>
 											<td><?php echo "<a title='Ver' style='color: black;'href='VerCompra.php?valor=$facturas[0]'>".$facturas[4]."</a>";?></td>
+											<td><?php echo "<a title='Ver' style='color: black;'href='VerCompra.php?valor=$facturas[0]'>".$facturas[5]."</a>";?></td>
+											<td><?php echo "<a title='Ver' style='color: black;'href='VerCompra.php?valor=$facturas[0]'>$".number_format($facturas[6],2,'.',',')."</a>";?></td>
 										</tr>
 										<?php
 										}
@@ -148,7 +153,7 @@ $consulta_factura = mysql_query($instruccion_select, $conexion) or die ("<SPAN C
 			</tr>
 <!------------------------------------------------------------------------------------------------------------------------>				
 		</table>
-		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2011</center>
+		<hr><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2012</center>
 	</BODY>
 </HTML>
 <?php include "../../../librerias/cerrar_conexion.php"; ?>
