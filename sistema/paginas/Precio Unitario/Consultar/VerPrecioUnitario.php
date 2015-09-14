@@ -18,17 +18,7 @@ $precio = mysql_fetch_assoc($consulta_precio);
 		<meta name="description"         content="Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador">
 		<link rel="shortcut icon" 		 href="../../../imagenes/vical.ico">
 		<link rel="stylesheet" 			 href="../../../librerias/formato.css" type="text/css"></link>
-		<script type="text/javascript" 	 src="../../../librerias/jquery/prototype.js"></script>
 		<script type="text/javascript" 	 src="../../../librerias/funciones.js"></script>
-		<script type="text/javascript">
-			function borrarMensaje(){var elemento = document.getElementById('mensaje'); elemento.removeClassName("visto");}
-			function validarModificarPrecioUnitario(F){
-				var elemento;
-				borrarMensaje();
-				if(F.precio.value == ""){elemento = document.getElementById('mensaje'); elemento.addClassName("visto");return false;}
-				return true;
-			}
-		</script>
 	</head>
 	<BODY class="cuerpo1">
 		<table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -36,32 +26,26 @@ $precio = mysql_fetch_assoc($consulta_precio);
 			<tr>
 				<td align="center">
 					<img src="../../../imagenes/vical.png" width="25%" height="25%">
-					<h1 class="encabezado1">MODIFICAR PRECIO DE COMPRA UNITARIO</h1>
+					<h1 class="encabezado1">CONSULTAR PRECIO DE COMPRA UNITARIO</h1>
 				</td>
 			</tr>
 <!------------------------------------------------------------------------------------------------------------------------>				
 			<tr>
 				<td align="center">
-					<form name="modificar_precio" action="ModificarPrecioUnitario.php" method="post" enctype="multipart/form-data" onSubmit="return validarModificarPrecioUnitario(this);">
 					<table class="marco centro">
 						<tr>
 							<td align="right" class="titulo1">Precio Unitario:</td>
 							<td align="left">						
-								<input name="precio" class="subtitulo1 fondo" value="<?php echo $precio['precio_unitario'];?>" type="text" size=4 onKeyPress="return soloNumerosFloat(event)" onBlur="borrarMensaje();" onClick="borrarMensaje();">&nbsp;&nbsp;&nbsp;&nbsp;
+								<input name="precio" class="subtitulo1 fondo1" readonly value="<?php echo $precio['precio_unitario'];?>" type="text" size=4 onKeyPress="return soloNumerosFloat(event)" onBlur="borrarMensaje();" onClick="borrarMensaje();">&nbsp;&nbsp;&nbsp;&nbsp;
 							</td>
 						</tr>
 					</table>
 					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 					<span id="toolTipBox" width="50"></span>
 					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-					<!------------------------------------------------------------------------>
-					<input name="Modificar" type="submit" value="Modificar" onMouseOver="toolTip('Modificar',this)" class="boton aceptar">
-					<input type="button" onMouseOver="toolTip('Cancelar',this)" class="boton cancelar" onClick="redireccionar('../Consultar/VerPrecioUnitario.php')">
-					<!------------------------------------------------------------------------>
-					</form>
-					<center>
-						<div id="mensaje" class="oculto"><span class="alerta error">&nbsp;&nbsp;El campo Precio Unitario no puede quedar vacio!!&nbsp;&nbsp;</span></div>
-					</center>
+					<img src="../../../imagenes/icono_modificar.png" align="top" onMouseOver="toolTip('Modificar',this)" onClick="redireccionar('../Modificar/frmModificarPrecioUnitario.php')" class="manita">
+					<br>
+					<img src="../../../imagenes/icono_volver.png" width="42" height="42" align="top" onMouseOver="toolTip('Regresar',this)" onClick="redireccionar('javascript:window.history.back()');" class="manita">
 				</td>
 			</tr>
 <!------------------------------------------------------------------------------------------------------------------------>				

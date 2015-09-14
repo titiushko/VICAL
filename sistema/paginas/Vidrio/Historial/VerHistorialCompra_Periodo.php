@@ -3,29 +3,25 @@ include "../../../loggin/BloqueSeguridad.php";
 include "../../../loggin/AccesoContador.php";
 include "../../../librerias/abrir_conexion.php";
 include "../../../librerias/funciones.php";
-$fecha_inicial		  = $_POST['fecha_inicial'];
-$fecha_final		  = $_POST['fecha_final'];
-$sucursal			  = $_POST['sucursal'];
-$codigo_centro_acopio = $_POST['codigo_centro_acopio'];
-if($fecha_inicial == '' || $fecha_final == '' || $sucursal == '' || $codigo_centro_acopio == '') header("Location: frmHistorialCompra.php");
+$fecha_inicial = $_POST['fecha_inicial'];
+$fecha_final   = $_POST['fecha_final'];
+$sucursal 	   = $_POST['sucursal'];
+if($fecha_inicial == '' || $fecha_final == '' || $sucursal == '') header("Location: frmHistorialCompra.php");
 
 switch($sucursal){
 	case 'VICESA':
 	case 'VIGUA':	$Sucursal = "para ".$sucursal."";
-					$consulta_canidad = "SELECT COUNT(codigo_factura) AS cantidad FROM facturas WHERE facturas.fecha BETWEEN '$fecha_inicial' AND '$fecha_final' AND sucursal = '$sucursal' AND codigo_centro_acopio = '$codigo_centro_acopio'";
-					$seleccionar_factura = "SELECT facturas.codigo_factura, proveedores.nombre_proveedor FROM facturas, proveedores WHERE facturas.fecha BETWEEN '$fecha_inicial' AND '$fecha_final' AND facturas.codigo_proveedor = proveedores.codigo_proveedor AND sucursal = '$sucursal' AND codigo_centro_acopio = '$codigo_centro_acopio' ORDER BY facturas.codigo_factura ASC";
+					$consulta_canidad = "SELECT COUNT(codigo_factura) AS cantidad FROM facturas WHERE facturas.fecha BETWEEN '$fecha_inicial' AND '$fecha_final' AND sucursal = '$sucursal'";
+					$seleccionar_factura = "SELECT facturas.codigo_factura, proveedores.nombre_proveedor FROM facturas, proveedores WHERE facturas.fecha BETWEEN '$fecha_inicial' AND '$fecha_final' AND facturas.codigo_proveedor = proveedores.codigo_proveedor AND sucursal = '$sucursal' ORDER BY facturas.codigo_factura ASC";
 					break;
 	case 'AMBAS':	$Sucursal = "";
-					$consulta_canidad = "SELECT COUNT(codigo_factura) AS cantidad FROM facturas WHERE facturas.fecha BETWEEN '$fecha_inicial' AND '$fecha_final' AND codigo_centro_acopio = '$codigo_centro_acopio'";
-					$seleccionar_factura = "SELECT facturas.codigo_factura, proveedores.nombre_proveedor FROM facturas, proveedores WHERE facturas.fecha BETWEEN '$fecha_inicial' AND '$fecha_final' AND facturas.codigo_proveedor = proveedores.codigo_proveedor AND codigo_centro_acopio = '$codigo_centro_acopio' ORDER BY facturas.codigo_factura ASC";
+					$consulta_canidad = "SELECT COUNT(codigo_factura) AS cantidad FROM facturas WHERE facturas.fecha BETWEEN '$fecha_inicial' AND '$fecha_final'";
+					$seleccionar_factura = "SELECT facturas.codigo_factura, proveedores.nombre_proveedor FROM facturas, proveedores WHERE facturas.fecha BETWEEN '$fecha_inicial' AND '$fecha_final' AND facturas.codigo_proveedor = proveedores.codigo_proveedor ORDER BY facturas.codigo_factura ASC";
 					break;
 }
 $consulta_factura = mysql_query($seleccionar_factura, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_factura!!</SPAN>".mysql_error());
 $consulta = mysql_query($consulta_canidad, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta cantidad facturas!!</SPAN>".mysql_error());
 $cantidad = mysql_fetch_assoc($consulta);
-
-$consulta_centro_de_acopio = mysql_query("SELECT nombre_centro_acopio FROM centros_de_acopio WHERE codigo_centro_acopio = '$codigo_centro_acopio'",$conexion) or die ("<SPAN CLASS='error'>Fallo en la consulta_centro_de_acopio!!</SPAN>".mysql_error());
-$nombre_centro_acopio = mysql_fetch_assoc($consulta_centro_de_acopio);
 ?>
 <HTML>
 	<head>
@@ -56,7 +52,7 @@ $nombre_centro_acopio = mysql_fetch_assoc($consulta_centro_de_acopio);
 					<h2 class="encabezado2"><img src="../../../imagenes/icono_error.png"><br>NO SE PUDO MOSTRAR EL HISTORIAL DE COMPRAS!!</h2>
 					<table align="center" class="alerta error centro">
 						<tr>
-							<td align="center" colspan="3">No hay valores que mostrar.<br>No se a comprado vidrio <?php echo $Sucursal." en el periodo del<br>".formatoFechaExtendida($fecha_inicial)."<br>al<br>".formatoFechaExtendida($fecha_final);?> deposiotado para el centro de acopio de <?php echo $nombre_centro_acopio['nombre_centro_acopio'];?>.</td>
+							<td align="center" colspan="3">No hay valores que mostrar.<br>No se a comprado vidrio <?php echo $Sucursal." en el periodo del<br>".formatoFechaExtendida($fecha_inicial)."<br>al<br>".formatoFechaExtendida($fecha_final);?>.</td>
 							<meta http-equiv ="refresh"		 content="5;url=frmHistorialCompra.php">
 						</tr>
 					</table>
@@ -73,7 +69,7 @@ $nombre_centro_acopio = mysql_fetch_assoc($consulta_centro_de_acopio);
 			<tr>							
 				<td align="center">
 					<table align="center" border bgcolor="white">
-						<caption><h1 class="encabezado2">Historial de vidrio comprado <?php echo $Sucursal." en el periodo del<br>".formatoFechaExtendida($fecha_inicial)." al ".formatoFechaExtendida($fecha_final);?> deposiotado en el centro de acopio de <?php echo $nombre_centro_acopio['nombre_centro_acopio'];?>.</h1></caption>
+						<caption><h1 class="encabezado2">Historial de vidrio comprado <?php echo $Sucursal." en el periodo del<br>".formatoFechaExtendida($fecha_inicial)." al ".formatoFechaExtendida($fecha_final);?>.</h1></caption>
 						<thead class="titulo2">
 							<tr><th rowspan=2 colspan=2></th><th colspan=10>BOTELLA</th><th colspan=10>PLANO</th><th rowspan=1 colspan=2></th></tr>
 							<tr>
@@ -159,19 +155,20 @@ $nombre_centro_acopio = mysql_fetch_assoc($consulta_centro_de_acopio);
 					<table align="center">
 						<tr>
 							<td>
-								<FORM ACTION="ExportarHistorialCompra_Periodo.php<?php echo "?valor_fecha_inicial=$fecha_inicial&valor_fecha_final=$fecha_final&valor_sucursal=$sucursal&valor_codigo_centro_acopio=$codigo_centro_acopio";?>" METHOD="post">
+								<FORM ACTION="ExportarHistorialCompra_Periodo.php<?php echo "?valor_fecha_inicial=$fecha_inicial&valor_fecha_final=$fecha_final&valor_sucursal=$sucursal";?>" METHOD="post">
 								<input name="Exportar" type="submit" value="Exportar" onMouseOver="toolTip('Exportar',this)" class="boton exportar">
 								</FORM>
 							</td>
 							<td>		
-								<FORM ACTION="ImprimirHistorialCompra_Periodo.php<?php echo "?valor_fecha_inicial=$fecha_inicial&valor_fecha_final=$fecha_final&valor_sucursal=$sucursal&valor_codigo_centro_acopio=$codigo_centro_acopio";?>" METHOD="post">
+								<FORM ACTION="ImprimirHistorialCompra_Periodo.php<?php echo "?valor_fecha_inicial=$fecha_inicial&valor_fecha_final=$fecha_final&valor_sucursal=$sucursal";?>" METHOD="post">
 								<input name="Imprimir" type="submit" value="Imprimir" onMouseOver="toolTip('Imprimir',this)" class="boton imprimir">
 								</FORM>
 							</td>
 						</tr>
 					</table>
 					<?php } ?>
-					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->					
+					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+					<br>
 					<span id="toolTipBox" width="50"></span>
 					<img src="../../../imagenes/icono_volver.png" width="42" height="42" align="top" onMouseOver="toolTip('Regresar',this)" onClick="redireccionar('javascript:window.history.back()');" class="manita">
 					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->

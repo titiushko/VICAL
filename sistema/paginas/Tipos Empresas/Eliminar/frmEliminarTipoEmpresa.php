@@ -55,7 +55,7 @@ $tipos_empresas = mysql_fetch_array($consulta_tipo_empresa);
 					</table>
 					<!------------------------------------------------------------------------>
 					<input name="Eliminar" type="submit" value="Eliminar" onMouseOver="toolTip('Aceptar',this)" class="boton aceptar">
-					<input type="button" onMouseOver="toolTip('Cancelar',this)" class="boton cancelar" onClick="redireccionar('../Consultar/frmConsultarTipoEmpresa.php')">
+					<input type="button" onMouseOver="toolTip('Cancelar',this)" class="boton cancelar" <?php echo "onClick=\"redireccionar('../Consultar/frmConsultarTipoEmpresa.php?valor=$codigo_tipo_empresa')\"";?>>
 					<!------------------------------------------------------------------------>
 					</form>
 					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->

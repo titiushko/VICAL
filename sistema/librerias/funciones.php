@@ -1,7 +1,7 @@
 <?php
 $filas = 1;		//variable global
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-//funcion que calcula la suma de las cantidades y precio_vidrios de vidrio comprado por factura para un determinado mes y año
+//funcion que calcula la suma de las cantidades y precios de vidrio comprado por factura para un determinado mes y año
 //scripts que la utilizan: GraficarEstadisticaCompra, GraficarComparacionCompra
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 function calcularSumaCompras($mes,$ano,$sucursal){
@@ -16,7 +16,7 @@ function calcularSumaCompras($mes,$ano,$sucursal){
 	}
 	$consulta_factura = mysql_query($select_factura, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_factura!!</SPAN>".mysql_error());
 
-	$Bsuma_cantidad = 0;	$Bsuma_precio_vidrio = 0;
+	$Bsuma_cantidad = 0;	$Bsuma_precio = 0;
 	for($i=1; $i<=10; $i++)
 		for($j=1; $j<=2; $j++)
 			$Compras[$i][$j] = 0;
@@ -24,7 +24,7 @@ function calcularSumaCompras($mes,$ano,$sucursal){
 		$factura = $facturas['codigo_factura'];
 
 		$select_vidrio = "
-		SELECT vidrio.codigo_tipo, vidrio.codigo_color, vidrio.cantidad_vidrio, vidrio.precio_vidrio
+		SELECT vidrio.codigo_tipo, vidrio.codigo_color, vidrio.cantidad_vidrio, vidrio.precio
 		FROM vidrio, facturas
 		WHERE facturas.codigo_factura = '$factura'
 		AND facturas.codigo_factura = vidrio.codigo_factura
@@ -34,28 +34,28 @@ function calcularSumaCompras($mes,$ano,$sucursal){
 		while($vidrios = mysql_fetch_assoc($consulta_vidrio)){
 			if($vidrios['codigo_tipo'] == 'TV-01'){
 			//-------------------------------------------------
-				if($vidrios['codigo_color'] == 'CV-01'){$Compras[1][1] += $vidrios['cantidad_vidrio'];	$Compras[1][2] += $vidrios['precio_vidrio'];}
+				if($vidrios['codigo_color'] == 'CV-01'){$Compras[1][1] += $vidrios['cantidad_vidrio'];	$Compras[1][2] += $vidrios['precio'];}
 			//-------------------------------------------------
-				if($vidrios['codigo_color'] == 'CV-02'){$Compras[2][1] += $vidrios['cantidad_vidrio'];	$Compras[2][2] += $vidrios['precio_vidrio'];}
+				if($vidrios['codigo_color'] == 'CV-02'){$Compras[2][1] += $vidrios['cantidad_vidrio'];	$Compras[2][2] += $vidrios['precio'];}
 			//-------------------------------------------------
-				if($vidrios['codigo_color'] == 'CV-03'){$Compras[3][1] += $vidrios['cantidad_vidrio'];	$Compras[3][2] += $vidrios['precio_vidrio'];}
+				if($vidrios['codigo_color'] == 'CV-03'){$Compras[3][1] += $vidrios['cantidad_vidrio'];	$Compras[3][2] += $vidrios['precio'];}
 			//-------------------------------------------------
-				if($vidrios['codigo_color'] == 'CV-04'){$Compras[4][1] += $vidrios['cantidad_vidrio'];	$Compras[4][2] += $vidrios['precio_vidrio'];}
+				if($vidrios['codigo_color'] == 'CV-04'){$Compras[4][1] += $vidrios['cantidad_vidrio'];	$Compras[4][2] += $vidrios['precio'];}
 			//-------------------------------------------------
-				if($vidrios['codigo_color'] == 'CV-05'){$Compras[5][1] += $vidrios['cantidad_vidrio'];	$Compras[5][2] += $vidrios['precio_vidrio'];}
+				if($vidrios['codigo_color'] == 'CV-05'){$Compras[5][1] += $vidrios['cantidad_vidrio'];	$Compras[5][2] += $vidrios['precio'];}
 			//-------------------------------------------------
 			}
 			if($vidrios['codigo_tipo'] == 'TV-02'){
 			//-------------------------------------------------
-				if($vidrios['codigo_color'] == 'CV-01'){$Compras[6][1] += $vidrios['cantidad_vidrio'];	$Compras[6][2] += $vidrios['precio_vidrio'];}
+				if($vidrios['codigo_color'] == 'CV-01'){$Compras[6][1] += $vidrios['cantidad_vidrio'];	$Compras[6][2] += $vidrios['precio'];}
 			//-------------------------------------------------
-				if($vidrios['codigo_color'] == 'CV-02'){$Compras[7][1] += $vidrios['cantidad_vidrio'];	$Compras[7][2] += $vidrios['precio_vidrio'];}
+				if($vidrios['codigo_color'] == 'CV-02'){$Compras[7][1] += $vidrios['cantidad_vidrio'];	$Compras[7][2] += $vidrios['precio'];}
 			//-------------------------------------------------
-				if($vidrios['codigo_color'] == 'CV-03'){$Compras[8][1] += $vidrios['cantidad_vidrio'];	$Compras[8][2] += $vidrios['precio_vidrio'];}
+				if($vidrios['codigo_color'] == 'CV-03'){$Compras[8][1] += $vidrios['cantidad_vidrio'];	$Compras[8][2] += $vidrios['precio'];}
 			//-------------------------------------------------
-				if($vidrios['codigo_color'] == 'CV-04'){$Compras[9][1] += $vidrios['cantidad_vidrio'];	$Compras[9][2] += $vidrios['precio_vidrio'];}
+				if($vidrios['codigo_color'] == 'CV-04'){$Compras[9][1] += $vidrios['cantidad_vidrio'];	$Compras[9][2] += $vidrios['precio'];}
 			//-------------------------------------------------
-				if($vidrios['codigo_color'] == 'CV-05'){$Compras[10][1] += $vidrios['cantidad_vidrio'];	$Compras[10][2] += $vidrios['precio_vidrio'];}
+				if($vidrios['codigo_color'] == 'CV-05'){$Compras[10][1] += $vidrios['cantidad_vidrio'];	$Compras[10][2] += $vidrios['precio'];}
 			//-------------------------------------------------
 			}
 		}
@@ -64,7 +64,7 @@ function calcularSumaCompras($mes,$ano,$sucursal){
 	return $Compras;	//devuelve una matriz 10x2
 }
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-//funcion que calcula la suma de los totales de cantida y precio_vidrios de vidrio por tipo de vidrio
+//funcion que calcula la suma de los totales de cantida y precios de vidrio por tipo de vidrio
 //scripts que la utilizan: GraficarEstadisticaCompra, GraficarComparacionCompra, HistorialCompra_Periodo
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 function calcularSumaTotales($Compras){
@@ -74,7 +74,7 @@ function calcularSumaTotales($Compras){
 	return $Totales;	//devuelve un vector de cuatro elementos
 }
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-//funcion que calcula la suma total de las cantidades y precio_vidrios de cada mes por tipo de vidrio o por proveedor
+//funcion que calcula la suma total de las cantidades y precios de cada mes por tipo de vidrio o por proveedor
 //scripts que la utilizan: HistorialCompra_Proveedor, HistorialCompra_TipoVidrio
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 function calcularSumaMes($tabla,$buscar,$sucursal){
@@ -85,9 +85,9 @@ function calcularSumaMes($tabla,$buscar,$sucursal){
 	}
 	switch($sucursal){
 		case 'VICESA':
-		case 'VIGUA':	$seleccionar_vidrio = "SELECT YEAR(fecha) AS ano, MONTH(fecha) AS mes, vidrio.cantidad_vidrio, vidrio.precio_vidrio FROM facturas, vidrio WHERE facturas.codigo_factura = vidrio.codigo_factura $buscar_por AND sucursal = '$sucursal' ORDER BY facturas.fecha  ASC";
+		case 'VIGUA':	$seleccionar_vidrio = "SELECT YEAR(fecha) AS ano, MONTH(fecha) AS mes, vidrio.cantidad_vidrio, vidrio.precio FROM facturas, vidrio WHERE facturas.codigo_factura = vidrio.codigo_factura $buscar_por AND sucursal = '$sucursal' ORDER BY facturas.fecha  ASC";
 						break;
-		case 'AMBAS':	$seleccionar_vidrio = "SELECT YEAR(fecha) AS ano, MONTH(fecha) AS mes, vidrio.cantidad_vidrio, vidrio.precio_vidrio FROM facturas, vidrio WHERE facturas.codigo_factura = vidrio.codigo_factura $buscar_por ORDER BY facturas.fecha  ASC";
+		case 'AMBAS':	$seleccionar_vidrio = "SELECT YEAR(fecha) AS ano, MONTH(fecha) AS mes, vidrio.cantidad_vidrio, vidrio.precio FROM facturas, vidrio WHERE facturas.codigo_factura = vidrio.codigo_factura $buscar_por ORDER BY facturas.fecha  ASC";
 						break;
 	}	
 	$consulta_vidrio = mysql_query($seleccionar_vidrio, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_vidrio!!</SPAN>".mysql_error());
@@ -103,32 +103,32 @@ function calcularSumaMes($tabla,$buscar,$sucursal){
 			$comprasMes[$filas][1] = $vidrios['ano'];
 			$comprasMes[$filas][2] = $lista_meses[$vidrios['mes']];
 			$comprasMes[$filas][3] = $vidrios['cantidad_vidrio'];
-			$comprasMes[$filas][4] = $vidrios['precio_vidrio'];
+			$comprasMes[$filas][4] = $vidrios['precio'];
 			$bandera = false;
 		}
 		else if($comprasMes[$filas][2] == $lista_meses[$vidrios['mes']]){
 				$comprasMes[$filas][3] += $vidrios['cantidad_vidrio'];
-				$comprasMes[$filas][4] += $vidrios['precio_vidrio'];
+				$comprasMes[$filas][4] += $vidrios['precio'];
 			}
 			else{
 				$filas++;
 				$comprasMes[$filas][1] = $vidrios['ano'];
 				$comprasMes[$filas][2] = $lista_meses[$vidrios['mes']];
 				$comprasMes[$filas][3] += $vidrios['cantidad_vidrio'];
-				$comprasMes[$filas][4] += $vidrios['precio_vidrio'];
+				$comprasMes[$filas][4] += $vidrios['precio'];
 			}
 	}
 	include "cerrar_conexion.php";
-	return $comprasMes;		//devuelve un vector con [ano][mes][cantidad][precio_vidrio] por cada año, matriz Nx4
+	return $comprasMes;		//devuelve un vector con [ano][mes][cantidad][precio] por cada año, matriz Nx4
 }
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-//funcion que calcula la suma de las cantidades y precio_vidrios de vidrio comprado por factura
+//funcion que calcula la suma de las cantidades y precios de vidrio comprado por factura
 //scripts que la utilizan: verCompra, frmModificarCompra, frmEliminarCompra, EliminarCompra
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 function calcularSumaVidrio($codigo_factura){
 	include "abrir_conexion.php";
 	
-	$select_vidrio = "SELECT vidrio.codigo_tipo, vidrio.codigo_color, vidrio.cantidad_vidrio, vidrio.precio_vidrio FROM vidrio, facturas WHERE facturas.codigo_factura = '$codigo_factura' AND facturas.codigo_factura = vidrio.codigo_factura ORDER BY codigo_vidrio ASC";
+	$select_vidrio = "SELECT vidrio.codigo_tipo, vidrio.codigo_color, vidrio.cantidad_vidrio, vidrio.precio FROM vidrio, facturas WHERE facturas.codigo_factura = '$codigo_factura' AND facturas.codigo_factura = vidrio.codigo_factura ORDER BY codigo_vidrio ASC";
 	$consulta_vidrio = mysql_query($select_vidrio, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_vidrio!!</SPAN>".mysql_error());
 
 	for($i=1; $i<=10; $i++)
@@ -137,45 +137,45 @@ function calcularSumaVidrio($codigo_factura){
 	while($vidrios = mysql_fetch_assoc($consulta_vidrio)){
 		if($vidrios['codigo_tipo'] == 'TV-01'){
 		//-------------------------------------------------
-			if($vidrios['codigo_color'] == 'CV-01'){$SumaVidrios[1][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[1][2] += $vidrios['precio_vidrio'];}
+			if($vidrios['codigo_color'] == 'CV-01'){$SumaVidrios[1][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[1][2] += $vidrios['precio'];}
 		//-------------------------------------------------
 			else
-			if($vidrios['codigo_color'] == 'CV-02'){$SumaVidrios[2][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[2][2] += $vidrios['precio_vidrio'];}
+			if($vidrios['codigo_color'] == 'CV-02'){$SumaVidrios[2][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[2][2] += $vidrios['precio'];}
 		//-------------------------------------------------
 			else
-			if($vidrios['codigo_color'] == 'CV-03'){$SumaVidrios[3][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[3][2] += $vidrios['precio_vidrio'];}
+			if($vidrios['codigo_color'] == 'CV-03'){$SumaVidrios[3][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[3][2] += $vidrios['precio'];}
 		//-------------------------------------------------
 			else
-			if($vidrios['codigo_color'] == 'CV-04'){$SumaVidrios[4][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[4][2] += $vidrios['precio_vidrio'];}
+			if($vidrios['codigo_color'] == 'CV-04'){$SumaVidrios[4][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[4][2] += $vidrios['precio'];}
 		//-------------------------------------------------
 			else
-			if($vidrios['codigo_color'] == 'CV-05'){$SumaVidrios[5][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[5][2] += $vidrios['precio_vidrio'];}
+			if($vidrios['codigo_color'] == 'CV-05'){$SumaVidrios[5][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[5][2] += $vidrios['precio'];}
 		//-------------------------------------------------
 		}
 		else
 		if($vidrios['codigo_tipo'] == 'TV-02'){
 		//-------------------------------------------------
-			if($vidrios['codigo_color'] == 'CV-01'){$SumaVidrios[6][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[6][2] += $vidrios['precio_vidrio'];}
+			if($vidrios['codigo_color'] == 'CV-01'){$SumaVidrios[6][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[6][2] += $vidrios['precio'];}
 		//-------------------------------------------------
 			else
-			if($vidrios['codigo_color'] == 'CV-02'){$SumaVidrios[7][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[7][2] += $vidrios['precio_vidrio'];}
+			if($vidrios['codigo_color'] == 'CV-02'){$SumaVidrios[7][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[7][2] += $vidrios['precio'];}
 		//-------------------------------------------------
 			else
-			if($vidrios['codigo_color'] == 'CV-03'){$SumaVidrios[8][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[8][2] += $vidrios['precio_vidrio'];}
+			if($vidrios['codigo_color'] == 'CV-03'){$SumaVidrios[8][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[8][2] += $vidrios['precio'];}
 		//-------------------------------------------------
 			else
-			if($vidrios['codigo_color'] == 'CV-04'){$SumaVidrios[9][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[9][2] += $vidrios['precio_vidrio'];}
+			if($vidrios['codigo_color'] == 'CV-04'){$SumaVidrios[9][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[9][2] += $vidrios['precio'];}
 		//-------------------------------------------------
 			else
-			if($vidrios['codigo_color'] == 'CV-05'){$SumaVidrios[10][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[10][2] += $vidrios['precio_vidrio'];}
+			if($vidrios['codigo_color'] == 'CV-05'){$SumaVidrios[10][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[10][2] += $vidrios['precio'];}
 		//-------------------------------------------------
 		}
 	}
 	include "cerrar_conexion.php";
-	return $SumaVidrios;	//devuelve una matriz 10x2, de la fila 1 a la 5 es botella, de la fila 1 a la 5 es plano, columna 1 es cantidad, columna 2 es precio_vidrio
+	return $SumaVidrios;	//devuelve una matriz 10x2, de la fila 1 a la 5 es botella, de la fila 1 a la 5 es plano, columna 1 es cantidad, columna 2 es precio
 }
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-//funcion que calcula la suma de las cantidades y precio_vidrios de vidrio comprado por factura
+//funcion que calcula la suma de las cantidades y precios de vidrio comprado por factura
 //scripts que la utilizan: HistorialCompra_Periodo
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 function calcularSumaTotalVidrio($codigo_factura,$sucursal){
@@ -183,9 +183,9 @@ function calcularSumaTotalVidrio($codigo_factura,$sucursal){
 	
 	switch($sucursal){
 		case 'VICESA':
-		case 'VIGUA':	$select_vidrio = "SELECT vidrio.codigo_tipo, vidrio.codigo_color, vidrio.cantidad_vidrio, vidrio.precio_vidrio FROM vidrio, facturas WHERE facturas.codigo_factura = '$codigo_factura' AND facturas.codigo_factura = vidrio.codigo_factura AND sucursal = '$sucursal' ORDER BY codigo_vidrio ASC";
+		case 'VIGUA':	$select_vidrio = "SELECT vidrio.codigo_tipo, vidrio.codigo_color, vidrio.cantidad_vidrio, vidrio.precio FROM vidrio, facturas WHERE facturas.codigo_factura = '$codigo_factura' AND facturas.codigo_factura = vidrio.codigo_factura AND sucursal = '$sucursal' ORDER BY codigo_vidrio ASC";
 						break;
-		case 'AMBAS':	$select_vidrio = "SELECT vidrio.codigo_tipo, vidrio.codigo_color, vidrio.cantidad_vidrio, vidrio.precio_vidrio FROM vidrio, facturas WHERE facturas.codigo_factura = '$codigo_factura' AND facturas.codigo_factura = vidrio.codigo_factura ORDER BY codigo_vidrio ASC";
+		case 'AMBAS':	$select_vidrio = "SELECT vidrio.codigo_tipo, vidrio.codigo_color, vidrio.cantidad_vidrio, vidrio.precio FROM vidrio, facturas WHERE facturas.codigo_factura = '$codigo_factura' AND facturas.codigo_factura = vidrio.codigo_factura ORDER BY codigo_vidrio ASC";
 						break;
 	}
 	$consulta_vidrio = mysql_query($select_vidrio, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_vidrio!!</SPAN>".mysql_error());
@@ -196,51 +196,51 @@ function calcularSumaTotalVidrio($codigo_factura,$sucursal){
 	while($vidrios = mysql_fetch_assoc($consulta_vidrio)){
 		if($vidrios['codigo_tipo'] == 'TV-01'){
 		//-------------------------------------------------
-			if($vidrios['codigo_color'] == 'CV-01'){$SumaVidrios[1][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[1][2] += $vidrios['precio_vidrio'];}
+			if($vidrios['codigo_color'] == 'CV-01'){$SumaVidrios[1][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[1][2] += $vidrios['precio'];}
 		//-------------------------------------------------
 			else
-			if($vidrios['codigo_color'] == 'CV-02'){$SumaVidrios[2][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[2][2] += $vidrios['precio_vidrio'];}
+			if($vidrios['codigo_color'] == 'CV-02'){$SumaVidrios[2][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[2][2] += $vidrios['precio'];}
 		//-------------------------------------------------
 			else
-			if($vidrios['codigo_color'] == 'CV-03'){$SumaVidrios[3][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[3][2] += $vidrios['precio_vidrio'];}
+			if($vidrios['codigo_color'] == 'CV-03'){$SumaVidrios[3][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[3][2] += $vidrios['precio'];}
 		//-------------------------------------------------
 			else
-			if($vidrios['codigo_color'] == 'CV-04'){$SumaVidrios[4][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[4][2] += $vidrios['precio_vidrio'];}
+			if($vidrios['codigo_color'] == 'CV-04'){$SumaVidrios[4][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[4][2] += $vidrios['precio'];}
 		//-------------------------------------------------
 			else
-			if($vidrios['codigo_color'] == 'CV-05'){$SumaVidrios[5][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[5][2] += $vidrios['precio_vidrio'];}
+			if($vidrios['codigo_color'] == 'CV-05'){$SumaVidrios[5][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[5][2] += $vidrios['precio'];}
 		//-------------------------------------------------
 		}
 		else
 		if($vidrios['codigo_tipo'] == 'TV-02'){
 		//-------------------------------------------------
-			if($vidrios['codigo_color'] == 'CV-01'){$SumaVidrios[6][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[6][2] += $vidrios['precio_vidrio'];}
+			if($vidrios['codigo_color'] == 'CV-01'){$SumaVidrios[6][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[6][2] += $vidrios['precio'];}
 		//-------------------------------------------------
 			else
-			if($vidrios['codigo_color'] == 'CV-02'){$SumaVidrios[7][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[7][2] += $vidrios['precio_vidrio'];}
+			if($vidrios['codigo_color'] == 'CV-02'){$SumaVidrios[7][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[7][2] += $vidrios['precio'];}
 		//-------------------------------------------------
 			else
-			if($vidrios['codigo_color'] == 'CV-03'){$SumaVidrios[8][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[8][2] += $vidrios['precio_vidrio'];}
+			if($vidrios['codigo_color'] == 'CV-03'){$SumaVidrios[8][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[8][2] += $vidrios['precio'];}
 		//-------------------------------------------------
 			else
-			if($vidrios['codigo_color'] == 'CV-04'){$SumaVidrios[9][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[9][2] += $vidrios['precio_vidrio'];}
+			if($vidrios['codigo_color'] == 'CV-04'){$SumaVidrios[9][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[9][2] += $vidrios['precio'];}
 		//-------------------------------------------------
 			else
-			if($vidrios['codigo_color'] == 'CV-05'){$SumaVidrios[10][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[10][2] += $vidrios['precio_vidrio'];}
+			if($vidrios['codigo_color'] == 'CV-05'){$SumaVidrios[10][1] += $vidrios['cantidad_vidrio'];	$SumaVidrios[10][2] += $vidrios['precio'];}
 		//-------------------------------------------------
 		}
 	}
 	include "cerrar_conexion.php";
-	return $SumaVidrios;	//devuelve una matriz 10x2, de la fila 1 a la 5 es botella, de la fila 1 a la 5 es plano, columna 1 es cantidad, columna 2 es precio_vidrio
+	return $SumaVidrios;	//devuelve una matriz 10x2, de la fila 1 a la 5 es botella, de la fila 1 a la 5 es plano, columna 1 es cantidad, columna 2 es precio
 }
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-//funcion que calcula la suma total de las cantidades y precio_vidrios de cada factura por periodo
+//funcion que calcula la suma total de las cantidades y precios de cada factura por periodo
 //scripts que la utilizan: VerReporteCompra_Periodo, ExportarReporteCompra_Periodo, ImprimirReporteCompra_Periodo,
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 function calcularSumaFacturaPeriodo($mes,$ano){
 	include "abrir_conexion.php";
 	$instruccion = "
-	SELECT facturas.codigo_factura, proveedores.nombre_proveedor, vidrio.cantidad_vidrio, vidrio.precio_vidrio
+	SELECT facturas.codigo_factura, proveedores.nombre_proveedor, vidrio.cantidad_vidrio, vidrio.precio
 	FROM facturas, proveedores, vidrio
 	WHERE facturas.fecha LIKE '$ano-$mes%'
 	AND facturas.codigo_proveedor = proveedores.codigo_proveedor
@@ -257,32 +257,32 @@ function calcularSumaFacturaPeriodo($mes,$ano){
 			$facturasPeriodo[$filas][1] = $vidrios['codigo_factura'];
 			$facturasPeriodo[$filas][2] = $vidrios['nombre_proveedor'];
 			$facturasPeriodo[$filas][3] = $vidrios['cantidad_vidrio'];
-			$facturasPeriodo[$filas][4] = $vidrios['precio_vidrio'];
+			$facturasPeriodo[$filas][4] = $vidrios['precio'];
 			$bandera = false;
 		}
 		else if($facturasPeriodo[$filas][1] == $vidrios['codigo_factura']){
 				$facturasPeriodo[$filas][3] += $vidrios['cantidad_vidrio'];
-				$facturasPeriodo[$filas][4] += $vidrios['precio_vidrio'];
+				$facturasPeriodo[$filas][4] += $vidrios['precio'];
 			}
 			else{
 				$filas++;
 				$facturasPeriodo[$filas][1] = $vidrios['codigo_factura'];
 				$facturasPeriodo[$filas][2] = $vidrios['nombre_proveedor'];
 				$facturasPeriodo[$filas][3] = $vidrios['cantidad_vidrio'];
-				$facturasPeriodo[$filas][4] = $vidrios['precio_vidrio'];
+				$facturasPeriodo[$filas][4] = $vidrios['precio'];
 			}
 	}
 	include "cerrar_conexion.php";
-	return $facturasPeriodo;		//devuelve un vector con [factura][proveedor][cantidad][precio_vidrio] por cada factura, matriz Nx4
+	return $facturasPeriodo;		//devuelve un vector con [factura][proveedor][cantidad][precio] por cada factura, matriz Nx4
 }
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-//funcion que calcula la suma total de las cantidades y precio_vidrios de cada factura por proveedor
+//funcion que calcula la suma total de las cantidades y precios de cada factura por proveedor
 //scripts que la utilizan: VerReporteCompra_Proveedor, ExportarReporteCompra_Proveedor, ImprimirReporteCompra_Proveedor,
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 function calcularSumaFacturaProveedor($proveedor){
 	include "abrir_conexion.php";
 	$instruccion = "
-	SELECT facturas.codigo_factura, facturas.fecha, vidrio.cantidad_vidrio, vidrio.precio_vidrio
+	SELECT facturas.codigo_factura, facturas.fecha, vidrio.cantidad_vidrio, vidrio.precio
 	FROM vidrio, facturas, proveedores
 	WHERE proveedores.nombre_proveedor = '$proveedor'
 	AND facturas.codigo_proveedor = proveedores.codigo_proveedor
@@ -299,23 +299,23 @@ function calcularSumaFacturaProveedor($proveedor){
 			$facturasProveedor[$filas][1] = $vidrios['codigo_factura'];
 			$facturasProveedor[$filas][2] = $vidrios['fecha'];
 			$facturasProveedor[$filas][3] = $vidrios['cantidad_vidrio'];
-			$facturasProveedor[$filas][4] = $vidrios['precio_vidrio'];
+			$facturasProveedor[$filas][4] = $vidrios['precio'];
 			$bandera = false;
 		}
 		else if($facturasProveedor[$filas][1] == $vidrios['codigo_factura']){
 				$facturasProveedor[$filas][3] += $vidrios['cantidad_vidrio'];
-				$facturasProveedor[$filas][4] += $vidrios['precio_vidrio'];
+				$facturasProveedor[$filas][4] += $vidrios['precio'];
 			}
 			else{
 				$filas++;
 				$facturasProveedor[$filas][1] = $vidrios['codigo_factura'];
 				$facturasProveedor[$filas][2] = $vidrios['fecha'];
 				$facturasProveedor[$filas][3] = $vidrios['cantidad_vidrio'];
-				$facturasProveedor[$filas][4] = $vidrios['precio_vidrio'];
+				$facturasProveedor[$filas][4] = $vidrios['precio'];
 			}
 	}
 	include "cerrar_conexion.php";
-	return $facturasProveedor;		//devuelve un vector con [factura][fecha][cantidad][precio_vidrio] por cada factura, matriz Nx4
+	return $facturasProveedor;		//devuelve un vector con [factura][fecha][cantidad][precio] por cada factura, matriz Nx4
 }
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 //funcion que busca los colores de vidrios vendidos por un recolector
@@ -338,61 +338,9 @@ function coloresVidrioComprado($codigo_factura){
 			case 'CV-05':	if($coloresVidrio[5] == 0)	$coloresVidrio[5] = 1;	break;
 		}
 	}
-	
+		
 	include "cerrar_conexion.php";
 	return $coloresVidrio;
-}
-//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-//funcion que actualiza las filas de los centros de acopio de un recolector
-//scripts que la utilizan: EliminarRecolector&AsignarNuevo
-//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-function actualizarCentrosAcopio($centro_acopio,$codigo_recolector){
-	include "abrir_conexion.php";
-	
-	$instruccion_update = "UPDATE centros_de_acopio SET codigo_recolector = '$codigo_recolector' WHERE codigo_centro_acopio = '$centro_acopio'";
-	mysql_query($instruccion_update, $conexion) or die ("<SPAN CLASS='error'>Fallo actualizar_centro_de_acopio!! </SPAN>".mysql_error());
-	
-	include "cerrar_conexion.php";
-}
-//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-//funcion que elimina las filas de vidrios y compras de las facturas por recolector o centros de acopio
-//scripts que la utilizan: EliminarRecolector&AsignarNuevo
-//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-function eliminarVidrios_y_Compras($codigo_factura){
-	include "abrir_conexion.php";
-	
-	//buscar con el codigo de factura en la tabla vidrios el codigo del vidrio del registro que se va eliminar de la tabla vidrios
-	$instruccion_vidrio = "
-	SELECT vidrio.codigo_vidrio, facturas.codigo_factura
-	FROM vidrio, facturas
-	WHERE vidrio.codigo_factura = '$codigo_factura'
-	AND facturas.codigo_factura = vidrio.codigo_factura";
-	$consultar_vidrio = mysql_query($instruccion_vidrio, $conexion) or die ("<SPAN CLASS='error'>Fallo consultar_vidrio!! </SPAN>".mysql_error());
-	
-	while($vidrios = mysql_fetch_array($consultar_vidrio)){		
-		$codigo_vidrio = $vidrios['codigo_vidrio'];
-		
-		//eliminar el registro de la tabla vidrios con el codigo del vidrio que se acaba de encontrar
-		$instruccion_delete = "DELETE FROM vidrio WHERE codigo_vidrio = '$codigo_vidrio'";
-		mysql_query($instruccion_delete, $conexion) or die ("<SPAN CLASS='error'>Fallo eliminar_vidrio!! </SPAN>".mysql_error());
-	}
-	
-	//buscar con el codigo de factura en la tabla compras el codigo de la compra del registro que se va eliminar de la tabla compras
-	$instruccion_compra = "
-	SELECT compras.codigo_compra, facturas.codigo_factura
-	FROM compras, facturas
-	WHERE compras.codigo_factura = '$codigo_factura'
-	AND facturas.codigo_factura = compras.codigo_factura";
-	$consultar_compra = mysql_query($instruccion_compra, $conexion) or die ("<SPAN CLASS='error'>Fallo consultar_compra!! </SPAN>".mysql_error());
-	
-	while($compras = mysql_fetch_array($consultar_compra)){
-		$codigo_compra = $compras['codigo_compra'];
-		
-		//eliminar el registro de la tabla compras con el codigo del compra que se acaba de encontrar
-		$instruccion_delete = "DELETE FROM compras WHERE codigo_compra = '$codigo_compra'";
-		mysql_query($instruccion_delete, $conexion) or die ("<SPAN CLASS='error'>Fallo eliminar_compra!! </SPAN>".mysql_error());
-	}
-	include "cerrar_conexion.php";
 }
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 //funcion que devuelve la fecha y hora actual en un String ("NOMBRE_DIA N_DIA de NOMBRE_MES de N_ANO - HORA:MINUTO am/pm")
@@ -497,7 +445,7 @@ function formatoFechaCompactada($fecha){
 //funcion que busca el nombre de un proveedor con el codigo del proveedor
 //scripts que la utilizan: frame_contenido
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-function buscarProveedor($codigo){
+function BuscarProveedor($codigo){
 	include "abrir_conexion.php";
 	$proveedores = mysql_query("SELECT nombre_proveedor FROM proveedores WHERE codigo_proveedor = '$codigo'",$conexion) or die ("<SPAN CLASS='error'>Fallo en proveedores!!</SPAN>".mysql_error());
 	$proveedor = mysql_fetch_array($proveedores);
@@ -509,13 +457,12 @@ function buscarProveedor($codigo){
 //funcion que calcula que proveedor vende mas vidrio
 //scripts que la utilizan: frame_contenido
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-function vendeMas(){
+function VendeMas(){
 	include "abrir_conexion.php";
 	$consulta_proveedores = mysql_query("SELECT codigo_factura, codigo_proveedor FROM facturas ORDER BY codigo_proveedor ASC",$conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_proveedores!!</SPAN>".mysql_error());
 	$cantidad_proveedores = mysql_query("SELECT COUNT(codigo_proveedor) AS cantidad FROM proveedores",$conexion) or die ("<SPAN CLASS='error'>Fallo en cantidad_proveedores!!</SPAN>".mysql_error());
 	$cantidad = mysql_fetch_array($cantidad_proveedores);
 
-	if($cantidad['cantidad'] < 5)	$cantidad['cantidad'] = 5;
 	for($i=1;$i<=$cantidad['cantidad'];$i++){$ventas_proveedores[$i][1] = 0;	$ventas_proveedores[$i][2] = "";}
 
 	$valor_temporal = 0;	$bandera = true;	$i = 1;
@@ -567,7 +514,7 @@ function vendeMas(){
 //funcion que busca el nombre de un recolector con el codigo del recolector
 //scripts que la utilizan: frame_contenido
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-function buscarRecolector($codigo){
+function BuscarRecolector($codigo){
 	include "abrir_conexion.php";
 	$recolectores = mysql_query("SELECT nombre_recolector FROM recolectores WHERE codigo_recolector = '$codigo'",$conexion) or die ("<SPAN CLASS='error'>Fallo en recolectores!!</SPAN>".mysql_error());
 	$recolector = mysql_fetch_array($recolectores);
@@ -579,13 +526,12 @@ function buscarRecolector($codigo){
 //funcion que calcula que recolector vende mas vidrio
 //scripts que la utilizan: frame_contenido
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-function compraMas(){
+function CompraMas(){
 	include "abrir_conexion.php";
 	$consulta_recolectores = mysql_query("SELECT codigo_factura, codigo_recolector FROM facturas ORDER BY codigo_recolector ASC",$conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_recolectores!!</SPAN>".mysql_error());
 	$cantidad_recolectores = mysql_query("SELECT COUNT(codigo_recolector) AS cantidad FROM recolectores",$conexion) or die ("<SPAN CLASS='error'>Fallo en cantidad_recolectores!!</SPAN>".mysql_error());
 	$cantidad = mysql_fetch_array($cantidad_recolectores);
 
-	if($cantidad['cantidad'] < 5)	$cantidad['cantidad'] = 5;
 	for($i=1;$i<=$cantidad['cantidad'];$i++){$ventas_recolectores[$i][1] = 0;	$ventas_recolectores[$i][2] = "";}
 
 	$valor_temporal = 0;	$bandera = true;	$i=1;
@@ -593,7 +539,7 @@ function compraMas(){
 		if($bandera){
 			$valor_temporal = $facturas_recolectores['codigo_recolector'];
 			$ventas_recolectores[$i][1]++;
-			//$ventas_recolectores[$i][2] = buscarRecolector($facturas_recolectores['codigo_recolector']);
+			//$ventas_recolectores[$i][2] = BuscarRecolector($facturas_recolectores['codigo_recolector']);
 			$recolectores = mysql_query("SELECT nombre_recolector FROM recolectores WHERE codigo_recolector = '".$facturas_recolectores['codigo_recolector']."'",$conexion) or die ("<SPAN CLASS='error'>Fallo en recolectores!!</SPAN>".mysql_error());
 			$recolector = mysql_fetch_array($recolectores);
 			$ventas_recolectores[$i][2] = $recolector['nombre_recolector'];
@@ -602,7 +548,7 @@ function compraMas(){
 		else{
 			if($valor_temporal == $facturas_recolectores['codigo_recolector']){
 				$ventas_recolectores[$i][1]++;
-				//$ventas_recolectores[$i][2] = buscarRecolector($facturas_recolectores['codigo_recolector']);
+				//$ventas_recolectores[$i][2] = BuscarRecolector($facturas_recolectores['codigo_recolector']);
 				$recolectores = mysql_query("SELECT nombre_recolector FROM recolectores WHERE codigo_recolector = '".$facturas_recolectores['codigo_recolector']."'",$conexion) or die ("<SPAN CLASS='error'>Fallo en recolectores!!</SPAN>".mysql_error());
 				$recolector = mysql_fetch_array($recolectores);
 				$ventas_recolectores[$i][2] = $recolector['nombre_recolector'];
@@ -611,7 +557,7 @@ function compraMas(){
 				$valor_temporal = $facturas_recolectores['codigo_recolector'];
 				$i++;
 				$ventas_recolectores[$i][1]++;
-				//$ventas_recolectores[$i][2] = buscarRecolector($facturas_recolectores['codigo_recolector']);
+				//$ventas_recolectores[$i][2] = BuscarRecolector($facturas_recolectores['codigo_recolector']);
 				$recolectores = mysql_query("SELECT nombre_recolector FROM recolectores WHERE codigo_recolector = '".$facturas_recolectores['codigo_recolector']."'",$conexion) or die ("<SPAN CLASS='error'>Fallo en recolectores!!</SPAN>".mysql_error());
 				$recolector = mysql_fetch_array($recolectores);
 				$ventas_recolectores[$i][2] = $recolector['nombre_recolector'];

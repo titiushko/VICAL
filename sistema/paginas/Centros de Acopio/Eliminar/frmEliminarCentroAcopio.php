@@ -2,7 +2,7 @@
 include "../../../loggin/BloqueSeguridad.php";
 include "../../../loggin/AccesoAdministrador.php";
 include "../../../librerias/abrir_conexion.php";
-$codigo_centro_acopio = $_REQUEST['eliminar_centro_de_acopio'];
+$centro_de_acopio = $_REQUEST['eliminar_centro_de_acopio'];
 $direccion			= $_REQUEST['direccion'];
 
 $instruccion_select = "
@@ -15,7 +15,7 @@ centros_de_acopio.telefono,
 recolectores.nombre_recolector
 FROM centros_de_acopio
 JOIN recolectores
-WHERE centros_de_acopio.codigo_centro_acopio = '$codigo_centro_acopio'
+WHERE centros_de_acopio.codigo_centro_acopio = '$centro_de_acopio'
 AND recolectores.codigo_recolector = centros_de_acopio.codigo_recolector";
 $consulta_centro_de_acopio = mysql_query($instruccion_select, $conexion) or die ("<SPAN CLASS='error'>Fallo en consulta_centro_de_acopio!!</SPAN>".mysql_error());
 $centros_de_acopio = mysql_fetch_assoc($consulta_centro_de_acopio);
@@ -52,7 +52,7 @@ $centros_de_acopio = mysql_fetch_assoc($consulta_centro_de_acopio);
 <!------------------------------------------------------------------------------------------------------------------------>
 			<tr>
 				<td align="center">
-					<form name="borrar_centro_de_acopio" <?php echo "action=\"EliminarCentroAcopio.php?codigo=$codigo_centro_acopio&direccion=$direccion\"";?> method="post" enctype="multipart/form-data">
+					<form name="borrar_centro_de_acopio" <?php echo "action=\"EliminarCentroAcopio.php?codigo=$centro_de_acopio\"";?> method="post" enctype="multipart/form-data">
 					<table align="center" class="alerta error centro">
 						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 						<tr>
@@ -105,24 +105,24 @@ $centros_de_acopio = mysql_fetch_assoc($consulta_centro_de_acopio);
 					<?php
 					if($direccion == "../Consultar/VerCentroAcopioDepartamento.php"){
 						switch($centros_de_acopio["departamento"]){
-							case "Ahuachapan": $codigo_centro_acopio = 1; break;
-							case "Santa Ana": $codigo_centro_acopio = 2; break;
-							case "Sonsonate": $codigo_centro_acopio = 3; break;
-							case "Usulutan": $codigo_centro_acopio = 4; break;
-							case "San Miguel": $codigo_centro_acopio = 5; break;
-							case "Morazan": $codigo_centro_acopio = 6; break;
-							case "La Union": $codigo_centro_acopio = 7; break;
-							case "La Libertad": $codigo_centro_acopio = 8; break;
-							case "Chalatenango": $codigo_centro_acopio = 9; break;
-							case "Cuscatlan": $codigo_centro_acopio = 10; break;
-							case "San Salvador": $codigo_centro_acopio = 11; break;
-							case "La Paz": $codigo_centro_acopio = 12; break;
-							case "Caba&ntilde;as": $codigo_centro_acopio = 13; break;
-							case "San Vicente": $codigo_centro_acopio = 14; break;
+							case "Ahuachapan": $centro_de_acopio = 1; break;
+							case "Santa Ana": $centro_de_acopio = 2; break;
+							case "Sonsonate": $centro_de_acopio = 3; break;
+							case "Usulutan": $centro_de_acopio = 4; break;
+							case "San Miguel": $centro_de_acopio = 5; break;
+							case "Morazan": $centro_de_acopio = 6; break;
+							case "La Union": $centro_de_acopio = 7; break;
+							case "La Libertad": $centro_de_acopio = 8; break;
+							case "Chalatenango": $centro_de_acopio = 9; break;
+							case "Cuscatlan": $centro_de_acopio = 10; break;
+							case "San Salvador": $centro_de_acopio = 11; break;
+							case "La Paz": $centro_de_acopio = 12; break;
+							case "Caba&ntilde;as": $centro_de_acopio = 13; break;
+							case "San Vicente": $centro_de_acopio = 14; break;
 						}
 					}
 					?>
-					<input type="button" onMouseOver="toolTip('Cancelar',this)" class="boton cancelar" <?php echo "onClick=\"redireccionar('../Consultar/$direccion?departamento=$codigo_centro_acopio')\"";?>>
+					<input type="button" onMouseOver="toolTip('Cancelar',this)" class="boton cancelar" <?php echo "onClick=\"redireccionar('../Consultar/$direccion?departamento=$centro_de_acopio')\"";?>>
 					<!------------------------------------------------------------------------>
 					</form>
 					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->

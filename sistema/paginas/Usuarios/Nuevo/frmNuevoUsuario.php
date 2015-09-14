@@ -18,6 +18,18 @@ include "../../../librerias/abrir_conexion.php";
 		<script type="text/javascript" 	 src="../../../librerias/jquery/prototype.js"></script>
 		<script type="text/javascript" 	 src="../../../librerias/funciones.js"></script>
 		<script type="text/javascript" 	 src="../../../librerias/validaciones.js"></script>
+		<script type="text/javascript">
+			//vector con los nombres de usuarios
+			var usuarios = new Array;										
+			<?php
+			$consulta = mysql_query("SELECT usuario FROM usuarios ORDER BY id ASC",$conexion) or die ("<SPAN CLASS='error'>Fallo en facturas!!</SPAN>".mysql_error());
+			$contador = 0;
+			while($opciones = mysql_fetch_array($consulta)){
+				echo "usuarios[$contador] = '".$opciones[0]."';";
+				$contador++;
+			}
+			?>
+		</script>
 	</head>
 	<BODY class="cuerpo1">
 		<table width="100%" border="0" cellpadding="0" cellspacing="0">

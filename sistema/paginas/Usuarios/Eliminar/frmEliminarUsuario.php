@@ -40,7 +40,7 @@ $tipos_usuarios = array(1=>"Administrador",2=>"Contador",3=>"Recolector");
 <!------------------------------------------------------------------------------------------------------------------------>
 			<tr>
 				<td align="center">
-					<form name="borrar_usuario" <?php echo "action=\"EliminarUsuario.php?codigo=$id\"";?> method="post" enctype="multipart/form-data">
+					<form name="borrar_tipo_empresa" <?php echo "action=\"EliminarUsuario.php?codigo=$id\"";?> method="post" enctype="multipart/form-data">
 					<table align="center" class="alerta error centro">
 						<!------------------------------------------------------------------------>
 						<tr>
@@ -65,7 +65,7 @@ $tipos_usuarios = array(1=>"Administrador",2=>"Contador",3=>"Recolector");
 					</table>
 					<!------------------------------------------------------------------------>
 					<input name="Eliminar" type="submit" value="Eliminar" onMouseOver="toolTip('Aceptar',this)" class="boton aceptar">
-					<input type="button" onMouseOver="toolTip('Cancelar',this)" class="boton cancelar" onClick="redireccionar('../Consultar/frmConsultarUsuario.php')">
+					<input type="button" onMouseOver="toolTip('Cancelar',this)" class="boton cancelar" <?php echo "onClick=\"redireccionar('../Consultar/frmConsultarUsuario.php?valor=$id')\"";?>>
 					<!------------------------------------------------------------------------>
 					</form>
 					<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->

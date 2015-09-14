@@ -28,7 +28,7 @@ $intruccion_vidrio = "
 SELECT
 DISTINCT MONTH(facturas.fecha) AS mes,
 vidrio.cantidad_vidrio,
-vidrio.precio_vidrio
+vidrio.precio
 FROM vidrio, facturas, proveedores
 WHERE proveedores.nombre_proveedor = '$proveedor'
 AND facturas.codigo_proveedor = proveedores.codigo_proveedor

@@ -4,7 +4,7 @@ session_start();
 
 $_SESSION["cambio"] = 1;
 /*
-$ventas	= vendeMas();	$compras = compraMas();
+$ventas	= VendeMas();	$compras = CompraMas();
 for($i=1;$i<=5;$i++){
 	$_SESSION["venta".$i][1]  = $ventas[$i][1];		$_SESSION["venta".$i][2]  = $ventas[$i][2];
 	$_SESSION["compra".$i][1] = $compras[$i][1];	$_SESSION["compra".$i][2] = $compras[$i][2];
@@ -41,8 +41,8 @@ if($_SESSION["nivel"] == 3){
 	<BODY class="cuerpo1">	
 		<CENTER>
 		<h1 class="encabezado1">CARGANDO SESION</h1>
-		<img src="../imagenes/cargando_sesion.gif" width="30%" height="30%">
-		<br><br>Espere porfavor...<br><br>
+		<br>
+		<img SRC="../imagenes/cargando_sesion.gif" width="30%" height="30%">
 		</CENTER>
 		<hr><p><center>Sistema de Compras y Control de Proveedores de la Empresa VICAL de El Salvador &#8226; Derechos Reservados 2011</center></p>
 	</BODY>

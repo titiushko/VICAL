@@ -13,24 +13,24 @@ if($cantidad != 0){
 		$filas++;
 	}
 	for($ano=1; $ano<$filas; $ano++){
-		$instruccion = "SELECT SUM(precio_vidrio) AS precio_vidrio FROM vidrio, facturas WHERE YEAR(facturas.fecha) = '$anos[$ano]' AND vidrio.codigo_factura = facturas.codigo_factura";
-		$consulta = mysql_query($instruccion,$conexion) or die ("<SPAN CLASS='error'>Fallo en consulta precio_vidrios!!</SPAN>".mysql_error());
+		$instruccion = "SELECT SUM(precio) AS precio FROM vidrio, facturas WHERE YEAR(facturas.fecha) = '$anos[$ano]' AND vidrio.codigo_factura = facturas.codigo_factura";
+		$consulta = mysql_query($instruccion,$conexion) or die ("<SPAN CLASS='error'>Fallo en consulta precios!!</SPAN>".mysql_error());
 		$opciones = mysql_fetch_array($consulta);
-		$precio_vidrios[$ano] = $opciones['precio_vidrio'];
+		$precios[$ano] = $opciones['precio'];
 	}
 	//calculo de pronostico aplicando suavizamiento exponencial simple
-	$ano_actual = $precio_vidrios[1];
+	$ano_actual = $precios[1];
 	$alfha = 0.5;			//constante de suavisamiento
 	$bandera = true;
 	for($i=1; $i<=$filas; $i++){
 		if($bandera){
-			$ano_anterior = $precio_vidrios[1];
+			$ano_anterior = $precios[1];
 			$Ft = $ano_actual + ($alfha * ($ano_anterior - $ano_actual));
 			$ano_actual = $Ft;
 			$bandera = false;
 		}
 		else{
-			$ano_anterior = $precio_vidrios[$i-1];
+			$ano_anterior = $precios[$i-1];
 			$Ft = $ano_actual + ($alfha * ($ano_anterior - $ano_actual));
 			$ano_actual = $Ft;
 		}
@@ -103,14 +103,14 @@ else{
 							<td align="right">
 								<table align="center" border bgcolor="white" width="80%">
 									<caption><h1 class="encabezado2">A&Ntilde;OS BASES<h1></caption>
-									<thead class="titulo2"><tr><th width="80">A&Ntilde;O</th><th width="100">precio_vidrio</th></tr></thead>
+									<thead class="titulo2"><tr><th width="80">A&Ntilde;O</th><th width="100">PRECIO</th></tr></thead>
 									<tbody align="center">
 										<?php
 										for($i=1; $i<$filas; $i++){
 										?>
 										<tr>
 											<th class="titulo2" width="80"><?php echo $anos[$i];?></th>
-											<td width="100"><?php echo "$".number_format($precio_vidrios[$i],2,'.',',');?></td>
+											<td width="100"><?php echo "$".number_format($precios[$i],2,'.',',');?></td>
 										</tr>
 										<?php
 										}
@@ -139,11 +139,11 @@ else{
 										}
 										//imprimir pronostico del año siguiente
 										$n_ano = $anos[$filas - 1] + 1;
-										$n_precio_vidrio = $pronosticos[$filas];
+										$n_precio = $pronosticos[$filas];
 										?>
 										<tr>
 											<th class="titulo2" width="80"><?php echo $n_ano;?></th>
-											<td width="100"><?php echo "$".number_format($n_precio_vidrio,2,'.',',');?></td>
+											<td width="100"><?php echo "$".number_format($n_precio,2,'.',',');?></td>
 										</tr>
 									</tbody>
 								</table>
@@ -162,19 +162,19 @@ else{
 										?>
 										<tr>
 											<th class="titulo2" width="80"><?php echo $anos[$i];?></th>
-											<td width="100"><?php printf("%.2f",$precio_vidrios[$i]);?></td>
+											<td width="100"><?php printf("%.2f",$precios[$i]);?></td>
 											<td width="100"><?php printf("%.2f",$pronosticos[$i]);?></td>
 										</tr>
 										<?php
 										}
 										//imprimir pronostico del año siguiente
 										$n_ano = $anos[$filas - 1] + 1;
-										$n_precio_vidrio = $pronosticos[$filas];
+										$n_precio = $pronosticos[$filas];
 										?>
 										<tr>
 											<th class="titulo2" width="80"><?php echo $n_ano;?></th>
-											<td width="100"><?php echo printf("%.2f",$precio_vidrios[$i-1]);?></td>
-											<td width="100"><?php echo printf("%.2f",$n_precio_vidrio);?></td>
+											<td width="100"><?php echo printf("%.2f",$precios[$i-1]);?></td>
+											<td width="100"><?php echo printf("%.2f",$n_precio);?></td>
 										</tr>
 									</tbody>
 								</table>

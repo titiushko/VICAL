@@ -56,7 +56,7 @@ $cantidad = $proveedor['maximo'];
 						<tr><td colspan="2"></td></tr>
 						<tr>
 							<td align="right">
-								<img src="../../../imagenes/icono_agregar.png" width="10%" height="10%" align="top" onMouseOver="toolTip('Nuevo Tipo de Empresa',this)" onClick="redireccionar('../../Tipos Empresas/Nuevo/frmNuevoTipoEmpresa.php')" class="manita">
+								<img src="../../../imagenes/icono_agregar.png" width="14%" height="14%" align="top" onMouseOver="toolTip('Nuevo Tipo de Empresa',this)" onClick="redireccionar('../../Tipos Empresas/Nuevo/frmNuevoTipoEmpresa.php')" class="manita">
 								<span class="titulo1">Tipo de Empresa:</span>
 							</td>
 							<td align="left">

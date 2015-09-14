@@ -83,7 +83,7 @@ $lista_mes = array(1 => "Enero", 2 => "Febrero", 3 => "Marzo", 4 => "Abril", 5 =
 											<select name="seleccionar_mes" class="lista opcion" size="1" onClick="borrarMensaje(3);">
 												<option selected value="">.:Opciones:.</option>
 												<?php
-												for($i=1;$i<=12;$i++){
+												for($i=1;$i<12;$i++){
 												echo "<option value=\"$i\">".$lista_mes[$i]."</option>";
 												}
 												?>

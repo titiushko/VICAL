@@ -74,7 +74,7 @@ $facturas = mysql_fetch_array($consulta_factura);
 							</td>
 						</tr>
 					</table>
-					<form name="borrar_proveedor" <?php echo "action=\"CargarEliminarProveedor.php?codigo=$codigo_proveedor\"";?> method="post" enctype="multipart/form-data">
+					<form name="borrar_proveedor" <?php echo "action=\"EliminarProveedor&CompraVidrio.php?codigo=$codigo_proveedor\"";?> method="post" enctype="multipart/form-data">
 					<!------------------------------------------------------------------------>
 					<input name="Continuar" type="submit" value="Continuar" onMouseOver="toolTip('Continuar',this)" class="boton aceptar">
 					<input type="button" onMouseOver="toolTip('Regresar',this)" class="boton cancelar" <?php echo "onClick=\"redireccionar('../Consultar/VerProveedor.php?valor=$codigo_proveedor')\"";?>>
@@ -183,7 +183,7 @@ $facturas = mysql_fetch_array($consulta_factura);
 					</table>
 					<meta http-equiv ="refresh"		 content="5;url=../Consultar/frmConsultarProveedor.php">
 				</td>
-			</tr>
+			</tr>			
 			<?php
 			}
 			?>

@@ -72,7 +72,7 @@ if($_SESSION["autenticado"] != "SI"){
 						<li class="primera"><a href="../paginas/Centros de Acopio/Consultar/frmConsultarCentroAcopio.php" TARGET="CONTENIDO">Centros de Acopio</a></li>
 						<li><a href="../paginas/Tipos Empresas/Consultar/frmConsultarTipoEmpresa.php" TARGET="CONTENIDO">Tipos de Empresa</a></li>
 						<li><a href="../paginas/Usuarios/Consultar/frmConsultarUsuario.php" TARGET="CONTENIDO">Usuarios</a></li>
-						<li><a href="../paginas/Precio Unitario/Consultar/frmConsultarPrecioUnitario.php" TARGET="CONTENIDO">Precios Unitario</a></li>
+						<li><a href="../paginas/Precio Unitario/Consultar/VerPrecioUnitario.php" TARGET="CONTENIDO">Precio Unitario</a></li>
 					</ul>
 				</li>
 				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->

@@ -8,7 +8,7 @@ function validarNuevaCompra(F,cantidad){
 	var cantidad_vacios = 0;
 	var elemento;
 	var bandera = 0;
-	borrarMensaje(cantidad);	elementosVacios(cantidad-1);
+	borrarMensaje(cantidad);	elementosVacios(cantidad+1);
 //campo fecha
 	if(F.fecha.value > fechaActual()){
 		elemento = document.getElementById('mensaje1'); elemento.addClassName("visto");
@@ -25,45 +25,41 @@ function validarNuevaCompra(F,cantidad){
 	for(i=0; i<facturas.length; i++){
 		if(F.factura.value == facturas[i]){
 			elemento = document.getElementById('mensaje3'); elemento.addClassName("visto");
-			elemento = document.getElementById('id2'); elemento.addClassName("elementoVacio");
+		elemento = document.getElementById('id2'); elemento.addClassName("elementoVacio");
 			return false;
 		}
 	}
 //listas recolector
-	if(F.nombre_recolector.selectedIndex == 0){
+	if(F.nombre_recolector.selectedIndex == 0 || F.codigo_recolector.selectedIndex == 0){
 		elemento = document.getElementById('mensaje4'); elemento.addClassName("visto");
 		elemento = document.getElementById('id3'); elemento.addClassName("elementoVacio");
-		return false;
-	}
-//listas proveedor
-	if(F.nombre_proveedor.selectedIndex == 0){
-		elemento = document.getElementById('mensaje5'); elemento.addClassName("visto");
 		elemento = document.getElementById('id4'); elemento.addClassName("elementoVacio");
 		return false;
 	}
-//campos cantidad vidrio
-	if(F.Vc1.value.length == 0) cantidad_vacios++;	if(F.Vc6.value.length == 0) cantidad_vacios++;
-	if(F.Vc2.value.length == 0) cantidad_vacios++;	if(F.Vc7.value.length == 0) cantidad_vacios++;
-	if(F.Vc3.value.length == 0) cantidad_vacios++;	if(F.Vc8.value.length == 0) cantidad_vacios++;
-	if(F.Vc4.value.length == 0) cantidad_vacios++;	if(F.Vc9.value.length == 0) cantidad_vacios++;
-	if(F.Vc5.value.length == 0) cantidad_vacios++;	if(F.Vc10.value.length == 0) cantidad_vacios++;
-//mostrar si no se registro ningun vidrio
-	if(cantidad_vacios == 10){
-		elemento = document.getElementById('mensaje6'); elemento.addClassName("visto");
+//listas proveedor
+	if(F.nombre_proveedor.selectedIndex == 0 || F.codigo_proveedor.selectedIndex == 0){
+		elemento = document.getElementById('mensaje5'); elemento.addClassName("visto");
 		elemento = document.getElementById('id5'); elemento.addClassName("elementoVacio");
-		F.Vc1.focus();
+		elemento = document.getElementById('id6'); elemento.addClassName("elementoVacio");
 		return false;
 	}
 //lista sucursal
 	if(F.sucursal.selectedIndex == 0){
-		elemento = document.getElementById('mensaje7'); elemento.addClassName("visto");
-		elemento = document.getElementById('id6'); elemento.addClassName("elementoVacio");
+		elemento = document.getElementById('mensaje6'); elemento.addClassName("visto");
+		elemento = document.getElementById('id7'); elemento.addClassName("elementoVacio");
 		return false;
 	}
-//lista codigo_centro_acopio
-	if(F.codigo_centro_acopio.selectedIndex == 0){
-		elemento = document.getElementById('mensaje8'); elemento.addClassName("visto");
-		elemento = document.getElementById('id7'); elemento.addClassName("elementoVacio");
+//campos cantidad vidrio
+	if(F.BVe1.value.length == 0) cantidad_vacios++;	if(F.PVe1.value.length == 0) cantidad_vacios++;
+	if(F.BCr1.value.length == 0) cantidad_vacios++;	if(F.PCr1.value.length == 0) cantidad_vacios++;
+	if(F.BCa1.value.length == 0) cantidad_vacios++;	if(F.PCa1.value.length == 0) cantidad_vacios++;
+	if(F.BBr1.value.length == 0) cantidad_vacios++;	if(F.PBr1.value.length == 0) cantidad_vacios++;
+	if(F.BRe1.value.length == 0) cantidad_vacios++;	if(F.PRe1.value.length == 0) cantidad_vacios++;
+//mostrar si no se registro ningun vidrio
+	if(cantidad_vacios == 10){
+		elemento = document.getElementById('mensaje7'); elemento.addClassName("visto");
+		elemento = document.getElementById('id8'); elemento.addClassName("elementoVacio");
+		F.BVe1.focus();
 		return false;
 	}
 	return true;
@@ -195,28 +191,6 @@ function validarNuevoCentroAcopio(F,cantidad){
 	return true;
 }
 //------------------------------------------------------------------------------------
-//							formulario nuevo precio unitario
-//------------------------------------------------------------------------------------
-function validarNuevoPrecioUnitario(F,cantidad){
-	var elemento;
-	borrarMensaje(cantidad);	elementosVacios(cantidad-1);
-//validar que el campo precio_unitario no este vacio
-	if(F.precio_unitario.value == ""){
-		elemento = document.getElementById('mensaje1'); elemento.addClassName("visto");
-		elemento = document.getElementById('id1'); elemento.addClassName("elementoVacio");
-		return false;
-	}
-//verificar que el valor del precio no este repetido
-	for(i=0; i<precios.length; i++){
-		if(F.precio_unitario.value == precios[i]){
-			elemento = document.getElementById('mensaje2'); elemento.addClassName("visto");
-			elemento = document.getElementById('id1'); elemento.addClassName("elementoVacio");
-			return false;
-		}
-	}
-	return true;
-}
-//------------------------------------------------------------------------------------
 //							formulario nuevo usuario
 //------------------------------------------------------------------------------------
 function validarNuevoUsuario(F,cantidad){
@@ -294,15 +268,15 @@ function validarModificarCompra(F,cantidad){
 	}
 	var cantidad_vacios = 0;
 //campos cantidad vidrio
-	if(F.Vc1.value.length == 0) cantidad_vacios++;	if(F.Vc6.value.length == 0)  cantidad_vacios++;
-	if(F.Vc2.value.length == 0) cantidad_vacios++;	if(F.Vc7.value.length == 0)  cantidad_vacios++;
-	if(F.Vc3.value.length == 0) cantidad_vacios++;	if(F.Vc8.value.length == 0)  cantidad_vacios++;
-	if(F.Vc4.value.length == 0) cantidad_vacios++;	if(F.Vc9.value.length == 0)  cantidad_vacios++;
+	if(F.Vc1.value.length == 0) cantidad_vacios++;	if(F.Vc6.value.length == 0) cantidad_vacios++;
+	if(F.Vc2.value.length == 0) cantidad_vacios++;	if(F.Vc7.value.length == 0) cantidad_vacios++;
+	if(F.Vc3.value.length == 0) cantidad_vacios++;	if(F.Vc8.value.length == 0) cantidad_vacios++;
+	if(F.Vc4.value.length == 0) cantidad_vacios++;	if(F.Vc9.value.length == 0) cantidad_vacios++;
 	if(F.Vc5.value.length == 0) cantidad_vacios++;	if(F.Vc10.value.length == 0) cantidad_vacios++;
 //mostrar si no se registro ningun vidrio
 	if(cantidad_vacios == 10){
 		elemento = document.getElementById('mensaje2'); elemento.addClassName("visto");
-		F.Vc1.focus();
+		F.Bc1.focus();
 		return false;
 	}
 	return true;
@@ -425,27 +399,13 @@ function validarHistorialCompra(F,cantidad,criterio){
 	borrarMensaje(cantidad);
 	switch(criterio){
 	case 'periodo':
-					return FechaInicialFinal(F) && ListaSucursal(F,10) && ListaCentroAcopio(F,10);
+					return FechaInicialFinal(F) && ListaSucursal(F,10);
 					break;
 	case 'tipo':
 					return ListaTipoVidrio(F,8) && ListaSucursal(F,10);
 					break;
 	case 'proveedor':
 					return ListaProveedor(F,9) && ListaSucursal(F,10);
-					break;
-	}
-}
-//------------------------------------------------------------------------------------
-//							formulario reporte vidrio
-//------------------------------------------------------------------------------------
-function validarReporteVidrio(F,cantidad,criterio){
-	borrarMensaje(cantidad);
-	switch(criterio){
-	case 'periodo':
-					return ListaMes(F,1) && ListaAno(F,2);
-					break;
-	case 'proveedor':
-					return ListaProveedor(F,3);
 					break;
 	}
 }
@@ -513,7 +473,7 @@ function FechaInicialFinal(F){
 		return false;
 	}
 //fecha_final no debe ser mayor ni igual a la fecha actual
-	if(F.fecha_final.value > fechaActual()){
+	if(F.fecha_final.value >= fechaActual()){
 		elemento = document.getElementById('mensaje7'); elemento.addClassName("visto");
 		return false;
 	}
@@ -555,14 +515,6 @@ function ListaRecolector(F,msj){
 //lista sucursal
 function ListaSucursal(F,msj){
 	if (F.sucursal.selectedIndex == 0){
-		var elemento = document.getElementById('mensaje'+msj); elemento.addClassName("visto");
-		return false;
-	}
-	return true;
-}
-//lista codigo_centro_acopio
-function ListaCentroAcopio(F,msj){
-	if (F.codigo_centro_acopio.selectedIndex == 0){
 		var elemento = document.getElementById('mensaje'+msj); elemento.addClassName("visto");
 		return false;
 	}

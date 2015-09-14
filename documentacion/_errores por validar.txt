@@ -1,0 +1,10 @@
+- Proceso de modificar compra
+- Implementar la meta mensual de william
+- Arreglar reporte de recolector diario
+- Historial de compras, validar cuando solo hay una sola factura registrada en el sistema
+
+- Eliminar recolector, validar cuando ya no hay mas recolectores a quien reasignar centros de acopio
+- No se puede eliminar un centro de acopio si no hay al menos un centro de acopio para trasladar las compras
+- No se puede registrar una nueva compra si no existe al menos un centro de acopio, un recolector y un proveedor
+
+- No se puede eliminar el usuario actualmente logeado

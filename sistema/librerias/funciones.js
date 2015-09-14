@@ -1,6 +1,7 @@
 //------------------------------------------------------------------------------------
 //								calcular el monto y total
 //------------------------------------------------------------------------------------
+//var precio = 1.2;	//precio unitario
 function calcularMonto(){
 with (document.forms["formulario"]){
 	var totalVc1,totalVc2,totalVc3,totalVc4,totalVc5,totalVc6,totalVc7,totalVc8,totalVc9,totalVc10;
@@ -64,11 +65,37 @@ with (document.forms["formulario"]){
 	}
 }
 //------------------------------------------------------------------------------------
-//								cambiar el precio unitario
+//							muestra los codigos y los nombres
 //------------------------------------------------------------------------------------
-function cambiarPrecio(indice){
-	precio = precios[indice];
-	calcularMonto();
+//recolectores
+function ponerCodRecolector(F){
+	for(i=0; i<recolectores.length; i++)//buscar en el vector el nombre del recolector seleccionado en la lista nombre_recolector
+		if(recolectores[i][1] == F.nombre_recolector.value)
+			for(j=0; j<recolectores.length; j++)//se encontro el nombre del recolector, con el indice "i" se busca el codigo del recolector en la lista codigo_recolector
+				if(recolectores[i][0] == F.codigo_recolector.options[j].text)//se encontro el codigo del recolector, con el infice "j" se selecciona el codigo del recolector en la lista codigo_recolector
+					F.codigo_recolector.selectedIndex = j;
+}
+function ponerNomRecolector(F){
+	for(i=0; i<recolectores.length; i++)
+		if(recolectores[i][0] == F.codigo_recolector.value)
+			for(j=0; j<recolectores.length; j++)
+				if(recolectores[i][1] == F.nombre_recolector.options[j].text)
+					F.nombre_recolector.selectedIndex = j;
+}
+//proveedores
+function ponerCodProveedor(F){
+		for(i=0; i<proveedores.length; i++)
+		if(proveedores[i][1] == F.nombre_proveedor.value)
+			for(j=0; j<proveedores.length; j++)
+				if(proveedores[i][0] == F.codigo_proveedor.options[j].text)
+					F.codigo_proveedor.selectedIndex = j;
+}
+function ponerNomProveedor(F){
+	for(i=0; i<proveedores.length; i++)
+		if(proveedores[i][0] == F.codigo_proveedor.value)
+			for(j=0; j<proveedores.length; j++)
+				if(proveedores[i][1] == F.nombre_proveedor.options[j].text)
+					F.nombre_proveedor.selectedIndex = j;
 }
 //------------------------------------------------------------------------------------
 //								redireccionar a una pagina
