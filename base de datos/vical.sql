@@ -3,89 +3,16 @@ DROP DATABASE IF EXISTS VICAL;
 CREATE DATABASE VICAL DEFAULT CHARACTER SET latin1 COLLATE latin1_bin;
 USE VICAL;
 -- -------------------------------------------------------------------------------------
-
-/*==============================================================*/
-/* Table: CENTROS_DE_ACOPIO                                     */
-/*==============================================================*/
-create table CENTROS_DE_ACOPIO
-(
-   CODIGO_CENTRO_ACOPIO			char(6) not null,
-   CODIGO_RECOLECTOR			char(5) not null,
-   DIRECCION			     	varchar(100),
-   DEPARTAMENTO					varchar(50),
-   TELEFONO						varchar(10),
-   primary key (CODIGO_CENTRO_ACOPIO)
-)
-ENGINE=InnoDB DEFAULT CHARSET=utf8; 
-
-/*==============================================================*/
-/* Table: COLORES_VIDRIO                                        */
-/*==============================================================*/
-create table COLORES_VIDRIO
-(
-   CODIGO_COLOR         		char(5) not null,
-   NOMBRE_COLOR         		varchar(10),
-   primary key (CODIGO_COLOR)
-)
-ENGINE=InnoDB DEFAULT CHARSET=utf8; 
-
-/*==============================================================*/
-/* Table: PROVEEDORES                                           */
-/*==============================================================*/
-create table PROVEEDORES
-(
-   CODIGO_PROVEEDOR     		int(5) auto_increment not null,
-   CODIGO_TIPO_EMPRESA  		char(5) not null,
-   NOMBRE_PROVEEDOR       		varchar(50),
-   DEPARTAMENTO         		varchar(50),
-   DIRECCION_PROVEEDOR  		varchar(100),
-   TELEFONO_PROVEEDOR1  		varchar(10),
-   TELEFONO_PROVEEDOR2  		varchar(10),
-   CONTACTO             		varchar(50),
-   ESTANON                  	varchar(5),
-   primary key (CODIGO_PROVEEDOR)
-)
-ENGINE=InnoDB DEFAULT CHARSET=utf8; 
-
-/*==============================================================*/
-/* Table: RECOLECTORES                                          */
-/*==============================================================*/
-create table RECOLECTORES
-(
-   CODIGO_RECOLECTOR    		char(5) not null,
-   NOMBRE_RECOLECTOR    		varchar(50),
-   TELEFONO_RECOLECTOR  		varchar(10),
-   DUI_RECOLECTOR           	varchar(10),
-   NIT_RECOLECTOR           	varchar(17),
-   DIRECCION_RECOLECTOR     	varchar(100),
-   primary key (CODIGO_RECOLECTOR)
-)
-ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 /*==============================================================*/
 /* Table: TIPOS_EMPRESAS                                        */
 /*==============================================================*/
 create table TIPOS_EMPRESAS
 (
    CODIGO_TIPO_EMPRESA  		char(5) not null,
-   NOMBRE_TIPO_EMPRESA  		varchar(50),
+   NOMBRE_TIPO_EMPRESA  		varchar(50) COLLATE latin1_bin,
    primary key (CODIGO_TIPO_EMPRESA)
 )
-ENGINE=InnoDB DEFAULT CHARSET=utf8; 
-
-/*==============================================================*/
-/* Table: FACTURAS                                       */
-/*==============================================================*/
-create table FACTURAS
-(
-   CODIGO_FACTURA    			char(5) not null,
-   CODIGO_PROVEEDOR     		int(5) not null,
-   CODIGO_RECOLECTOR    		char(5) not null,
-   FECHA                		date,
-   primary key (CODIGO_FACTURA)
-)
-ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
+ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 /*==============================================================*/
 /* Table: TIPOS_VIDRIO                                          */
 /*==============================================================*/
@@ -95,22 +22,108 @@ create table TIPOS_VIDRIO
    NOMBRE_TIPO					varchar(50),
    primary key (CODIGO_TIPO)
 )
-ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
+ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 /*==============================================================*/
-/* Table: USUARIOS                                               */
+/* Table: COLORES_VIDRIO                                        */
 /*==============================================================*/
-create table USUARIOS
+create table COLORES_VIDRIO
 (
-   ID	              			int(5) auto_increment not null,
-   NOMBRE	           			varchar(50) not null,
-   USUARIO              		varchar(15) not null,
-   PASSWORD             		varchar(15) not null,
-   NIVEL						int(5) not null,
-   primary key (ID)
- )
-ENGINE=InnoDB DEFAULT CHARSET=utf8; 
-
+   CODIGO_COLOR         		char(5) not null,
+   NOMBRE_COLOR         		varchar(10),
+   primary key (CODIGO_COLOR)
+)
+ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+/*==============================================================*/
+/* Table: RECOLECTORES                                          */
+/*==============================================================*/
+create table RECOLECTORES
+(
+   CODIGO_RECOLECTOR    		char(5) not null,
+   NOMBRE_RECOLECTOR    		varchar(50) COLLATE latin1_bin,
+   TELEFONO_RECOLECTOR  		varchar(10),
+   DUI_RECOLECTOR           	varchar(10),
+   NIT_RECOLECTOR           	varchar(17),
+   DIRECCION_RECOLECTOR     	varchar(100) COLLATE latin1_bin,
+   primary key (CODIGO_RECOLECTOR)
+)
+ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+/*==============================================================*/
+/* Table: DEPARTAMENTO                                          */
+/*==============================================================*/
+create table DEPARTAMENTO
+(
+   CODIGO_DEPARTAMENTO			int(3) not null,
+   NOMBRE_DEPARTAMENTO			varchar(50) COLLATE latin1_bin not null,
+   primary key (CODIGO_DEPARTAMENTO)
+)
+ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+/*==============================================================*/
+/* Table: MUNICIPIO                                             */
+/*==============================================================*/
+create table MUNICIPIO
+(
+  CODIGO_MUNICIPIO				int(3) not null,
+  CODIGO_DEPARTAMENTO			int(3) not null,
+  NOMBRE_MUNICIPIO				varchar(50) COLLATE latin1_bin not null,
+  primary key (CODIGO_MUNICIPIO)
+)
+ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+/*==============================================================*/
+/* Table: CENTROS_DE_ACOPIO                                     */
+/*==============================================================*/
+create table CENTROS_DE_ACOPIO
+(
+   CODIGO_CENTRO_ACOPIO			char(6) not null,
+   CODIGO_RECOLECTOR			char(5) not null,
+   NOMBRE_CENTRO_ACOPIO			varchar(50) COLLATE latin1_bin,
+   DIRECCION			     	varchar(100) COLLATE latin1_bin,
+   DEPARTAMENTO					varchar(50),
+   TELEFONO						varchar(10),
+   primary key (CODIGO_CENTRO_ACOPIO)
+)
+ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+/*==============================================================*/
+/* Table: PROVEEDORES                                           */
+/*==============================================================*/
+create table PROVEEDORES
+(
+   CODIGO_PROVEEDOR     		int(5) auto_increment not null,
+   CODIGO_TIPO_EMPRESA  		char(5) not null,
+   NOMBRE_PROVEEDOR       		varchar(50) COLLATE latin1_bin,
+   DEPARTAMENTO         		varchar(50),
+   DIRECCION_PROVEEDOR  		varchar(100) COLLATE latin1_bin,
+   TELEFONO_PROVEEDOR1  		varchar(10),
+   TELEFONO_PROVEEDOR2  		varchar(10),
+   CONTACTO             		varchar(50) COLLATE latin1_bin,
+   ESTANON                  	varchar(5),
+   primary key (CODIGO_PROVEEDOR)
+)
+ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+/*==============================================================*/
+/* Table: FACTURAS                                     			*/
+/*==============================================================*/
+create table FACTURAS
+(
+   CODIGO_FACTURA    			char(5) not null,
+   CODIGO_PROVEEDOR     		int(5) not null,
+   CODIGO_RECOLECTOR    		char(5) not null,
+   CODIGO_CENTRO_ACOPIO			char(6) not null,
+   PRECIO_COMPRA         		float(2),
+   SUCURSAL			    		varchar(6) not null,
+   FECHA                		date,
+   primary key (CODIGO_FACTURA)
+)
+ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+/*==============================================================*/
+/* Table: COMPRAS                           	     			*/
+/*==============================================================*/
+create table COMPRAS
+(
+   CODIGO_COMPRA				int(5) auto_increment not null,
+   CODIGO_FACTURA       		char(5) not null,
+   primary key (CODIGO_COMPRA)
+)
+ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 /*==============================================================*/
 /* Table: VIDRIO                                                */
 /*==============================================================*/
@@ -121,5333 +134,7311 @@ create table VIDRIO
    CODIGO_COLOR         		char(5) not null,
    CODIGO_FACTURA       		char(5) not null,
    CANTIDAD_VIDRIO      		float(2),
-   PRECIO               		float(2),
+   PRECIO_VIDRIO          		float(2),
    primary key (CODIGO_VIDRIO)
 )
-ENGINE=InnoDB DEFAULT CHARSET=utf8; 
-
+ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 /*==============================================================*/
-/* Relaciones                                                                                                         */
+/* Table: PRECIO			                                    */
 /*==============================================================*/
-alter table CENTROS_DE_ACOPIO add constraint FK_ADMINISTRA foreign key (CODIGO_RECOLECTOR)
-      references RECOLECTORES (CODIGO_RECOLECTOR) on delete restrict on update restrict;
-
-alter table PROVEEDORES add constraint FK_ESPECIFICA foreign key (CODIGO_TIPO_EMPRESA)
-      references TIPOS_EMPRESAS (CODIGO_TIPO_EMPRESA) on delete restrict on update restrict;
-
-alter table FACTURAS add constraint FK_REGISTRA foreign key (CODIGO_RECOLECTOR)
-      references RECOLECTORES (CODIGO_RECOLECTOR) on delete restrict on update restrict;
-
-alter table VIDRIO add constraint FK_DETALLA foreign key (CODIGO_COLOR)
-      references COLORES_VIDRIO (CODIGO_COLOR) on delete restrict on update restrict;
-
-alter table VIDRIO add constraint FK_INCLUYE foreign key (CODIGO_TIPO)
-      references TIPOS_VIDRIO (CODIGO_TIPO) on delete restrict on update restrict;
-
-alter table FACTURAS add constraint FK_GUARDA foreign key (CODIGO_PROVEEDOR)
-      references PROVEEDORES (CODIGO_PROVEEDOR) on delete restrict on update restrict;
-
-alter table VIDRIO add constraint FK_POSEE foreign key (CODIGO_FACTURA)
-      references FACTURAS (CODIGO_FACTURA) on delete restrict on update restrict;
+create table PRECIOS (
+   CODIGO_PRECIO				int(5) auto_increment not null,
+   PRECIO_UNITARIO 				float(4) not null default '1.2',
+   primary key (CODIGO_PRECIO)
+)
+ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+/*==============================================================*/
+/* Table: USUARIOS                                              */
+/*==============================================================*/
+create table USUARIOS
+(
+   ID	              			int(5) auto_increment not null,
+   NOMBRE	           			varchar(50) COLLATE latin1_bin not null,
+   USUARIO              		varchar(15) not null,
+   PASSWORD             		varchar(15) not null,
+   NIVEL						int(5) not null,
+   primary key (ID)
+ )
+ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+/*==============================================================*/
+/* Relaciones                                                   */
+/*==============================================================*/
+ALTER TABLE MUNICIPIO ADD CONSTRAINT FK_PERTENECE FOREIGN KEY (CODIGO_DEPARTAMENTO) REFERENCES DEPARTAMENTO (CODIGO_DEPARTAMENTO) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE CENTROS_DE_ACOPIO ADD CONSTRAINT FK_ADMINISTRA FOREIGN KEY (CODIGO_RECOLECTOR) REFERENCES RECOLECTORES (CODIGO_RECOLECTOR) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE PROVEEDORES ADD CONSTRAINT FK_ESPECIFICA FOREIGN KEY (CODIGO_TIPO_EMPRESA) REFERENCES TIPOS_EMPRESAS (CODIGO_TIPO_EMPRESA) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE FACTURAS ADD CONSTRAINT FK_REGISTRA FOREIGN KEY (CODIGO_RECOLECTOR) REFERENCES RECOLECTORES (CODIGO_RECOLECTOR) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE FACTURAS ADD CONSTRAINT FK_COMPRA FOREIGN KEY (CODIGO_PROVEEDOR) REFERENCES PROVEEDORES (CODIGO_PROVEEDOR) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE FACTURAS ADD CONSTRAINT FK_GUARDA FOREIGN KEY (CODIGO_CENTRO_ACOPIO) REFERENCES CENTROS_DE_ACOPIO (CODIGO_CENTRO_ACOPIO) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE COMPRAS ADD CONSTRAINT FK_REALIZA FOREIGN KEY (CODIGO_FACTURA) REFERENCES FACTURAS (CODIGO_FACTURA) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE VIDRIO ADD CONSTRAINT FK_DETALLA FOREIGN KEY (CODIGO_COLOR) REFERENCES COLORES_VIDRIO (CODIGO_COLOR) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE VIDRIO ADD CONSTRAINT FK_INCLUYE FOREIGN KEY (CODIGO_TIPO) REFERENCES TIPOS_VIDRIO (CODIGO_TIPO) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE VIDRIO ADD CONSTRAINT FK_POSEE FOREIGN KEY (CODIGO_FACTURA) REFERENCES FACTURAS (CODIGO_FACTURA) ON DELETE RESTRICT ON UPDATE RESTRICT;
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-/*==============================================================*/
-/* Table: RECOLECTORES                                          */
-/*==============================================================*/
-INSERT INTO `vical`.`recolectores` (`CODIGO_RECOLECTOR`,`NOMBRE_RECOLECTOR`,`TELEFONO_RECOLECTOR`,`DUI_RECOLECTOR`,`NIT_RECOLECTOR`, `DIRECCION_RECOLECTOR`)
-VALUES
-('R-001','William Sanchez','7301-9840','03694568-1','0613-030488-103-5','Col. Milagro final 1 c ote San Marcos casa #12'),
-('R-002','Ricardo Ramos','7944-5603','02658745-4','0512-311278-103-7','Col. Tierra Virgen, pje 5#10.San Martin.S.S'),
-('R-003','Jorgue Hernandez','7286-0741','04587965-8','0514-120488-103-4','2 av sur # 609 San salvador'),
-('R-004','Ernesto Perez','7521-8498','04789632-9','0613-110573-103-7','Col. La Esperanza, pje-2,block C.San Marcos'),
-('R-005','Walter Ponce','7326-7882','03647154-5','0245-100184-103-3','Col Santa Teresa, pje9-C#25.San Martín'),
-('R-006','Guillermo Soto','7315-2474','04785469-4','0215-010472-103-2','10 C OTE # 306 pje 7-C.San Salvador '),
-('R-007','Carlos Galdamez','7248-7988','01024754-3','0325-150477-103-4','Col. Jerusalen Av. Monseñor pje 2-"A" #14'),
-('R-008','Alfredo Fernandez','7124-4712','07458798-4','0963-280280-103-5','Col. Santa fe calle #180 San Marcos'),
-('R-009','Miguel Rosales','7410-2563','04789632-1','0147-210569-103-8','8 c ote #632 Barrio la vega'),
-('R-010','Marvin Pacheco','7745-9687','04212142-7','0154-181071-103-2','28 c poniente 49 av sur # 2523 san salvador');
--- -------------------------------------------------------------------------------------
 /*==============================================================*/
 /* Table: TIPOS_EMPRESAS                                        */
 /*==============================================================*/
-INSERT INTO `vical`.`tipos_empresas` (`CODIGO_TIPO_EMPRESA`,`NOMBRE_TIPO_EMPRESA`)
-VALUES
-('TE-01','Alcaldia'),
-('TE-02','Club Nocturno'),
-('TE-03','Discoteca'),
-('TE-04','Empresa Varia'),
-('TE-05','Hotel'),
-('TE-06','Laboratorio'),
-('TE-07','Licoreria'),
-('TE-08','Relleno Sanitario'),
-('TE-09','Restaurante'),
-('TE-10','Vidriera');
--- -------------------------------------------------------------------------------------
-/*==============================================================*/
-/* Table: PROVEEDORES                                           */
-/*==============================================================*/
-
--- -------------------------------------------------------------------------------------1
-
-INSERT INTO `vical`.`proveedores` (`CODIGO_PROVEEDOR`,`CODIGO_TIPO_EMPRESA`,`NOMBRE_PROVEEDOR`,`DEPARTAMENTO`,`DIRECCION_PROVEEDOR`,`TELEFONO_PROVEEDOR1`,`TELEFONO_PROVEEDOR2`,`CONTACTO`,`ESTANON`)
-VALUES
-('1','TE-10','YOHANA','San Salvador','Av monsenor Romero 10 calle oriente por ex - cine Plaza San salvador','2271-5813','2502-9742','Luis Cardoza','3'),
-('2','TE-10','ESTRELLA','San Salvador','Av monsenor romero # 525 frente a ex- cine plaza san salvador','2249-7048','2281-5764','Julio Ungo','4'),
-('3','TE-10','FRANCIA','San Salvador','Av monsenor romero # 506 frente a ex- cine plaza san salvador','2271-8449',NULL,'Irma Chacon','2'),
-('4','TE-10','VENECIA','San Salvador','2 av sur # 609 San salvador','2222-8019','2100-3036','Mario Venitez','4'),
-('5','TE-10','HENRIQUEZ','San Salvador','10 C OTE # 306 Mercado Belloso ','2520-8836',NULL,'Enrique Rivera',NULL),
-('6','TE-10','ALUMICENTRO','San Salvador','25 av Nte S.S Frente a Hospital Bloom','2226-9800',NULL,'Jacob Cuellar','6'),
-('7','TE-10','SOLAIRE ','San Salvador','21 av sur y 4 c pte S.S Atras de didea','2275-2100',NULL,'Elmer Cruz','10'),
-('9','TE-10','ROSTRAN','San Salvador','Col. Milagro final 1 c ote San Marcos','2103-3605',NULL,'Celia Perez','4');
-
--- -------------------------------------------------------------------------------------2
-
-INSERT INTO `vical`.`proveedores` (`CODIGO_PROVEEDOR`,`CODIGO_TIPO_EMPRESA`,`NOMBRE_PROVEEDOR`,`DEPARTAMENTO`,`DIRECCION_PROVEEDOR`,`TELEFONO_PROVEEDOR1`,`TELEFONO_PROVEEDOR2`,`CONTACTO`,`ESTANON`)
-VALUES
-('10','TE-10','DISCOA ','San Salvador','Final 25 av Sur y pje 3 casa # 4 col santa Ursula San salvador','2242-3681','2242-0441','Jose Villegas','2'),
-('11','TE-10','VIDRIO CENTROAMERICANO','San Salvador','Av cuzcatlan #614  frente a la roca','2222-3325',NULL,'Susana mejia',NULL),
-('12','TE-10','BONILLA','San Salvador','Col San antonio abad #721 col america','2208-0322',NULL,'Oscar Bonilla','4'),
-('13','TE-10','INSTALUM','San Salvador','Final 1 c ote col milagro san Marcos','2556-8547','2220-1589','Mario Rivera',NULL),
-('14','TE-10','PROALVI','San Salvador','29 av nte frente a teatro de camaras','2234-7895','7980-8786','Empleados','3'),
-('15','TE-10','LA ROCA','San Salvador','Av cuzcatlan #530  mercado belloso','2221-3891','2222-0840','Susana Barrientos','4'),
-('16','TE-10','LUZ AIRE','San Salvador','C cuzcatlan esquina opuesta a banco Agricola','2249-7367',NULL,'Aleida nunez','2'),
-('17','TE-10','INDUSTRIAL','San Salvador','2 av nte y 33 c ote local 1804 mejicanos','2226-7118',NULL,'Benjamin Orantes','4');
-
--- -------------------------------------------------------------------------------------3
-
-INSERT INTO `vical`.`proveedores` (`CODIGO_PROVEEDOR`,`CODIGO_TIPO_EMPRESA`,`NOMBRE_PROVEEDOR`,`DEPARTAMENTO`,`DIRECCION_PROVEEDOR`,`TELEFONO_PROVEEDOR1`,`TELEFONO_PROVEEDOR2`,`CONTACTO`,`ESTANON`)
-VALUES
-('18','TE-10','VIDRERIA PINEDA','San Salvador','Calle modelo #349 San Salvador','2270-1304',NULL,'Sr. Elmer','5'),
-('19','TE-10','INDUSTRIAS PANOAMERICANAS','San Salvador','Final 27 Av sur y calle central #1426 Col. Cucumacayan san salvador','2221-8686',NULL,'trabajadores','4'),
-('20','TE-10','PRISMA','San Salvador','C chiltiupan pol. E ciudad merliot','2221-1257','71182056','Roxana de Noyola','4'),
-('21','TE-10','ALU ARQ','San Salvador','35 Av sur # 633 entre 6 y decima y 12 calle poniente Col. Flor Blanca','2298-8147','7851-8750','Jesus de guevara','3'),
-('22','TE-10','INCO','San Salvador','Final 1 av norte 2 cuadras abajo de la alcaldia de Soyapango','2251-6000',NULL,'Jaime Eduardo Argueta',NULL),
-('23','TE-10','ALUMINARTE','San Salvador','Col. Santa fe calle #180 San Marcos','2213-0337',NULL,'leonardo Recinos','2'),
-('24','TE-10','PENIEL','San Salvador','C chiltiupan frente a colegio espiritu santo','2269-4200',NULL,'Carlos Miranda',NULL),
-('25','TE-10','INCO UNIVERSITARIA','San Salvador','Bodega universitaria','2235-3905',NULL,'Sr Pineda','1R'),
-('26','TE-10','MARTINEZ','San Salvador','Av catro moran local 16 mejicanos','2317-3225',NULL,'Cesar Martinez','1');
-
--- -------------------------------------------------------------------------------------4
-
-INSERT INTO `vical`.`proveedores` (`CODIGO_PROVEEDOR`,`CODIGO_TIPO_EMPRESA`,`NOMBRE_PROVEEDOR`,`DEPARTAMENTO`,`DIRECCION_PROVEEDOR`,`TELEFONO_PROVEEDOR1`,`TELEFONO_PROVEEDOR2`,`CONTACTO`,`ESTANON`)
-VALUES
-('27','TE-10','VITRA','San Salvador','Atras de iglesia el rosario San salvador','2221-4542','7887-2723','Alicia Mendez','1R'),
-('28','TE-10','INSTACIELO','San Salvador','12 c oriente # 317 mercado Belloso','2249-7048','2221-1786','Ernesto Quintanilla','3'),
-('29','TE-10','INCO BELLOSO','San Salvador','2 av sur # 520 mercado belloso','2221-0758',NULL,'Luisa Moreno','2'),
-('30','TE-10','NATANAEL','San Salvador','mercado belloso   ','2532-5280',NULL,'Sr.Solorsano',NULL),
-('31','TE-10','LEMUS','San Salvador','10 c ote # 12 Mercado Belloso','2281-1000',NULL,'Saul lemus','2'),
-('32','TE-10','UNIVERSALES','San Salvador','2 Av sur local 629 belloso','2222-3470',NULL,'Fredy figueroa',NULL),
-('33','TE-10','DIVENTANAS','San Salvador','4 c ote y 19 av sur local 304','2223-2688',NULL,'Carlos Molina',NULL),
-('34','TE-09','LA BOCANA','Libertad','Carretera litoral contiguo a Roca zunzal playa el tunco','7888-8067',NULL,'Luis Alonso delgado','3'),
-('35','TE-09','EL PASIFICO','Libertad','Carretera litoral playa el majahualy frente a hotel santa fe','2310-6504',NULL,'Nelson figueroa','3');
-
--- -------------------------------------------------------------------------------------5
-
-INSERT INTO `vical`.`proveedores` (`CODIGO_PROVEEDOR`,`CODIGO_TIPO_EMPRESA`,`NOMBRE_PROVEEDOR`,`DEPARTAMENTO`,`DIRECCION_PROVEEDOR`,`TELEFONO_PROVEEDOR1`,`TELEFONO_PROVEEDOR2`,`CONTACTO`,`ESTANON`)
-VALUES
-('36','TE-09','ROCA ZUMZAL','Libertad','Carretera litoral playa el Zunzal','2389-6126',NULL,'Oscar miranda','3'),
-('37','TE-09','SANTA FE','Libertad','Carretera litoral playa el majahualt','2389-5489',NULL,'Orlando Jimenes','3'),
-('38','TE-09','DOLCE VITA','Libertad','Carretera litoral Siguiendo playa san diego ctgo a curva de don gere','2335-3592',NULL,'Maria rodriguez','3'),
-('39','TE-09','CURVA DE DON GERE','Libertad','Carretera litoral siguiendo playa san diego ctgo a dolce vita','2335-3436','7927-2730','Miguel sibrian','3'),
-('40','TE-09','LA OLA VETOS','San Salvador','Col. Miramonte atras de hotel intercontinental','7898-9751',NULL,'Sr. Carmen','3'),
-('41','TE-09','DISCO SKEY','San Salvador','Prolongacion juan pablo 2 por colegio lavalle Lc 313a y 307a San salvador','2261-0724',NULL,'Pedro Antonio Arevalo','3'),
-('42','TE-09','SOPON ZACAMIL','San Salvador','Col zacamil pje 3 #2 frente a pnc.','2272-5198',NULL,'Nelson Martinez','2'),
-('43','TE-09','RANCHOS EL SALVADOR','San Salvador','Zona Rosa por Restauran Cancun.','2264-5858',NULL,'Sr. Carlos',NULL),
-('44','TE-10','INSTALACINES INTERIANO','Soyapango','Col los alpes pje 3 lote 69','2277-8238',NULL,'Elena Henriquez',NULL);
-
--- -------------------------------------------------------------------------------------6
-
-INSERT INTO `vical`.`proveedores` (`CODIGO_PROVEEDOR`,`CODIGO_TIPO_EMPRESA`,`NOMBRE_PROVEEDOR`,`DEPARTAMENTO`,`DIRECCION_PROVEEDOR`,`TELEFONO_PROVEEDOR1`,`TELEFONO_PROVEEDOR2`,`CONTACTO`,`ESTANON`)
-VALUES
-('45','TE-10','LUNA SOL','San Jacinto','Av los diplomaticos 1336 por ex casa Presidencial','2270-1639',NULL,'Despachador',NULL),
-('46','TE-05','HILTON PRINSES','San Salvador','1c poniente Zona Rosa Esquina opuesta a Jala La Jarra','2268-4545','7325-8708','Alexander Arevalo','3'),
-('47','TE-05','SHERATON P.','San Salvador','Final av revolucion san benito','2283-4078',NULL,'Silvia Madrid','6'),
-('48','TE-04','MULTIPROYECTOS (TITAC)','San Salvador','8 c ote #632 Barrio la vega','2221-6201',NULL,'Mauricio Calderon',NULL),
-('49','TE-10','SAN GERARDO','San Salvador',' cl concepcion 513 por la tiendona','2222-5154',NULL,'Jaime Abarca',NULL),
-('50','TE-06','ANCALMO ','San Salvador','Antiguo Cuzcatlan','2243-0100',NULL,'Elga de olmedo',NULL),
-('51','TE-06','ARSAL ','San Salvador','Ca san jacinto frente al Zoologico Nacional','2231-1335',NULL,'Lic Paty','3'),
-('52','TE-04','COMAGUI','San Salvador','28 c poniente 49 av sur # 2523 san salvador','2510-0518',NULL,'William vazques','3'),
-('53','TE-04','RECIPLAS','San Salvador','Alameda roosevelt y 55 av norte edificio Ipsfa 4 planta San salvador','2290-6606','2260-6607','Mauricio Saravia','12');
-
--- -------------------------------------------------------------------------------------7
-
-INSERT INTO `vical`.`proveedores` (`CODIGO_PROVEEDOR`,`CODIGO_TIPO_EMPRESA`,`NOMBRE_PROVEEDOR`,`DEPARTAMENTO`,`DIRECCION_PROVEEDOR`,`TELEFONO_PROVEEDOR1`,`TELEFONO_PROVEEDOR2`,`CONTACTO`,`ESTANON`)
-VALUES
-('54','TE-04','ESC. AMERICANA','San Salvador','San Benito','2528-8275','7859-4322','Celina Aguirreurreta','3'),
-('55','TE-04','DILICO','San Salvador','Carretera a sonsonate desvio del cria aves','2298-7845','7433-0495','Rafael',NULL),
-('56','TE-04','MC CORMIC','San Salvador','Antiguo Cuzcatlan','2212-8579',NULL,'Fatima de Chavez','2'),
-('57','TE-04','ECOSEVICIOS','San Salvador','C antigua a tonacatepeque #125 Soyapango San salvador','2227-0029','7986-6870','Romel Castro',NULL),
-('58','TE-04','SHELTERS','San Salvador','Blvd los proceres centro de oficinas la sultana L110 Antiguo cuzcatlan','2434-6892','2439-7222','Ricardo Mejia',NULL),
-('59','TE-04','COCA COLA','San Salvador','Carretera Panoamericana Nejapa','2239-4527','7844-4229','Alejandro acevedo',NULL),
-('60','TE-04','CERVECERIA','San Salvador','Av independencia Frente a reloj de Flores','2231-5239','7745-7885','Edwin Lemus',NULL),
-('61','TE-04','INVERSIONES MONTECARLOS','San Salvador','Final av san martin # 4-7 santa tecla','2241-0470',NULL,'Rene villalobos','10'),
-('62','TE-10','NASARETH','Santa Tecla','7 av sur 4-6','2531-1433',NULL,'Cristian Sanchez',NULL);
-
--- -------------------------------------------------------------------------------------8
-
-INSERT INTO `vical`.`proveedores` (`CODIGO_PROVEEDOR`,`CODIGO_TIPO_EMPRESA`,`NOMBRE_PROVEEDOR`,`DEPARTAMENTO`,`DIRECCION_PROVEEDOR`,`TELEFONO_PROVEEDOR1`,`TELEFONO_PROVEEDOR2`,`CONTACTO`,`ESTANON`)
-VALUES
-('63','TE-10','ADECORAVI','Soyapango','C roosvelt poniente  #27','7002-3675',NULL,'Elida de Monterrosa',NULL),
-('64','TE-10','V. 911','San Salvador','49 av sur contiguo a 911 de pnc.','2275-9631',NULL,'Sr. Luis',NULL),
-('65','TE-10','ELIM','San Salvador','Bulevard constitucion 504 ','2262-4865',NULL,'Sr. Elim Garcia',NULL),
-('66','TE-10','V: ROCA','San Salvador','79 av sur col escalon #6','2264-0238',NULL,'Empleados',NULL),
-('67','TE-10','TECNICIELO','Lourdes','Col las delicias #6','2318-0393',NULL,'Armando Arcia',NULL),
-('68','TE-10','JERUSALEN','San Salvador','Alameda juan Pablo 2 y 2 av nte 502','2222-6438',NULL,'Santos Portillo',NULL),
-('69','TE-10','LAS BRISAS','Lourdes','Km 24 y medio frente a castano','2318-6464',NULL,'Sr. Jorge',NULL),
-('70','TE-04','ECOSANTE','Santa Tecla','Col Quesaltepec final pje 1 contiguo a bomba de anda','7270-2618',NULL,'Carlos Rivara','5'),
-('71','TE-10','TARCIS','Santa Tecla','7 av nte 11 c ote bis plg 33 #3','2288-2561',NULL,'Roxana Bonilla',NULL);
-
--- -------------------------------------------------------------------------------------9
-
-INSERT INTO `vical`.`proveedores` (`CODIGO_PROVEEDOR`,`CODIGO_TIPO_EMPRESA`,`NOMBRE_PROVEEDOR`,`DEPARTAMENTO`,`DIRECCION_PROVEEDOR`,`TELEFONO_PROVEEDOR1`,`TELEFONO_PROVEEDOR2`,`CONTACTO`,`ESTANON`)
-VALUES
-('72','TE-10','JOEL','Santa Tecla','4 cl pte #2-4 b','2100-2188',NULL,'Carlos Diaz',NULL),
-('73','TE-10','INCO','Santa Tecla','4 cl pte#3-5 b barrio candelaria','7850-9207',NULL,'Jose cruz',NULL),
-('74','TE-04','UNIVERSIDAD NACIONAL','San Salvador','Autopista nte Universidad Nacional','7160-5966',NULL,'LIC. De Soriano',NULL),
-('75','TE-04','AMAR','San Salvador','Constitucion pje francisco #540','2262-1152',NULL,'Francisco Rivas','3'),
-('76','TE-03','CERO GRADOS','San Salvador','Paseo General Escalon ','7983-3344',NULL,'Chino','3'),
-('77','TE-03','JUNGLE','San Salvador','Zona Rosa frente a mac donals','7701-7187',NULL,'Xiomara','3'),
-('78','TE-10','LUZ AIRE','San Salvador','20 c pte 2501 col. Luz','2298-1860',NULL,'Juan Miranda',NULL),
-('79','TE-10','EUSAl','San Salvador','Av Olimpica Por estadio Flor Blanca','2276-4567',NULL,'Yovanny',NULL),
-('80','TE-07','CORDONCILLO','San Salvador','SECTOR SAN JUAN BOSCO 1 CANTON SAN ANDRES LIBERTAD','2455-5086',NULL,'Mauricio Saravia','3');
-
--- -------------------------------------------------------------------------------------10
-
-INSERT INTO `vical`.`proveedores` (`CODIGO_PROVEEDOR`,`CODIGO_TIPO_EMPRESA`,`NOMBRE_PROVEEDOR`,`DEPARTAMENTO`,`DIRECCION_PROVEEDOR`,`TELEFONO_PROVEEDOR1`,`TELEFONO_PROVEEDOR2`,`CONTACTO`,`ESTANON`)
-VALUES
-('81','TE-10','VEDECOR','San Jacinto','Col.santa carlota2 pje san francisco 14 Barrio san jacinto','2275-6340',NULL,'Carlos Regalado','2'),
-('82','TE-07','SAN MARINO','San Jacinto','10 av sur 553 barrio la vega ex administracion de renta',NULL,NULL,'Marbelly Flores','3'),
-('83','TE-08','SUCHITOTO','Cuzcatlan','Carretera a suchitoto relleno sanitario','7786-5882',NULL,'Nery Amaya','3'),
-('84','TE-09','LOS RINCONCITOS','San Salvador','Zona Rosa frente a Banco City',NULL,NULL,'Vigilante',NULL),
-('85','TE-10','COMERCIAL GALDAMEZ','San Salvador','12 c ote 217 a el centro mercado Belloso.','2271-3760',NULL,'Alfonso Galdamez',NULL),
-('86','TE-10','VENTANAS SAN PEDRO','San Salvador','2 av sur monsenor arnulfo romero 617 mercado belloso','2222-3466',NULL,'Juan Mena',NULL),
-('87','TE-10','VENTANAS CASTILLO','San Salvador','4 av surblvd venezuela y 12 c ote frente a parqueo belloso','2249-7717','2222-8161','Leonardo Castillo',NULL),
-('88','TE-10','PENIEL SOYAPANGO','San Salvador','Col. Guadalupe c principal y c franklin roosevelt  2 soyapango','2277-5971',NULL,'Jonathan Miranda','2J'),
-('89','TE-10','VIDRIERIA SANCHEZ','San Salvador','Av cuzcatlan mercado belloso.','2222-6437',NULL,'Veronica Sanchez','1');
-
--- -------------------------------------------------------------------------------------11
-
-INSERT INTO `vical`.`proveedores` (`CODIGO_PROVEEDOR`,`CODIGO_TIPO_EMPRESA`,`NOMBRE_PROVEEDOR`,`DEPARTAMENTO`,`DIRECCION_PROVEEDOR`,`TELEFONO_PROVEEDOR1`,`TELEFONO_PROVEEDOR2`,`CONTACTO`,`ESTANON`)
-VALUES
-('90','TE-09','WILLYS','San Salvador','Final 5 Cl pte y 11 av nte frente a indes Alameda Juan pablo 2','2281-1519',NULL,'Beatriz Pleitez','3'),
-('91','TE-02','QUESSON','San Salvador','C 5 de Noviembre 5 San Salvador','7789-4512',NULL,'Vigilante','2'),
-('92','TE-10','INDUSTRIAS EL EXITO','San Salvador','C al volcan pje palacios col. Zacamil mejicanos 5.','2272-7522',NULL,'Nelson Montenegro','6'),
-('93','TE-04','CORPORACION BONIMA','San Salvador','Blvad el ejercito frente a aeropuerto de ilopango.','2224-1022',NULL,'Oscar Mendoza',NULL),
-('94','TE-09','LA GUITARRA','Libertad','Km 42 Carretera el Litoral playa el tunco','2389-6398',NULL,'Vigilante','2'),
-('95','TE-09','KAYU','Libertad','Km 44 playa el tunco','2389-6135',NULL,'Vigilante','1B'),
-('96','TE-05','HOTEL MOPELIA','Libertad','Km 42 carretera litoral tamanique','2389-6265',NULL,'Patricia guerra','2'),
-('97','TE-10','TORNOLARA','San Salvador','27 c pte # 106 san Miguelito','2235-3755',NULL,'Jose luis Lara','1'),
-('98','TE-04','NONI TAHITI','San Salvador','Final 83 av sur cerca del centro espanol.','7894-0539',NULL,'Ana gloria palomo',NULL);
-
--- -------------------------------------------------------------------------------------12
-
-INSERT INTO `vical`.`proveedores` (`CODIGO_PROVEEDOR`,`CODIGO_TIPO_EMPRESA`,`NOMBRE_PROVEEDOR`,`DEPARTAMENTO`,`DIRECCION_PROVEEDOR`,`TELEFONO_PROVEEDOR1`,`TELEFONO_PROVEEDOR2`,`CONTACTO`,`ESTANON`)
-VALUES
-('99','TE-09','CEFE DON PEDRO merliot','Merliot','17 av nte c chiultiupan esquina opuesta a plaza merliot','2288-4334',NULL,'Maria de los angeles','3'),
-('100','TE-09','CAFE DON PEDRO autopista nte',NULL,NULL,NULL,NULL,NULL,NULL),
-('101','TE-10','LEO','San Salvador','10 c  120 Mercado Belloso.','2271-4071','7597-7343','Israel Lemus',NULL),
-('102','TE-04','COPERATIVA AVACHAZ','San Salvador','Col. Zacamil ( punto de buses de la 44)',NULL,NULL,'Carmen v. de Aguirre',NULL),
-('103','TE-10','VID. MOLDURAS MELENDEZ','San Salvador','8 Av sur y 4c ote atras de iglesia rosario','2222-0454','7730-9552','Jose Leonardo Perla',NULL),
-('104','TE-10','ALUMANT','San Salvador','c modelo frente a comercial chacon.','71241309',NULL,'Rigoberto Lopez',NULL),
-('105','TE-10','CUZCATLAN','San Salvador',NULL,NULL,NULL,NULL,'1'),
-('106','TE-10','DELUXE','San Salvador','Av. Cuzcatlan mercado belloso',NULL,NULL,NULL,'1'),
-('107','TE-06','TE-06 FARDEL','San Jacinto','1 av nte # 412 pje gloria col. San jacinto',NULL,NULL,'Lic. Guardado',NULL);
-
--- -------------------------------------------------------------------------------------13
-
-INSERT INTO `vical`.`proveedores` (`CODIGO_PROVEEDOR`,`CODIGO_TIPO_EMPRESA`,`NOMBRE_PROVEEDOR`,`DEPARTAMENTO`,`DIRECCION_PROVEEDOR`,`TELEFONO_PROVEEDOR1`,`TELEFONO_PROVEEDOR2`,`CONTACTO`,`ESTANON`)
-VALUES
-('108','TE-04','ERMINDA DE RAMIREZ','San Salvador','11 av sur n 309 sobre 4 c pte detras del parque bolivar frente comercial isnan.',NULL,NULL,'(MONSIRAMI)',NULL),
-('109','TE-07','ILOPANIA','San Salvador','10 av sur 553 barrio la vega ex administracion de renta','2271-5957',NULL,'Jorge manzzini',NULL),
-('110','TE-10','MOLDURAS PICASO','San Salvador','59 av nte 334 San Salvador prolongacion juan pablo 2','2261-0768',NULL,NULL,NULL),
-('111','TE-04','YORECICLO','San Salvador','a la par de los juzgados de santa tecla y cementerio del lugar','7321-4521',NULL,'FRANCISCO GARCIA',NULL),
-('112','TE-10','RAPI VIDRIO','San Salvador','C antigua a huizucar pje san rafael local 3 la cima san salvador.','2273-2488',NULL,'JORGE CASTRO',NULL),
-('113','TE-05','INTERCONTINENTAL','San Salvador','BLVD LOS HEROES FRENTE A METROCENTRO.','7895-1605',NULL,'RENE PEREZ',NULL),
-('114','TE-08','ALC. SAN ANTONIO PAJONAL','SANTA ANA','SANTA ANA SAN ANTONIO PAJONAL.',NULL,NULL,'CARLOS HENRIQUES',NULL),
-('115','TE-08','ALC. DE TALNIQUE','Sonsonate','CARRETERA A SONSONATE  ',NULL,NULL,'MOISES',NULL),
-('116','TE-10','FERRETERIA AZ','San Salvador','CONTIGUO AL MAYESTIC',NULL,NULL,'ENCARGADO DE BODEGA',NULL);
-
--- -------------------------------------------------------------------------------------14
-
-INSERT INTO `vical`.`proveedores` (`CODIGO_PROVEEDOR`,`CODIGO_TIPO_EMPRESA`,`NOMBRE_PROVEEDOR`,`DEPARTAMENTO`,`DIRECCION_PROVEEDOR`,`TELEFONO_PROVEEDOR1`,`TELEFONO_PROVEEDOR2`,`CONTACTO`,`ESTANON`)
-VALUES
-('117','TE-10','CIELOS Y VENTANAS HERNANDEZ','San Salvador','REPARTO XOCHILIT 12 CALLE MONSERRAT FRENTE A TAMINSAL','2131-6955','7890-0523','JOSE MARIO HERNANDEZ',NULL),
-('118','TE-08','MEANGUERA','Morazan','carretera a perquin','2680/6430','7904/5593','NOE PEREIRA',NULL);
--- -------------------------------------------------------------------------------------
+INSERT INTO TIPOS_EMPRESAS (CODIGO_TIPO_EMPRESA, NOMBRE_TIPO_EMPRESA) VALUES
+('TE-01', 'Alcaldia'),
+('TE-02', 'Club Nocturno'),
+('TE-03', 'Discoteca'),
+('TE-04', 'Empresa Varia'),
+('TE-05', 'Hotel'),
+('TE-06', 'Laboratorio'),
+('TE-07', 'Licoreria'),
+('TE-08', 'Relleno Sanitario'),
+('TE-09', 'Restaurante'),
+('TE-10', 'Vidriera');
 /*==============================================================*/
 /* Table: TIPOS_VIDRIO                                          */
 /*==============================================================*/
-INSERT INTO `vical`.`tipos_vidrio` (`CODIGO_TIPO`,`NOMBRE_TIPO`)
-VALUES
-('TV-01','BOTELLA'),
-('TV-02','PLANO');
--- -------------------------------------------------------------------------------------
+INSERT INTO TIPOS_VIDRIO (CODIGO_TIPO, NOMBRE_TIPO) VALUES
+('TV-01', 'BOTELLA'),
+('TV-02', 'PLANO');
 /*==============================================================*/
 /* Table: COLORES_VIDRIO                                        */
 /*==============================================================*/
-INSERT INTO `vical`.`colores_vidrio` (`CODIGO_COLOR`,`NOMBRE_COLOR`)
-VALUES
-('CV-01','VERDE'),
-('CV-02','CRISTALINO'),
-('CV-03','CAFE'),
-('CV-04','BRONCE'),
-('CV-05','REFLECTIVO');
--- -------------------------------------------------------------------------------------
+INSERT INTO COLORES_VIDRIO (CODIGO_COLOR, NOMBRE_COLOR) VALUES
+('CV-01', 'VERDE'),
+('CV-02', 'CRISTALINO'),
+('CV-03', 'CAFE'),
+('CV-04', 'BRONCE'),
+('CV-05', 'REFLECTIVO');
+/*==============================================================*/
+/* Table: USUARIOS                                              */
+/*==============================================================*/
+INSERT INTO USUARIOS (NOMBRE, USUARIO, PASSWORD, NIVEL) VALUES
+('Super Usuario', 'super', 'super', '1'),
+('William Sanchez', 'william', 'william', '1'),
+('Carlos Lopez', 'carlos', 'carlos', '2'),
+('Alfredo Fernande', 'alfredo', 'alfredo', '3');
+/*==============================================================*/
+/* Table: PRECIO			                                    */
+/*==============================================================*/
+INSERT INTO PRECIOS (CODIGO_PRECIO, PRECIO_UNITARIO) VALUES
+(1, 1.2),
+(2, 0.9),
+(3, 1.5),
+(4, 2.25);
+/*==============================================================*/
+/* Table: RECOLECTORES                                          */
+/*==============================================================*/
+INSERT INTO RECOLECTORES (CODIGO_RECOLECTOR, NOMBRE_RECOLECTOR, TELEFONO_RECOLECTOR, DUI_RECOLECTOR, NIT_RECOLECTOR, DIRECCION_RECOLECTOR) VALUES
+('R-001', 'William Sanchez', '7301-9840', '03694568-1', '0613-030488-103-5', 'Col. Milagro final 1 c ote San Marcos casa #12'),
+('R-002', 'Ricardo Ramos', '7944-5603', '02658745-4', '0512-311278-103-7', 'Col. Tierra Virgen, pje 5#10.San Martin.S.S'),
+('R-003', 'Jorgue Hernandez', '7286-0741', '04587965-8', '0514-120488-103-4', '2 av sur # 609 San salvador'),
+('R-004', 'Ernesto Perez', '7521-8498', '04789632-9', '0613-110573-103-7', 'Col. La Esperanza, pje-2,block C.San Marcos'),
+('R-005', 'Walter Ponce', '7326-7882', '03647154-5', '0245-100184-103-3', 'Col Santa Teresa, pje9-C#25.San Martín'),
+('R-006', 'Guillermo Soto', '7315-2474', '04785469-4', '0215-010472-103-2', '10 C OTE # 306 pje 7-C.San Salvador '),
+('R-007', 'Carlos Galdamez', '7248-7988', '01024754-3', '0325-150477-103-4', 'Col. Jerusalen Av. Monseñor pje 2-"A" #14'),
+('R-008', 'Alfredo Fernandez', '7124-4712', '07458798-4', '0963-280280-103-5', 'Col. Santa fe calle #180 San Marcos'),
+('R-009', 'Miguel Rosales', '7410-2563', '04789632-1', '0147-210569-103-8', '8 c ote #632 Barrio la vega'),
+('R-010', 'Marvin Pacheco', '7745-9687', '04212142-7', '0154-181071-103-2', '28 c poniente 49 av sur # 2523 san salvador');
+/*==============================================================*/
+/* Table: DEPARTAMENTO                                          */
+/*==============================================================*/
+INSERT INTO DEPARTAMENTO (CODIGO_DEPARTAMENTO, NOMBRE_DEPARTAMENTO) VALUES
+(1, 'Ahuachapan'),
+(2, 'Santa Ana'),
+(3, 'Sonsonate'),
+(4, 'Chalatenango'),
+(5, 'Cuscatlan'),
+(6, 'San Salvador'),
+(7, 'La Libertad'),
+(8, 'San Vicente'),
+(9, 'La Paz'),
+(10, 'Cabañas'),
+(11, 'Usulutan'),
+(12, 'San Miguel'),
+(13, 'Morazan'),
+(14, 'La Union');
+/*==============================================================*/
+/* Table: MUNICIPIO                                             */
+/*==============================================================*/
+INSERT INTO MUNICIPIO (CODIGO_MUNICIPIO, CODIGO_DEPARTAMENTO, NOMBRE_MUNICIPIO) VALUES
+(1,1,'Ahuachapan'),
+(2,1,'Jujutla'),
+(3,1,'Atiquizaya'),
+(4,1,'Concepcion de Ataco'),
+(5,1,'El Refugio'),
+(6,1,'Guaymango'),
+(7,1,'Apaneca'),
+(8,1,'San Francisco Menendez'),
+(9,1,'San Lorenzo'),
+(10,1,'San Pedro Puxtla'),
+(11,1,'Tacuba'),
+(12,1,'Turin'),
+(13,2,'Candelaria de la Frontera'),
+(14,2,'Chalchuapa'),
+(15,2,'Coatepeque'),
+(16,2,'El Congo'),
+(17,2,'El Porvenir'),
+(18,2,'Masahuat'),
+(19,2,'Metapan'),
+(20,2,'San Antonio Pajonal'),
+(21,2,'San Sebastian Salitrillo'),
+(22,2,'Santa Ana'),
+(23,2,'Santa Rosa Guachipilin'),
+(24,2,'Santiago de la Frontera'),
+(25,2,'Texistepeque'),
+(26,3,'Acajutla'),
+(27,3,'Armenia'),
+(28,3,'Caluco'),
+(29,3,'Cuisnahuat'),
+(30,3,'Izalco'),
+(31,3,'Juayua'),
+(32,3,'Nahuizalco'),
+(33,3,'Nahulingo'),
+(34,3,'Salcoatitan'),
+(35,3,'San Antonio del Monte'),
+(36,3,'San Julian'),
+(37,3,'Santa Catarina Masahuat'),
+(38,3,'Santa Isabel Ishuatan'),
+(39,3,'Santo Domingo'),
+(40,3,'Sonsonate'),
+(41,3,'Sonzacate'),
+(42,4,'Agua Caliente'),
+(43,4,'Arcatao'),
+(44,4,'Azacualpa'),
+(45,4,'Chalatenango'),
+(46,4,'Citala'),
+(47,4,'Comalapa'),
+(48,4,'Concepcion Quezaltepeque'),
+(49,4,'Dulce Nombre de Maria'),
+(50,4,'El Carrizal'),
+(51,4,'El Paraiso'),
+(52,4,'La Laguna'),
+(53,4,'La Palma'),
+(54,4,'La Reina'),
+(55,4,'Las Vueltas'),
+(56,4,'Nueva Concepcion'),
+(57,4,'Nueva Trinidad'),
+(58,4,'Nombre de Jesus'),
+(59,4,'Ojos de Agua'),
+(60,4,'Potonico'),
+(61,4,'San Antonio de la Cruz'),
+(62,4,'San Antonio Los Ranchos'),
+(63,4,'San Fernando'),
+(64,4,'San Francisco Lempa'),
+(65,4,'San Francisco Morazan'),
+(66,4,'San Ignacio'),
+(67,4,'San Isidro Labrador'),
+(68,4,'San Jose Cancasque'),
+(69,4,'San Jose Las Flores'),
+(70,4,'San Luis del Carmen'),
+(71,4,'San Miguel de Mercedes'),
+(72,4,'San Rafael'),
+(73,4,'Santa Rita'),
+(74,4,'Tejutla'),
+(75,5,'Candelaria'),
+(76,5,'Cojutepeque'),
+(77,5,'El Carmen'),
+(78,5,'El Rosario'),
+(79,5,'Monte San Juan'),
+(80,5,'Oratorio de Concepcion'),
+(81,5,'San Bartolomé Perulapia'),
+(82,5,'San Cristobal'),
+(83,5,'San Jose Guayabal'),
+(84,5,'San Pedro Perulapan'),
+(85,5,'San Rafael Cedros'),
+(86,5,'San Ramon'),
+(87,5,'Santa Cruz Analquito'),
+(88,5,'Santa Cruz Michapa'),
+(89,5,'Suchitoto'),
+(90,5,'Tenancingo'),
+(91,6,'Aguilares'),
+(92,6,'Apopa'),
+(93,6,'Ayutuxtepeque'),
+(94,6,'Cuscatancingo'),
+(95,6,'Delgado'),
+(96,6,'El Paisnal'),
+(97,6,'Guazapa'),
+(98,6,'Ilopango'),
+(99,6,'Mejicanos'),
+(100,6,'Nejapa'),
+(101,6,'Panchimalco'),
+(102,6,'Rosario de Mora'),
+(103,6,'San Marcos'),
+(104,6,'San Martin'),
+(105,6,'San Salvador'),
+(106,6,'Santiago Texacuangos'),
+(107,6,'Santo Tomas'),
+(108,6,'Soyapango'),
+(109,6,'Tonacatepeque'),
+(110,7,'Antiguo Cuscatlan'),
+(111,7,'Chiltiupan'),
+(112,7,'Ciudad Arce'),
+(113,7,'Colon'),
+(114,7,'Comasagua'),
+(115,7,'Huizucar'),
+(116,7,'Jayaque'),
+(117,7,'Jicalapa'),
+(118,7,'La Libertad'),
+(119,7,'Santa Tecla'),
+(120,7,'Nuevo Cuscatlan'),
+(121,7,'San Juan Opico'),
+(122,7,'Quezaltepeque'),
+(123,7,'Sacacoyo'),
+(124,7,'San Jose Villanueva'),
+(125,7,'San Matias'),
+(126,7,'San Pablo Tacachico'),
+(127,7,'Talnique'),
+(128,7,'Tamanique'),
+(129,7,'Teotepeque'),
+(130,7,'Tepecoyo'),
+(131,7,'Zaragoza'),
+(132,8,'Apastepeque'),
+(133,8,'Guadalupe'),
+(134,8,'San Cayetano Istepeque'),
+(135,8,'San Esteban Catarina'),
+(136,8,'San Ildefonso'),
+(137,8,'San Lorenzo'),
+(138,8,'San Sebastian'),
+(139,8,'San Vicente'),
+(140,8,'Santa Clara'),
+(141,8,'Santo Domingo'),
+(142,8,'Tecoluca'),
+(143,8,'Tepetitan'),
+(144,8,'Verapaz'),
+(145,9,'Cuyultitlan'),
+(146,9,'El Rosario'),
+(147,9,'Jerusalen'),
+(148,9,'Mercedes La Ceiba'),
+(149,9,'Olocuilta'),
+(150,9,'Paraiso de Osorio'),
+(151,9,'San Antonio Masahuat'),
+(152,9,'San Emigdio'),
+(153,9,'San Francisco Chinameca'),
+(154,9,'San Juan Nonualco'),
+(155,9,'San Juan Talpa'),
+(156,9,'San Juan Tepezontes'),
+(157,9,'San Luis Talpa'),
+(158,9,'San Luis La Herradura'),
+(159,9,'San Miguel Tepezontes'),
+(160,9,'San Pedro Masahuat'),
+(161,9,'San Pedro Nonualco'),
+(162,9,'San Rafael Obrajuelo'),
+(163,9,'Santa Maria Ostuma'),
+(164,9,'Santiago Nonualco'),
+(165,9,'Tapalhuaca'),
+(166,9,'Zacatecoluca'),
+(167,10,'Cinquera'),
+(168,10,'Dolores'),
+(169,10,'Guacotecti'),
+(170,10,'Ilobasco'),
+(171,10,'Jutiapa'),
+(172,10,'San Isidro'),
+(173,10,'Sensuntepeque'),
+(174,10,'Tejutepeque'),
+(175,10,'Victoria'),
+(176,11,'Alegria'),
+(177,11,'Berlin'),
+(178,11,'California'),
+(179,11,'Concepcion Batres'),
+(180,11,'El Triunfo'),
+(181,11,'Ereguayquin'),
+(182,11,'Estanzuelas'),
+(183,11,'Jiquilisco'),
+(184,11,'Jucuapa'),
+(185,11,'Jucuaran'),
+(186,11,'Mercedes Umana'),
+(187,11,'Nueva Granada'),
+(188,11,'Ozatlan'),
+(189,11,'Puerto El Triunfo'),
+(190,11,'San Agustin'),
+(191,11,'San Buenaventura'),
+(192,11,'San Dionisio'),
+(193,11,'San Francisco Javier'),
+(194,11,'Santa Elena'),
+(195,11,'Santa Maria'),
+(196,11,'Santiago de Maria'),
+(197,11,'Tecapan'),
+(198,11,'Usulutan'),
+(199,12,'Carolina'),
+(200,12,'Chapeltique'),
+(201,12,'Chinameca'),
+(202,12,'Chirilagua'),
+(203,12,'Ciudad Barrios'),
+(204,12,'Comacaran'),
+(205,12,'El Transito'),
+(206,12,'Lolotique'),
+(207,12,'Moncagua'),
+(208,12,'Nueva Guadalupe'),
+(209,12,'Nuevo Eden de San Juan'),
+(210,12,'Quelepa'),
+(211,12,'San Antonio del Mosco'),
+(212,12,'San Gerardo'),
+(213,12,'San Jorge'),
+(214,12,'San Luis de la Reina'),
+(215,12,'San Miguel'),
+(216,12,'San Rafael Oriente'),
+(217,12,'Sesori'),
+(218,12,'Uluazapa'),
+(219,13,'Arambala'),
+(220,13,'Cacaopera'),
+(221,13,'Chilanga'),
+(222,13,'Corinto'),
+(223,13,'Delicias de Concepcion'),
+(224,13,'El Divisadero'),
+(225,13,'El Rosario'),
+(226,13,'Gualococti'),
+(227,13,'Guatajiagua'),
+(228,13,'Joateca'),
+(229,13,'Jocoaitique'),
+(230,13,'Jocoro'),
+(231,13,'Lolotiquillo'),
+(232,13,'Meanguera'),
+(233,13,'Osicala'),
+(234,13,'Perquin'),
+(235,13,'San Carlos'),
+(236,13,'San Fernando'),
+(237,13,'San Francisco Gotera'),
+(238,13,'San Isidro'),
+(239,13,'San Simon'),
+(240,13,'Sensembra'),
+(241,13,'Sociedad'),
+(242,13,'Torola'),
+(243,13,'Yamabal'),
+(244,13,'Yoloaiquin'),
+(245,14,'La Union'),
+(246,14,'San Alejo'),
+(247,14,'Yucuaiquin'),
+(248,14,'Conchagua'),
+(249,14,'Intipuca'),
+(250,14,'San Jose'),
+(251,14,'El Carmen'),
+(252,14,'Yayantique'),
+(253,14,'Bolivar'),
+(254,14,'Meanguera del Golfo'),
+(255,14,'Santa Rosa de Lima'),
+(256,14,'Pasaquina'),
+(257,14,'Anamoros'),
+(258,14,'Nueva Esparta'),
+(259,14,'El Sauce'),
+(260,14,'Concepcion de Oriente'),
+(261,14,'Poloros'),
+(262,14,'Lislique');
 /*==============================================================*/
 /* Table: CENTROS_DE_ACOPIO                                     */
 /*==============================================================*/
-INSERT INTO `vical`.`centros_de_acopio` (`CODIGO_CENTRO_ACOPIO`,`CODIGO_RECOLECTOR`,`DIRECCION`,`DEPARTAMENTO`,`TELEFONO`)
-VALUES
-('CA-001','R-001','Carrt Internac a Guatemala Km 99 1/2','Ahuachapan','2560-5731'),
-('CA-002','R-001','Fnl Rpto Lorena 11 Cl Ote No 8-10','Sonsonate','2200-5700'),
-('CA-003','R-001','Calle BERBIQUI 22 POL','Santa Ana','2304-8938'),
-('CA-004','R-002','Blvd del Hipodromo Col San Benito Loc 106','San Salvador','2697-0364'),
-('CA-005','R-002','Km. 10 Carretera a Santa ana, Opico','La Libertad','2591-0976'),
-('CA-006','R-002','Avenida Central Norte, Barrio el centro El Paraiso','Chalatenango','2200-3698'),
-('CA-007','R-003','Av. Fco Rivera No 15 Osicala','Morazan','2397-8889'),
-('CA-008','R-003','17 Av Nte No 316','La Union','2368-7100'),
-('CA-009','R-003','Av. La Paz 1616','San Miguel','2306-4749'),
-('CA-010','R-002','200 Mts al Nte del Hospital San Pedro','Usulutan','2345-4749');
--- -------------------------------------------------------------------------------------
+INSERT INTO CENTROS_DE_ACOPIO (CODIGO_CENTRO_ACOPIO, CODIGO_RECOLECTOR, NOMBRE_CENTRO_ACOPIO, DIRECCION, DEPARTAMENTO, TELEFONO) VALUES
+('CA-001', 'R-001', 'Alcaldia Ahuachapan', 'Carrt Internac a Guatemala Km 99 1/2', 'Ahuachapan', '2560-5731'),
+('CA-002', 'R-001', 'Recolector', 'Fnl Rpto Lorena 11 Cl Ote No 8-10', 'Sonsonate', '2200-5700'),
+('CA-003', 'R-001', 'Berbiqui', 'Calle BERBIQUI 22 POL', 'Santa Ana', '2304-8938'),
+('CA-004', 'R-002', 'Aragua', 'Blvd del Hipodromo Col San Benito Loc 106', 'San Salvador', '2697-0364'),
+('CA-005', 'R-002', 'Opico', 'Km. 10 Carretera a Santa ana, Opico', 'La Libertad', '2591-0976'),
+('CA-006', 'R-002', 'El Paraiso', 'Avenida Central Norte, Barrio el centro El Paraiso', 'Chalatenango', '2200-3698'),
+('CA-007', 'R-003', 'Osicala', 'Av. Fco Rivera No 15 Osicala', 'Morazan', '2397-8889'),
+('CA-008', 'R-003', 'La Union', '17 Av Nte No 316', 'La Union', '2368-7100'),
+('CA-009', 'R-003', 'San Miguel', 'Av. La Paz 1616', 'San Miguel', '2306-4749'),
+('CA-010', 'R-002', 'Hospital San Pedro', '200 Mts al Nte del Hospital San Pedro', 'Usulutan', '2345-4749');
 /*==============================================================*/
-/* Table: FACTURAS                                              */
+/* Table: PROVEEDORES                                           */
 /*==============================================================*/
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1000','63','R-001','2008-09-01'),
-('1001','44','R-001','2008-09-01'),
-('1002','115','R-001','2008-09-01'),
-('1003','73','R-001','2008-09-01'),
-('1004','72','R-001','2008-09-01'),
-('1005','71','R-001','2008-09-02'),
-('1006','70','R-001','2008-09-02'),
-('1007','62','R-001','2008-09-02'),
-('1008','114','R-001','2008-09-02');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1009','117','R-001','2008-09-02'),
-('1010','116','R-001','2008-09-03'),
-('1011','113','R-002','2008-09-03'),
-('1012','112','R-002','2008-09-03'),
-('1013','111','R-002','2008-09-03'),
-('1014','110','R-002','2008-09-03'),
-('1015','109','R-002','2008-09-04'),
-('1016','108','R-002','2008-09-04');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1017','106','R-002','2008-09-04'),
-('1018','105','R-002','2008-09-04'),
-('1019','104','R-002','2008-09-04'),
-('1020','103','R-002','2008-09-05'),
-('1021','102','R-003','2008-09-05'),
-('1022','101','R-003','2008-09-05'),
-('1023','98','R-003','2008-09-05'),
-('1024','97','R-003','2008-09-05');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1025','93','R-003','2008-09-06'),
-('1026','92','R-003','2008-09-06'),
-('1027','91','R-003','2008-09-06'),
-('1028','90','R-003','2008-09-06'),
-('1029','89','R-003','2008-09-06'),
-('1030','88','R-003','2008-09-07'),
-('1031','87','R-004','2008-09-07'),
-('1032','86','R-004','2008-09-07');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1033','85','R-004','2008-09-07'),
-('1034','84','R-004','2008-09-07'),
-('1035','80','R-004','2008-09-15'),
-('1036','79','R-004','2008-09-15'),
-('1037','78','R-004','2008-09-15'),
-('1038','77','R-004','2008-09-15'),
-('1039','76','R-004','2008-09-17'),
-('1040','74','R-004','2008-09-17'),
-('1041','68','R-005','2008-09-17');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1042','66','R-005','2008-09-17'),
-('1043','65','R-005','2008-09-17'),
-('1044','64','R-005','2008-09-20'),
-('1045','61','R-005','2008-09-20'),
-('1046','60','R-005','2008-09-20'),
-('1047','59','R-005','2008-09-20'),
-('1048','58','R-005','2008-09-25'),
-('1049','57','R-005','2008-09-25');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1050','56','R-005','2008-09-25'),
-('1051','55','R-006','2008-09-25'),
-('1052','54','R-006','2008-10-02'),
-('1053','53','R-006','2008-10-02'),
-('1054','52','R-006','2008-10-02'),
-('1055','51','R-006','2008-10-02'),
-('1056','50','R-006','2008-10-05'),
-('1057','49','R-006','2008-10-05');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1058','48','R-006','2008-10-05'),
-('1059','47','R-006','2008-10-05'),
-('1060','46','R-006','2008-10-05'),
-('1061','43','R-007','2008-10-06'),
-('1062','42','R-007','2008-10-06'),
-('1063','41','R-007','2008-10-06'),
-('1064','40','R-007','2008-10-06'),
-('1065','33','R-007','2008-10-08');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1066','32','R-007','2008-10-08'),
-('1067','31','R-007','2008-10-08'),
-('1068','30','R-007','2008-10-08'),
-('1069','29','R-007','2008-10-09'),
-('1070','28','R-007','2008-10-09'),
-('1071','27','R-008','2008-10-09'),
-('1072','26','R-008','2008-10-09'),
-('1073','25','R-008','2008-10-10');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1074','24','R-008','2008-10-10'),
-('1075','23','R-008','2008-10-10'),
-('1076','22','R-008','2008-10-10'),
-('1077','21','R-008','2008-10-11'),
-('1078','20','R-008','2008-10-11'),
-('1079','19','R-008','2008-10-11'),
-('1080','18','R-008','2008-10-11'),
-('1081','17','R-009','2008-11-03');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1082','16','R-009','2008-11-03'),
-('1083','15','R-009','2008-11-03'),
-('1084','14','R-009','2008-11-03'),
-('1085','13','R-009','2008-11-03'),
-('1086','12','R-009','2008-11-08'),
-('1087','11','R-009','2008-11-08'),
-('1088','10','R-009','2008-11-08'),
-('1089','9','R-009','2008-11-08');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1090','10','R-009','2008-11-08'),
-('1091','7','R-010','2008-11-08'),
-('1092','6','R-010','2008-11-09'),
-('1093','5','R-010','2008-11-09'),
-('1094','4','R-010','2008-11-09'),
-('1095','3','R-010','2008-11-09'),
-('1096','2','R-010','2008-11-09'),
-('1097','1','R-010','2008-11-10');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1098','107','R-010','2008-11-10'),
-('1099','82','R-010','2008-11-10'),
-('1100','81','R-010','2008-11-10'),
-('1101','45','R-001','2008-11-10'),
-('1102','118','R-001','2008-11-11'),
-('1103','99','R-001','2008-11-11'),
-('1104','69','R-001','2008-11-11'),
-('1105','67','R-001','2008-11-11');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1106','96','R-001','2008-11-12'),
-('1107','95','R-001','2008-11-12'),
-('1108','94','R-001','2008-11-12'),
-('1109','39','R-001','2008-11-12'),
-('1110','38','R-001','2008-11-20'),
-('1111','37','R-001','2008-11-20'),
-('1112','36','R-002','2008-11-20'),
-('1113','35','R-002','2008-11-20');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1114','34','R-002','2008-11-24'),
-('1115','83','R-002','2008-11-24'),
-('1116','100','R-002','2008-11-24'),
-('1117','63','R-002','2008-11-24'),
-('1118','44','R-002','2008-12-01'),
-('1119','115','R-002','2008-12-01'),
-('1120','73','R-002','2008-12-01'),
-('1121','72','R-002','2008-12-01');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1122','71','R-003','2009-01-01'),
-('1123','70','R-003','2009-01-01'),
-('1124','62','R-003','2009-01-01'),
-('1125','114','R-003','2009-01-01'),
-('1126','117','R-003','2009-01-01'),
-('1127','116','R-003','2009-01-02'),
-('1128','113','R-003','2009-01-02'),
-('1129','112','R-003','2009-01-02');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1130','111','R-003','2009-01-02'),
-('1131','110','R-003','2009-01-02'),
-('1132','109','R-004','2009-01-03'),
-('1133','108','R-004','2009-01-03'),
-('1134','106','R-004','2009-01-03'),
-('1135','105','R-004','2009-01-03'),
-('1136','104','R-004','2009-01-03'),
-('1137','103','R-004','2009-01-04');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1138','102','R-004','2009-01-04'),
-('1139','101','R-004','2009-01-04'),
-('1140','98','R-004','2009-01-04'),
-('1141','97','R-004','2009-01-04'),
-('1142','93','R-005','2009-01-05'),
-('1143','92','R-005','2009-01-05'),
-('1144','91','R-005','2009-01-05'),
-('1145','90','R-005','2009-01-05');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1146','89','R-005','2009-01-05'),
-('1147','88','R-005','2009-01-06'),
-('1148','87','R-005','2009-01-06'),
-('1149','86','R-005','2009-01-06'),
-('1150','85','R-005','2009-01-06'),
-('1151','84','R-005','2009-01-06'),
-('1152','80','R-006','2009-01-07'),
-('1153','79','R-006','2009-01-07');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1154','78','R-006','2009-01-07'),
-('1155','77','R-006','2009-01-07'),
-('1156','76','R-006','2009-01-07'),
-('1157','74','R-006','2009-01-15'),
-('1158','68','R-006','2009-01-15'),
-('1159','66','R-006','2009-01-15'),
-('1160','65','R-006','2009-01-15'),
-('1161','64','R-006','2009-01-17');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1162','61','R-007','2009-01-17'),
-('1163','60','R-007','2009-01-17'),
-('1164','59','R-007','2009-01-17'),
-('1165','58','R-007','2009-01-17'),
-('1166','57','R-007','2009-01-20'),
-('1167','56','R-007','2009-01-20'),
-('1168','55','R-007','2009-01-20'),
-('1169','54','R-007','2009-01-20');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1170','53','R-007','2009-01-25'),
-('1171','52','R-007','2009-01-25'),
-('1172','51','R-008','2009-01-25'),
-('1173','50','R-008','2009-01-25'),
-('1174','49','R-008','2009-02-02'),
-('1175','48','R-008','2009-02-02'),
-('1176','47','R-008','2009-02-02'),
-('1177','46','R-008','2009-02-02');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1178','43','R-008','2009-02-05'),
-('1179','42','R-008','2009-02-05'),
-('1180','41','R-008','2009-02-05'),
-('1181','40','R-008','2009-02-05'),
-('1182','33','R-009','2009-02-05'),
-('1183','32','R-009','2009-02-06'),
-('1184','31','R-009','2009-02-06'),
-('1185','30','R-009','2009-02-06');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1186','29','R-009','2009-02-06'),
-('1187','28','R-009','2009-02-08'),
-('1188','27','R-009','2009-02-08'),
-('1189','26','R-009','2009-02-08'),
-('1190','25','R-009','2009-02-08'),
-('1191','24','R-009','2009-02-09'),
-('1192','23','R-010','2009-02-09'),
-('1193','22','R-010','2009-02-09');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1194','21','R-010','2009-02-09'),
-('1195','20','R-010','2009-02-10'),
-('1196','19','R-010','2009-02-10'),
-('1197','18','R-010','2009-02-10'),
-('1198','17','R-010','2009-02-10'),
-('1199','16','R-010','2009-02-11'),
-('1200','15','R-010','2009-02-11'),
-('1201','14','R-010','2009-02-11');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1202','13','R-001','2009-02-11'),
-('1203','12','R-001','2009-03-03'),
-('1204','11','R-001','2009-03-03'),
-('1205','10','R-001','2009-03-03'),
-('1206','9','R-001','2009-03-03'),
-('1207','15','R-001','2009-03-03'),
-('1208','7','R-001','2009-03-08'),
-('1209','6','R-001','2009-03-08');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1210','5','R-001','2009-03-08'),
-('1211','4','R-001','2009-03-08'),
-('1212','3','R-001','2009-03-08'),
-('1213','2','R-002','2009-03-08'),
-('1214','1','R-002','2009-03-09'),
-('1215','107','R-002','2009-03-09'),
-('1216','82','R-002','2009-03-09'),
-('1217','81','R-002','2009-03-09');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1218','45','R-002','2009-03-09'),
-('1219','118','R-002','2009-03-10'),
-('1220','99','R-002','2009-03-10'),
-('1221','69','R-002','2009-03-10'),
-('1222','67','R-002','2009-03-10'),
-('1223','96','R-003','2009-03-10'),
-('1224','95','R-003','2009-03-11');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1225','94','R-003','2009-03-11'),
-('1226','39','R-003','2009-03-11'),
-('1227','38','R-003','2009-03-11'),
-('1228','37','R-003','2009-03-12'),
-('1229','36','R-003','2009-03-12'),
-('1230','35','R-003','2009-03-12'),
-('1231','34','R-003','2009-03-12'),
-('1232','83','R-003','2009-03-20');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1233','100','R-004','2009-03-20'),
-('1234','63','R-004','2009-03-20'),
-('1235','44','R-004','2009-03-20'),
-('1236','115','R-004','2009-03-24'),
-('1237','73','R-004','2009-03-24'),
-('1238','72','R-004','2009-03-24'),
-('1239','71','R-004','2009-03-24'),
-('1240','70','R-004','2009-04-01');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1241','62','R-004','2009-04-01'),
-('1242','114','R-004','2009-04-01'),
-('1243','117','R-005','2009-04-01'),
-('1244','116','R-005','2009-04-05'),
-('1245','113','R-005','2009-04-05'),
-('1246','112','R-005','2009-04-05'),
-('1247','111','R-005','2009-04-05'),
-('1248','110','R-005','2009-04-06');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1249','109','R-005','2009-04-06'),
-('1250','108','R-005','2009-04-06'),
-('1251','106','R-005','2009-04-06'),
-('1252','105','R-005','2009-04-06'),
-('1253','104','R-006','2009-04-07'),
-('1254','103','R-006','2009-04-07'),
-('1255','102','R-006','2009-04-07'),
-('1256','101','R-006','2009-04-08');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1257','98','R-006','2009-04-08'),
-('1258','97','R-006','2009-04-08'),
-('1259','93','R-006','2009-04-09'),
-('1260','92','R-006','2009-04-09'),
-('1261','91','R-006','2009-04-09'),
-('1262','90','R-006','2009-04-09'),
-('1263','89','R-007','2009-05-02');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1264','88','R-007','2009-05-02'),
-('1265','87','R-007','2009-05-02'),
-('1266','86','R-007','2009-05-02'),
-('1267','85','R-007','2009-05-09'),
-('1268','84','R-007','2009-05-09'),
-('1269','80','R-007','2009-05-09'),
-('1270','79','R-007','2009-05-09'),
-('1271','78','R-007','2009-05-09');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1272','77','R-007','2009-05-12'),
-('1273','76','R-008','2009-05-12'),
-('1274','74','R-008','2009-05-12'),
-('1275','68','R-008','2009-05-12'),
-('1276','66','R-008','2009-06-05'),
-('1277','65','R-008','2009-06-05'),
-('1278','64','R-008','2009-06-05'),
-('1279','61','R-008','2009-06-05');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1280','60','R-008','2009-06-07'),
-('1281','59','R-008','2009-06-07'),
-('1282','58','R-008','2009-06-07'),
-('1283','57','R-009','2009-06-07'),
-('1284','56','R-009','2009-06-09'),
-('1285','55','R-009','2009-06-09'),
-('1286','54','R-009','2009-06-09'),
-('1287','53','R-009','2009-06-11');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1288','52','R-009','2009-06-11'),
-('1289','51','R-009','2009-06-11'),
-('1290','50','R-009','2009-06-13'),
-('1291','49','R-009','2009-06-13'),
-('1292','48','R-009','2009-06-13'),
-('1293','47','R-010','2009-07-03'),
-('1294','46','R-010','2009-07-07'),
-('1295','43','R-010','2009-07-25');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1296','42','R-010','2009-07-28'),
-('1297','41','R-010','2009-08-01'),
-('1298','40','R-010','2009-08-08'),
-('1299','33','R-010','2009-08-15'),
-('1300','32','R-010','2009-08-21'),
-('1301','31','R-010','2009-08-28'),
-('1302','30','R-010','2009-09-11');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1303','29','R-001','2009-09-15'),
-('1304','28','R-001','2009-09-20'),
-('1305','27','R-001','2009-09-21'),
-('1306','26','R-001','2009-09-23'),
-('1307','25','R-001','2009-09-23'),
-('1308','24','R-001','2009-10-11'),
-('1309','23','R-001','2009-10-12');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1310','22','R-001','2009-10-13'),
-('1311','21','R-001','2009-10-14'),
-('1312','20','R-001','2009-10-15'),
-('1313','19','R-001','2009-10-16'),
-('1314','18','R-002','2009-10-17'),
-('1315','17','R-002','2009-10-18'),
-('1316','16','R-002','2009-10-19'),
-('1317','15','R-002','2009-10-20');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1318','14','R-002','2009-11-07'),
-('1319','13','R-002','2009-11-08'),
-('1320','12','R-002','2009-11-09'),
-('1321','11','R-002','2009-11-10'),
-('1322','10','R-002','2009-11-11'),
-('1323','9','R-002','2009-11-17'),
-('1324','17','R-003','2009-11-18');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1325','7','R-003','2009-11-19'),
-('1326','6','R-003','2009-11-20'),
-('1327','5','R-003','2009-12-05'),
-('1328','4','R-003','2009-12-09'),
-('1329','3','R-003','2009-12-13'),
-('1330','2','R-003','2009-12-17'),
-('1331','1','R-003','2009-12-21'),
-('1332','107','R-003','2010-01-05');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1333','82','R-003','2010-01-08'),
-('1334','81','R-004','2010-01-08'),
-('1335','45','R-004','2010-01-08'),
-('1336','118','R-004','2010-01-08'),
-('1337','99','R-004','2010-02-01'),
-('1338','69','R-004','2010-02-01'),
-('1339','67','R-004','2010-02-01'),
-('1340','96','R-004','2010-02-01');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1341','95','R-004','2010-02-01'),
-('1342','94','R-004','2010-02-05'),
-('1343','39','R-004','2010-02-05'),
-('1344','38','R-005','2010-02-05'),
-('1345','37','R-005','2010-02-05'),
-('1346','36','R-005','2010-02-05'),
-('1347','35','R-005','2010-02-05'),
-('1348','34','R-005','2010-02-05');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1349','83','R-005','2010-02-06'),
-('1350','100','R-005','2010-02-06'),
-('1351','63','R-005','2010-02-06'),
-('1352','44','R-005','2010-02-06'),
-('1353','115','R-005','2010-02-06'),
-('1354','73','R-006','2010-02-07'),
-('1355','72','R-006','2010-02-07'),
-('1356','71','R-006','2010-02-07');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1357','70','R-006','2010-02-07'),
-('1358','62','R-006','2010-02-07'),
-('1359','114','R-006','2010-02-07'),
-('1360','117','R-006','2010-02-07'),
-('1361','116','R-006','2010-02-08'),
-('1362','113','R-006','2010-02-08'),
-('1363','112','R-006','2010-02-08'),
-('1364','111','R-007','2010-02-08');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1365','110','R-007','2010-02-08'),
-('1366','109','R-007','2010-02-08'),
-('1367','108','R-007','2010-02-08'),
-('1368','106','R-007','2010-02-09'),
-('1369','105','R-007','2010-02-09'),
-('1370','104','R-007','2010-02-09'),
-('1371','103','R-007','2010-02-09'),
-('1372','102','R-007','2010-02-09');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1373','101','R-007','2010-02-13'),
-('1374','98','R-008','2010-02-13'),
-('1375','97','R-008','2010-02-13'),
-('1376','93','R-008','2010-02-13'),
-('1377','92','R-008','2010-02-13'),
-('1378','91','R-008','2010-02-14'),
-('1379','90','R-008','2010-02-14'),
-('1380','89','R-008','2010-02-14');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1381','88','R-008','2010-02-14'),
-('1382','87','R-008','2010-02-14'),
-('1383','86','R-008','2010-02-14'),
-('1384','85','R-009','2010-02-15'),
-('1385','84','R-009','2010-02-15'),
-('1386','80','R-009','2010-02-15'),
-('1387','79','R-009','2010-02-15'),
-('1388','78','R-009','2010-02-15');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1389','77','R-009','2010-02-15'),
-('1390','76','R-009','2010-02-16'),
-('1391','74','R-009','2010-02-16'),
-('1392','68','R-009','2010-02-16'),
-('1393','66','R-009','2010-02-16'),
-('1394','65','R-010','2010-02-16'),
-('1395','64','R-010','2010-02-16'),
-('1396','61','R-010','2010-02-16');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1397','60','R-010','2010-02-16'),
-('1398','59','R-010','2010-03-10'),
-('1399','58','R-010','2010-03-10'),
-('1400','57','R-010','2010-03-10'),
-('1401','56','R-010','2010-03-10'),
-('1402','55','R-010','2010-03-10'),
-('1403','54','R-010','2010-03-10'),
-('1404','53','R-001','2010-03-10');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1405','52','R-001','2010-03-11'),
-('1406','51','R-001','2010-03-11'),
-('1407','50','R-001','2010-03-11'),
-('1408','49','R-001','2010-03-11'),
-('1409','48','R-001','2010-03-11'),
-('1410','47','R-001','2010-03-12'),
-('1411','46','R-001','2010-03-12');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1412','43','R-001','2010-03-12'),
-('1413','42','R-001','2010-03-12'),
-('1414','41','R-001','2010-03-12'),
-('1415','40','R-002','2010-03-23'),
-('1416','33','R-002','2010-03-23'),
-('1417','32','R-002','2010-03-23'),
-('1418','31','R-002','2010-03-23');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1419','30','R-002','2010-03-23'),
-('1420','29','R-002','2010-03-23'),
-('1421','28','R-002','2010-04-04'),
-('1422','27','R-002','2010-04-04'),
-('1423','26','R-002','2010-04-04'),
-('1424','25','R-002','2010-04-04'),
-('1425','24','R-003','2010-04-04');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1426','23','R-003','2010-04-05'),
-('1427','22','R-003','2010-04-05'),
-('1428','21','R-003','2010-04-05'),
-('1429','20','R-003','2010-04-05'),
-('1430','19','R-003','2010-04-06'),
-('1431','18','R-003','2010-04-06'),
-('1432','17','R-003','2010-04-06'),
-('1433','16','R-003','2010-04-06');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1434','15','R-003','2010-04-06'),
-('1435','14','R-004','2010-04-07'),
-('1436','13','R-004','2010-04-07'),
-('1437','12','R-004','2010-04-07'),
-('1438','11','R-004','2010-04-07'),
-('1439','10','R-004','2010-04-07'),
-('1440','9','R-004','2010-04-08'),
-('1441','21','R-004','2010-04-08');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1442','7','R-004','2010-04-08'),
-('1443','6','R-004','2010-04-08'),
-('1444','5','R-004','2010-04-08'),
-('1445','4','R-005','2010-04-09'),
-('1446','3','R-005','2010-04-09'),
-('1447','2','R-005','2010-04-09'),
-('1448','1','R-005','2010-04-09'),
-('1449','107','R-005','2010-04-09');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1450','82','R-005','2010-04-09'),
-('1451','81','R-005','2010-04-10'),
-('1452','45','R-005','2010-04-10'),
-('1453','118','R-005','2010-04-10'),
-('1454','99','R-005','2010-04-10'),
-('1455','69','R-006','2010-04-10'),
-('1456','67','R-006','2010-04-11'),
-('1457','96','R-006','2010-04-11');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1458','95','R-006','2010-04-11'),
-('1459','94','R-006','2010-04-11'),
-('1460','39','R-006','2010-04-11'),
-('1461','38','R-006','2010-04-12'),
-('1462','37','R-006','2010-04-12'),
-('1463','36','R-006','2010-04-12'),
-('1464','35','R-006','2010-04-12'),
-('1465','34','R-007','2010-04-13');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1466','83','R-007','2010-04-13'),
-('1467','100','R-007','2010-04-13'),
-('1468','63','R-007','2010-04-13'),
-('1469','44','R-007','2010-04-13'),
-('1470','115','R-007','2010-04-14'),
-('1471','73','R-007','2010-04-14'),
-('1472','72','R-007','2010-04-14'),
-('1473','71','R-007','2010-04-14');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1474','70','R-007','2010-04-14'),
-('1475','62','R-008','2010-04-15'),
-('1476','114','R-008','2010-04-15'),
-('1477','117','R-008','2010-04-15'),
-('1478','116','R-008','2010-04-16'),
-('1479','113','R-008','2010-04-16'),
-('1480','112','R-008','2010-04-16'),
-('1481','111','R-008','2010-04-16');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1482','110','R-008','2010-04-17'),
-('1483','109','R-008','2010-04-17'),
-('1484','108','R-008','2010-04-17'),
-('1485','106','R-009','2010-04-17'),
-('1486','105','R-009','2010-04-18'),
-('1487','104','R-009','2010-04-18'),
-('1488','103','R-009','2010-04-18');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1489','102','R-009','2010-05-03'),
-('1490','101','R-009','2010-05-03'),
-('1491','98','R-009','2010-05-03'),
-('1492','97','R-009','2010-05-03'),
-('1493','93','R-009','2010-05-04'),
-('1494','92','R-009','2010-05-04'),
-('1495','91','R-010','2010-05-04'),
-('1496','90','R-010','2010-05-05');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1497','89','R-010','2010-05-05'),
-('1498','88','R-010','2010-05-05'),
-('1499','87','R-010','2010-05-05'),
-('1500','86','R-010','2010-05-06'),
-('1501','85','R-010','2010-05-06'),
-('1502','84','R-010','2010-05-06'),
-('1503','80','R-010','2010-05-06'),
-('1504','79','R-010','2010-05-06');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1505','78','R-001','2010-05-07'),
-('1506','77','R-001','2010-05-07'),
-('1507','76','R-001','2010-05-07'),
-('1508','74','R-001','2010-05-07'),
-('1509','68','R-001','2010-05-07'),
-('1510','66','R-001','2010-05-07'),
-('1511','65','R-001','2010-05-08'),
-('1512','64','R-001','2010-05-08');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1513','61','R-001','2010-05-08'),
-('1514','60','R-001','2010-05-08'),
-('1515','59','R-001','2010-05-08'),
-('1516','58','R-002','2010-05-09'),
-('1517','57','R-002','2010-05-09'),
-('1518','56','R-002','2010-05-09'),
-('1519','55','R-002','2010-05-09'),
-('1520','54','R-002','2010-05-09');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1521','53','R-002','2010-05-09'),
-('1522','52','R-002','2010-05-09'),
-('1523','51','R-002','2010-05-10'),
-('1524','50','R-002','2010-05-10'),
-('1525','49','R-002','2010-05-10'),
-('1526','48','R-003','2010-05-10'),
-('1527','47','R-003','2010-05-11'),
-('1528','46','R-003','2010-05-11'),
-('1529','43','R-003','2010-05-11');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1530','42','R-003','2010-05-12'),
-('1531','41','R-003','2010-05-12'),
-('1532','40','R-003','2010-05-12'),
-('1533','33','R-003','2010-05-13'),
-('1534','32','R-003','2010-05-13'),
-('1535','31','R-003','2010-05-13'),
-('1536','30','R-004','2010-05-13'),
-('1537','29','R-004','2010-05-13'),
-('1538','28','R-004','2010-06-01');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1539','27','R-004','2010-06-01'),
-('1540','26','R-004','2010-06-01'),
-('1541','25','R-004','2010-06-01'),
-('1542','24','R-004','2010-06-01'),
-('1543','23','R-004','2010-06-01'),
-('1544','22','R-004','2010-06-01'),
-('1545','21','R-004','2010-06-01'),
-('1546','20','R-005','2010-06-01');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1547','19','R-005','2010-06-01'),
-('1548','18','R-005','2010-06-02'),
-('1549','17','R-005','2010-06-02'),
-('1550','16','R-005','2010-06-02'),
-('1551','15','R-005','2010-06-02'),
-('1552','14','R-005','2010-06-02'),
-('1553','13','R-005','2010-06-02'),
-('1554','12','R-005','2010-06-02');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1555','11','R-005','2010-06-02'),
-('1556','10','R-006','2010-06-02'),
-('1557','9','R-006','2010-06-02'),
-('1558','23','R-006','2010-06-03'),
-('1559','7','R-006','2010-06-03'),
-('1560','6','R-006','2010-06-03'),
-('1561','5','R-006','2010-06-03'),
-('1562','4','R-006','2010-06-03');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1563','3','R-006','2010-06-03'),
-('1564','2','R-006','2010-06-03'),
-('1565','1','R-006','2010-06-03'),
-('1566','107','R-007','2010-06-04'),
-('1567','82','R-007','2010-06-04'),
-('1568','81','R-007','2010-06-04'),
-('1569','45','R-007','2010-06-04'),
-('1570','118','R-007','2010-06-04');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1571','99','R-007','2010-06-04'),
-('1572','69','R-007','2010-06-04'),
-('1573','67','R-007','2010-06-05'),
-('1574','96','R-007','2010-06-06'),
-('1575','95','R-007','2010-06-06'),
-('1576','94','R-008','2010-06-06'),
-('1577','39','R-008','2010-06-06'),
-('1578','38','R-008','2010-06-06');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1579','37','R-008','2010-06-06'),
-('1580','36','R-008','2010-06-06'),
-('1581','35','R-008','2010-06-06'),
-('1582','34','R-008','2010-06-06'),
-('1583','83','R-008','2010-06-06'),
-('1584','100','R-008','2010-06-06'),
-('1585','63','R-008','2010-06-06'),
-('1586','44','R-009','2010-06-07');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1587','115','R-009','2010-06-07'),
-('1588','73','R-009','2010-06-07'),
-('1589','72','R-009','2010-06-07'),
-('1590','71','R-009','2010-06-07'),
-('1591','70','R-009','2010-06-07'),
-('1592','62','R-009','2010-06-07'),
-('1593','114','R-009','2010-06-07'),
-('1594','117','R-009','2010-06-07');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1595','116','R-009','2010-06-07'),
-('1596','113','R-010','2010-06-07'),
-('1597','112','R-010','2010-06-07'),
-('1598','111','R-010','2010-06-07'),
-('1599','110','R-010','2010-06-07'),
-('1600','109','R-010','2010-06-07'),
-('1601','108','R-010','2010-06-07'),
-('1602','106','R-010','2010-06-07');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1603','105','R-010','2010-06-07'),
-('1604','104','R-010','2010-06-07'),
-('1605','103','R-010','2010-06-07'),
-('1606','102','R-001','2010-06-08'),
-('1607','101','R-001','2010-06-08'),
-('1608','98','R-001','2010-06-08'),
-('1609','97','R-001','2010-06-08'),
-('1610','93','R-001','2010-06-08');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1611','92','R-001','2010-06-08'),
-('1612','91','R-001','2010-06-08'),
-('1613','90','R-001','2010-06-08'),
-('1614','89','R-001','2010-06-08'),
-('1615','88','R-001','2010-06-08'),
-('1616','87','R-001','2010-06-09'),
-('1617','86','R-002','2010-06-09'),
-('1618','85','R-002','2010-06-09');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1619','84','R-002','2010-06-09'),
-('1620','80','R-002','2010-06-09'),
-('1621','79','R-002','2010-06-09'),
-('1622','78','R-002','2010-06-09'),
-('1623','77','R-002','2010-06-10'),
-('1624','76','R-002','2010-06-10'),
-('1625','74','R-002','2010-06-10'),
-('1626','68','R-002','2010-06-10');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1627','66','R-003','2010-06-10'),
-('1628','65','R-003','2010-06-10'),
-('1629','64','R-003','2010-06-10'),
-('1630','61','R-003','2010-06-10'),
-('1631','60','R-003','2010-06-10'),
-('1632','59','R-003','2010-06-10'),
-('1633','58','R-003','2010-06-10'),
-('1634','57','R-003','2010-06-10');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1635','56','R-003','2010-06-10'),
-('1636','55','R-003','2010-06-10'),
-('1637','54','R-004','2010-06-10'),
-('1638','53','R-004','2010-06-10'),
-('1639','52','R-004','2010-06-11'),
-('1640','51','R-004','2010-06-11'),
-('1641','50','R-004','2010-06-11'),
-('1642','49','R-004','2010-06-11');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1643','48','R-004','2010-06-11'),
-('1644','47','R-004','2010-06-11'),
-('1645','46','R-004','2010-06-11'),
-('1646','43','R-004','2010-06-11'),
-('1647','42','R-005','2010-06-11'),
-('1648','41','R-005','2010-06-11'),
-('1649','40','R-005','2010-06-11'),
-('1650','33','R-005','2010-06-11');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1651','32','R-005','2010-06-11'),
-('1652','31','R-005','2010-06-12'),
-('1653','30','R-005','2010-06-12'),
-('1654','29','R-005','2010-06-12'),
-('1655','28','R-005','2010-06-12'),
-('1656','27','R-005','2010-06-12'),
-('1657','26','R-006','2010-06-12'),
-('1658','25','R-006','2010-06-12');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1659','24','R-006','2010-06-12'),
-('1660','23','R-006','2010-06-12'),
-('1661','22','R-006','2010-06-12'),
-('1662','21','R-006','2010-06-12'),
-('1663','20','R-006','2010-06-12'),
-('1664','19','R-006','2010-06-12'),
-('1665','18','R-006','2010-06-12'),
-('1666','17','R-006','2010-06-12');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1667','16','R-007','2010-06-12'),
-('1668','15','R-007','2010-06-12'),
-('1669','14','R-007','2010-06-13'),
-('1670','13','R-007','2010-06-13'),
-('1671','12','R-007','2010-06-13'),
-('1672','11','R-007','2010-06-13'),
-('1673','10','R-007','2010-06-13'),
-('1674','9','R-007','2010-06-13');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1675','25','R-007','2010-06-13'),
-('1676','7','R-007','2010-06-13'),
-('1677','6','R-008','2010-07-01'),
-('1678','5','R-008','2010-07-01'),
-('1679','4','R-008','2010-07-01'),
-('1680','3','R-008','2010-07-01'),
-('1681','2','R-008','2010-07-01'),
-('1682','1','R-008','2010-07-01');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1683','107','R-008','2010-07-01'),
-('1684','82','R-008','2010-07-02'),
-('1685','81','R-008','2010-07-02'),
-('1686','45','R-008','2010-07-02'),
-('1687','118','R-009','2010-07-02'),
-('1688','99','R-009','2010-07-03'),
-('1689','69','R-009','2010-07-03'),
-('1690','67','R-009','2010-07-03');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1691','96','R-009','2010-07-03'),
-('1692','95','R-009','2010-07-03'),
-('1693','94','R-009','2010-07-03'),
-('1694','39','R-009','2010-07-03'),
-('1695','38','R-009','2010-07-03'),
-('1696','37','R-009','2010-07-04'),
-('1697','36','R-010','2010-07-04'),
-('1698','35','R-010','2010-07-04');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1699','34','R-010','2010-07-04'),
-('1700','83','R-010','2010-07-05'),
-('1701','100','R-010','2010-07-05'),
-('1702','63','R-010','2010-07-05'),
-('1703','44','R-010','2010-07-05'),
-('1704','115','R-010','2010-07-05'),
-('1705','73','R-010','2010-07-05'),
-('1706','72','R-010','2010-07-05');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1707','71','R-001','2010-07-05'),
-('1708','70','R-001','2010-07-05'),
-('1709','62','R-001','2010-07-05'),
-('1710','114','R-001','2010-07-05'),
-('1711','117','R-001','2010-07-06'),
-('1712','116','R-001','2010-07-06'),
-('1713','113','R-001','2010-07-06'),
-('1714','112','R-001','2010-07-06');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1715','111','R-001','2010-07-06'),
-('1716','110','R-001','2010-07-06'),
-('1717','109','R-001','2010-07-06'),
-('1718','108','R-002','2010-07-06'),
-('1719','106','R-002','2010-07-07'),
-('1720','105','R-002','2010-07-07'),
-('1721','104','R-002','2010-07-07'),
-('1722','103','R-002','2010-07-07'),
-('1723','102','R-002','2010-07-07');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1724','101','R-002','2010-07-08'),
-('1725','98','R-002','2010-07-08'),
-('1726','97','R-002','2010-07-08'),
-('1727','93','R-002','2010-07-08'),
-('1728','92','R-003','2010-07-08'),
-('1729','91','R-003','2010-07-08'),
-('1730','90','R-003','2010-07-08'),
-('1731','89','R-003','2010-07-09');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1732','88','R-003','2010-07-09'),
-('1733','87','R-003','2010-07-09'),
-('1734','86','R-003','2010-07-09'),
-('1735','85','R-003','2010-07-09'),
-('1736','84','R-003','2010-07-09'),
-('1737','80','R-003','2010-07-09'),
-('1738','79','R-004','2010-07-09');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1739','78','R-004','2010-07-10'),
-('1740','77','R-004','2010-07-10'),
-('1741','76','R-004','2010-07-10'),
-('1742','74','R-004','2010-07-10'),
-('1743','68','R-004','2010-07-10'),
-('1744','66','R-004','2010-07-10'),
-('1745','65','R-004','2010-07-10'),
-('1746','64','R-004','2010-07-11');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1747','61','R-004','2010-07-11'),
-('1748','60','R-005','2010-07-11'),
-('1749','59','R-005','2010-07-11'),
-('1750','58','R-005','2010-07-11'),
-('1751','57','R-005','2010-07-11'),
-('1752','56','R-005','2010-07-11'),
-('1753','55','R-005','2010-07-11'),
-('1754','54','R-005','2010-07-12');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1755','53','R-005','2010-07-12'),
-('1756','52','R-005','2010-07-12'),
-('1757','51','R-005','2010-07-12'),
-('1758','50','R-006','2010-07-12'),
-('1759','49','R-006','2010-07-12'),
-('1760','48','R-006','2010-07-12'),
-('1761','47','R-006','2010-07-12'),
-('1762','46','R-006','2010-07-12');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1763','43','R-006','2010-07-12'),
-('1764','42','R-006','2010-07-12'),
-('1765','41','R-006','2010-07-12'),
-('1766','40','R-006','2010-07-12'),
-('1767','33','R-006','2010-07-12'),
-('1768','32','R-007','2010-07-13'),
-('1769','31','R-007','2010-07-13'),
-('1770','30','R-007','2010-07-13');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1771','29','R-007','2010-07-13'),
-('1772','28','R-007','2010-07-13'),
-('1773','27','R-007','2010-07-13'),
-('1774','26','R-007','2010-07-14'),
-('1775','25','R-007','2010-07-14'),
-('1776','24','R-007','2010-07-14'),
-('1777','23','R-007','2010-07-14');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1778','22','R-008','2010-07-14'),
-('1779','21','R-008','2010-07-14'),
-('1780','20','R-008','2010-07-14'),
-('1781','19','R-008','2010-07-14'),
-('1782','18','R-008','2010-07-14'),
-('1783','17','R-008','2010-07-14'),
-('1784','16','R-008','2010-07-14'),
-('1785','15','R-008','2010-07-14');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1786','14','R-008','2010-07-14'),
-('1787','13','R-008','2010-07-14'),
-('1788','12','R-009','2010-07-14'),
-('1789','11','R-009','2010-07-14'),
-('1790','10','R-009','2010-07-14'),
-('1791','9','R-009','2010-07-14'),
-('1792','27','R-009','2010-07-14'),
-('1793','7','R-009','2010-07-14');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1794','6','R-009','2010-07-14'),
-('1795','5','R-009','2010-07-15'),
-('1796','4','R-009','2010-07-15'),
-('1797','3','R-009','2010-07-15'),
-('1798','2','R-010','2010-07-15'),
-('1799','1','R-010','2010-07-15'),
-('1800','107','R-010','2010-07-15'),
-('1801','82','R-010','2010-07-15');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1802','81','R-010','2010-07-15'),
-('1803','45','R-010','2010-07-15'),
-('1804','118','R-010','2010-07-15'),
-('1805','99','R-010','2010-07-15'),
-('1806','69','R-010','2010-07-15'),
-('1807','67','R-010','2010-07-15'),
-('1808','96','R-001','2010-07-15'),
-('1809','95','R-001','2010-07-15');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1810','94','R-001','2010-07-15'),
-('1811','39','R-001','2010-07-15'),
-('1812','38','R-001','2010-07-15'),
-('1813','37','R-001','2010-07-15'),
-('1814','36','R-001','2010-07-16'),
-('1815','35','R-001','2010-07-16'),
-('1816','34','R-001','2010-07-16'),
-('1817','83','R-001','2010-07-16'),
-('1818','100','R-001','2010-07-16');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1819','63','R-002','2010-07-16'),
-('1820','44','R-002','2010-08-05'),
-('1821','115','R-002','2010-08-05'),
-('1822','73','R-002','2010-08-05'),
-('1823','72','R-002','2010-08-05'),
-('1824','71','R-002','2010-08-05'),
-('1825','70','R-002','2010-08-05'),
-('1826','62','R-002','2010-08-06');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1827','114','R-002','2010-08-06'),
-('1828','117','R-002','2010-08-06'),
-('1829','116','R-003','2010-08-06'),
-('1830','113','R-003','2010-08-06'),
-('1831','112','R-003','2010-08-06'),
-('1832','111','R-003','2010-08-06'),
-('1833','110','R-003','2010-08-06');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1834','109','R-003','2010-08-07'),
-('1835','108','R-003','2010-08-07'),
-('1836','106','R-003','2010-08-07'),
-('1837','105','R-003','2010-08-07'),
-('1838','104','R-003','2010-08-08'),
-('1839','103','R-004','2010-08-08'),
-('1840','102','R-004','2010-08-08');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1841','101','R-004','2010-08-08'),
-('1842','98','R-004','2010-08-09'),
-('1843','97','R-004','2010-08-09'),
-('1844','93','R-004','2010-08-09'),
-('1845','92','R-004','2010-08-09'),
-('1846','91','R-004','2010-08-09'),
-('1847','90','R-004','2010-08-09'),
-('1848','89','R-004','2010-08-09');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1849','88','R-005','2010-08-09'),
-('1850','87','R-005','2010-08-09'),
-('1851','86','R-005','2010-08-09'),
-('1852','85','R-005','2010-08-09'),
-('1853','84','R-005','2010-08-09'),
-('1854','80','R-005','2010-08-10'),
-('1855','79','R-005','2010-08-10'),
-('1856','78','R-005','2010-08-10');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1857','77','R-005','2010-08-10'),
-('1858','76','R-005','2010-08-10'),
-('1859','74','R-006','2010-08-10'),
-('1860','68','R-006','2010-08-10'),
-('1861','66','R-006','2010-08-10'),
-('1862','65','R-006','2010-08-11'),
-('1863','64','R-006','2010-08-11'),
-('1864','61','R-006','2010-08-11');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1865','60','R-006','2010-08-11'),
-('1866','59','R-006','2010-08-12'),
-('1867','58','R-006','2010-08-12'),
-('1868','57','R-006','2010-08-12'),
-('1869','56','R-007','2010-08-12'),
-('1870','55','R-007','2010-08-12'),
-('1871','54','R-007','2010-08-12'),
-('1872','53','R-007','2010-08-12');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1873','52','R-007','2010-08-12'),
-('1874','51','R-007','2010-08-12'),
-('1875','50','R-007','2010-09-09'),
-('1876','49','R-007','2010-09-09'),
-('1877','48','R-007','2010-09-09'),
-('1878','47','R-007','2010-09-09'),
-('1879','46','R-008','2010-09-09'),
-('1880','43','R-008','2010-09-09');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1881','42','R-008','2010-09-09'),
-('1882','41','R-008','2010-09-09'),
-('1883','40','R-008','2010-09-10'),
-('1884','33','R-008','2010-09-10'),
-('1885','32','R-008','2010-09-10'),
-('1886','31','R-008','2010-09-10'),
-('1887','30','R-008','2010-09-10'),
-('1888','29','R-008','2010-09-10');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1889','28','R-009','2010-09-10'),
-('1890','27','R-009','2010-09-10'),
-('1891','26','R-009','2010-09-10'),
-('1892','25','R-009','2010-09-11'),
-('1893','24','R-009','2010-09-11'),
-('1894','23','R-009','2010-09-11'),
-('1895','22','R-009','2010-09-11'),
-('1896','21','R-009','2010-09-11');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1897','20','R-009','2010-09-11'),
-('1898','19','R-009','2010-09-11'),
-('1899','18','R-010','2010-09-17'),
-('1900','17','R-010','2010-09-17'),
-('1901','16','R-010','2010-09-17'),
-('1902','15','R-010','2010-09-17'),
-('1903','14','R-010','2010-09-17'),
-('1904','13','R-010','2010-09-17');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1905','12','R-010','2010-09-18'),
-('1906','11','R-010','2010-09-18'),
-('1907','10','R-010','2010-09-18'),
-('1908','9','R-010','2010-09-18'),
-('1909','30','R-001','2010-09-18'),
-('1910','7','R-001','2010-09-18'),
-('1911','6','R-001','2010-09-18');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1912','5','R-001','2010-09-18'),
-('1913','4','R-001','2010-09-20'),
-('1914','3','R-001','2010-09-20'),
-('1915','2','R-001','2010-09-20'),
-('1916','1','R-001','2010-09-20'),
-('1917','107','R-001','2010-09-20'),
-('1918','82','R-001','2010-09-20');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1919','81','R-001','2010-09-20'),
-('1920','45','R-002','2010-09-20'),
-('1921','118','R-002','2010-10-06'),
-('1922','99','R-002','2010-10-06'),
-('1923','69','R-002','2010-10-06'),
-('1924','67','R-002','2010-10-06'),
-('1925','96','R-002','2010-10-06');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1926','95','R-002','2010-10-09'),
-('1927','94','R-002','2010-10-09'),
-('1928','39','R-002','2010-10-09'),
-('1929','38','R-002','2010-10-09'),
-('1930','37','R-003','2010-10-09'),
-('1931','36','R-003','2010-10-12'),
-('1932','35','R-003','2010-10-12');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1933','34','R-003','2010-10-12'),
-('1934','83','R-003','2010-10-12'),
-('1935','100','R-003','2010-10-12'),
-('1936','63','R-003','2010-10-12'),
-('1937','44','R-003','2010-10-18'),
-('1938','115','R-003','2010-10-18'),
-('1939','73','R-003','2010-10-18');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1940','72','R-004','2010-10-18'),
-('1941','71','R-004','2010-10-18'),
-('1942','70','R-004','2010-10-18'),
-('1943','62','R-004','2010-10-19'),
-('1944','114','R-004','2010-10-19'),
-('1945','117','R-004','2010-10-19'),
-('1946','116','R-004','2010-10-19');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1947','113','R-004','2010-10-19'),
-('1948','112','R-004','2010-10-19'),
-('1949','111','R-004','2010-10-19'),
-('1950','110','R-005','2010-10-19'),
-('1951','109','R-005','2010-10-20'),
-('1952','108','R-005','2010-10-20'),
-('1953','106','R-005','2010-10-20');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1954','105','R-005','2010-10-20'),
-('1955','104','R-005','2010-10-20'),
-('1956','103','R-005','2010-10-20'),
-('1957','102','R-005','2010-10-20'),
-('1958','101','R-005','2010-11-01'),
-('1959','98','R-005','2010-11-01'),
-('1960','97','R-006','2010-11-01');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1961','93','R-006','2010-11-01'),
-('1962','92','R-006','2010-11-01'),
-('1963','91','R-006','2010-11-01'),
-('1964','90','R-006','2010-11-01'),
-('1965','89','R-006','2010-11-01'),
-('1966','88','R-006','2010-11-01'),
-('1967','87','R-006','2010-11-02');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1968','86','R-006','2010-11-02'),
-('1969','85','R-006','2010-11-02'),
-('1970','84','R-007','2010-11-02'),
-('1971','80','R-007','2010-11-02'),
-('1972','79','R-007','2010-11-02'),
-('1973','78','R-007','2010-11-02'),
-('1974','77','R-007','2010-11-02'),
-('1975','76','R-007','2010-11-02');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1976','74','R-007','2010-11-02'),
-('1977','68','R-007','2010-11-02'),
-('1978','66','R-007','2010-11-02'),
-('1979','65','R-007','2010-11-02'),
-('1980','64','R-008','2010-11-02'),
-('1981','61','R-008','2010-11-02'),
-('1982','60','R-008','2010-11-02');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1983','59','R-008','2010-11-02'),
-('1984','58','R-008','2010-11-02'),
-('1985','57','R-008','2010-11-02'),
-('1986','56','R-008','2010-11-02'),
-('1987','55','R-008','2010-11-02'),
-('1988','54','R-008','2010-11-03'),
-('1989','53','R-008','2010-11-03');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1990','52','R-009','2010-11-03'),
-('1991','51','R-009','2010-11-03'),
-('1992','50','R-009','2010-11-03'),
-('1993','49','R-009','2010-11-03'),
-('1994','48','R-009','2010-12-10'),
-('1995','47','R-009','2010-12-12'),
-('1996','46','R-009','2010-12-13'),
-('1997','43','R-009','2010-12-14');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`facturas` (`CODIGO_FACTURA`,`CODIGO_PROVEEDOR`,`CODIGO_RECOLECTOR`,`FECHA`)
-VALUES
-('1998','42','R-009','2010-12-15'),
-('1999','41','R-009','2010-12-16'),
-('2000','40','R-010','2010-12-17');
-
+INSERT INTO PROVEEDORES (CODIGO_PROVEEDOR, CODIGO_TIPO_EMPRESA, NOMBRE_PROVEEDOR, DEPARTAMENTO, DIRECCION_PROVEEDOR, TELEFONO_PROVEEDOR1, TELEFONO_PROVEEDOR2, CONTACTO, ESTANON) VALUES
+(1, 'TE-10', 'YOHANA', 'San Salvador', 'Av monsenor Romero 10 calle oriente por ex - cine Plaza San salvador', '2271-5813', '2502-9742', 'Luis Cardoza', '3'),
+(2, 'TE-10', 'ESTRELLA', 'San Salvador', 'Av monsenor romero # 525 frente a ex- cine plaza san salvador', '2249-7048', '2281-5764', 'Julio Ungo', '4'),
+(3, 'TE-10', 'FRANCIA', 'San Salvador', 'Av monsenor romero # 506 frente a ex- cine plaza san salvador', '2271-8449', NULL, 'Irma Chacon', '2'),
+(4, 'TE-10', 'VENECIA', 'San Salvador', '2 av sur # 609 San salvador', '2222-8019', '2100-3036', 'Mario Venitez', '4'),
+(5, 'TE-10', 'HENRIQUEZ', 'San Salvador', '10 C OTE # 306 Mercado Belloso ', '2520-8836', NULL, 'Enrique Rivera', NULL),
+(6, 'TE-10', 'ALUMICENTRO', 'San Salvador', '25 av Nte S.S Frente a Hospital Bloom', '2226-9800', NULL, 'Jacob Cuellar', '6'),
+(7, 'TE-10', 'SOLAIRE ', 'San Salvador', '21 av sur y 4 c pte S.S Atras de didea', '2275-2100', NULL, 'Elmer Cruz', '10'),
+(8, 'TE-08', 'MEANGUERA', 'Morazan', 'carretera a perquin', '2680/6430', '7904/5593', 'NOE PEREIRA', NULL),
+(9, 'TE-10', 'ROSTRAN', 'San Salvador', 'Col. Milagro final 1 c ote San Marcos', '2103-3605', NULL, 'Celia Perez', '4'),
+(10, 'TE-10', 'DISCOA ', 'San Salvador', 'Final 25 av Sur y pje 3 casa # 4 col santa Ursula San salvador', '2242-3681', '2242-0441', 'Jose Villegas', '2'),
+(11, 'TE-10', 'VIDRIO CENTROAMERICANO', 'San Salvador', 'Av cuzcatlan #614  frente a la roca', '2222-3325', NULL, 'Susana mejia', NULL),
+(12, 'TE-10', 'BONILLA', 'San Salvador', 'Col San antonio abad #721 col america', '2208-0322', NULL, 'Oscar Bonilla', '4'),
+(13, 'TE-10', 'INSTALUM', 'San Salvador', 'Final 1 c ote col milagro san Marcos', '2556-8547', '2220-1589', 'Mario Rivera', NULL),
+(14, 'TE-10', 'PROALVI', 'San Salvador', '29 av nte frente a teatro de camaras', '2234-7895', '7980-8786', 'Empleados', '3'),
+(15, 'TE-10', 'LA ROCA', 'San Salvador', 'Av cuzcatlan #530  mercado belloso', '2221-3891', '2222-0840', 'Susana Barrientos', '4'),
+(16, 'TE-10', 'LUZ AIRE', 'San Salvador', 'C cuzcatlan esquina opuesta a banco Agricola', '2249-7367', NULL, 'Aleida nunez', '2'),
+(17, 'TE-10', 'INDUSTRIAL', 'San Salvador', '2 av nte y 33 c ote local 1804 mejicanos', '2226-7118', NULL, 'Benjamin Orantes', '4'),
+(18, 'TE-10', 'VIDRERIA PINEDA', 'San Salvador', 'Calle modelo #349 San Salvador', '2270-1304', NULL, 'Sr. Elmer', '5'),
+(19, 'TE-10', 'INDUSTRIAS PANOAMERICANAS', 'San Salvador', 'Final 27 Av sur y calle central #1426 Col. Cucumacayan san salvador', '2221-8686', NULL, 'trabajadores', '4'),
+(20, 'TE-10', 'PRISMA', 'San Salvador', 'C chiltiupan pol. E ciudad merliot', '2221-1257', '71182056', 'Roxana de Noyola', '4'),
+(21, 'TE-10', 'ALU ARQ', 'San Salvador', '35 Av sur # 633 entre 6 y decima y 12 calle poniente Col. Flor Blanca', '2298-8147', '7851-8750', 'Jesus de guevara', '3'),
+(22, 'TE-10', 'INCO', 'San Salvador', 'Final 1 av norte 2 cuadras abajo de la alcaldia de Soyapango', '2251-6000', NULL, 'Jaime Eduardo Argueta', NULL),
+(23, 'TE-10', 'ALUMINARTE', 'San Salvador', 'Col. Santa fe calle #180 San Marcos', '2213-0337', NULL, 'leonardo Recinos', '2'),
+(24, 'TE-10', 'PENIEL', 'San Salvador', 'C chiltiupan frente a colegio espiritu santo', '2269-4200', NULL, 'Carlos Miranda', NULL),
+(25, 'TE-10', 'INCO UNIVERSITARIA', 'San Salvador', 'Bodega universitaria', '2235-3905', NULL, 'Sr Pineda', '1R'),
+(26, 'TE-10', 'MARTINEZ', 'San Salvador', 'Av catro moran local 16 mejicanos', '2317-3225', NULL, 'Cesar Martinez', '1'),
+(27, 'TE-10', 'VITRA', 'San Salvador', 'Atras de iglesia el rosario San salvador', '2221-4542', '7887-2723', 'Alicia Mendez', '1R'),
+(28, 'TE-10', 'INSTACIELO', 'San Salvador', '12 c oriente # 317 mercado Belloso', '2249-7048', '2221-1786', 'Ernesto Quintanilla', '3'),
+(29, 'TE-10', 'INCO BELLOSO', 'San Salvador', '2 av sur # 520 mercado belloso', '2221-0758', NULL, 'Luisa Moreno', '2'),
+(30, 'TE-10', 'NATANAEL', 'San Salvador', 'mercado belloso   ', '2532-5280', NULL, 'Sr.Solorsano', NULL),
+(31, 'TE-10', 'LEMUS', 'San Salvador', '10 c ote # 12 Mercado Belloso', '2281-1000', NULL, 'Saul lemus', '2'),
+(32, 'TE-10', 'UNIVERSALES', 'San Salvador', '2 Av sur local 629 belloso', '2222-3470', NULL, 'Fredy figueroa', NULL),
+(33, 'TE-10', 'DIVENTANAS', 'San Salvador', '4 c ote y 19 av sur local 304', '2223-2688', NULL, 'Carlos Molina', NULL),
+(34, 'TE-09', 'LA BOCANA', 'Libertad', 'Carretera litoral contiguo a Roca zunzal playa el tunco', '7888-8067', NULL, 'Luis Alonso delgado', '3'),
+(35, 'TE-09', 'EL PASIFICO', 'Libertad', 'Carretera litoral playa el majahualy frente a hotel santa fe', '2310-6504', NULL, 'Nelson figueroa', '3'),
+(36, 'TE-09', 'ROCA ZUMZAL', 'Libertad', 'Carretera litoral playa el Zunzal', '2389-6126', NULL, 'Oscar miranda', '3'),
+(37, 'TE-09', 'SANTA FE', 'Libertad', 'Carretera litoral playa el majahualt', '2389-5489', NULL, 'Orlando Jimenes', '3'),
+(38, 'TE-09', 'DOLCE VITA', 'Libertad', 'Carretera litoral Siguiendo playa san diego ctgo a curva de don gere', '2335-3592', NULL, 'Maria rodriguez', '3'),
+(39, 'TE-09', 'CURVA DE DON GERE', 'Libertad', 'Carretera litoral siguiendo playa san diego ctgo a dolce vita', '2335-3436', '7927-2730', 'Miguel sibrian', '3'),
+(40, 'TE-09', 'LA OLA VETOS', 'San Salvador', 'Col. Miramonte atras de hotel intercontinental', '7898-9751', NULL, 'Sr. Carmen', '3'),
+(41, 'TE-09', 'DISCO SKEY', 'San Salvador', 'Prolongacion juan pablo 2 por colegio lavalle Lc 313a y 307a San salvador', '2261-0724', NULL, 'Pedro Antonio Arevalo', '3'),
+(42, 'TE-09', 'SOPON ZACAMIL', 'San Salvador', 'Col zacamil pje 3 #2 frente a pnc.', '2272-5198', NULL, 'Nelson Martinez', '2'),
+(43, 'TE-09', 'RANCHOS EL SALVADOR', 'San Salvador', 'Zona Rosa por Restauran Cancun.', '2264-5858', NULL, 'Sr. Carlos', NULL),
+(44, 'TE-10', 'INSTALACINES INTERIANO', 'Soyapango', 'Col los alpes pje 3 lote 69', '2277-8238', NULL, 'Elena Henriquez', NULL),
+(45, 'TE-10', 'LUNA SOL', 'San Jacinto', 'Av los diplomaticos 1336 por ex casa Presidencial', '2270-1639', NULL, 'Despachador', NULL),
+(46, 'TE-05', 'HILTON PRINSES', 'San Salvador', '1c poniente Zona Rosa Esquina opuesta a Jala La Jarra', '2268-4545', '7325-8708', 'Alexander Arevalo', '3'),
+(47, 'TE-05', 'SHERATON P.', 'San Salvador', 'Final av revolucion san benito', '2283-4078', NULL, 'Silvia Madrid', '6'),
+(48, 'TE-04', 'MULTIPROYECTOS (TITAC)', 'San Salvador', '8 c ote #632 Barrio la vega', '2221-6201', NULL, 'Mauricio Calderon', NULL),
+(49, 'TE-10', 'SAN GERARDO', 'San Salvador', ' cl concepcion 513 por la tiendona', '2222-5154', NULL, 'Jaime Abarca', NULL),
+(50, 'TE-06', 'ANCALMO ', 'San Salvador', 'Antiguo Cuzcatlan', '2243-0100', NULL, 'Elga de olmedo', NULL),
+(51, 'TE-06', 'ARSAL ', 'San Salvador', 'Ca san jacinto frente al Zoologico Nacional', '2231-1335', NULL, 'Lic Paty', '3'),
+(52, 'TE-04', 'COMAGUI', 'San Salvador', '28 c poniente 49 av sur # 2523 san salvador', '2510-0518', NULL, 'William vazques', '3'),
+(53, 'TE-04', 'RECIPLAS', 'San Salvador', 'Alameda roosevelt y 55 av norte edificio Ipsfa 4 planta San salvador', '2290-6606', '2260-6607', 'Mauricio Saravia', '12'),
+(54, 'TE-04', 'ESC. AMERICANA', 'San Salvador', 'San Benito', '2528-8275', '7859-4322', 'Celina Aguirreurreta', '3'),
+(55, 'TE-04', 'DILICO', 'San Salvador', 'Carretera a sonsonate desvio del cria aves', '2298-7845', '7433-0495', 'Rafael', NULL),
+(56, 'TE-04', 'MC CORMIC', 'San Salvador', 'Antiguo Cuzcatlan', '2212-8579', NULL, 'Fatima de Chavez', '2'),
+(57, 'TE-04', 'ECOSEVICIOS', 'San Salvador', 'C antigua a tonacatepeque #125 Soyapango San salvador', '2227-0029', '7986-6870', 'Romel Castro', NULL),
+(58, 'TE-04', 'SHELTERS', 'San Salvador', 'Blvd los proceres centro de oficinas la sultana L110 Antiguo cuzcatlan', '2434-6892', '2439-7222', 'Ricardo Mejia', NULL),
+(59, 'TE-04', 'COCA COLA', 'San Salvador', 'Carretera Panoamericana Nejapa', '2239-4527', '7844-4229', 'Alejandro acevedo', NULL),
+(60, 'TE-04', 'CERVECERIA', 'San Salvador', 'Av independencia Frente a reloj de Flores', '2231-5239', '7745-7885', 'Edwin Lemus', NULL),
+(61, 'TE-04', 'INVERSIONES MONTECARLOS', 'San Salvador', 'Final av san martin # 4-7 santa tecla', '2241-0470', NULL, 'Rene villalobos', '10'),
+(62, 'TE-10', 'NASARETH', 'Santa Tecla', '7 av sur 4-6', '2531-1433', NULL, 'Cristian Sanchez', NULL),
+(63, 'TE-10', 'ADECORAVI', 'Soyapango', 'C roosvelt poniente  #27', '7002-3675', NULL, 'Elida de Monterrosa', NULL),
+(64, 'TE-10', 'V. 911', 'San Salvador', '49 av sur contiguo a 911 de pnc.', '2275-9631', NULL, 'Sr. Luis', NULL),
+(65, 'TE-10', 'ELIM', 'San Salvador', 'Bulevard constitucion 504 ', '2262-4865', NULL, 'Sr. Elim Garcia', NULL),
+(66, 'TE-10', 'V: ROCA', 'San Salvador', '79 av sur col escalon #6', '2264-0238', NULL, 'Empleados', NULL),
+(67, 'TE-10', 'TECNICIELO', 'Lourdes', 'Col las delicias #6', '2318-0393', NULL, 'Armando Arcia', NULL),
+(68, 'TE-10', 'JERUSALEN', 'San Salvador', 'Alameda juan Pablo 2 y 2 av nte 502', '2222-6438', NULL, 'Santos Portillo', NULL),
+(69, 'TE-10', 'LAS BRISAS', 'Lourdes', 'Km 24 y medio frente a castano', '2318-6464', NULL, 'Sr. Jorge', NULL),
+(70, 'TE-04', 'ECOSANTE', 'Santa Tecla', 'Col Quesaltepec final pje 1 contiguo a bomba de anda', '7270-2618', NULL, 'Carlos Rivara', '5'),
+(71, 'TE-10', 'TARCIS', 'Santa Tecla', '7 av nte 11 c ote bis plg 33 #3', '2288-2561', NULL, 'Roxana Bonilla', NULL),
+(72, 'TE-10', 'JOEL', 'Santa Tecla', '4 cl pte #2-4 b', '2100-2188', NULL, 'Carlos Diaz', NULL),
+(73, 'TE-10', 'INCO', 'Santa Tecla', '4 cl pte#3-5 b barrio candelaria', '7850-9207', NULL, 'Jose cruz', NULL),
+(74, 'TE-04', 'UNIVERSIDAD NACIONAL', 'San Salvador', 'Autopista nte Universidad Nacional', '7160-5966', NULL, 'LIC. De Soriano', NULL),
+(75, 'TE-04', 'AMAR', 'San Salvador', 'Constitucion pje francisco #540', '2262-1152', NULL, 'Francisco Rivas', '3'),
+(76, 'TE-03', 'CERO GRADOS', 'San Salvador', 'Paseo General Escalon ', '7983-3344', NULL, 'Chino', '3'),
+(77, 'TE-03', 'JUNGLE', 'San Salvador', 'Zona Rosa frente a mac donals', '7701-7187', NULL, 'Xiomara', '3'),
+(78, 'TE-10', 'LUZ AIRE', 'San Salvador', '20 c pte 2501 col. Luz', '2298-1860', NULL, 'Juan Miranda', NULL),
+(79, 'TE-10', 'EUSAl', 'San Salvador', 'Av Olimpica Por estadio Flor Blanca', '2276-4567', NULL, 'Yovanny', NULL),
+(80, 'TE-07', 'CORDONCILLO', 'San Salvador', 'SECTOR SAN JUAN BOSCO 1 CANTON SAN ANDRES LIBERTAD', '2455-5086', NULL, 'Mauricio Saravia', '3'),
+(81, 'TE-10', 'VEDECOR', 'San Jacinto', 'Col.santa carlota2 pje san francisco 14 Barrio san jacinto', '2275-6340', NULL, 'Carlos Regalado', '2'),
+(82, 'TE-07', 'SAN MARINO', 'San Jacinto', '10 av sur 553 barrio la vega ex administracion de renta', NULL, NULL, 'Marbelly Flores', '3'),
+(83, 'TE-08', 'SUCHITOTO', 'Cuzcatlan', 'Carretera a suchitoto relleno sanitario', '7786-5882', NULL, 'Nery Amaya', '3'),
+(84, 'TE-09', 'LOS RINCONCITOS', 'San Salvador', 'Zona Rosa frente a Banco City', NULL, NULL, 'Vigilante', NULL),
+(85, 'TE-10', 'COMERCIAL GALDAMEZ', 'San Salvador', '12 c ote 217 a el centro mercado Belloso.', '2271-3760', NULL, 'Alfonso Galdamez', NULL),
+(86, 'TE-10', 'VENTANAS SAN PEDRO', 'San Salvador', '2 av sur monsenor arnulfo romero 617 mercado belloso', '2222-3466', NULL, 'Juan Mena', NULL),
+(87, 'TE-10', 'VENTANAS CASTILLO', 'San Salvador', '4 av surblvd venezuela y 12 c ote frente a parqueo belloso', '2249-7717', '2222-8161', 'Leonardo Castillo', NULL),
+(88, 'TE-10', 'PENIEL SOYAPANGO', 'San Salvador', 'Col. Guadalupe c principal y c franklin roosevelt  2 soyapango', '2277-5971', NULL, 'Jonathan Miranda', '2J'),
+(89, 'TE-10', 'VIDRIERIA SANCHEZ', 'San Salvador', 'Av cuzcatlan mercado belloso.', '2222-6437', NULL, 'Veronica Sanchez', '1'),
+(90, 'TE-09', 'WILLYS', 'San Salvador', 'Final 5 Cl pte y 11 av nte frente a indes Alameda Juan pablo 2', '2281-1519', NULL, 'Beatriz Pleitez', '3'),
+(91, 'TE-02', 'QUESSON', 'San Salvador', 'C 5 de Noviembre 5 San Salvador', '7789-4512', NULL, 'Vigilante', '2'),
+(92, 'TE-10', 'INDUSTRIAS EL EXITO', 'San Salvador', 'C al volcan pje palacios col. Zacamil mejicanos 5.', '2272-7522', NULL, 'Nelson Montenegro', '6'),
+(93, 'TE-04', 'CORPORACION BONIMA', 'San Salvador', 'Blvad el ejercito frente a aeropuerto de ilopango.', '2224-1022', NULL, 'Oscar Mendoza', NULL),
+(94, 'TE-09', 'LA GUITARRA', 'Libertad', 'Km 42 Carretera el Litoral playa el tunco', '2389-6398', NULL, 'Vigilante', '2'),
+(95, 'TE-09', 'KAYU', 'Libertad', 'Km 44 playa el tunco', '2389-6135', NULL, 'Vigilante', '1B'),
+(96, 'TE-05', 'HOTEL MOPELIA', 'Libertad', 'Km 42 carretera litoral tamanique', '2389-6265', NULL, 'Patricia guerra', '2'),
+(97, 'TE-10', 'TORNOLARA', 'San Salvador', '27 c pte # 106 san Miguelito', '2235-3755', NULL, 'Jose luis Lara', '1'),
+(98, 'TE-04', 'NONI TAHITI', 'San Salvador', 'Final 83 av sur cerca del centro espanol.', '7894-0539', NULL, 'Ana gloria palomo', NULL),
+(99, 'TE-09', 'CEFE DON PEDRO merliot', 'Merliot', '17 av nte c chiultiupan esquina opuesta a plaza merliot', '2288-4334', NULL, 'Maria de los angeles', '3'),
+(100, 'TE-09', 'CAFE DON PEDRO autopista nte', NULL, NULL, NULL, NULL, NULL, NULL),
+(101, 'TE-10', 'LEO', 'San Salvador', '10 c  120 Mercado Belloso.', '2271-4071', '7597-7343', 'Israel Lemus', NULL),
+(102, 'TE-04', 'COPERATIVA AVACHAZ', 'San Salvador', 'Col. Zacamil ( punto de buses de la 44)', NULL, NULL, 'Carmen v. de Aguirre', NULL),
+(103, 'TE-10', 'VID. MOLDURAS MELENDEZ', 'San Salvador', '8 Av sur y 4c ote atras de iglesia rosario', '2222-0454', '7730-9552', 'Jose Leonardo Perla', NULL),
+(104, 'TE-10', 'ALUMANT', 'San Salvador', 'c modelo frente a comercial chacon.', '71241309', NULL, 'Rigoberto Lopez', NULL),
+(105, 'TE-10', 'CUZCATLAN', 'San Salvador', NULL, NULL, NULL, NULL, '1'),
+(106, 'TE-10', 'DELUXE', 'San Salvador', 'Av. Cuzcatlan mercado belloso', NULL, NULL, NULL, '1'),
+(107, 'TE-06', 'TE-06 FARDEL', 'San Jacinto', '1 av nte # 412 pje gloria col. San jacinto', NULL, NULL, 'Lic. Guardado', NULL),
+(108, 'TE-04', 'ERMINDA DE RAMIREZ', 'San Salvador', '11 av sur n 309 sobre 4 c pte detras del parque bolivar frente comercial isnan.', NULL, NULL, '(MONSIRAMI)', NULL),
+(109, 'TE-07', 'ILOPANIA', 'San Salvador', '10 av sur 553 barrio la vega ex administracion de renta', '2271-5957', NULL, 'Jorge manzzini', NULL),
+(110, 'TE-10', 'MOLDURAS PICASO', 'San Salvador', '59 av nte 334 San Salvador prolongacion juan pablo 2', '2261-0768', NULL, NULL, NULL),
+(111, 'TE-04', 'YORECICLO', 'San Salvador', 'a la par de los juzgados de santa tecla y cementerio del lugar', '7321-4521', NULL, 'FRANCISCO GARCIA', NULL),
+(112, 'TE-10', 'RAPI VIDRIO', 'San Salvador', 'C antigua a huizucar pje san rafael local 3 la cima san salvador.', '2273-2488', NULL, 'JORGE CASTRO', NULL),
+(113, 'TE-05', 'INTERCONTINENTAL', 'San Salvador', 'BLVD LOS HEROES FRENTE A METROCENTRO.', '7895-1605', NULL, 'RENE PEREZ', NULL),
+(114, 'TE-08', 'ALC. SAN ANTONIO PAJONAL', 'SANTA ANA', 'SANTA ANA SAN ANTONIO PAJONAL.', NULL, NULL, 'CARLOS HENRIQUES', NULL),
+(115, 'TE-08', 'ALC. DE TALNIQUE', 'Sonsonate', 'CARRETERA A SONSONATE  ', NULL, NULL, 'MOISES', NULL),
+(116, 'TE-10', 'FERRETERIA AZ', 'San Salvador', 'CONTIGUO AL MAYESTIC', NULL, NULL, 'ENCARGADO DE BODEGA', NULL),
+(117, 'TE-10', 'CIELOS Y VENTANAS HERNANDEZ', 'San Salvador', 'REPARTO XOCHILIT 12 CALLE MONSERRAT FRENTE A TAMINSAL', '2131-6955', '7890-0523', 'JOSE MARIO HERNANDEZ', NULL);
+/*==============================================================*/
+/* Table: FACTURAS                                     			*/
+/*==============================================================*/
+INSERT INTO FACTURAS (CODIGO_FACTURA, CODIGO_PROVEEDOR, CODIGO_RECOLECTOR, SUCURSAL, CODIGO_CENTRO_ACOPIO, PRECIO_COMPRA, FECHA) VALUES
+('1001', 106, 'R-003', 'VICESA', 'CA-003', 1.2, '2010-08-25'),
+('1004', 5, 'R-006', 'VICESA', 'CA-004', 1.2, '2010-12-24'),
+('1008', 61, 'R-004', 'VIGUA', 'CA-004', 1.5, '2009-08-17'),
+('1009', 32, 'R-008', 'VICESA', 'CA-001', 1.2, '2008-12-08'),
+('1011', 46, 'R-005', 'VICESA', 'CA-010', 1.2, '2009-03-20'),
+('1012', 33, 'R-005', 'VICESA', 'CA-007', 1.2, '2010-01-14'),
+('1013', 100, 'R-001', 'VIGUA', 'CA-009', 1.2, '2008-10-26'),
+('1014', 69, 'R-005', 'VICESA', 'CA-007', 1.5, '2010-06-28'),
+('1015', 73, 'R-005', 'VIGUA', 'CA-004', 1.2, '2008-11-01'),
+('1016', 47, 'R-006', 'VIGUA', 'CA-010', 1.2, '2011-09-04'),
+('1017', 22, 'R-001', 'VIGUA', 'CA-001', 1.2, '2011-01-02'),
+('1018', 21, 'R-006', 'VICESA', 'CA-008', 1.2, '2009-11-18'),
+('1019', 108, 'R-002', 'VICESA', 'CA-008', 1.2, '2009-09-27'),
+('1020', 77, 'R-005', 'VICESA', 'CA-007', 1.2, '2009-05-02'),
+('1021', 24, 'R-004', 'VIGUA', 'CA-005', 1.2, '2010-10-31'),
+('1022', 50, 'R-009', 'VICESA', 'CA-003', 1.2, '2009-04-03'),
+('1023', 51, 'R-004', 'VIGUA', 'CA-010', 1.2, '2011-07-10'),
+('1024', 106, 'R-004', 'VIGUA', 'CA-008', 1.2, '2009-05-01'),
+('1025', 50, 'R-007', 'VIGUA', 'CA-006', 1.2, '2010-03-26'),
+('1026', 83, 'R-009', 'VICESA', 'CA-007', 1.2, '2010-10-22'),
+('1027', 93, 'R-004', 'VIGUA', 'CA-009', 1.2, '2010-01-25'),
+('1028', 99, 'R-005', 'VICESA', 'CA-008', 1.2, '2009-03-20'),
+('1029', 8, 'R-003', 'VIGUA', 'CA-003', 1.2, '2010-09-02'),
+('1030', 30, 'R-007', 'VICESA', 'CA-003', 1.2, '2011-09-28'),
+('1031', 97, 'R-006', 'VIGUA', 'CA-008', 1.2, '2011-10-14'),
+('1032', 2, 'R-001', 'VICESA', 'CA-007', 1.2, '2011-08-23'),
+('1033', 111, 'R-001', 'VICESA', 'CA-005', 1.2, '2009-08-19'),
+('1035', 25, 'R-003', 'VIGUA', 'CA-008', 1.2, '2011-05-19'),
+('1036', 110, 'R-006', 'VIGUA', 'CA-002', 1.2, '2009-11-14'),
+('1037', 93, 'R-005', 'VICESA', 'CA-008', 1.2, '2011-01-20'),
+('1038', 110, 'R-002', 'VIGUA', 'CA-010', 1.2, '2011-07-10'),
+('1039', 72, 'R-007', 'VICESA', 'CA-003', 1.2, '2010-03-24'),
+('1040', 111, 'R-002', 'VICESA', 'CA-006', 1.2, '2011-10-13'),
+('1041', 109, 'R-008', 'VIGUA', 'CA-003', 1.2, '2009-03-29'),
+('1042', 24, 'R-007', 'VIGUA', 'CA-008', 1.2, '2009-05-25'),
+('1043', 106, 'R-007', 'VIGUA', 'CA-004', 1.2, '2011-08-26'),
+('1044', 2, 'R-002', 'VICESA', 'CA-005', 1.2, '2010-08-27'),
+('1045', 78, 'R-005', 'VICESA', 'CA-007', 1.2, '2011-01-21'),
+('1046', 90, 'R-006', 'VIGUA', 'CA-003', 1.2, '2009-04-01'),
+('1047', 22, 'R-007', 'VICESA', 'CA-002', 1.2, '2011-06-04'),
+('1048', 69, 'R-001', 'VICESA', 'CA-006', 1.2, '2010-03-04'),
+('1049', 15, 'R-003', 'VICESA', 'CA-002', 1.2, '2010-04-24'),
+('1050', 41, 'R-008', 'VICESA', 'CA-001', 1.2, '2010-09-18'),
+('1051', 19, 'R-009', 'VICESA', 'CA-004', 1.2, '2011-05-07'),
+('1052', 24, 'R-009', 'VIGUA', 'CA-003', 1.2, '2008-11-10'),
+('1053', 92, 'R-007', 'VIGUA', 'CA-003', 1.2, '2009-07-28'),
+('1054', 46, 'R-010', 'VICESA', 'CA-001', 1.2, '2009-08-17'),
+('1055', 44, 'R-002', 'VICESA', 'CA-008', 1.2, '2010-07-24'),
+('1056', 104, 'R-010', 'VIGUA', 'CA-010', 1.2, '2011-08-25'),
+('1057', 116, 'R-001', 'VICESA', 'CA-007', 1.2, '2011-02-08'),
+('1058', 67, 'R-004', 'VICESA', 'CA-003', 1.2, '2009-12-30'),
+('1059', 2, 'R-010', 'VIGUA', 'CA-009', 1.2, '2010-08-15'),
+('1060', 102, 'R-006', 'VIGUA', 'CA-002', 1.2, '2009-03-09'),
+('1061', 27, 'R-009', 'VIGUA', 'CA-010', 1.2, '2009-05-14'),
+('1062', 108, 'R-006', 'VIGUA', 'CA-005', 1.2, '2010-02-14'),
+('1063', 114, 'R-009', 'VICESA', 'CA-004', 1.2, '2010-08-27'),
+('1064', 20, 'R-010', 'VIGUA', 'CA-006', 1.2, '2009-12-01'),
+('1065', 98, 'R-003', 'VICESA', 'CA-005', 1.2, '2010-08-28'),
+('1066', 61, 'R-003', 'VICESA', 'CA-001', 1.2, '2009-06-03'),
+('1067', 52, 'R-008', 'VIGUA', 'CA-010', 1.2, '2010-06-05'),
+('1068', 54, 'R-001', 'VIGUA', 'CA-003', 1.2, '2008-11-12'),
+('1069', 103, 'R-010', 'VIGUA', 'CA-002', 1.2, '2010-04-20'),
+('1070', 24, 'R-007', 'VICESA', 'CA-002', 1.2, '2010-01-20'),
+('1071', 75, 'R-006', 'VIGUA', 'CA-004', 1.2, '2008-11-24'),
+('1072', 17, 'R-003', 'VIGUA', 'CA-004', 1.2, '2011-03-30'),
+('1073', 103, 'R-008', 'VICESA', 'CA-002', 1.2, '2009-06-30'),
+('1074', 62, 'R-001', 'VIGUA', 'CA-001', 1.2, '2011-01-21'),
+('1075', 2, 'R-009', 'VIGUA', 'CA-004', 1.2, '2010-01-11'),
+('1076', 85, 'R-003', 'VIGUA', 'CA-009', 1.2, '2009-11-02'),
+('1077', 82, 'R-001', 'VICESA', 'CA-006', 1.2, '2010-09-23'),
+('1078', 22, 'R-010', 'VIGUA', 'CA-007', 1.2, '2009-05-29'),
+('1079', 102, 'R-005', 'VICESA', 'CA-002', 1.2, '2009-12-28'),
+('1080', 77, 'R-006', 'VIGUA', 'CA-005', 1.2, '2010-11-29'),
+('1081', 111, 'R-004', 'VICESA', 'CA-008', 1.2, '2010-08-16'),
+('1082', 40, 'R-007', 'VIGUA', 'CA-008', 1.2, '2010-08-30'),
+('1083', 73, 'R-008', 'VICESA', 'CA-009', 1.2, '2009-08-20'),
+('1084', 17, 'R-002', 'VICESA', 'CA-006', 1.2, '2009-04-15'),
+('1085', 96, 'R-010', 'VICESA', 'CA-004', 1.2, '2009-06-24'),
+('1086', 100, 'R-007', 'VIGUA', 'CA-009', 1.2, '2011-03-24'),
+('1087', 4, 'R-003', 'VICESA', 'CA-004', 1.2, '2011-08-26'),
+('1088', 101, 'R-007', 'VICESA', 'CA-009', 1.2, '2008-12-08'),
+('1089', 13, 'R-008', 'VIGUA', 'CA-006', 1.2, '2010-11-10'),
+('1090', 101, 'R-006', 'VICESA', 'CA-010', 1.2, '2009-06-02'),
+('1091', 9, 'R-005', 'VICESA', 'CA-004', 1.2, '2010-02-04'),
+('1092', 23, 'R-008', 'VICESA', 'CA-008', 1.2, '2011-02-15'),
+('1093', 92, 'R-009', 'VIGUA', 'CA-006', 1.2, '2010-05-23'),
+('1094', 90, 'R-010', 'VICESA', 'CA-001', 1.2, '2009-03-21'),
+('1095', 25, 'R-004', 'VICESA', 'CA-010', 1.2, '2009-09-02'),
+('1096', 98, 'R-008', 'VIGUA', 'CA-001', 1.2, '2011-06-27'),
+('1097', 7, 'R-009', 'VIGUA', 'CA-001', 1.2, '2011-04-16'),
+('1098', 3, 'R-005', 'VIGUA', 'CA-008', 1.2, '2009-01-06'),
+('1099', 19, 'R-009', 'VIGUA', 'CA-003', 1.2, '2009-02-07'),
+('1100', 75, 'R-004', 'VIGUA', 'CA-005', 1.2, '2011-10-10'),
+('1101', 59, 'R-004', 'VIGUA', 'CA-010', 1.2, '2009-01-21'),
+('1102', 24, 'R-005', 'VIGUA', 'CA-005', 1.2, '2011-08-21'),
+('1103', 19, 'R-007', 'VICESA', 'CA-003', 1.2, '2010-09-25'),
+('1104', 82, 'R-007', 'VICESA', 'CA-001', 1.2, '2010-02-17'),
+('1105', 106, 'R-004', 'VIGUA', 'CA-003', 1.2, '2011-08-04'),
+('1106', 109, 'R-005', 'VICESA', 'CA-006', 1.2, '2010-11-23'),
+('1107', 75, 'R-001', 'VIGUA', 'CA-007', 1.2, '2011-03-07'),
+('1108', 9, 'R-008', 'VIGUA', 'CA-007', 1.2, '2010-06-10'),
+('1109', 84, 'R-007', 'VIGUA', 'CA-001', 1.2, '2010-04-06'),
+('1110', 107, 'R-004', 'VICESA', 'CA-004', 1.2, '2011-10-21'),
+('1111', 77, 'R-004', 'VICESA', 'CA-006', 1.2, '2010-06-25'),
+('1112', 103, 'R-001', 'VICESA', 'CA-005', 1.2, '2010-12-23'),
+('1113', 1, 'R-003', 'VICESA', 'CA-004', 1.2, '2010-11-21'),
+('1114', 51, 'R-007', 'VICESA', 'CA-005', 1.2, '2011-04-15'),
+('1115', 66, 'R-004', 'VIGUA', 'CA-005', 1.2, '2011-09-01'),
+('1116', 103, 'R-009', 'VICESA', 'CA-007', 1.2, '2010-07-23'),
+('1117', 67, 'R-006', 'VICESA', 'CA-010', 1.2, '2009-11-08'),
+('1118', 50, 'R-007', 'VICESA', 'CA-001', 1.2, '2010-05-28'),
+('1119', 60, 'R-002', 'VICESA', 'CA-004', 1.2, '2010-06-21'),
+('1120', 62, 'R-004', 'VIGUA', 'CA-009', 1.2, '2009-10-25'),
+('1121', 79, 'R-003', 'VIGUA', 'CA-010', 1.2, '2009-11-22'),
+('1122', 85, 'R-009', 'VIGUA', 'CA-003', 1.2, '2009-09-08'),
+('1123', 37, 'R-004', 'VIGUA', 'CA-005', 1.2, '2010-09-22'),
+('1124', 50, 'R-006', 'VICESA', 'CA-009', 1.2, '2009-06-01'),
+('1125', 17, 'R-004', 'VICESA', 'CA-004', 1.2, '2010-01-11'),
+('1126', 7, 'R-002', 'VIGUA', 'CA-008', 1.2, '2009-03-18'),
+('1127', 114, 'R-008', 'VICESA', 'CA-004', 1.2, '2011-06-24'),
+('1128', 36, 'R-003', 'VICESA', 'CA-006', 1.2, '2011-05-25'),
+('1129', 15, 'R-004', 'VIGUA', 'CA-010', 1.2, '2009-04-22'),
+('1130', 25, 'R-006', 'VIGUA', 'CA-002', 1.2, '2009-09-25'),
+('1131', 83, 'R-001', 'VIGUA', 'CA-003', 1.2, '2009-04-20'),
+('1132', 109, 'R-003', 'VIGUA', 'CA-002', 1.2, '2010-10-23'),
+('1133', 32, 'R-010', 'VIGUA', 'CA-009', 1.2, '2010-01-15'),
+('1134', 22, 'R-004', 'VIGUA', 'CA-002', 1.2, '2011-03-02'),
+('1135', 28, 'R-008', 'VIGUA', 'CA-003', 1.2, '2009-09-22'),
+('1136', 7, 'R-007', 'VICESA', 'CA-003', 1.2, '2009-01-05'),
+('1137', 76, 'R-005', 'VICESA', 'CA-007', 1.2, '2010-11-27'),
+('1138', 70, 'R-001', 'VIGUA', 'CA-002', 1.2, '2011-06-03'),
+('1139', 49, 'R-001', 'VICESA', 'CA-008', 1.2, '2011-08-30'),
+('1140', 88, 'R-002', 'VIGUA', 'CA-008', 1.2, '2009-11-09'),
+('1141', 107, 'R-010', 'VIGUA', 'CA-005', 1.2, '2011-05-18'),
+('1142', 36, 'R-003', 'VIGUA', 'CA-010', 1.2, '2011-09-17'),
+('1143', 102, 'R-008', 'VICESA', 'CA-008', 1.2, '2010-03-25'),
+('1144', 99, 'R-003', 'VICESA', 'CA-010', 1.2, '2008-11-13'),
+('1145', 3, 'R-007', 'VIGUA', 'CA-006', 1.2, '2009-02-02'),
+('1146', 5, 'R-009', 'VICESA', 'CA-004', 1.2, '2009-11-20'),
+('1147', 58, 'R-003', 'VICESA', 'CA-007', 1.2, '2009-02-19'),
+('1148', 100, 'R-005', 'VICESA', 'CA-002', 1.2, '2009-08-05'),
+('1149', 67, 'R-008', 'VICESA', 'CA-009', 1.2, '2008-12-06'),
+('1150', 48, 'R-001', 'VIGUA', 'CA-005', 1.2, '2009-02-17'),
+('1151', 8, 'R-001', 'VICESA', 'CA-010', 1.2, '2009-09-04'),
+('1152', 44, 'R-010', 'VICESA', 'CA-008', 1.2, '2009-10-31'),
+('1153', 107, 'R-005', 'VIGUA', 'CA-010', 1.2, '2010-07-26'),
+('1154', 49, 'R-007', 'VIGUA', 'CA-010', 1.2, '2008-11-16'),
+('1155', 35, 'R-002', 'VIGUA', 'CA-004', 1.2, '2010-01-02'),
+('1156', 23, 'R-001', 'VIGUA', 'CA-002', 1.2, '2010-10-15'),
+('1157', 20, 'R-007', 'VICESA', 'CA-010', 1.2, '2008-11-20'),
+('1158', 51, 'R-009', 'VIGUA', 'CA-008', 1.2, '2011-04-11'),
+('1159', 89, 'R-003', 'VIGUA', 'CA-006', 1.2, '2010-07-30'),
+('1160', 115, 'R-003', 'VIGUA', 'CA-003', 1.2, '2009-02-18'),
+('1161', 58, 'R-001', 'VIGUA', 'CA-008', 1.2, '2009-02-18'),
+('1162', 64, 'R-002', 'VICESA', 'CA-001', 1.2, '2009-12-29'),
+('1163', 89, 'R-010', 'VIGUA', 'CA-003', 1.2, '2010-07-10'),
+('1164', 20, 'R-006', 'VIGUA', 'CA-004', 1.2, '2010-12-25'),
+('1165', 11, 'R-010', 'VIGUA', 'CA-004', 1.2, '2008-12-07'),
+('1166', 52, 'R-004', 'VIGUA', 'CA-008', 1.2, '2011-02-04'),
+('1167', 12, 'R-008', 'VIGUA', 'CA-010', 1.2, '2011-08-18'),
+('1168', 102, 'R-008', 'VIGUA', 'CA-001', 1.2, '2010-07-17'),
+('1169', 50, 'R-003', 'VICESA', 'CA-003', 1.2, '2009-01-21'),
+('1170', 100, 'R-003', 'VICESA', 'CA-001', 1.2, '2011-08-09'),
+('1171', 22, 'R-009', 'VICESA', 'CA-007', 1.2, '2009-07-10'),
+('1172', 29, 'R-004', 'VIGUA', 'CA-004', 1.2, '2009-09-01'),
+('1173', 24, 'R-004', 'VICESA', 'CA-002', 1.2, '2010-11-05'),
+('1174', 96, 'R-010', 'VICESA', 'CA-006', 1.2, '2010-09-19'),
+('1175', 38, 'R-007', 'VIGUA', 'CA-002', 1.2, '2010-08-17'),
+('1176', 60, 'R-004', 'VICESA', 'CA-001', 1.2, '2010-12-30'),
+('1177', 117, 'R-005', 'VICESA', 'CA-004', 1.2, '2010-08-26'),
+('1178', 39, 'R-004', 'VIGUA', 'CA-003', 1.2, '2009-12-25'),
+('1179', 55, 'R-007', 'VIGUA', 'CA-003', 1.2, '2010-05-10'),
+('1180', 111, 'R-007', 'VICESA', 'CA-009', 1.2, '2009-12-27'),
+('1181', 101, 'R-003', 'VICESA', 'CA-006', 1.2, '2011-04-02'),
+('1182', 117, 'R-003', 'VIGUA', 'CA-005', 1.2, '2009-04-28'),
+('1183', 70, 'R-008', 'VIGUA', 'CA-004', 1.2, '2010-01-20'),
+('1184', 61, 'R-006', 'VIGUA', 'CA-009', 1.2, '2010-01-28'),
+('1185', 40, 'R-008', 'VIGUA', 'CA-002', 1.2, '2010-06-23'),
+('1186', 2, 'R-002', 'VICESA', 'CA-003', 1.2, '2009-03-05'),
+('1187', 66, 'R-008', 'VIGUA', 'CA-009', 1.2, '2010-06-27'),
+('1188', 15, 'R-005', 'VIGUA', 'CA-007', 1.2, '2010-04-30'),
+('1189', 87, 'R-009', 'VICESA', 'CA-007', 1.2, '2011-08-16'),
+('1190', 20, 'R-003', 'VIGUA', 'CA-007', 1.2, '2009-09-10'),
+('1191', 106, 'R-007', 'VIGUA', 'CA-004', 1.2, '2010-10-13'),
+('1192', 115, 'R-005', 'VIGUA', 'CA-007', 1.2, '2010-12-15'),
+('1193', 76, 'R-007', 'VIGUA', 'CA-002', 1.2, '2009-08-23'),
+('1194', 32, 'R-005', 'VIGUA', 'CA-009', 1.2, '2010-09-20'),
+('1195', 47, 'R-007', 'VIGUA', 'CA-004', 1.2, '2010-10-11'),
+('1196', 89, 'R-004', 'VIGUA', 'CA-009', 1.2, '2009-01-11'),
+('1197', 57, 'R-001', 'VICESA', 'CA-003', 1.2, '2010-12-06'),
+('1198', 73, 'R-003', 'VICESA', 'CA-002', 1.2, '2010-09-08'),
+('1199', 69, 'R-010', 'VICESA', 'CA-007', 1.2, '2011-04-13'),
+('1200', 92, 'R-001', 'VIGUA', 'CA-009', 1.2, '2011-07-05'),
+('1201', 116, 'R-003', 'VIGUA', 'CA-001', 1.2, '2011-05-21'),
+('1202', 75, 'R-005', 'VIGUA', 'CA-010', 1.2, '2011-01-07'),
+('1203', 91, 'R-010', 'VICESA', 'CA-001', 1.2, '2009-10-01'),
+('1204', 18, 'R-002', 'VICESA', 'CA-002', 1.2, '2009-10-11'),
+('1205', 76, 'R-001', 'VICESA', 'CA-001', 1.2, '2010-10-12'),
+('1206', 43, 'R-008', 'VIGUA', 'CA-009', 1.2, '2011-07-08'),
+('1207', 24, 'R-004', 'VICESA', 'CA-007', 1.2, '2009-03-31'),
+('1208', 23, 'R-004', 'VICESA', 'CA-010', 1.2, '2011-01-07'),
+('1209', 17, 'R-007', 'VIGUA', 'CA-003', 1.2, '2010-08-11'),
+('1210', 55, 'R-001', 'VIGUA', 'CA-010', 1.2, '2010-02-15'),
+('1211', 58, 'R-004', 'VIGUA', 'CA-002', 1.2, '2009-09-21'),
+('1212', 103, 'R-010', 'VIGUA', 'CA-009', 1.2, '2009-05-22'),
+('1213', 24, 'R-002', 'VICESA', 'CA-004', 1.2, '2010-12-05'),
+('1214', 100, 'R-007', 'VIGUA', 'CA-004', 1.2, '2010-09-09'),
+('1215', 78, 'R-006', 'VICESA', 'CA-004', 1.2, '2011-01-04'),
+('1216', 49, 'R-010', 'VICESA', 'CA-005', 1.2, '2011-08-24'),
+('1217', 72, 'R-007', 'VICESA', 'CA-003', 1.2, '2011-06-17'),
+('1218', 57, 'R-006', 'VIGUA', 'CA-008', 1.2, '2010-12-29'),
+('1219', 109, 'R-005', 'VICESA', 'CA-001', 1.2, '2009-05-08'),
+('1220', 26, 'R-005', 'VIGUA', 'CA-004', 1.2, '2010-04-14'),
+('1221', 79, 'R-007', 'VICESA', 'CA-006', 1.2, '2010-11-13'),
+('1222', 95, 'R-009', 'VICESA', 'CA-004', 1.2, '2008-11-18'),
+('1223', 46, 'R-003', 'VICESA', 'CA-001', 1.2, '2009-11-07'),
+('1224', 10, 'R-004', 'VICESA', 'CA-005', 1.2, '2010-08-07'),
+('1225', 103, 'R-010', 'VICESA', 'CA-006', 1.2, '2011-09-28'),
+('1226', 68, 'R-004', 'VICESA', 'CA-003', 1.2, '2011-09-22'),
+('1227', 117, 'R-004', 'VICESA', 'CA-006', 1.2, '2009-04-13'),
+('1228', 79, 'R-004', 'VIGUA', 'CA-002', 1.2, '2010-01-27'),
+('1229', 29, 'R-001', 'VIGUA', 'CA-003', 1.2, '2011-06-03'),
+('1230', 51, 'R-009', 'VIGUA', 'CA-006', 1.2, '2011-06-07'),
+('1231', 1, 'R-009', 'VIGUA', 'CA-001', 1.2, '2010-01-24'),
+('1232', 86, 'R-006', 'VICESA', 'CA-010', 1.2, '2011-04-26'),
+('1233', 34, 'R-006', 'VIGUA', 'CA-008', 1.2, '2010-05-07'),
+('1234', 11, 'R-005', 'VICESA', 'CA-003', 1.2, '2008-12-10'),
+('1235', 38, 'R-005', 'VIGUA', 'CA-003', 1.2, '2011-05-17'),
+('1236', 29, 'R-008', 'VIGUA', 'CA-006', 1.2, '2008-11-29'),
+('1237', 16, 'R-010', 'VICESA', 'CA-006', 1.2, '2010-03-18'),
+('1238', 60, 'R-003', 'VICESA', 'CA-003', 1.2, '2010-11-06'),
+('1239', 73, 'R-005', 'VICESA', 'CA-009', 1.2, '2010-01-21'),
+('1240', 95, 'R-004', 'VIGUA', 'CA-004', 1.2, '2009-01-09'),
+('1241', 13, 'R-007', 'VIGUA', 'CA-006', 1.2, '2011-05-01'),
+('1242', 112, 'R-007', 'VIGUA', 'CA-003', 1.2, '2009-08-06'),
+('1243', 38, 'R-003', 'VIGUA', 'CA-001', 1.2, '2009-06-09'),
+('1244', 49, 'R-008', 'VIGUA', 'CA-003', 1.2, '2009-03-25'),
+('1245', 86, 'R-009', 'VICESA', 'CA-001', 1.2, '2008-11-18'),
+('1246', 92, 'R-008', 'VICESA', 'CA-003', 1.2, '2010-08-30'),
+('1247', 79, 'R-010', 'VICESA', 'CA-003', 1.2, '2010-03-10'),
+('1248', 2, 'R-009', 'VIGUA', 'CA-008', 1.2, '2008-11-30'),
+('1249', 75, 'R-003', 'VICESA', 'CA-001', 1.2, '2009-05-18'),
+('1250', 63, 'R-003', 'VIGUA', 'CA-007', 1.2, '2009-06-09'),
+('1251', 80, 'R-003', 'VIGUA', 'CA-009', 1.2, '2011-01-21'),
+('1252', 115, 'R-006', 'VIGUA', 'CA-006', 1.2, '2010-10-19'),
+('1253', 87, 'R-006', 'VICESA', 'CA-006', 1.2, '2009-01-27'),
+('1254', 14, 'R-007', 'VIGUA', 'CA-002', 1.2, '2009-07-18'),
+('1255', 18, 'R-005', 'VIGUA', 'CA-010', 1.2, '2011-02-26'),
+('1256', 92, 'R-001', 'VIGUA', 'CA-001', 1.2, '2009-02-06'),
+('1257', 21, 'R-003', 'VICESA', 'CA-008', 1.2, '2011-05-11'),
+('1258', 16, 'R-006', 'VICESA', 'CA-010', 1.2, '2011-07-17'),
+('1259', 52, 'R-004', 'VIGUA', 'CA-008', 1.2, '2009-01-27'),
+('1260', 19, 'R-005', 'VICESA', 'CA-001', 1.2, '2009-01-08'),
+('1261', 95, 'R-004', 'VICESA', 'CA-010', 1.2, '2010-10-28'),
+('1262', 13, 'R-008', 'VIGUA', 'CA-005', 1.2, '2008-11-25'),
+('1263', 11, 'R-007', 'VIGUA', 'CA-005', 1.2, '2010-09-29'),
+('1264', 111, 'R-004', 'VICESA', 'CA-010', 1.2, '2009-10-28'),
+('1265', 30, 'R-010', 'VIGUA', 'CA-004', 1.2, '2009-08-31'),
+('1266', 103, 'R-004', 'VIGUA', 'CA-006', 1.2, '2009-04-18'),
+('1267', 102, 'R-005', 'VICESA', 'CA-008', 1.2, '2010-09-26'),
+('1268', 84, 'R-003', 'VICESA', 'CA-008', 1.2, '2011-09-29'),
+('1269', 14, 'R-006', 'VIGUA', 'CA-003', 1.2, '2010-07-25'),
+('1270', 113, 'R-004', 'VICESA', 'CA-001', 1.2, '2011-06-13'),
+('1271', 106, 'R-004', 'VICESA', 'CA-002', 1.2, '2009-11-20'),
+('1272', 68, 'R-009', 'VIGUA', 'CA-005', 1.2, '2010-04-30'),
+('1273', 84, 'R-009', 'VICESA', 'CA-005', 1.2, '2010-04-13'),
+('1274', 23, 'R-001', 'VICESA', 'CA-004', 1.2, '2010-06-07'),
+('1275', 51, 'R-009', 'VICESA', 'CA-004', 1.2, '2009-12-22'),
+('1276', 112, 'R-005', 'VIGUA', 'CA-002', 1.2, '2009-11-11'),
+('1277', 4, 'R-007', 'VIGUA', 'CA-010', 1.2, '2010-09-14'),
+('1278', 107, 'R-006', 'VIGUA', 'CA-006', 1.2, '2009-05-10'),
+('1279', 71, 'R-002', 'VICESA', 'CA-007', 1.2, '2009-05-25'),
+('1280', 65, 'R-005', 'VIGUA', 'CA-007', 1.2, '2011-10-15'),
+('1281', 28, 'R-005', 'VICESA', 'CA-008', 1.2, '2010-02-28'),
+('1282', 49, 'R-003', 'VICESA', 'CA-007', 1.2, '2008-12-09'),
+('1283', 74, 'R-005', 'VIGUA', 'CA-007', 1.2, '2008-12-19'),
+('1284', 44, 'R-006', 'VICESA', 'CA-004', 1.2, '2009-02-06'),
+('1285', 51, 'R-005', 'VIGUA', 'CA-007', 1.2, '2009-03-23'),
+('1286', 104, 'R-010', 'VIGUA', 'CA-005', 1.2, '2010-02-12'),
+('1287', 22, 'R-003', 'VIGUA', 'CA-008', 1.2, '2009-02-03'),
+('1288', 25, 'R-002', 'VICESA', 'CA-007', 1.2, '2009-02-25'),
+('1289', 72, 'R-003', 'VICESA', 'CA-002', 1.2, '2011-08-06'),
+('1290', 73, 'R-009', 'VICESA', 'CA-010', 1.2, '2008-12-01'),
+('1291', 111, 'R-010', 'VIGUA', 'CA-003', 1.2, '2010-04-02'),
+('1292', 61, 'R-004', 'VICESA', 'CA-004', 1.2, '2009-04-21'),
+('1293', 116, 'R-010', 'VIGUA', 'CA-006', 1.2, '2011-07-02'),
+('1294', 74, 'R-008', 'VICESA', 'CA-002', 1.2, '2009-10-10'),
+('1295', 4, 'R-003', 'VIGUA', 'CA-010', 1.2, '2010-04-10'),
+('1296', 111, 'R-009', 'VICESA', 'CA-006', 1.2, '2010-03-29'),
+('1297', 72, 'R-002', 'VICESA', 'CA-008', 1.2, '2009-09-29'),
+('1298', 38, 'R-009', 'VIGUA', 'CA-005', 1.2, '2011-01-10'),
+('1299', 4, 'R-010', 'VIGUA', 'CA-005', 1.2, '2009-02-25'),
+('1300', 3, 'R-001', 'VICESA', 'CA-009', 1.2, '2011-03-25'),
+('1301', 58, 'R-005', 'VICESA', 'CA-006', 1.2, '2010-05-19'),
+('1302', 34, 'R-008', 'VIGUA', 'CA-004', 1.2, '2011-03-07'),
+('1303', 29, 'R-007', 'VIGUA', 'CA-007', 1.2, '2009-05-11'),
+('1304', 109, 'R-003', 'VIGUA', 'CA-009', 1.2, '2009-09-22'),
+('1305', 83, 'R-001', 'VICESA', 'CA-007', 1.2, '2010-04-17'),
+('1306', 113, 'R-008', 'VIGUA', 'CA-005', 1.2, '2009-05-06'),
+('1307', 100, 'R-006', 'VIGUA', 'CA-007', 1.2, '2010-11-03'),
+('1308', 36, 'R-003', 'VIGUA', 'CA-002', 1.2, '2011-03-10'),
+('1309', 24, 'R-004', 'VICESA', 'CA-006', 1.2, '2010-10-27'),
+('1310', 94, 'R-002', 'VICESA', 'CA-006', 1.2, '2010-05-29'),
+('1311', 97, 'R-004', 'VIGUA', 'CA-006', 1.2, '2011-03-27'),
+('1312', 24, 'R-001', 'VIGUA', 'CA-006', 1.2, '2010-11-06'),
+('1313', 41, 'R-005', 'VIGUA', 'CA-004', 1.2, '2011-03-27'),
+('1314', 38, 'R-010', 'VICESA', 'CA-007', 1.2, '2009-12-14'),
+('1315', 87, 'R-004', 'VICESA', 'CA-005', 1.2, '2011-02-09'),
+('1316', 13, 'R-008', 'VICESA', 'CA-004', 1.2, '2010-09-18'),
+('1317', 77, 'R-010', 'VICESA', 'CA-006', 1.2, '2010-09-09'),
+('1318', 54, 'R-008', 'VICESA', 'CA-010', 1.2, '2008-12-08'),
+('1319', 21, 'R-004', 'VIGUA', 'CA-006', 1.2, '2011-04-04'),
+('1320', 86, 'R-008', 'VICESA', 'CA-003', 1.2, '2011-03-27'),
+('1321', 53, 'R-008', 'VICESA', 'CA-008', 1.2, '2009-03-27'),
+('1322', 107, 'R-002', 'VICESA', 'CA-009', 1.2, '2009-07-22'),
+('1323', 84, 'R-008', 'VICESA', 'CA-006', 1.2, '2009-10-27'),
+('1324', 18, 'R-008', 'VIGUA', 'CA-007', 1.2, '2009-02-11'),
+('1325', 116, 'R-010', 'VICESA', 'CA-002', 1.2, '2010-12-29'),
+('1326', 23, 'R-006', 'VIGUA', 'CA-004', 1.2, '2011-07-05'),
+('1327', 58, 'R-007', 'VICESA', 'CA-001', 1.2, '2009-08-21'),
+('1328', 71, 'R-009', 'VIGUA', 'CA-007', 1.2, '2011-05-27'),
+('1329', 74, 'R-002', 'VICESA', 'CA-007', 1.2, '2009-04-09'),
+('1330', 102, 'R-009', 'VIGUA', 'CA-007', 1.2, '2011-01-13'),
+('1331', 71, 'R-006', 'VICESA', 'CA-002', 1.2, '2011-04-17'),
+('1332', 78, 'R-006', 'VIGUA', 'CA-007', 1.2, '2010-10-27'),
+('1333', 25, 'R-005', 'VICESA', 'CA-007', 1.2, '2009-07-08'),
+('1334', 78, 'R-007', 'VIGUA', 'CA-008', 1.2, '2009-05-22'),
+('1335', 72, 'R-002', 'VIGUA', 'CA-006', 1.2, '2008-11-23'),
+('1336', 60, 'R-004', 'VICESA', 'CA-006', 1.2, '2009-05-23'),
+('1337', 111, 'R-008', 'VIGUA', 'CA-001', 1.2, '2009-04-24'),
+('1338', 31, 'R-006', 'VIGUA', 'CA-008', 1.2, '2010-07-28'),
+('1339', 97, 'R-001', 'VICESA', 'CA-007', 1.2, '2011-08-15'),
+('1340', 70, 'R-004', 'VICESA', 'CA-008', 1.2, '2009-02-16'),
+('1341', 35, 'R-003', 'VICESA', 'CA-008', 1.2, '2009-05-04'),
+('1343', 97, 'R-001', 'VIGUA', 'CA-007', 1.2, '2010-11-01'),
+('1344', 94, 'R-010', 'VIGUA', 'CA-005', 1.2, '2011-04-02'),
+('1345', 69, 'R-010', 'VICESA', 'CA-007', 1.2, '2009-06-24'),
+('1346', 71, 'R-001', 'VIGUA', 'CA-007', 1.2, '2010-12-20'),
+('1347', 115, 'R-008', 'VIGUA', 'CA-006', 1.2, '2009-08-26'),
+('1348', 28, 'R-008', 'VIGUA', 'CA-008', 1.2, '2010-03-22'),
+('1349', 14, 'R-008', 'VIGUA', 'CA-004', 1.2, '2009-12-21'),
+('1350', 9, 'R-001', 'VICESA', 'CA-005', 1.2, '2009-01-19'),
+('1351', 86, 'R-009', 'VIGUA', 'CA-004', 1.2, '2009-08-22'),
+('1352', 92, 'R-005', 'VIGUA', 'CA-003', 1.2, '2010-08-31'),
+('1353', 17, 'R-005', 'VIGUA', 'CA-001', 1.2, '2010-05-25'),
+('1354', 66, 'R-007', 'VICESA', 'CA-008', 1.2, '2009-10-18'),
+('1355', 19, 'R-010', 'VICESA', 'CA-002', 1.2, '2009-07-08'),
+('1356', 91, 'R-010', 'VICESA', 'CA-010', 1.2, '2009-08-28'),
+('1357', 90, 'R-006', 'VIGUA', 'CA-004', 1.2, '2009-05-25'),
+('1358', 90, 'R-008', 'VIGUA', 'CA-008', 1.2, '2010-05-13'),
+('1359', 32, 'R-007', 'VIGUA', 'CA-005', 1.2, '2011-08-09'),
+('1360', 82, 'R-008', 'VICESA', 'CA-006', 1.2, '2010-06-24'),
+('1361', 32, 'R-010', 'VICESA', 'CA-002', 1.2, '2009-01-29'),
+('1362', 75, 'R-008', 'VICESA', 'CA-008', 1.2, '2009-02-16'),
+('1363', 51, 'R-003', 'VIGUA', 'CA-008', 1.2, '2009-12-21'),
+('1364', 50, 'R-003', 'VICESA', 'CA-008', 1.2, '2009-01-01'),
+('1365', 90, 'R-004', 'VICESA', 'CA-008', 1.2, '2010-02-09'),
+('1366', 98, 'R-001', 'VIGUA', 'CA-005', 1.2, '2011-05-05'),
+('1367', 46, 'R-003', 'VICESA', 'CA-003', 1.2, '2009-09-12'),
+('1368', 40, 'R-003', 'VICESA', 'CA-002', 1.2, '2010-11-23'),
+('1369', 73, 'R-006', 'VICESA', 'CA-005', 1.2, '2008-12-22'),
+('1370', 109, 'R-004', 'VICESA', 'CA-005', 1.2, '2008-11-27'),
+('1371', 85, 'R-008', 'VIGUA', 'CA-004', 1.2, '2009-01-14'),
+('1372', 95, 'R-008', 'VIGUA', 'CA-010', 1.2, '2009-11-27'),
+('1373', 21, 'R-010', 'VIGUA', 'CA-001', 1.2, '2009-02-24'),
+('1374', 41, 'R-010', 'VICESA', 'CA-005', 1.2, '2009-07-25'),
+('1375', 34, 'R-008', 'VIGUA', 'CA-007', 1.2, '2009-08-01'),
+('1376', 115, 'R-002', 'VICESA', 'CA-008', 1.2, '2011-09-02'),
+('1377', 74, 'R-010', 'VICESA', 'CA-006', 1.2, '2011-03-25'),
+('1378', 24, 'R-002', 'VIGUA', 'CA-004', 1.2, '2009-06-15'),
+('1379', 45, 'R-007', 'VICESA', 'CA-004', 1.2, '2010-07-07'),
+('1380', 80, 'R-003', 'VIGUA', 'CA-001', 1.2, '2009-11-26'),
+('1381', 86, 'R-003', 'VICESA', 'CA-008', 1.2, '2009-06-10'),
+('1382', 67, 'R-003', 'VIGUA', 'CA-005', 1.2, '2010-04-10'),
+('1383', 81, 'R-006', 'VIGUA', 'CA-009', 1.2, '2010-02-09'),
+('1384', 88, 'R-003', 'VIGUA', 'CA-010', 1.2, '2010-10-03'),
+('1385', 17, 'R-010', 'VIGUA', 'CA-006', 1.2, '2011-07-02'),
+('1386', 62, 'R-008', 'VIGUA', 'CA-010', 1.2, '2011-07-01'),
+('1387', 96, 'R-002', 'VIGUA', 'CA-009', 1.2, '2010-12-12'),
+('1388', 16, 'R-006', 'VICESA', 'CA-002', 1.2, '2011-07-21'),
+('1389', 104, 'R-002', 'VIGUA', 'CA-010', 1.2, '2011-03-15'),
+('1390', 10, 'R-005', 'VIGUA', 'CA-010', 1.2, '2009-05-22'),
+('1391', 97, 'R-007', 'VICESA', 'CA-001', 1.2, '2010-10-30'),
+('1392', 26, 'R-007', 'VICESA', 'CA-006', 1.2, '2010-08-18'),
+('1393', 59, 'R-009', 'VICESA', 'CA-005', 1.2, '2009-11-06'),
+('1394', 21, 'R-006', 'VICESA', 'CA-004', 1.2, '2011-03-04'),
+('1395', 38, 'R-001', 'VICESA', 'CA-010', 1.2, '2009-01-04'),
+('1396', 92, 'R-009', 'VICESA', 'CA-004', 1.2, '2009-03-20'),
+('1397', 94, 'R-008', 'VICESA', 'CA-007', 1.2, '2010-07-05'),
+('1398', 71, 'R-005', 'VICESA', 'CA-006', 1.2, '2009-11-17'),
+('1399', 28, 'R-004', 'VICESA', 'CA-005', 1.2, '2010-05-15'),
+('1400', 98, 'R-002', 'VIGUA', 'CA-008', 1.2, '2011-07-26'),
+('1402', 92, 'R-008', 'VIGUA', 'CA-009', 1.2, '2010-06-20'),
+('1403', 62, 'R-007', 'VIGUA', 'CA-004', 1.2, '2011-10-15'),
+('1404', 3, 'R-008', 'VIGUA', 'CA-003', 1.2, '2009-09-10'),
+('1405', 14, 'R-001', 'VIGUA', 'CA-002', 1.2, '2009-09-19'),
+('1406', 13, 'R-002', 'VIGUA', 'CA-001', 1.2, '2009-08-21'),
+('1407', 2, 'R-010', 'VICESA', 'CA-010', 1.2, '2008-11-19'),
+('1408', 101, 'R-006', 'VIGUA', 'CA-007', 1.2, '2011-06-22'),
+('1409', 48, 'R-010', 'VIGUA', 'CA-008', 1.2, '2010-08-08'),
+('1410', 57, 'R-009', 'VICESA', 'CA-005', 1.2, '2008-12-17'),
+('1411', 115, 'R-007', 'VICESA', 'CA-005', 1.2, '2011-09-05'),
+('1412', 42, 'R-005', 'VICESA', 'CA-002', 1.2, '2010-04-30'),
+('1413', 43, 'R-004', 'VICESA', 'CA-008', 1.2, '2010-01-04'),
+('1414', 17, 'R-007', 'VIGUA', 'CA-006', 1.2, '2009-04-12'),
+('1415', 54, 'R-002', 'VICESA', 'CA-009', 1.2, '2009-02-12'),
+('1416', 107, 'R-010', 'VICESA', 'CA-010', 1.2, '2011-01-11'),
+('1417', 79, 'R-007', 'VIGUA', 'CA-006', 1.2, '2011-05-20'),
+('1418', 83, 'R-008', 'VICESA', 'CA-001', 1.2, '2009-06-28'),
+('1419', 50, 'R-004', 'VIGUA', 'CA-006', 1.2, '2011-02-17'),
+('1420', 75, 'R-003', 'VIGUA', 'CA-008', 1.2, '2011-08-29'),
+('1421', 32, 'R-001', 'VIGUA', 'CA-005', 1.2, '2010-01-19'),
+('1422', 88, 'R-010', 'VICESA', 'CA-009', 1.2, '2011-05-26'),
+('1423', 60, 'R-003', 'VICESA', 'CA-005', 1.2, '2010-09-26'),
+('1424', 13, 'R-006', 'VICESA', 'CA-004', 1.2, '2010-06-12'),
+('1425', 78, 'R-008', 'VIGUA', 'CA-008', 1.2, '2008-11-13'),
+('1426', 106, 'R-006', 'VICESA', 'CA-007', 1.2, '2009-09-13'),
+('1427', 53, 'R-001', 'VIGUA', 'CA-006', 1.2, '2008-11-10'),
+('1428', 93, 'R-001', 'VICESA', 'CA-006', 1.2, '2010-08-26'),
+('1429', 64, 'R-010', 'VICESA', 'CA-005', 1.2, '2009-01-11'),
+('1430', 77, 'R-002', 'VIGUA', 'CA-009', 1.2, '2008-11-01'),
+('1431', 67, 'R-005', 'VICESA', 'CA-005', 1.2, '2011-05-19'),
+('1432', 70, 'R-008', 'VIGUA', 'CA-010', 1.2, '2011-09-27'),
+('1433', 46, 'R-005', 'VICESA', 'CA-007', 1.2, '2008-12-14'),
+('1434', 111, 'R-007', 'VICESA', 'CA-006', 1.2, '2010-11-22'),
+('1435', 56, 'R-010', 'VICESA', 'CA-009', 1.2, '2009-03-25'),
+('1436', 46, 'R-001', 'VIGUA', 'CA-006', 1.2, '2010-05-14'),
+('1437', 111, 'R-001', 'VICESA', 'CA-007', 1.2, '2010-07-25'),
+('1438', 12, 'R-007', 'VICESA', 'CA-001', 1.2, '2009-05-13'),
+('1439', 61, 'R-010', 'VIGUA', 'CA-006', 1.2, '2008-12-22'),
+('1440', 49, 'R-002', 'VIGUA', 'CA-004', 1.2, '2010-11-13'),
+('1442', 33, 'R-010', 'VIGUA', 'CA-006', 1.2, '2009-02-24'),
+('1443', 47, 'R-008', 'VICESA', 'CA-008', 1.2, '2011-08-06'),
+('1444', 54, 'R-009', 'VICESA', 'CA-004', 1.2, '2010-06-08'),
+('1445', 12, 'R-010', 'VIGUA', 'CA-006', 1.2, '2011-01-26'),
+('1446', 51, 'R-005', 'VICESA', 'CA-009', 1.2, '2010-11-21'),
+('1447', 52, 'R-002', 'VICESA', 'CA-004', 1.2, '2009-04-26'),
+('1448', 23, 'R-010', 'VIGUA', 'CA-005', 1.2, '2011-09-06'),
+('1449', 21, 'R-010', 'VICESA', 'CA-002', 1.2, '2008-11-28'),
+('1450', 51, 'R-010', 'VIGUA', 'CA-003', 1.2, '2009-03-01'),
+('1451', 67, 'R-004', 'VICESA', 'CA-010', 1.2, '2010-01-04'),
+('1452', 54, 'R-003', 'VICESA', 'CA-003', 1.2, '2010-03-03'),
+('1453', 42, 'R-010', 'VIGUA', 'CA-007', 1.2, '2009-04-09'),
+('1454', 58, 'R-010', 'VICESA', 'CA-002', 1.2, '2008-11-08'),
+('1455', 37, 'R-008', 'VICESA', 'CA-002', 1.2, '2010-01-15'),
+('1456', 65, 'R-003', 'VICESA', 'CA-003', 1.2, '2011-04-01'),
+('1457', 10, 'R-006', 'VIGUA', 'CA-003', 1.2, '2009-03-17'),
+('1458', 51, 'R-010', 'VIGUA', 'CA-010', 1.2, '2009-10-29'),
+('1459', 102, 'R-005', 'VIGUA', 'CA-004', 1.2, '2010-09-09'),
+('1460', 9, 'R-005', 'VICESA', 'CA-004', 1.2, '2008-10-25'),
+('1461', 29, 'R-005', 'VIGUA', 'CA-001', 1.2, '2009-08-26'),
+('1462', 72, 'R-005', 'VIGUA', 'CA-007', 1.2, '2011-01-19'),
+('1463', 26, 'R-006', 'VIGUA', 'CA-005', 1.2, '2009-03-03'),
+('1464', 67, 'R-008', 'VIGUA', 'CA-006', 1.2, '2010-09-04'),
+('1465', 81, 'R-009', 'VIGUA', 'CA-002', 1.2, '2010-09-10'),
+('1466', 88, 'R-010', 'VICESA', 'CA-009', 1.2, '2011-01-31'),
+('1467', 115, 'R-008', 'VICESA', 'CA-006', 1.2, '2010-03-26'),
+('1468', 11, 'R-009', 'VICESA', 'CA-008', 1.2, '2009-05-14'),
+('1469', 15, 'R-009', 'VIGUA', 'CA-003', 1.2, '2009-12-03'),
+('1470', 53, 'R-003', 'VIGUA', 'CA-008', 1.2, '2010-02-19'),
+('1471', 5, 'R-001', 'VICESA', 'CA-005', 1.2, '2009-10-03'),
+('1472', 93, 'R-007', 'VICESA', 'CA-008', 1.2, '2009-07-01'),
+('1473', 79, 'R-010', 'VICESA', 'CA-009', 1.2, '2011-03-03'),
+('1474', 35, 'R-010', 'VICESA', 'CA-002', 1.2, '2010-05-21'),
+('1475', 91, 'R-005', 'VICESA', 'CA-005', 1.2, '2009-10-12'),
+('1476', 14, 'R-003', 'VIGUA', 'CA-006', 1.2, '2009-04-27'),
+('1477', 16, 'R-003', 'VIGUA', 'CA-009', 1.2, '2010-03-23'),
+('1478', 100, 'R-002', 'VICESA', 'CA-002', 1.2, '2010-08-13'),
+('1479', 50, 'R-006', 'VIGUA', 'CA-009', 1.2, '2010-11-11'),
+('1480', 114, 'R-008', 'VIGUA', 'CA-009', 1.2, '2011-04-25'),
+('1481', 19, 'R-005', 'VIGUA', 'CA-008', 1.2, '2011-04-08'),
+('1482', 85, 'R-002', 'VIGUA', 'CA-006', 1.2, '2011-07-01'),
+('1483', 43, 'R-009', 'VIGUA', 'CA-004', 1.2, '2009-05-13'),
+('1484', 51, 'R-005', 'VICESA', 'CA-010', 1.2, '2010-07-14'),
+('1485', 38, 'R-009', 'VIGUA', 'CA-006', 1.2, '2009-01-09'),
+('1486', 44, 'R-008', 'VICESA', 'CA-010', 1.2, '2011-01-01'),
+('1487', 42, 'R-005', 'VICESA', 'CA-010', 1.2, '2010-07-13'),
+('1488', 98, 'R-008', 'VIGUA', 'CA-001', 1.2, '2011-02-10'),
+('1489', 2, 'R-004', 'VIGUA', 'CA-007', 1.2, '2009-03-31'),
+('1490', 30, 'R-005', 'VICESA', 'CA-005', 1.2, '2010-07-28'),
+('1491', 92, 'R-005', 'VIGUA', 'CA-010', 1.2, '2010-12-07'),
+('1492', 116, 'R-005', 'VICESA', 'CA-006', 1.2, '2009-05-22'),
+('1493', 59, 'R-010', 'VIGUA', 'CA-010', 1.2, '2010-07-12'),
+('1494', 60, 'R-005', 'VIGUA', 'CA-009', 1.2, '2010-06-01'),
+('1495', 5, 'R-004', 'VIGUA', 'CA-004', 1.2, '2010-04-25'),
+('1496', 34, 'R-002', 'VICESA', 'CA-004', 1.2, '2010-06-21'),
+('1497', 17, 'R-007', 'VICESA', 'CA-006', 1.2, '2009-01-04'),
+('1498', 14, 'R-002', 'VICESA', 'CA-007', 1.2, '2011-01-06'),
+('1499', 33, 'R-004', 'VICESA', 'CA-009', 1.2, '2010-09-24'),
+('1500', 24, 'R-001', 'VICESA', 'CA-006', 1.2, '2009-09-07'),
+('1501', 39, 'R-003', 'VICESA', 'CA-004', 1.2, '2009-08-10'),
+('1502', 32, 'R-004', 'VIGUA', 'CA-006', 1.2, '2009-12-21'),
+('1503', 32, 'R-004', 'VIGUA', 'CA-002', 1.2, '2011-08-03'),
+('1504', 8, 'R-005', 'VICESA', 'CA-002', 1.2, '2011-08-09'),
+('1505', 39, 'R-002', 'VIGUA', 'CA-007', 1.2, '2011-02-11'),
+('1506', 97, 'R-005', 'VIGUA', 'CA-001', 1.2, '2010-01-12'),
+('1507', 81, 'R-003', 'VICESA', 'CA-001', 1.2, '2010-10-23'),
+('1508', 66, 'R-010', 'VIGUA', 'CA-005', 1.2, '2011-03-31'),
+('1509', 35, 'R-001', 'VIGUA', 'CA-001', 1.2, '2011-04-29'),
+('1510', 63, 'R-007', 'VICESA', 'CA-003', 1.2, '2009-08-22'),
+('1511', 39, 'R-001', 'VICESA', 'CA-004', 1.2, '2010-02-23'),
+('1512', 114, 'R-001', 'VIGUA', 'CA-008', 1.2, '2011-06-28'),
+('1513', 58, 'R-007', 'VIGUA', 'CA-002', 1.2, '2009-06-05'),
+('1514', 78, 'R-005', 'VICESA', 'CA-001', 1.2, '2008-11-17'),
+('1515', 80, 'R-001', 'VIGUA', 'CA-006', 1.2, '2010-06-13'),
+('1516', 27, 'R-005', 'VIGUA', 'CA-005', 1.2, '2011-09-14'),
+('1517', 92, 'R-009', 'VICESA', 'CA-004', 1.2, '2011-01-16'),
+('1518', 16, 'R-001', 'VIGUA', 'CA-007', 1.2, '2010-12-28'),
+('1519', 37, 'R-001', 'VICESA', 'CA-007', 1.2, '2011-02-18'),
+('1520', 39, 'R-009', 'VIGUA', 'CA-010', 1.2, '2009-03-17'),
+('1521', 18, 'R-002', 'VICESA', 'CA-009', 1.2, '2009-11-11'),
+('1522', 59, 'R-009', 'VICESA', 'CA-002', 1.2, '2011-02-09'),
+('1523', 22, 'R-008', 'VICESA', 'CA-003', 1.2, '2009-04-17'),
+('1524', 53, 'R-004', 'VIGUA', 'CA-003', 1.2, '2011-08-18'),
+('1525', 84, 'R-007', 'VIGUA', 'CA-004', 1.2, '2009-10-15'),
+('1526', 90, 'R-008', 'VICESA', 'CA-010', 1.2, '2009-01-16'),
+('1527', 67, 'R-008', 'VIGUA', 'CA-007', 1.2, '2009-12-15'),
+('1528', 102, 'R-010', 'VIGUA', 'CA-010', 1.2, '2010-07-27'),
+('1529', 59, 'R-001', 'VIGUA', 'CA-007', 1.2, '2009-02-22'),
+('1530', 5, 'R-007', 'VICESA', 'CA-001', 1.2, '2009-02-23'),
+('1531', 10, 'R-003', 'VICESA', 'CA-007', 1.2, '2011-05-28'),
+('1532', 80, 'R-010', 'VIGUA', 'CA-001', 1.2, '2010-05-21'),
+('1533', 35, 'R-003', 'VIGUA', 'CA-001', 1.2, '2011-04-25'),
+('1534', 55, 'R-006', 'VICESA', 'CA-005', 1.2, '2010-12-18'),
+('1535', 81, 'R-002', 'VIGUA', 'CA-006', 1.2, '2009-07-15'),
+('1536', 42, 'R-004', 'VIGUA', 'CA-009', 1.2, '2009-07-15'),
+('1537', 67, 'R-009', 'VIGUA', 'CA-010', 1.2, '2010-01-15'),
+('1538', 28, 'R-004', 'VICESA', 'CA-003', 1.2, '2011-09-17'),
+('1539', 101, 'R-001', 'VICESA', 'CA-010', 1.2, '2009-08-06'),
+('1540', 73, 'R-005', 'VIGUA', 'CA-007', 1.2, '2010-05-24'),
+('1541', 101, 'R-004', 'VIGUA', 'CA-002', 1.2, '2011-01-10'),
+('1542', 54, 'R-005', 'VIGUA', 'CA-009', 1.2, '2011-01-15'),
+('1543', 2, 'R-003', 'VICESA', 'CA-007', 1.2, '2010-09-08'),
+('1544', 88, 'R-009', 'VICESA', 'CA-010', 1.2, '2009-03-28'),
+('1545', 116, 'R-002', 'VIGUA', 'CA-004', 1.2, '2011-05-05'),
+('1546', 110, 'R-003', 'VIGUA', 'CA-002', 1.2, '2010-03-11'),
+('1547', 57, 'R-002', 'VICESA', 'CA-003', 1.2, '2011-05-05'),
+('1548', 21, 'R-006', 'VIGUA', 'CA-007', 1.2, '2011-05-22'),
+('1549', 95, 'R-003', 'VICESA', 'CA-005', 1.2, '2010-03-17'),
+('1550', 67, 'R-009', 'VICESA', 'CA-006', 1.2, '2008-11-10'),
+('1551', 38, 'R-004', 'VIGUA', 'CA-002', 1.2, '2011-10-02'),
+('1552', 31, 'R-002', 'VIGUA', 'CA-008', 1.2, '2010-10-21'),
+('1553', 87, 'R-009', 'VICESA', 'CA-005', 1.2, '2009-10-21'),
+('1554', 78, 'R-001', 'VICESA', 'CA-010', 1.2, '2011-01-19'),
+('1555', 13, 'R-002', 'VIGUA', 'CA-004', 1.2, '2011-08-18'),
+('1556', 95, 'R-007', 'VICESA', 'CA-001', 1.2, '2010-06-24'),
+('1557', 72, 'R-001', 'VICESA', 'CA-008', 1.2, '2009-12-24'),
+('1558', 23, 'R-010', 'VIGUA', 'CA-006', 1.2, '2011-09-27'),
+('1559', 73, 'R-006', 'VIGUA', 'CA-010', 1.2, '2008-11-11'),
+('1560', 108, 'R-007', 'VIGUA', 'CA-008', 1.2, '2009-04-22'),
+('1561', 15, 'R-002', 'VIGUA', 'CA-002', 1.2, '2011-02-01'),
+('1562', 11, 'R-008', 'VICESA', 'CA-001', 1.2, '2011-07-28'),
+('1563', 27, 'R-010', 'VICESA', 'CA-010', 1.2, '2010-08-03'),
+('1564', 108, 'R-003', 'VIGUA', 'CA-001', 1.2, '2010-05-13'),
+('1565', 93, 'R-009', 'VICESA', 'CA-003', 1.2, '2010-04-21'),
+('1566', 110, 'R-010', 'VIGUA', 'CA-005', 1.2, '2010-09-16'),
+('1567', 18, 'R-001', 'VICESA', 'CA-003', 1.2, '2011-10-04'),
+('1568', 96, 'R-009', 'VIGUA', 'CA-001', 1.2, '2011-01-30'),
+('1569', 113, 'R-010', 'VICESA', 'CA-002', 1.2, '2011-06-08'),
+('1570', 35, 'R-006', 'VIGUA', 'CA-006', 1.2, '2011-02-03'),
+('1571', 27, 'R-002', 'VIGUA', 'CA-007', 1.2, '2008-11-04'),
+('1572', 85, 'R-003', 'VICESA', 'CA-005', 1.2, '2009-10-27'),
+('1573', 57, 'R-010', 'VIGUA', 'CA-007', 1.2, '2011-01-29'),
+('1574', 110, 'R-004', 'VIGUA', 'CA-008', 1.2, '2009-01-16'),
+('1575', 67, 'R-006', 'VIGUA', 'CA-003', 1.2, '2011-05-25'),
+('1576', 35, 'R-003', 'VICESA', 'CA-008', 1.2, '2011-08-18'),
+('1577', 27, 'R-004', 'VIGUA', 'CA-009', 1.2, '2011-06-11'),
+('1578', 76, 'R-004', 'VIGUA', 'CA-010', 1.2, '2009-01-23'),
+('1579', 116, 'R-004', 'VICESA', 'CA-006', 1.2, '2011-03-12'),
+('1580', 7, 'R-004', 'VIGUA', 'CA-004', 1.2, '2011-07-17'),
+('1581', 101, 'R-008', 'VIGUA', 'CA-002', 1.2, '2009-08-17'),
+('1583', 115, 'R-008', 'VIGUA', 'CA-010', 1.2, '2011-05-28'),
+('1584', 82, 'R-003', 'VICESA', 'CA-007', 1.2, '2011-08-09'),
+('1585', 105, 'R-008', 'VIGUA', 'CA-002', 1.2, '2011-06-04'),
+('1586', 28, 'R-005', 'VIGUA', 'CA-007', 1.2, '2009-07-30'),
+('1587', 60, 'R-007', 'VIGUA', 'CA-005', 1.2, '2010-07-09'),
+('1588', 49, 'R-001', 'VIGUA', 'CA-010', 1.2, '2009-03-01'),
+('1589', 31, 'R-003', 'VICESA', 'CA-008', 1.2, '2009-08-01'),
+('1590', 40, 'R-009', 'VICESA', 'CA-008', 1.2, '2011-04-20'),
+('1591', 58, 'R-006', 'VIGUA', 'CA-002', 1.2, '2011-09-13'),
+('1592', 107, 'R-010', 'VICESA', 'CA-005', 1.2, '2008-10-28'),
+('1593', 21, 'R-005', 'VICESA', 'CA-010', 1.2, '2011-09-29'),
+('1594', 44, 'R-002', 'VICESA', 'CA-004', 1.2, '2011-07-28'),
+('1595', 76, 'R-001', 'VIGUA', 'CA-006', 1.2, '2010-10-29'),
+('1596', 27, 'R-007', 'VIGUA', 'CA-008', 1.2, '2008-10-25'),
+('1597', 34, 'R-002', 'VICESA', 'CA-009', 1.2, '2010-03-03'),
+('1598', 103, 'R-001', 'VIGUA', 'CA-008', 1.2, '2011-09-09'),
+('1599', 60, 'R-002', 'VIGUA', 'CA-003', 1.2, '2011-02-03'),
+('1600', 31, 'R-007', 'VICESA', 'CA-003', 1.2, '2011-05-23'),
+('1601', 54, 'R-003', 'VIGUA', 'CA-006', 1.2, '2009-05-22'),
+('1602', 89, 'R-003', 'VIGUA', 'CA-010', 1.2, '2009-01-10'),
+('1603', 116, 'R-003', 'VICESA', 'CA-001', 1.2, '2009-04-27'),
+('1604', 29, 'R-001', 'VIGUA', 'CA-009', 1.2, '2009-07-03'),
+('1605', 78, 'R-001', 'VICESA', 'CA-003', 1.2, '2010-09-21'),
+('1606', 89, 'R-007', 'VICESA', 'CA-008', 1.2, '2009-02-02'),
+('1607', 12, 'R-008', 'VIGUA', 'CA-006', 1.2, '2011-03-16'),
+('1608', 104, 'R-004', 'VIGUA', 'CA-006', 1.2, '2011-07-21'),
+('1609', 85, 'R-006', 'VIGUA', 'CA-002', 1.2, '2009-01-28'),
+('1610', 1, 'R-001', 'VIGUA', 'CA-004', 1.2, '2009-11-17'),
+('1611', 44, 'R-001', 'VIGUA', 'CA-007', 1.2, '2011-03-06'),
+('1612', 59, 'R-002', 'VIGUA', 'CA-002', 1.2, '2011-09-25'),
+('1613', 81, 'R-007', 'VICESA', 'CA-002', 1.2, '2009-08-19'),
+('1614', 105, 'R-008', 'VICESA', 'CA-002', 1.2, '2010-01-29'),
+('1615', 48, 'R-005', 'VIGUA', 'CA-009', 1.2, '2008-11-28'),
+('1616', 81, 'R-003', 'VICESA', 'CA-001', 1.2, '2010-01-18'),
+('1617', 35, 'R-006', 'VIGUA', 'CA-010', 1.2, '2009-01-30'),
+('1618', 35, 'R-007', 'VICESA', 'CA-009', 1.2, '2009-12-19'),
+('1619', 71, 'R-003', 'VICESA', 'CA-002', 1.2, '2009-04-24'),
+('1620', 4, 'R-010', 'VIGUA', 'CA-003', 1.2, '2009-04-06'),
+('1621', 110, 'R-001', 'VIGUA', 'CA-001', 1.2, '2011-02-27'),
+('1622', 106, 'R-006', 'VICESA', 'CA-008', 1.2, '2010-10-17'),
+('1623', 57, 'R-006', 'VICESA', 'CA-009', 1.2, '2008-12-23'),
+('1624', 45, 'R-002', 'VICESA', 'CA-010', 1.2, '2011-01-13'),
+('1625', 1, 'R-006', 'VICESA', 'CA-003', 1.2, '2011-10-06'),
+('1626', 90, 'R-003', 'VICESA', 'CA-002', 1.2, '2009-12-01'),
+('1627', 27, 'R-002', 'VICESA', 'CA-003', 1.2, '2009-09-22'),
+('1628', 50, 'R-001', 'VIGUA', 'CA-004', 1.2, '2009-10-17'),
+('1629', 51, 'R-005', 'VIGUA', 'CA-002', 1.2, '2009-09-29'),
+('1630', 107, 'R-001', 'VIGUA', 'CA-005', 1.2, '2009-12-30'),
+('1631', 97, 'R-006', 'VICESA', 'CA-005', 1.2, '2010-12-01'),
+('1632', 56, 'R-010', 'VIGUA', 'CA-004', 1.2, '2008-11-20'),
+('1633', 17, 'R-009', 'VICESA', 'CA-008', 1.2, '2009-04-21'),
+('1634', 13, 'R-004', 'VIGUA', 'CA-010', 1.2, '2009-04-02'),
+('1635', 103, 'R-010', 'VICESA', 'CA-002', 1.2, '2009-02-26'),
+('1636', 7, 'R-007', 'VICESA', 'CA-003', 1.2, '2011-09-28'),
+('1637', 72, 'R-006', 'VICESA', 'CA-003', 1.2, '2010-07-05'),
+('1638', 21, 'R-004', 'VICESA', 'CA-006', 1.2, '2009-09-18'),
+('1639', 3, 'R-007', 'VICESA', 'CA-004', 1.2, '2011-03-15'),
+('1640', 74, 'R-009', 'VIGUA', 'CA-007', 1.2, '2011-04-28'),
+('1641', 101, 'R-002', 'VICESA', 'CA-005', 1.2, '2010-12-17'),
+('1642', 96, 'R-006', 'VIGUA', 'CA-008', 1.2, '2010-04-12'),
+('1643', 21, 'R-010', 'VICESA', 'CA-002', 1.2, '2010-11-07'),
+('1644', 68, 'R-001', 'VIGUA', 'CA-003', 1.2, '2011-08-16'),
+('1645', 83, 'R-008', 'VIGUA', 'CA-003', 1.2, '2010-06-10'),
+('1646', 93, 'R-002', 'VIGUA', 'CA-006', 1.2, '2010-07-02'),
+('1647', 111, 'R-003', 'VICESA', 'CA-004', 1.2, '2008-12-08'),
+('1648', 78, 'R-007', 'VICESA', 'CA-004', 1.2, '2010-06-07'),
+('1649', 62, 'R-004', 'VICESA', 'CA-005', 1.2, '2009-11-21'),
+('1650', 70, 'R-004', 'VIGUA', 'CA-008', 1.2, '2010-12-08'),
+('1651', 19, 'R-003', 'VICESA', 'CA-010', 1.2, '2009-08-08'),
+('1652', 80, 'R-003', 'VIGUA', 'CA-004', 1.2, '2010-06-09'),
+('1653', 31, 'R-007', 'VICESA', 'CA-005', 1.2, '2010-12-21'),
+('1654', 63, 'R-002', 'VICESA', 'CA-005', 1.2, '2008-10-29'),
+('1655', 33, 'R-010', 'VICESA', 'CA-002', 1.2, '2010-11-25'),
+('1656', 12, 'R-003', 'VICESA', 'CA-005', 1.2, '2009-01-13'),
+('1657', 90, 'R-007', 'VIGUA', 'CA-004', 1.2, '2010-04-13'),
+('1658', 81, 'R-010', 'VIGUA', 'CA-007', 1.2, '2011-02-27'),
+('1659', 27, 'R-002', 'VIGUA', 'CA-003', 1.2, '2009-01-07'),
+('1660', 112, 'R-010', 'VICESA', 'CA-002', 1.2, '2009-12-23'),
+('1661', 109, 'R-008', 'VICESA', 'CA-002', 1.2, '2009-02-25'),
+('1662', 77, 'R-006', 'VICESA', 'CA-001', 1.2, '2009-04-18'),
+('1663', 42, 'R-005', 'VICESA', 'CA-009', 1.2, '2010-06-06'),
+('1664', 28, 'R-009', 'VIGUA', 'CA-003', 1.2, '2009-04-19'),
+('1665', 5, 'R-001', 'VICESA', 'CA-002', 1.2, '2010-01-31'),
+('1666', 48, 'R-003', 'VICESA', 'CA-007', 1.2, '2009-08-28'),
+('1667', 27, 'R-005', 'VIGUA', 'CA-005', 1.2, '2011-06-18'),
+('1668', 86, 'R-002', 'VIGUA', 'CA-010', 1.2, '2011-03-11'),
+('1669', 101, 'R-008', 'VIGUA', 'CA-009', 1.2, '2009-01-14'),
+('1670', 107, 'R-005', 'VICESA', 'CA-007', 1.2, '2009-01-18'),
+('1671', 112, 'R-010', 'VICESA', 'CA-002', 1.2, '2011-10-17'),
+('1672', 11, 'R-001', 'VIGUA', 'CA-010', 1.2, '2010-04-19'),
+('1673', 104, 'R-003', 'VICESA', 'CA-001', 1.2, '2011-08-19'),
+('1674', 74, 'R-008', 'VICESA', 'CA-008', 1.2, '2011-05-09'),
+('1675', 64, 'R-009', 'VICESA', 'CA-008', 1.2, '2010-01-13'),
+('1676', 105, 'R-008', 'VIGUA', 'CA-006', 1.2, '2010-05-14'),
+('1677', 90, 'R-007', 'VIGUA', 'CA-005', 1.2, '2010-07-25'),
+('1678', 103, 'R-001', 'VIGUA', 'CA-007', 1.2, '2009-10-08'),
+('1679', 77, 'R-010', 'VICESA', 'CA-009', 1.2, '2010-05-20'),
+('1680', 38, 'R-008', 'VIGUA', 'CA-008', 1.2, '2011-02-18'),
+('1681', 53, 'R-009', 'VIGUA', 'CA-001', 1.2, '2009-04-24'),
+('1682', 72, 'R-006', 'VICESA', 'CA-006', 1.2, '2011-08-30'),
+('1683', 91, 'R-008', 'VICESA', 'CA-003', 1.2, '2010-12-21'),
+('1684', 72, 'R-007', 'VICESA', 'CA-005', 1.2, '2010-12-26'),
+('1685', 81, 'R-008', 'VICESA', 'CA-005', 1.2, '2011-08-21'),
+('1686', 13, 'R-010', 'VICESA', 'CA-003', 1.2, '2010-03-27'),
+('1687', 32, 'R-010', 'VICESA', 'CA-010', 1.2, '2011-06-21'),
+('1688', 108, 'R-005', 'VIGUA', 'CA-002', 1.2, '2008-11-11'),
+('1689', 30, 'R-001', 'VICESA', 'CA-010', 1.2, '2009-07-05'),
+('1690', 55, 'R-005', 'VIGUA', 'CA-008', 1.2, '2010-05-23'),
+('1691', 101, 'R-005', 'VIGUA', 'CA-001', 1.2, '2010-10-16'),
+('1692', 51, 'R-006', 'VICESA', 'CA-005', 1.2, '2010-01-02'),
+('1693', 77, 'R-009', 'VICESA', 'CA-010', 1.2, '2009-04-04'),
+('1694', 64, 'R-004', 'VICESA', 'CA-002', 1.2, '2010-06-20'),
+('1695', 36, 'R-010', 'VIGUA', 'CA-002', 1.2, '2009-11-26'),
+('1696', 33, 'R-003', 'VIGUA', 'CA-007', 1.2, '2011-08-30'),
+('1697', 1, 'R-010', 'VICESA', 'CA-009', 1.2, '2009-12-02'),
+('1698', 86, 'R-006', 'VICESA', 'CA-006', 1.2, '2009-03-11'),
+('1699', 46, 'R-002', 'VIGUA', 'CA-003', 1.2, '2010-01-10'),
+('1700', 32, 'R-002', 'VIGUA', 'CA-006', 1.2, '2011-01-22'),
+('1701', 86, 'R-008', 'VICESA', 'CA-007', 1.2, '2010-10-11'),
+('1702', 71, 'R-006', 'VIGUA', 'CA-009', 1.2, '2009-03-26'),
+('1703', 24, 'R-004', 'VIGUA', 'CA-004', 1.2, '2011-07-21'),
+('1704', 14, 'R-009', 'VIGUA', 'CA-002', 1.2, '2009-03-29'),
+('1705', 115, 'R-001', 'VICESA', 'CA-005', 1.2, '2010-11-10'),
+('1706', 97, 'R-010', 'VICESA', 'CA-010', 1.2, '2010-09-12'),
+('1707', 85, 'R-010', 'VICESA', 'CA-009', 1.2, '2011-09-15'),
+('1708', 3, 'R-004', 'VICESA', 'CA-002', 1.2, '2011-09-30'),
+('1709', 16, 'R-001', 'VIGUA', 'CA-004', 1.2, '2010-10-24'),
+('1710', 60, 'R-005', 'VICESA', 'CA-004', 1.2, '2010-11-26'),
+('1711', 4, 'R-007', 'VIGUA', 'CA-004', 1.2, '2009-03-10'),
+('1712', 5, 'R-008', 'VIGUA', 'CA-004', 1.2, '2011-02-28'),
+('1713', 38, 'R-010', 'VICESA', 'CA-002', 1.2, '2009-04-19'),
+('1714', 19, 'R-004', 'VICESA', 'CA-009', 1.2, '2008-11-15'),
+('1715', 14, 'R-009', 'VIGUA', 'CA-010', 1.2, '2010-01-16'),
+('1716', 55, 'R-005', 'VIGUA', 'CA-005', 1.2, '2010-11-30'),
+('1717', 68, 'R-001', 'VIGUA', 'CA-009', 1.2, '2009-04-06'),
+('1718', 48, 'R-006', 'VIGUA', 'CA-003', 1.2, '2010-02-11'),
+('1719', 77, 'R-005', 'VIGUA', 'CA-001', 1.2, '2011-05-14'),
+('1720', 28, 'R-004', 'VIGUA', 'CA-008', 1.2, '2010-04-24'),
+('1721', 74, 'R-010', 'VIGUA', 'CA-006', 1.2, '2010-07-24'),
+('1722', 96, 'R-007', 'VICESA', 'CA-008', 1.2, '2011-01-17'),
+('1723', 20, 'R-003', 'VICESA', 'CA-004', 1.2, '2011-09-19'),
+('1724', 102, 'R-002', 'VICESA', 'CA-008', 1.2, '2009-03-10'),
+('1725', 50, 'R-005', 'VIGUA', 'CA-004', 1.2, '2010-10-15'),
+('1726', 100, 'R-008', 'VIGUA', 'CA-008', 1.2, '2010-06-19'),
+('1727', 85, 'R-006', 'VIGUA', 'CA-002', 1.2, '2008-10-31'),
+('1728', 53, 'R-003', 'VIGUA', 'CA-003', 1.2, '2009-03-30'),
+('1729', 49, 'R-007', 'VICESA', 'CA-008', 1.2, '2009-10-27'),
+('1730', 100, 'R-001', 'VIGUA', 'CA-009', 1.2, '2011-05-29'),
+('1731', 55, 'R-005', 'VIGUA', 'CA-007', 1.2, '2010-09-05'),
+('1732', 41, 'R-005', 'VICESA', 'CA-008', 1.2, '2010-06-17'),
+('1733', 31, 'R-004', 'VICESA', 'CA-009', 1.2, '2009-01-10'),
+('1734', 27, 'R-002', 'VIGUA', 'CA-009', 1.2, '2010-02-24'),
+('1735', 35, 'R-010', 'VIGUA', 'CA-006', 1.2, '2008-12-31'),
+('1736', 38, 'R-003', 'VIGUA', 'CA-010', 1.2, '2009-01-01'),
+('1737', 116, 'R-010', 'VICESA', 'CA-003', 1.2, '2011-05-09'),
+('1738', 19, 'R-009', 'VICESA', 'CA-004', 1.2, '2011-10-09'),
+('1739', 85, 'R-002', 'VIGUA', 'CA-007', 1.2, '2010-02-13'),
+('1740', 97, 'R-005', 'VIGUA', 'CA-002', 1.2, '2010-11-09'),
+('1741', 17, 'R-001', 'VIGUA', 'CA-005', 1.2, '2009-11-18'),
+('1742', 90, 'R-007', 'VICESA', 'CA-002', 1.2, '2011-10-15'),
+('1743', 83, 'R-010', 'VIGUA', 'CA-005', 1.2, '2009-05-17'),
+('1744', 117, 'R-004', 'VICESA', 'CA-007', 1.2, '2010-11-26'),
+('1745', 66, 'R-004', 'VIGUA', 'CA-006', 1.2, '2011-06-13'),
+('1746', 42, 'R-006', 'VICESA', 'CA-008', 1.2, '2010-06-17'),
+('1747', 96, 'R-009', 'VIGUA', 'CA-003', 1.2, '2009-10-18'),
+('1748', 99, 'R-008', 'VIGUA', 'CA-009', 1.2, '2009-03-19'),
+('1749', 88, 'R-005', 'VIGUA', 'CA-010', 1.2, '2009-04-08'),
+('1750', 27, 'R-006', 'VICESA', 'CA-001', 1.2, '2010-01-06'),
+('1751', 29, 'R-010', 'VICESA', 'CA-005', 1.2, '2011-03-23'),
+('1752', 1, 'R-009', 'VICESA', 'CA-010', 1.2, '2011-10-04'),
+('1753', 92, 'R-007', 'VICESA', 'CA-001', 1.2, '2009-07-08'),
+('1754', 66, 'R-004', 'VIGUA', 'CA-009', 1.2, '2009-04-13'),
+('1755', 1, 'R-010', 'VIGUA', 'CA-007', 1.2, '2009-03-19'),
+('1756', 59, 'R-004', 'VICESA', 'CA-010', 1.2, '2011-07-22'),
+('1757', 35, 'R-009', 'VICESA', 'CA-004', 1.2, '2009-05-12'),
+('1758', 88, 'R-005', 'VIGUA', 'CA-010', 1.2, '2010-03-04'),
+('1759', 64, 'R-003', 'VIGUA', 'CA-005', 1.2, '2008-10-24'),
+('1760', 3, 'R-005', 'VICESA', 'CA-001', 1.2, '2011-03-07'),
+('1761', 1, 'R-005', 'VICESA', 'CA-001', 1.2, '2010-01-12'),
+('1762', 105, 'R-002', 'VICESA', 'CA-008', 1.2, '2009-07-30'),
+('1763', 58, 'R-007', 'VICESA', 'CA-005', 1.2, '2009-01-10'),
+('1764', 58, 'R-009', 'VIGUA', 'CA-002', 1.2, '2010-12-10'),
+('1765', 61, 'R-010', 'VICESA', 'CA-010', 1.2, '2009-06-22'),
+('1766', 98, 'R-001', 'VIGUA', 'CA-001', 1.2, '2009-10-26'),
+('1767', 10, 'R-005', 'VICESA', 'CA-006', 1.2, '2010-10-26'),
+('1768', 28, 'R-009', 'VICESA', 'CA-010', 1.2, '2009-07-02'),
+('1769', 72, 'R-007', 'VIGUA', 'CA-001', 1.2, '2009-07-18'),
+('1770', 48, 'R-010', 'VIGUA', 'CA-010', 1.2, '2011-01-11'),
+('1771', 10, 'R-006', 'VIGUA', 'CA-006', 1.2, '2010-07-16'),
+('1772', 5, 'R-004', 'VIGUA', 'CA-010', 1.2, '2009-10-04'),
+('1773', 103, 'R-002', 'VIGUA', 'CA-005', 1.2, '2010-08-10'),
+('1774', 69, 'R-009', 'VICESA', 'CA-010', 1.2, '2010-06-08'),
+('1775', 85, 'R-001', 'VIGUA', 'CA-007', 1.2, '2009-05-14'),
+('1776', 74, 'R-007', 'VIGUA', 'CA-009', 1.2, '2010-10-03'),
+('1777', 32, 'R-002', 'VICESA', 'CA-005', 1.2, '2008-12-07'),
+('1778', 86, 'R-010', 'VIGUA', 'CA-002', 1.2, '2008-12-26'),
+('1779', 103, 'R-004', 'VICESA', 'CA-006', 1.2, '2010-11-20'),
+('1780', 21, 'R-008', 'VIGUA', 'CA-002', 1.2, '2009-06-12'),
+('1781', 27, 'R-005', 'VICESA', 'CA-005', 1.2, '2011-01-01'),
+('1782', 46, 'R-001', 'VIGUA', 'CA-009', 1.2, '2011-02-04'),
+('1783', 55, 'R-003', 'VICESA', 'CA-007', 1.2, '2010-09-14'),
+('1784', 13, 'R-010', 'VICESA', 'CA-002', 1.2, '2011-05-27'),
+('1785', 55, 'R-009', 'VICESA', 'CA-004', 1.2, '2009-08-02'),
+('1786', 105, 'R-004', 'VIGUA', 'CA-005', 1.2, '2009-10-24'),
+('1787', 12, 'R-009', 'VICESA', 'CA-003', 1.2, '2011-05-02'),
+('1788', 64, 'R-003', 'VIGUA', 'CA-002', 1.2, '2009-12-08'),
+('1789', 59, 'R-002', 'VICESA', 'CA-005', 1.2, '2010-03-21'),
+('1790', 96, 'R-004', 'VIGUA', 'CA-008', 1.2, '2010-11-29'),
+('1791', 38, 'R-009', 'VICESA', 'CA-002', 1.2, '2010-10-12'),
+('1792', 115, 'R-001', 'VICESA', 'CA-003', 1.2, '2010-05-12'),
+('1793', 35, 'R-008', 'VICESA', 'CA-002', 1.2, '2008-12-10'),
+('1794', 89, 'R-006', 'VICESA', 'CA-007', 1.2, '2009-08-17'),
+('1795', 90, 'R-005', 'VIGUA', 'CA-008', 1.2, '2011-03-22'),
+('1796', 113, 'R-008', 'VIGUA', 'CA-009', 1.2, '2011-07-04'),
+('1797', 55, 'R-003', 'VIGUA', 'CA-005', 1.2, '2009-12-10'),
+('1798', 42, 'R-009', 'VIGUA', 'CA-005', 1.2, '2009-01-10'),
+('1799', 115, 'R-006', 'VICESA', 'CA-007', 1.2, '2008-11-26'),
+('1800', 25, 'R-008', 'VICESA', 'CA-008', 1.2, '2010-06-04'),
+('1801', 13, 'R-006', 'VICESA', 'CA-004', 1.2, '2009-08-07'),
+('1802', 81, 'R-006', 'VICESA', 'CA-008', 1.2, '2008-11-10'),
+('1803', 71, 'R-004', 'VICESA', 'CA-007', 1.2, '2009-03-27'),
+('1804', 66, 'R-007', 'VIGUA', 'CA-005', 1.2, '2010-09-19'),
+('1805', 33, 'R-001', 'VICESA', 'CA-003', 1.2, '2010-07-03'),
+('1806', 117, 'R-008', 'VICESA', 'CA-005', 1.2, '2009-08-06'),
+('1807', 28, 'R-010', 'VICESA', 'CA-010', 1.2, '2010-09-09'),
+('1808', 52, 'R-009', 'VIGUA', 'CA-009', 1.2, '2009-07-18'),
+('1809', 55, 'R-010', 'VICESA', 'CA-009', 1.2, '2010-08-20'),
+('1810', 98, 'R-004', 'VIGUA', 'CA-006', 1.2, '2011-02-08'),
+('1811', 42, 'R-003', 'VICESA', 'CA-003', 1.2, '2009-11-16'),
+('1812', 99, 'R-006', 'VIGUA', 'CA-001', 1.2, '2010-01-13'),
+('1813', 86, 'R-004', 'VIGUA', 'CA-001', 1.2, '2009-02-16'),
+('1814', 58, 'R-005', 'VIGUA', 'CA-003', 1.2, '2010-03-30'),
+('1815', 62, 'R-010', 'VIGUA', 'CA-008', 1.2, '2009-01-24'),
+('1816', 86, 'R-007', 'VICESA', 'CA-001', 1.2, '2009-10-27'),
+('1817', 46, 'R-002', 'VICESA', 'CA-001', 1.2, '2009-02-10'),
+('1818', 21, 'R-002', 'VIGUA', 'CA-008', 1.2, '2008-12-25'),
+('1819', 1, 'R-010', 'VICESA', 'CA-008', 1.2, '2009-03-11'),
+('1820', 76, 'R-004', 'VICESA', 'CA-004', 1.2, '2009-01-19'),
+('1821', 66, 'R-004', 'VICESA', 'CA-009', 1.2, '2010-06-30'),
+('1822', 51, 'R-004', 'VIGUA', 'CA-010', 1.2, '2011-03-12'),
+('1824', 100, 'R-004', 'VIGUA', 'CA-008', 1.2, '2011-08-12'),
+('1825', 14, 'R-010', 'VIGUA', 'CA-007', 1.2, '2010-08-07'),
+('1826', 82, 'R-005', 'VICESA', 'CA-001', 1.2, '2011-10-05'),
+('1827', 117, 'R-009', 'VIGUA', 'CA-009', 1.2, '2011-07-12'),
+('1828', 26, 'R-004', 'VICESA', 'CA-004', 1.2, '2008-12-06'),
+('1829', 56, 'R-003', 'VICESA', 'CA-004', 1.2, '2011-09-25'),
+('1830', 62, 'R-002', 'VIGUA', 'CA-002', 1.2, '2010-02-05'),
+('1832', 24, 'R-005', 'VICESA', 'CA-009', 1.2, '2009-09-17'),
+('1833', 53, 'R-003', 'VIGUA', 'CA-002', 1.2, '2010-10-06'),
+('1834', 109, 'R-006', 'VIGUA', 'CA-009', 1.2, '2009-06-09'),
+('1835', 43, 'R-005', 'VIGUA', 'CA-002', 1.2, '2009-07-08'),
+('1836', 75, 'R-010', 'VICESA', 'CA-003', 1.2, '2010-08-19'),
+('1837', 95, 'R-010', 'VIGUA', 'CA-001', 1.2, '2011-01-29'),
+('1838', 107, 'R-003', 'VICESA', 'CA-001', 1.2, '2009-12-19'),
+('1839', 106, 'R-005', 'VICESA', 'CA-006', 1.2, '2009-04-15'),
+('1840', 4, 'R-005', 'VIGUA', 'CA-009', 1.2, '2009-09-03'),
+('1841', 21, 'R-009', 'VICESA', 'CA-003', 1.2, '2009-06-23'),
+('1842', 104, 'R-001', 'VICESA', 'CA-003', 1.2, '2010-04-30'),
+('1843', 54, 'R-007', 'VICESA', 'CA-004', 1.2, '2010-11-14'),
+('1844', 45, 'R-006', 'VICESA', 'CA-006', 1.2, '2009-03-03'),
+('1845', 49, 'R-008', 'VICESA', 'CA-003', 1.2, '2011-08-07'),
+('1846', 39, 'R-001', 'VICESA', 'CA-009', 1.2, '2010-01-22'),
+('1847', 103, 'R-005', 'VICESA', 'CA-007', 1.2, '2009-09-24'),
+('1848', 108, 'R-006', 'VICESA', 'CA-001', 1.2, '2009-07-13'),
+('1849', 112, 'R-005', 'VIGUA', 'CA-009', 1.2, '2010-07-30');
+INSERT INTO FACTURAS (CODIGO_FACTURA, CODIGO_PROVEEDOR, CODIGO_RECOLECTOR, SUCURSAL, CODIGO_CENTRO_ACOPIO, PRECIO_COMPRA, FECHA) VALUES
+('1850', 12, 'R-006', 'VICESA', 'CA-006', 1.2, '2011-01-26'),
+('1851', 64, 'R-007', 'VIGUA', 'CA-007', 1.2, '2010-12-19'),
+('1852', 42, 'R-006', 'VIGUA', 'CA-010', 1.2, '2009-08-21'),
+('1853', 73, 'R-002', 'VICESA', 'CA-005', 1.2, '2010-12-15'),
+('1854', 113, 'R-005', 'VICESA', 'CA-006', 1.2, '2010-10-25'),
+('1855', 75, 'R-005', 'VICESA', 'CA-001', 1.2, '2011-03-04'),
+('1856', 85, 'R-001', 'VIGUA', 'CA-005', 1.2, '2011-09-21'),
+('1857', 26, 'R-002', 'VICESA', 'CA-004', 1.2, '2010-04-23'),
+('1858', 117, 'R-001', 'VICESA', 'CA-010', 1.2, '2010-10-19'),
+('1859', 10, 'R-004', 'VIGUA', 'CA-001', 1.2, '2009-05-29'),
+('1860', 66, 'R-004', 'VICESA', 'CA-005', 1.2, '2010-12-09'),
+('1861', 30, 'R-004', 'VIGUA', 'CA-003', 1.2, '2011-07-16'),
+('1862', 109, 'R-007', 'VIGUA', 'CA-009', 1.2, '2011-04-19'),
+('1863', 47, 'R-003', 'VICESA', 'CA-001', 1.2, '2010-05-03'),
+('1864', 58, 'R-001', 'VIGUA', 'CA-010', 1.2, '2010-07-01'),
+('1865', 13, 'R-004', 'VIGUA', 'CA-001', 1.2, '2008-11-21'),
+('1866', 20, 'R-003', 'VIGUA', 'CA-006', 1.2, '2010-02-01'),
+('1867', 42, 'R-009', 'VICESA', 'CA-004', 1.2, '2008-12-09'),
+('1868', 116, 'R-009', 'VICESA', 'CA-008', 1.2, '2011-06-10'),
+('1869', 79, 'R-010', 'VICESA', 'CA-001', 1.2, '2011-10-01'),
+('1870', 110, 'R-004', 'VIGUA', 'CA-005', 1.2, '2009-07-06'),
+('1871', 92, 'R-001', 'VICESA', 'CA-010', 1.2, '2009-04-09'),
+('1872', 17, 'R-009', 'VICESA', 'CA-007', 1.2, '2011-07-08'),
+('1873', 91, 'R-008', 'VIGUA', 'CA-008', 1.2, '2009-05-08'),
+('1874', 7, 'R-005', 'VICESA', 'CA-009', 1.2, '2008-12-13'),
+('1875', 54, 'R-008', 'VIGUA', 'CA-005', 1.2, '2011-06-12'),
+('1876', 74, 'R-002', 'VIGUA', 'CA-010', 1.2, '2010-03-29'),
+('1877', 29, 'R-005', 'VICESA', 'CA-002', 1.2, '2009-06-30'),
+('1878', 85, 'R-004', 'VICESA', 'CA-008', 1.2, '2008-10-24'),
+('1879', 33, 'R-003', 'VIGUA', 'CA-002', 1.2, '2008-11-17'),
+('1880', 108, 'R-005', 'VICESA', 'CA-003', 1.2, '2010-10-09'),
+('1881', 22, 'R-002', 'VIGUA', 'CA-001', 1.2, '2011-09-13'),
+('1882', 91, 'R-005', 'VICESA', 'CA-008', 1.2, '2010-06-13'),
+('1883', 45, 'R-008', 'VICESA', 'CA-006', 1.2, '2011-01-08'),
+('1884', 82, 'R-002', 'VICESA', 'CA-008', 1.2, '2010-05-04'),
+('1885', 95, 'R-008', 'VICESA', 'CA-001', 1.2, '2010-05-22'),
+('1886', 24, 'R-007', 'VIGUA', 'CA-004', 1.2, '2011-08-15'),
+('1887', 83, 'R-010', 'VICESA', 'CA-007', 1.2, '2011-03-30'),
+('1888', 13, 'R-007', 'VICESA', 'CA-007', 1.2, '2009-05-17'),
+('1889', 82, 'R-007', 'VIGUA', 'CA-007', 1.2, '2009-04-25'),
+('1890', 46, 'R-006', 'VIGUA', 'CA-010', 1.2, '2010-08-29'),
+('1891', 7, 'R-005', 'VIGUA', 'CA-006', 1.2, '2011-01-02'),
+('1892', 8, 'R-002', 'VIGUA', 'CA-010', 1.2, '2010-05-15'),
+('1893', 68, 'R-005', 'VICESA', 'CA-009', 1.2, '2011-01-09'),
+('1894', 115, 'R-009', 'VIGUA', 'CA-003', 1.2, '2011-03-13'),
+('1895', 53, 'R-001', 'VIGUA', 'CA-004', 1.2, '2011-03-03'),
+('1896', 15, 'R-006', 'VIGUA', 'CA-010', 1.2, '2008-11-14'),
+('1897', 41, 'R-005', 'VICESA', 'CA-002', 1.2, '2010-05-11'),
+('1898', 99, 'R-008', 'VIGUA', 'CA-006', 1.2, '2009-05-09'),
+('1899', 3, 'R-007', 'VICESA', 'CA-009', 1.2, '2009-02-03'),
+('1900', 8, 'R-006', 'VICESA', 'CA-002', 1.2, '2009-02-06'),
+('1901', 110, 'R-001', 'VICESA', 'CA-002', 1.2, '2009-10-05'),
+('1902', 49, 'R-006', 'VICESA', 'CA-007', 1.2, '2010-02-04'),
+('1903', 82, 'R-001', 'VICESA', 'CA-002', 1.2, '2011-04-21'),
+('1904', 5, 'R-003', 'VICESA', 'CA-005', 1.2, '2010-12-16'),
+('1905', 37, 'R-005', 'VICESA', 'CA-009', 1.2, '2010-11-02'),
+('1906', 35, 'R-001', 'VICESA', 'CA-001', 1.2, '2010-12-07'),
+('1907', 66, 'R-008', 'VICESA', 'CA-007', 1.2, '2010-06-28'),
+('1908', 22, 'R-005', 'VIGUA', 'CA-007', 1.2, '2010-05-10'),
+('1909', 13, 'R-009', 'VIGUA', 'CA-007', 1.2, '2009-04-18'),
+('1910', 109, 'R-001', 'VIGUA', 'CA-001', 1.2, '2011-03-18'),
+('1911', 8, 'R-002', 'VICESA', 'CA-009', 1.2, '2009-05-11'),
+('1912', 22, 'R-004', 'VICESA', 'CA-006', 1.2, '2011-03-20'),
+('1913', 111, 'R-005', 'VIGUA', 'CA-010', 1.2, '2009-05-03'),
+('1914', 91, 'R-001', 'VIGUA', 'CA-006', 1.2, '2010-07-19'),
+('1915', 59, 'R-006', 'VIGUA', 'CA-007', 1.2, '2009-02-13'),
+('1916', 78, 'R-004', 'VICESA', 'CA-002', 1.2, '2011-10-11'),
+('1917', 56, 'R-003', 'VICESA', 'CA-003', 1.2, '2010-04-02'),
+('1918', 55, 'R-002', 'VICESA', 'CA-004', 1.2, '2010-11-29'),
+('1919', 95, 'R-002', 'VICESA', 'CA-001', 1.2, '2010-04-08'),
+('1920', 53, 'R-003', 'VIGUA', 'CA-004', 1.2, '2011-01-07'),
+('1921', 90, 'R-004', 'VICESA', 'CA-002', 1.2, '2010-03-27'),
+('1922', 91, 'R-002', 'VIGUA', 'CA-001', 1.2, '2009-11-15'),
+('1923', 87, 'R-010', 'VICESA', 'CA-008', 1.2, '2009-04-06'),
+('1924', 29, 'R-010', 'VIGUA', 'CA-003', 1.2, '2009-01-27'),
+('1925', 17, 'R-007', 'VIGUA', 'CA-001', 1.2, '2009-01-19'),
+('1926', 80, 'R-005', 'VIGUA', 'CA-004', 1.2, '2010-06-05'),
+('1927', 26, 'R-003', 'VIGUA', 'CA-010', 1.2, '2009-02-21'),
+('1928', 31, 'R-001', 'VIGUA', 'CA-005', 1.2, '2010-07-20'),
+('1929', 64, 'R-002', 'VICESA', 'CA-010', 1.2, '2011-10-05'),
+('1930', 49, 'R-001', 'VICESA', 'CA-002', 1.2, '2010-06-07'),
+('1931', 14, 'R-003', 'VICESA', 'CA-010', 1.2, '2011-04-29'),
+('1932', 100, 'R-003', 'VIGUA', 'CA-005', 1.2, '2009-12-21'),
+('1933', 46, 'R-008', 'VIGUA', 'CA-009', 1.2, '2009-12-24'),
+('1934', 82, 'R-003', 'VICESA', 'CA-007', 1.2, '2009-12-02'),
+('1935', 100, 'R-006', 'VIGUA', 'CA-008', 1.2, '2009-07-21'),
+('1936', 3, 'R-006', 'VICESA', 'CA-008', 1.2, '2010-08-10'),
+('1937', 19, 'R-005', 'VICESA', 'CA-004', 1.2, '2010-02-08'),
+('1938', 91, 'R-005', 'VICESA', 'CA-010', 1.2, '2011-05-17'),
+('1939', 116, 'R-008', 'VICESA', 'CA-003', 1.2, '2011-07-02'),
+('1940', 47, 'R-006', 'VICESA', 'CA-001', 1.2, '2009-12-01'),
+('1941', 35, 'R-008', 'VICESA', 'CA-007', 1.2, '2010-01-22'),
+('1942', 84, 'R-002', 'VICESA', 'CA-004', 1.2, '2009-08-29'),
+('1943', 1, 'R-005', 'VICESA', 'CA-003', 1.2, '2011-06-07'),
+('1944', 78, 'R-005', 'VICESA', 'CA-003', 1.2, '2011-09-13'),
+('1945', 14, 'R-009', 'VICESA', 'CA-007', 1.2, '2010-01-25'),
+('1946', 19, 'R-004', 'VIGUA', 'CA-004', 1.2, '2010-08-07'),
+('1947', 18, 'R-001', 'VICESA', 'CA-008', 1.2, '2011-10-14'),
+('1948', 78, 'R-005', 'VIGUA', 'CA-001', 1.2, '2009-08-05'),
+('1949', 59, 'R-010', 'VIGUA', 'CA-002', 1.2, '2010-12-19'),
+('1950', 87, 'R-010', 'VICESA', 'CA-001', 1.2, '2011-02-15'),
+('1951', 34, 'R-006', 'VIGUA', 'CA-005', 1.2, '2009-07-04'),
+('1952', 54, 'R-005', 'VIGUA', 'CA-003', 1.2, '2009-01-24'),
+('1953', 81, 'R-006', 'VIGUA', 'CA-009', 1.2, '2009-03-14'),
+('1954', 66, 'R-005', 'VIGUA', 'CA-008', 1.2, '2010-09-08'),
+('1955', 104, 'R-007', 'VICESA', 'CA-005', 1.2, '2009-04-14'),
+('1956', 92, 'R-001', 'VIGUA', 'CA-003', 1.2, '2008-11-23'),
+('1957', 66, 'R-010', 'VIGUA', 'CA-005', 1.2, '2008-12-15'),
+('1958', 31, 'R-008', 'VICESA', 'CA-002', 1.2, '2009-04-17'),
+('1959', 114, 'R-010', 'VICESA', 'CA-003', 1.2, '2010-07-07'),
+('1960', 15, 'R-004', 'VIGUA', 'CA-002', 1.2, '2009-02-10'),
+('1961', 25, 'R-005', 'VIGUA', 'CA-006', 1.2, '2009-04-11'),
+('1962', 22, 'R-009', 'VIGUA', 'CA-001', 1.2, '2010-06-17'),
+('1963', 61, 'R-010', 'VIGUA', 'CA-002', 1.2, '2011-08-10'),
+('1964', 82, 'R-007', 'VICESA', 'CA-005', 1.2, '2008-11-22'),
+('1965', 24, 'R-004', 'VICESA', 'CA-001', 1.2, '2009-03-18'),
+('1966', 35, 'R-006', 'VICESA', 'CA-002', 1.2, '2009-04-28'),
+('1967', 39, 'R-007', 'VIGUA', 'CA-001', 1.2, '2010-07-08'),
+('1968', 19, 'R-002', 'VIGUA', 'CA-009', 1.2, '2010-05-11'),
+('1969', 24, 'R-004', 'VIGUA', 'CA-004', 1.2, '2010-05-05'),
+('1970', 52, 'R-007', 'VICESA', 'CA-002', 1.2, '2009-01-27'),
+('1971', 45, 'R-003', 'VIGUA', 'CA-004', 1.2, '2010-11-20'),
+('1972', 52, 'R-001', 'VIGUA', 'CA-006', 1.2, '2009-12-07'),
+('1973', 102, 'R-008', 'VICESA', 'CA-007', 1.2, '2010-12-18'),
+('1974', 52, 'R-007', 'VIGUA', 'CA-007', 1.2, '2009-04-08'),
+('1975', 99, 'R-007', 'VICESA', 'CA-008', 1.2, '2010-05-23'),
+('1976', 35, 'R-007', 'VICESA', 'CA-007', 1.2, '2011-02-02'),
+('1977', 58, 'R-001', 'VIGUA', 'CA-007', 1.2, '2009-09-20'),
+('1978', 110, 'R-006', 'VIGUA', 'CA-007', 1.2, '2010-09-02'),
+('1979', 32, 'R-003', 'VIGUA', 'CA-008', 1.2, '2010-12-23'),
+('1980', 27, 'R-008', 'VICESA', 'CA-002', 1.2, '2010-05-20'),
+('1981', 105, 'R-006', 'VICESA', 'CA-003', 1.2, '2009-04-20'),
+('1982', 4, 'R-002', 'VIGUA', 'CA-004', 1.2, '2010-06-04'),
+('1983', 92, 'R-007', 'VICESA', 'CA-005', 1.2, '2010-08-07'),
+('1984', 18, 'R-006', 'VIGUA', 'CA-007', 1.2, '2010-12-10'),
+('1985', 32, 'R-006', 'VICESA', 'CA-005', 1.2, '2010-06-13'),
+('1986', 72, 'R-009', 'VICESA', 'CA-007', 1.2, '2008-11-28'),
+('1987', 38, 'R-006', 'VIGUA', 'CA-002', 1.2, '2009-03-01'),
+('1988', 32, 'R-010', 'VIGUA', 'CA-004', 1.2, '2011-09-29'),
+('1989', 28, 'R-009', 'VICESA', 'CA-009', 1.2, '2011-09-18'),
+('1990', 94, 'R-008', 'VIGUA', 'CA-004', 1.2, '2009-10-19'),
+('1991', 13, 'R-003', 'VIGUA', 'CA-004', 1.2, '2010-09-22'),
+('1992', 43, 'R-001', 'VICESA', 'CA-001', 1.2, '2010-04-05'),
+('1993', 55, 'R-004', 'VICESA', 'CA-009', 1.2, '2010-10-18'),
+('1994', 103, 'R-007', 'VICESA', 'CA-010', 1.2, '2010-06-21'),
+('1995', 87, 'R-008', 'VIGUA', 'CA-010', 1.2, '2011-04-24'),
+('1996', 35, 'R-003', 'VICESA', 'CA-005', 1.2, '2010-08-06'),
+('1997', 63, 'R-005', 'VIGUA', 'CA-007', 1.2, '2010-02-06'),
+('1998', 28, 'R-003', 'VICESA', 'CA-002', 1.2, '2009-04-24'),
+('1999', 23, 'R-005', 'VICESA', 'CA-004', 1.2, '2010-06-28'),
+('2000', 48, 'R-006', 'VICESA', 'CA-002', 1.2, '2009-09-21'),
+('2001', 109, 'R-007', 'VICESA', 'CA-004', 1.2, '2011-04-24'),
+('2002', 97, 'R-007', 'VIGUA', 'CA-006', 1.2, '2011-01-30'),
+('2003', 34, 'R-001', 'VIGUA', 'CA-010', 1.2, '2008-11-29'),
+('2004', 62, 'R-010', 'VICESA', 'CA-004', 1.2, '2009-10-15'),
+('2005', 26, 'R-003', 'VICESA', 'CA-002', 1.2, '2010-01-03'),
+('2006', 105, 'R-005', 'VIGUA', 'CA-009', 1.2, '2010-07-22'),
+('2007', 107, 'R-005', 'VIGUA', 'CA-004', 1.2, '2009-08-27'),
+('2008', 76, 'R-004', 'VICESA', 'CA-007', 1.2, '2011-04-11'),
+('2009', 112, 'R-005', 'VIGUA', 'CA-005', 1.2, '2008-12-23'),
+('2010', 28, 'R-008', 'VIGUA', 'CA-005', 1.2, '2009-12-17'),
+('2011', 107, 'R-008', 'VIGUA', 'CA-003', 1.2, '2010-10-02'),
+('2012', 45, 'R-005', 'VICESA', 'CA-002', 1.2, '2009-11-20'),
+('2013', 32, 'R-005', 'VICESA', 'CA-009', 1.2, '2011-03-01'),
+('2014', 83, 'R-003', 'VICESA', 'CA-010', 1.2, '2010-08-08'),
+('2015', 44, 'R-010', 'VICESA', 'CA-001', 1.2, '2010-09-27'),
+('2016', 39, 'R-005', 'VIGUA', 'CA-007', 1.2, '2008-11-12'),
+('2017', 117, 'R-008', 'VICESA', 'CA-004', 1.2, '2010-09-29'),
+('2018', 18, 'R-005', 'VICESA', 'CA-001', 1.2, '2011-03-07'),
+('2019', 48, 'R-007', 'VICESA', 'CA-001', 1.2, '2011-03-17'),
+('2020', 55, 'R-001', 'VIGUA', 'CA-008', 1.2, '2011-10-17'),
+('2021', 30, 'R-003', 'VICESA', 'CA-009', 1.2, '2011-05-17'),
+('2022', 113, 'R-008', 'VIGUA', 'CA-009', 1.2, '2009-06-10'),
+('2023', 46, 'R-009', 'VIGUA', 'CA-004', 1.2, '2011-04-04'),
+('2024', 83, 'R-009', 'VIGUA', 'CA-001', 1.2, '2010-08-08'),
+('2025', 87, 'R-001', 'VIGUA', 'CA-010', 1.2, '2009-11-03'),
+('2026', 67, 'R-004', 'VICESA', 'CA-001', 1.2, '2010-06-13'),
+('2027', 31, 'R-007', 'VICESA', 'CA-005', 1.2, '2009-09-14'),
+('2028', 80, 'R-010', 'VICESA', 'CA-005', 1.2, '2009-01-13'),
+('2029', 8, 'R-006', 'VICESA', 'CA-005', 1.2, '2010-11-15'),
+('2030', 44, 'R-010', 'VICESA', 'CA-008', 1.2, '2009-11-16'),
+('2031', 1, 'R-003', 'VIGUA', 'CA-008', 1.2, '2009-07-06'),
+('2032', 108, 'R-003', 'VIGUA', 'CA-005', 1.2, '2011-05-04'),
+('2033', 1, 'R-001', 'VIGUA', 'CA-005', 1.2, '2011-03-17'),
+('2034', 7, 'R-002', 'VICESA', 'CA-001', 1.2, '2010-03-15'),
+('2035', 70, 'R-001', 'VICESA', 'CA-010', 1.2, '2010-08-16'),
+('2036', 73, 'R-005', 'VICESA', 'CA-010', 1.2, '2010-11-18'),
+('2037', 41, 'R-002', 'VIGUA', 'CA-005', 1.2, '2009-06-16'),
+('2038', 10, 'R-003', 'VICESA', 'CA-002', 1.2, '2010-06-23'),
+('2039', 18, 'R-001', 'VICESA', 'CA-002', 1.2, '2009-05-27'),
+('2040', 79, 'R-003', 'VICESA', 'CA-005', 1.2, '2008-10-29'),
+('2041', 78, 'R-001', 'VICESA', 'CA-006', 1.2, '2009-06-11'),
+('2042', 22, 'R-003', 'VIGUA', 'CA-008', 1.2, '2009-08-29'),
+('2043', 45, 'R-009', 'VIGUA', 'CA-007', 1.2, '2009-09-02'),
+('2044', 61, 'R-008', 'VIGUA', 'CA-005', 1.2, '2009-10-12'),
+('2045', 21, 'R-001', 'VICESA', 'CA-008', 1.2, '2009-06-02'),
+('2046', 44, 'R-006', 'VICESA', 'CA-009', 1.2, '2008-12-06'),
+('2047', 104, 'R-004', 'VICESA', 'CA-007', 1.2, '2010-01-11'),
+('2048', 43, 'R-010', 'VICESA', 'CA-001', 1.2, '2011-06-09'),
+('2049', 116, 'R-003', 'VIGUA', 'CA-001', 1.2, '2009-07-26'),
+('2050', 66, 'R-001', 'VIGUA', 'CA-009', 1.2, '2010-01-24'),
+('2051', 49, 'R-004', 'VICESA', 'CA-010', 1.2, '2011-03-25'),
+('2052', 60, 'R-001', 'VICESA', 'CA-008', 1.2, '2010-05-31'),
+('2053', 24, 'R-001', 'VIGUA', 'CA-003', 1.2, '2011-05-12'),
+('2054', 34, 'R-002', 'VIGUA', 'CA-004', 1.2, '2010-01-02'),
+('2055', 72, 'R-004', 'VICESA', 'CA-002', 1.2, '2009-01-03'),
+('2056', 27, 'R-007', 'VICESA', 'CA-008', 1.2, '2011-06-11'),
+('2057', 28, 'R-008', 'VIGUA', 'CA-005', 1.2, '2010-02-22'),
+('2058', 28, 'R-001', 'VIGUA', 'CA-010', 1.2, '2011-08-13'),
+('2059', 60, 'R-002', 'VIGUA', 'CA-010', 1.2, '2011-03-21'),
+('2060', 91, 'R-009', 'VIGUA', 'CA-005', 1.2, '2009-09-17'),
+('2061', 57, 'R-007', 'VIGUA', 'CA-001', 1.2, '2010-03-09'),
+('2062', 41, 'R-005', 'VIGUA', 'CA-002', 1.2, '2009-06-28'),
+('2063', 63, 'R-004', 'VIGUA', 'CA-004', 1.2, '2011-04-14'),
+('2064', 79, 'R-003', 'VIGUA', 'CA-009', 1.2, '2010-09-20'),
+('2065', 2, 'R-006', 'VIGUA', 'CA-006', 1.2, '2009-03-22'),
+('2066', 10, 'R-005', 'VIGUA', 'CA-005', 1.2, '2008-10-24'),
+('2067', 96, 'R-010', 'VIGUA', 'CA-001', 1.2, '2010-10-10'),
+('2068', 46, 'R-001', 'VIGUA', 'CA-003', 1.2, '2009-11-28'),
+('2069', 93, 'R-008', 'VICESA', 'CA-002', 1.2, '2009-08-28'),
+('2070', 3, 'R-008', 'VICESA', 'CA-006', 1.2, '2010-03-29'),
+('2071', 77, 'R-005', 'VIGUA', 'CA-001', 1.2, '2009-09-26'),
+('2072', 24, 'R-004', 'VIGUA', 'CA-007', 1.2, '2009-05-18'),
+('2073', 31, 'R-009', 'VIGUA', 'CA-007', 1.2, '2009-03-17'),
+('2074', 26, 'R-001', 'VIGUA', 'CA-005', 1.2, '2010-04-20'),
+('2075', 61, 'R-004', 'VICESA', 'CA-006', 1.2, '2010-09-14'),
+('2076', 112, 'R-007', 'VICESA', 'CA-009', 1.2, '2008-10-29'),
+('2077', 26, 'R-008', 'VIGUA', 'CA-008', 1.2, '2010-05-27'),
+('2078', 44, 'R-002', 'VICESA', 'CA-002', 1.2, '2010-08-07'),
+('2079', 73, 'R-010', 'VICESA', 'CA-008', 1.2, '2010-11-18'),
+('2080', 100, 'R-001', 'VICESA', 'CA-003', 1.2, '2009-11-20'),
+('2081', 84, 'R-005', 'VICESA', 'CA-007', 1.2, '2008-12-26'),
+('2082', 5, 'R-008', 'VICESA', 'CA-006', 1.2, '2009-03-16'),
+('2083', 24, 'R-003', 'VICESA', 'CA-010', 1.2, '2008-11-04'),
+('2084', 117, 'R-005', 'VIGUA', 'CA-006', 1.2, '2009-12-01'),
+('2085', 95, 'R-008', 'VIGUA', 'CA-010', 1.2, '2008-12-20'),
+('2086', 91, 'R-001', 'VICESA', 'CA-007', 1.2, '2010-05-07'),
+('2087', 77, 'R-002', 'VIGUA', 'CA-001', 1.2, '2009-09-09'),
+('2088', 70, 'R-008', 'VIGUA', 'CA-003', 1.2, '2009-09-09'),
+('2089', 27, 'R-004', 'VIGUA', 'CA-002', 1.2, '2009-10-09'),
+('2090', 19, 'R-001', 'VICESA', 'CA-004', 1.2, '2009-05-27'),
+('2091', 82, 'R-005', 'VICESA', 'CA-005', 1.2, '2009-11-04'),
+('2092', 63, 'R-002', 'VICESA', 'CA-003', 1.2, '2010-08-05'),
+('2093', 83, 'R-001', 'VIGUA', 'CA-010', 1.2, '2009-04-22'),
+('2094', 8, 'R-001', 'VICESA', 'CA-010', 1.2, '2009-01-14'),
+('2095', 79, 'R-001', 'VIGUA', 'CA-002', 1.2, '2008-10-28'),
+('2096', 20, 'R-004', 'VICESA', 'CA-007', 1.2, '2011-06-05'),
+('2097', 18, 'R-005', 'VIGUA', 'CA-005', 1.2, '2010-07-27'),
+('2098', 48, 'R-008', 'VICESA', 'CA-005', 1.2, '2008-12-31'),
+('2099', 60, 'R-006', 'VICESA', 'CA-001', 1.2, '2009-12-29'),
+('2100', 112, 'R-002', 'VIGUA', 'CA-001', 1.2, '2009-04-26'),
+('2101', 18, 'R-006', 'VIGUA', 'CA-005', 1.2, '2009-06-29'),
+('2102', 53, 'R-006', 'VIGUA', 'CA-008', 1.2, '2009-04-05'),
+('2103', 3, 'R-001', 'VICESA', 'CA-009', 1.2, '2010-06-03'),
+('2104', 57, 'R-007', 'VIGUA', 'CA-006', 1.2, '2009-07-25'),
+('2105', 86, 'R-005', 'VIGUA', 'CA-005', 1.2, '2009-07-02'),
+('2106', 93, 'R-004', 'VICESA', 'CA-008', 1.2, '2011-06-30'),
+('2107', 114, 'R-006', 'VIGUA', 'CA-008', 1.2, '2009-01-19'),
+('2108', 110, 'R-004', 'VICESA', 'CA-008', 1.2, '2010-11-02'),
+('2109', 19, 'R-005', 'VICESA', 'CA-007', 1.2, '2011-07-08'),
+('2110', 116, 'R-007', 'VICESA', 'CA-002', 1.2, '2011-10-05'),
+('2111', 108, 'R-006', 'VIGUA', 'CA-003', 1.2, '2011-04-01'),
+('2112', 37, 'R-008', 'VICESA', 'CA-008', 1.2, '2009-05-08'),
+('2113', 3, 'R-003', 'VIGUA', 'CA-007', 1.2, '2011-06-12'),
+('2114', 71, 'R-003', 'VICESA', 'CA-001', 1.2, '2010-12-31'),
+('2115', 7, 'R-007', 'VIGUA', 'CA-001', 1.2, '2011-09-10'),
+('2116', 49, 'R-003', 'VIGUA', 'CA-007', 1.2, '2010-05-18'),
+('2117', 100, 'R-006', 'VIGUA', 'CA-002', 1.2, '2010-09-06'),
+('2118', 96, 'R-010', 'VICESA', 'CA-002', 1.2, '2010-06-24'),
+('2119', 42, 'R-001', 'VIGUA', 'CA-005', 1.2, '2011-04-18'),
+('2120', 70, 'R-006', 'VIGUA', 'CA-010', 1.2, '2009-11-17'),
+('2121', 98, 'R-001', 'VICESA', 'CA-005', 1.2, '2009-07-24'),
+('2122', 56, 'R-009', 'VIGUA', 'CA-010', 1.2, '2011-04-09'),
+('2123', 98, 'R-010', 'VICESA', 'CA-004', 1.2, '2010-09-13'),
+('2124', 117, 'R-003', 'VIGUA', 'CA-001', 1.2, '2010-10-06'),
+('2125', 84, 'R-001', 'VICESA', 'CA-003', 1.2, '2011-09-20'),
+('2126', 109, 'R-008', 'VIGUA', 'CA-003', 1.2, '2010-02-25'),
+('2127', 74, 'R-001', 'VIGUA', 'CA-010', 1.2, '2010-07-15'),
+('2128', 54, 'R-006', 'VIGUA', 'CA-006', 1.2, '2009-08-08'),
+('2129', 44, 'R-005', 'VICESA', 'CA-001', 1.2, '2011-03-20'),
+('2130', 94, 'R-010', 'VICESA', 'CA-003', 1.2, '2011-04-08'),
+('2131', 31, 'R-008', 'VIGUA', 'CA-009', 1.2, '2010-09-14'),
+('2132', 79, 'R-010', 'VIGUA', 'CA-004', 1.2, '2008-12-04'),
+('2133', 20, 'R-007', 'VICESA', 'CA-004', 1.2, '2011-03-02'),
+('2134', 62, 'R-003', 'VIGUA', 'CA-010', 1.2, '2009-11-12'),
+('2135', 1, 'R-007', 'VICESA', 'CA-001', 1.2, '2010-09-29'),
+('2136', 94, 'R-003', 'VICESA', 'CA-001', 1.2, '2010-07-04'),
+('2137', 48, 'R-005', 'VICESA', 'CA-007', 1.2, '2011-10-07'),
+('2138', 116, 'R-007', 'VIGUA', 'CA-002', 1.2, '2011-06-03'),
+('2139', 98, 'R-005', 'VIGUA', 'CA-003', 1.2, '2011-05-26'),
+('2140', 92, 'R-001', 'VICESA', 'CA-004', 1.2, '2010-05-04'),
+('2141', 48, 'R-003', 'VIGUA', 'CA-009', 1.2, '2011-05-27'),
+('2142', 105, 'R-009', 'VICESA', 'CA-010', 1.2, '2010-10-19'),
+('2143', 98, 'R-009', 'VICESA', 'CA-005', 1.2, '2010-04-17'),
+('2144', 86, 'R-003', 'VIGUA', 'CA-006', 1.2, '2011-04-21'),
+('2145', 38, 'R-007', 'VIGUA', 'CA-003', 1.2, '2010-05-14'),
+('2146', 78, 'R-007', 'VICESA', 'CA-004', 1.2, '2011-09-25'),
+('2147', 11, 'R-009', 'VICESA', 'CA-009', 1.2, '2009-07-12'),
+('2148', 86, 'R-010', 'VIGUA', 'CA-007', 1.2, '2010-12-01'),
+('2149', 63, 'R-006', 'VIGUA', 'CA-009', 1.2, '2009-11-09'),
+('2150', 28, 'R-004', 'VICESA', 'CA-004', 1.2, '2009-03-09'),
+('2151', 111, 'R-007', 'VICESA', 'CA-010', 1.2, '2009-02-06'),
+('2152', 20, 'R-003', 'VIGUA', 'CA-002', 1.2, '2011-06-19'),
+('2153', 9, 'R-005', 'VICESA', 'CA-003', 1.2, '2010-10-24'),
+('2154', 25, 'R-003', 'VIGUA', 'CA-007', 1.2, '2011-02-06'),
+('2155', 61, 'R-008', 'VIGUA', 'CA-003', 1.2, '2010-07-04'),
+('2156', 61, 'R-005', 'VIGUA', 'CA-010', 1.2, '2009-06-09'),
+('2157', 57, 'R-010', 'VIGUA', 'CA-006', 1.2, '2009-01-25'),
+('2158', 67, 'R-007', 'VIGUA', 'CA-009', 1.2, '2011-08-16'),
+('2159', 46, 'R-003', 'VICESA', 'CA-002', 1.2, '2011-02-05'),
+('2160', 59, 'R-009', 'VICESA', 'CA-005', 1.2, '2010-01-02'),
+('2161', 70, 'R-001', 'VICESA', 'CA-007', 1.2, '2010-02-11'),
+('2162', 73, 'R-003', 'VICESA', 'CA-007', 1.2, '2009-06-23'),
+('2163', 90, 'R-007', 'VIGUA', 'CA-003', 1.2, '2010-05-16'),
+('2164', 111, 'R-007', 'VIGUA', 'CA-004', 1.2, '2011-05-09'),
+('2165', 22, 'R-002', 'VICESA', 'CA-002', 1.2, '2010-04-05'),
+('2166', 34, 'R-007', 'VIGUA', 'CA-005', 1.2, '2009-10-01'),
+('2167', 5, 'R-010', 'VIGUA', 'CA-001', 1.2, '2011-07-11'),
+('2168', 74, 'R-003', 'VICESA', 'CA-006', 1.2, '2009-07-19'),
+('2169', 86, 'R-009', 'VIGUA', 'CA-007', 1.2, '2009-10-21'),
+('2170', 3, 'R-004', 'VIGUA', 'CA-006', 1.2, '2010-11-20'),
+('2171', 11, 'R-001', 'VICESA', 'CA-002', 1.2, '2011-09-13'),
+('2172', 56, 'R-009', 'VICESA', 'CA-006', 1.2, '2010-11-21'),
+('2173', 58, 'R-004', 'VICESA', 'CA-009', 1.2, '2010-09-17'),
+('2174', 40, 'R-010', 'VICESA', 'CA-004', 1.2, '2010-07-09'),
+('2175', 24, 'R-005', 'VICESA', 'CA-009', 1.2, '2011-05-14'),
+('2176', 56, 'R-009', 'VICESA', 'CA-006', 1.2, '2010-03-07'),
+('2177', 41, 'R-008', 'VIGUA', 'CA-003', 1.2, '2010-11-19'),
+('2178', 111, 'R-003', 'VICESA', 'CA-005', 1.2, '2009-12-07'),
+('2179', 46, 'R-001', 'VIGUA', 'CA-001', 1.2, '2010-09-21'),
+('2180', 89, 'R-008', 'VIGUA', 'CA-006', 1.2, '2010-08-17'),
+('2181', 109, 'R-005', 'VIGUA', 'CA-010', 1.2, '2009-03-06'),
+('2182', 45, 'R-010', 'VICESA', 'CA-003', 1.2, '2010-07-15'),
+('2183', 114, 'R-008', 'VICESA', 'CA-005', 1.2, '2011-03-30'),
+('2184', 26, 'R-003', 'VIGUA', 'CA-008', 1.2, '2010-10-09'),
+('2185', 82, 'R-010', 'VICESA', 'CA-007', 1.2, '2009-08-01'),
+('2186', 7, 'R-010', 'VIGUA', 'CA-008', 1.2, '2010-08-01'),
+('2187', 29, 'R-010', 'VIGUA', 'CA-004', 1.2, '2011-01-23'),
+('2188', 73, 'R-002', 'VICESA', 'CA-009', 1.2, '2010-01-19'),
+('2189', 90, 'R-002', 'VICESA', 'CA-003', 1.2, '2009-12-11'),
+('2190', 94, 'R-008', 'VICESA', 'CA-010', 1.2, '2011-01-27'),
+('2191', 12, 'R-009', 'VICESA', 'CA-008', 1.2, '2010-02-27'),
+('2192', 30, 'R-001', 'VICESA', 'CA-007', 1.2, '2010-03-21'),
+('2193', 5, 'R-004', 'VIGUA', 'CA-001', 1.2, '2009-05-22'),
+('2194', 63, 'R-004', 'VIGUA', 'CA-006', 1.2, '2010-04-22'),
+('2195', 88, 'R-008', 'VIGUA', 'CA-003', 1.2, '2010-08-18'),
+('2196', 59, 'R-005', 'VICESA', 'CA-002', 1.2, '2010-09-04'),
+('2197', 94, 'R-001', 'VICESA', 'CA-004', 1.2, '2009-04-25'),
+('2198', 80, 'R-010', 'VIGUA', 'CA-004', 1.2, '2009-10-19'),
+('2199', 84, 'R-009', 'VIGUA', 'CA-010', 1.2, '2010-09-28'),
+('2200', 17, 'R-009', 'VICESA', 'CA-002', 1.2, '2009-06-23'),
+('2201', 109, 'R-008', 'VIGUA', 'CA-005', 1.2, '2009-06-13'),
+('2202', 56, 'R-004', 'VIGUA', 'CA-008', 1.2, '2010-06-08'),
+('2203', 24, 'R-008', 'VICESA', 'CA-009', 1.2, '2009-03-04'),
+('2204', 115, 'R-010', 'VIGUA', 'CA-002', 1.2, '2011-09-26'),
+('2205', 34, 'R-005', 'VICESA', 'CA-009', 1.2, '2011-09-20'),
+('2206', 103, 'R-003', 'VICESA', 'CA-003', 1.2, '2011-07-03'),
+('2207', 74, 'R-005', 'VIGUA', 'CA-001', 1.2, '2011-01-19'),
+('2208', 11, 'R-004', 'VIGUA', 'CA-005', 1.2, '2010-07-15'),
+('2209', 19, 'R-003', 'VICESA', 'CA-008', 1.2, '2009-08-16'),
+('2210', 12, 'R-003', 'VICESA', 'CA-004', 1.2, '2009-10-11'),
+('2211', 57, 'R-008', 'VICESA', 'CA-001', 1.2, '2009-11-17'),
+('2212', 105, 'R-006', 'VIGUA', 'CA-002', 1.2, '2010-02-15'),
+('2213', 86, 'R-004', 'VICESA', 'CA-005', 1.2, '2011-01-12'),
+('2214', 62, 'R-003', 'VICESA', 'CA-008', 1.2, '2011-10-04'),
+('2215', 91, 'R-006', 'VICESA', 'CA-001', 1.2, '2011-04-20'),
+('2216', 75, 'R-008', 'VICESA', 'CA-009', 1.2, '2009-07-04'),
+('2217', 9, 'R-001', 'VIGUA', 'CA-001', 1.2, '2008-12-27'),
+('2218', 115, 'R-001', 'VICESA', 'CA-002', 1.2, '2009-05-03'),
+('2219', 89, 'R-002', 'VICESA', 'CA-001', 1.2, '2009-05-29'),
+('2220', 65, 'R-001', 'VIGUA', 'CA-003', 1.2, '2010-02-13'),
+('2221', 104, 'R-005', 'VICESA', 'CA-009', 1.2, '2011-06-01'),
+('2222', 24, 'R-009', 'VICESA', 'CA-009', 1.2, '2009-03-01'),
+('2223', 100, 'R-007', 'VICESA', 'CA-010', 1.2, '2011-04-25'),
+('2224', 32, 'R-001', 'VIGUA', 'CA-007', 1.2, '2010-12-19'),
+('2225', 117, 'R-003', 'VIGUA', 'CA-005', 1.2, '2011-06-06'),
+('2226', 51, 'R-006', 'VIGUA', 'CA-002', 1.2, '2011-02-15'),
+('2227', 15, 'R-001', 'VICESA', 'CA-004', 1.2, '2010-07-26'),
+('2228', 79, 'R-002', 'VICESA', 'CA-004', 1.2, '2011-06-23'),
+('2229', 10, 'R-010', 'VICESA', 'CA-008', 1.2, '2011-05-13'),
+('2230', 23, 'R-004', 'VIGUA', 'CA-004', 1.2, '2009-12-02'),
+('2231', 54, 'R-004', 'VIGUA', 'CA-003', 1.2, '2011-08-10'),
+('2232', 50, 'R-003', 'VIGUA', 'CA-010', 1.2, '2010-08-17'),
+('2233', 38, 'R-004', 'VIGUA', 'CA-003', 1.2, '2011-09-18'),
+('2234', 115, 'R-008', 'VICESA', 'CA-006', 1.2, '2009-09-17'),
+('2235', 26, 'R-001', 'VIGUA', 'CA-004', 1.2, '2009-06-26'),
+('2236', 50, 'R-005', 'VICESA', 'CA-003', 1.2, '2009-11-15'),
+('2237', 64, 'R-001', 'VIGUA', 'CA-005', 1.2, '2010-02-16'),
+('2238', 89, 'R-010', 'VIGUA', 'CA-008', 1.2, '2009-03-11'),
+('2239', 95, 'R-006', 'VIGUA', 'CA-006', 1.2, '2008-12-17'),
+('2240', 111, 'R-008', 'VIGUA', 'CA-009', 1.2, '2011-10-07'),
+('2241', 20, 'R-003', 'VICESA', 'CA-005', 1.2, '2009-06-04'),
+('2242', 41, 'R-005', 'VICESA', 'CA-001', 1.2, '2010-10-26'),
+('2243', 50, 'R-009', 'VICESA', 'CA-005', 1.2, '2009-01-04'),
+('2244', 37, 'R-007', 'VIGUA', 'CA-008', 1.2, '2011-07-14'),
+('2245', 26, 'R-006', 'VIGUA', 'CA-009', 1.2, '2009-12-18'),
+('2246', 1, 'R-010', 'VICESA', 'CA-007', 1.2, '2010-07-04'),
+('2247', 76, 'R-010', 'VIGUA', 'CA-009', 1.2, '2010-10-25'),
+('2248', 78, 'R-010', 'VICESA', 'CA-006', 1.2, '2011-09-16'),
+('2249', 70, 'R-005', 'VIGUA', 'CA-008', 1.2, '2010-12-19'),
+('2250', 84, 'R-005', 'VIGUA', 'CA-002', 1.2, '2011-01-20'),
+('2251', 105, 'R-001', 'VICESA', 'CA-010', 1.2, '2010-11-16'),
+('2252', 12, 'R-008', 'VICESA', 'CA-002', 1.2, '2011-05-22'),
+('2253', 63, 'R-007', 'VIGUA', 'CA-006', 1.2, '2010-09-03'),
+('2254', 57, 'R-003', 'VIGUA', 'CA-005', 1.2, '2008-10-27'),
+('2255', 8, 'R-001', 'VICESA', 'CA-010', 1.2, '2010-04-23'),
+('2256', 37, 'R-004', 'VIGUA', 'CA-007', 1.2, '2010-12-30'),
+('2257', 53, 'R-009', 'VIGUA', 'CA-001', 1.2, '2010-01-17'),
+('2258', 104, 'R-003', 'VICESA', 'CA-006', 1.2, '2011-09-21'),
+('2259', 53, 'R-007', 'VICESA', 'CA-003', 1.2, '2011-04-27'),
+('2260', 74, 'R-005', 'VICESA', 'CA-003', 1.2, '2011-10-16'),
+('2261', 103, 'R-001', 'VIGUA', 'CA-005', 1.2, '2009-01-09'),
+('2262', 12, 'R-001', 'VIGUA', 'CA-002', 1.2, '2008-12-31'),
+('2263', 83, 'R-009', 'VIGUA', 'CA-010', 1.2, '2010-05-09'),
+('2264', 57, 'R-009', 'VIGUA', 'CA-004', 1.2, '2009-06-28'),
+('2265', 33, 'R-006', 'VICESA', 'CA-002', 1.2, '2011-03-17'),
+('2266', 59, 'R-001', 'VIGUA', 'CA-004', 1.2, '2009-05-25'),
+('2267', 106, 'R-010', 'VICESA', 'CA-007', 1.2, '2010-09-18'),
+('2268', 52, 'R-008', 'VICESA', 'CA-001', 1.2, '2010-08-07'),
+('2269', 94, 'R-006', 'VICESA', 'CA-005', 1.2, '2008-12-24'),
+('2270', 115, 'R-006', 'VICESA', 'CA-009', 1.2, '2011-02-26'),
+('2271', 101, 'R-010', 'VIGUA', 'CA-003', 1.2, '2010-10-23'),
+('2272', 110, 'R-010', 'VICESA', 'CA-005', 1.2, '2011-07-29'),
+('2273', 35, 'R-006', 'VICESA', 'CA-005', 1.2, '2009-01-13'),
+('2274', 22, 'R-003', 'VICESA', 'CA-008', 1.2, '2009-12-28'),
+('2275', 59, 'R-005', 'VIGUA', 'CA-003', 1.2, '2010-11-13'),
+('2276', 63, 'R-006', 'VIGUA', 'CA-010', 1.2, '2009-04-15'),
+('2277', 1, 'R-010', 'VICESA', 'CA-006', 1.2, '2011-09-23'),
+('2278', 20, 'R-004', 'VICESA', 'CA-001', 1.2, '2010-06-12'),
+('2279', 35, 'R-005', 'VIGUA', 'CA-007', 1.2, '2010-04-14'),
+('2280', 80, 'R-007', 'VICESA', 'CA-007', 1.2, '2011-09-29'),
+('2281', 100, 'R-006', 'VIGUA', 'CA-002', 1.2, '2010-03-11'),
+('2282', 86, 'R-004', 'VICESA', 'CA-002', 1.2, '2010-09-16'),
+('2283', 44, 'R-008', 'VIGUA', 'CA-008', 1.2, '2010-12-21'),
+('2284', 68, 'R-002', 'VIGUA', 'CA-010', 1.2, '2009-08-15'),
+('2285', 71, 'R-005', 'VIGUA', 'CA-004', 1.2, '2011-04-04'),
+('2286', 27, 'R-010', 'VICESA', 'CA-004', 1.2, '2011-05-15'),
+('2287', 46, 'R-003', 'VIGUA', 'CA-008', 1.2, '2009-11-02'),
+('2288', 11, 'R-002', 'VIGUA', 'CA-010', 1.2, '2011-09-10'),
+('2289', 57, 'R-007', 'VICESA', 'CA-009', 1.2, '2009-12-25'),
+('2290', 17, 'R-004', 'VIGUA', 'CA-001', 1.2, '2009-12-14'),
+('2291', 34, 'R-003', 'VIGUA', 'CA-004', 1.2, '2008-11-23'),
+('2292', 74, 'R-003', 'VICESA', 'CA-003', 1.2, '2011-03-03'),
+('2293', 79, 'R-005', 'VICESA', 'CA-002', 1.2, '2009-06-26'),
+('2294', 88, 'R-007', 'VIGUA', 'CA-008', 1.2, '2011-08-20'),
+('2295', 59, 'R-009', 'VIGUA', 'CA-004', 1.2, '2010-10-20'),
+('2296', 5, 'R-003', 'VIGUA', 'CA-005', 1.2, '2008-11-06'),
+('2297', 32, 'R-001', 'VIGUA', 'CA-001', 1.2, '2009-10-06'),
+('2298', 72, 'R-001', 'VICESA', 'CA-001', 1.2, '2011-03-07'),
+('2299', 48, 'R-008', 'VIGUA', 'CA-010', 1.2, '2011-02-23'),
+('2300', 46, 'R-001', 'VIGUA', 'CA-002', 1.2, '2009-06-06'),
+('2301', 64, 'R-004', 'VICESA', 'CA-005', 1.2, '2011-07-28'),
+('2302', 112, 'R-004', 'VICESA', 'CA-006', 1.2, '2010-08-28'),
+('2303', 117, 'R-001', 'VIGUA', 'CA-004', 1.2, '2009-03-25'),
+('2304', 73, 'R-007', 'VIGUA', 'CA-008', 1.2, '2009-07-10'),
+('2305', 10, 'R-008', 'VICESA', 'CA-001', 1.2, '2010-07-08'),
+('2306', 50, 'R-010', 'VICESA', 'CA-002', 1.2, '2009-02-19'),
+('2307', 114, 'R-008', 'VICESA', 'CA-006', 1.2, '2009-02-21'),
+('2308', 70, 'R-001', 'VICESA', 'CA-008', 1.2, '2010-12-11'),
+('2309', 86, 'R-003', 'VICESA', 'CA-010', 1.2, '2010-09-06'),
+('2310', 69, 'R-003', 'VIGUA', 'CA-006', 1.2, '2009-07-27'),
+('2311', 93, 'R-002', 'VIGUA', 'CA-007', 1.2, '2011-10-07'),
+('2312', 2, 'R-003', 'VICESA', 'CA-007', 1.2, '2010-03-27'),
+('2313', 89, 'R-001', 'VICESA', 'CA-006', 1.2, '2010-11-22'),
+('2314', 64, 'R-002', 'VICESA', 'CA-010', 1.2, '2008-12-03'),
+('2315', 92, 'R-003', 'VICESA', 'CA-002', 1.2, '2010-06-07'),
+('2316', 54, 'R-001', 'VIGUA', 'CA-008', 1.2, '2010-06-19'),
+('2317', 91, 'R-005', 'VIGUA', 'CA-002', 1.2, '2009-08-09'),
+('2318', 68, 'R-003', 'VIGUA', 'CA-010', 1.2, '2009-04-29'),
+('2319', 74, 'R-006', 'VIGUA', 'CA-002', 1.2, '2010-07-25'),
+('2320', 36, 'R-003', 'VIGUA', 'CA-007', 1.2, '2011-10-03'),
+('2321', 32, 'R-005', 'VIGUA', 'CA-003', 1.2, '2011-05-23'),
+('2322', 5, 'R-002', 'VIGUA', 'CA-009', 1.2, '2009-07-05'),
+('2323', 18, 'R-008', 'VIGUA', 'CA-010', 1.2, '2010-07-08'),
+('2324', 83, 'R-008', 'VICESA', 'CA-002', 1.2, '2011-09-28'),
+('2325', 42, 'R-008', 'VIGUA', 'CA-007', 1.2, '2009-09-20'),
+('2326', 85, 'R-002', 'VIGUA', 'CA-006', 1.2, '2009-09-08'),
+('2327', 68, 'R-009', 'VICESA', 'CA-008', 1.2, '2011-07-22'),
+('2328', 48, 'R-003', 'VICESA', 'CA-004', 1.2, '2011-05-29'),
+('2329', 60, 'R-001', 'VICESA', 'CA-008', 1.2, '2010-03-24'),
+('2330', 20, 'R-010', 'VICESA', 'CA-010', 1.2, '2010-03-26'),
+('2331', 61, 'R-004', 'VIGUA', 'CA-002', 1.2, '2009-05-13'),
+('2332', 16, 'R-008', 'VICESA', 'CA-003', 1.2, '2011-08-11'),
+('2333', 15, 'R-005', 'VIGUA', 'CA-008', 1.2, '2008-12-21'),
+('2334', 26, 'R-010', 'VIGUA', 'CA-002', 1.2, '2010-03-11'),
+('2335', 71, 'R-002', 'VICESA', 'CA-004', 1.2, '2010-10-11'),
+('2336', 23, 'R-002', 'VIGUA', 'CA-005', 1.2, '2009-03-19'),
+('2337', 72, 'R-006', 'VIGUA', 'CA-005', 1.2, '2011-06-30'),
+('2338', 43, 'R-006', 'VICESA', 'CA-004', 1.2, '2009-04-15'),
+('2339', 12, 'R-003', 'VICESA', 'CA-008', 1.2, '2008-11-05'),
+('2341', 54, 'R-003', 'VICESA', 'CA-005', 1.2, '2009-01-27'),
+('2342', 96, 'R-009', 'VIGUA', 'CA-009', 1.2, '2010-10-28'),
+('2343', 47, 'R-009', 'VICESA', 'CA-007', 1.2, '2011-07-05'),
+('2344', 73, 'R-007', 'VIGUA', 'CA-007', 1.2, '2011-01-15'),
+('2345', 92, 'R-006', 'VICESA', 'CA-005', 1.2, '2011-09-04'),
+('2346', 107, 'R-004', 'VIGUA', 'CA-006', 1.2, '2009-09-07'),
+('2347', 103, 'R-008', 'VICESA', 'CA-009', 1.2, '2011-03-05'),
+('2348', 108, 'R-010', 'VICESA', 'CA-005', 1.2, '2010-02-17'),
+('2349', 59, 'R-001', 'VICESA', 'CA-003', 1.2, '2009-08-05'),
+('2350', 7, 'R-002', 'VICESA', 'CA-009', 1.2, '2010-10-06'),
+('2351', 91, 'R-005', 'VICESA', 'CA-001', 1.2, '2008-12-24'),
+('2352', 114, 'R-006', 'VIGUA', 'CA-005', 1.2, '2009-12-01'),
+('2353', 11, 'R-001', 'VIGUA', 'CA-002', 1.2, '2010-06-10'),
+('2354', 68, 'R-006', 'VICESA', 'CA-002', 1.2, '2010-06-28'),
+('2355', 90, 'R-008', 'VICESA', 'CA-007', 1.2, '2008-11-24'),
+('2356', 46, 'R-005', 'VIGUA', 'CA-004', 1.2, '2009-03-04'),
+('2357', 40, 'R-005', 'VIGUA', 'CA-009', 1.2, '2009-02-27'),
+('2358', 50, 'R-003', 'VICESA', 'CA-008', 1.2, '2009-11-21'),
+('2359', 40, 'R-003', 'VIGUA', 'CA-002', 1.2, '2008-12-30'),
+('2360', 43, 'R-008', 'VIGUA', 'CA-003', 1.2, '2010-09-03'),
+('2361', 90, 'R-004', 'VIGUA', 'CA-004', 1.2, '2010-02-10'),
+('2362', 112, 'R-003', 'VICESA', 'CA-008', 1.2, '2009-06-13'),
+('2363', 71, 'R-009', 'VICESA', 'CA-005', 1.2, '2009-11-26'),
+('2364', 50, 'R-009', 'VICESA', 'CA-008', 1.2, '2010-10-31'),
+('2365', 82, 'R-003', 'VICESA', 'CA-007', 1.2, '2010-08-27'),
+('2366', 68, 'R-004', 'VIGUA', 'CA-010', 1.2, '2011-05-21'),
+('2367', 107, 'R-009', 'VICESA', 'CA-005', 1.2, '2008-10-24'),
+('2368', 2, 'R-008', 'VIGUA', 'CA-010', 1.2, '2010-05-08'),
+('2369', 67, 'R-001', 'VICESA', 'CA-004', 1.2, '2011-08-17'),
+('2370', 87, 'R-005', 'VIGUA', 'CA-003', 1.2, '2011-03-13'),
+('2371', 68, 'R-006', 'VICESA', 'CA-010', 1.2, '2010-06-29'),
+('2372', 99, 'R-010', 'VICESA', 'CA-005', 1.2, '2010-06-15'),
+('2373', 35, 'R-003', 'VIGUA', 'CA-001', 1.2, '2008-12-28'),
+('2374', 116, 'R-005', 'VIGUA', 'CA-007', 1.2, '2009-09-23'),
+('2375', 84, 'R-003', 'VICESA', 'CA-009', 1.2, '2008-11-08'),
+('2376', 66, 'R-008', 'VICESA', 'CA-009', 1.2, '2010-07-11'),
+('2377', 8, 'R-001', 'VICESA', 'CA-010', 1.2, '2009-07-10'),
+('2378', 28, 'R-006', 'VIGUA', 'CA-002', 1.2, '2011-06-17'),
+('2379', 117, 'R-010', 'VICESA', 'CA-004', 1.2, '2010-04-01'),
+('2380', 45, 'R-003', 'VICESA', 'CA-009', 1.2, '2010-02-17'),
+('2381', 44, 'R-003', 'VIGUA', 'CA-001', 1.2, '2011-08-01'),
+('2382', 24, 'R-007', 'VIGUA', 'CA-007', 1.2, '2009-06-10'),
+('2383', 14, 'R-002', 'VICESA', 'CA-002', 1.2, '2011-02-20'),
+('2384', 85, 'R-009', 'VIGUA', 'CA-002', 1.2, '2011-09-02'),
+('2385', 107, 'R-007', 'VICESA', 'CA-002', 1.2, '2009-10-12'),
+('2386', 110, 'R-005', 'VIGUA', 'CA-002', 1.2, '2009-10-09'),
+('2387', 101, 'R-001', 'VIGUA', 'CA-002', 1.2, '2008-11-09'),
+('2388', 47, 'R-008', 'VICESA', 'CA-009', 1.2, '2009-06-18'),
+('2389', 19, 'R-003', 'VICESA', 'CA-001', 1.2, '2009-05-18'),
+('2390', 91, 'R-002', 'VIGUA', 'CA-006', 1.2, '2011-05-22'),
+('2391', 59, 'R-006', 'VICESA', 'CA-008', 1.2, '2009-08-29'),
+('2392', 51, 'R-008', 'VIGUA', 'CA-004', 1.2, '2009-11-26'),
+('2393', 23, 'R-001', 'VIGUA', 'CA-001', 1.2, '2009-12-19'),
+('2394', 115, 'R-005', 'VIGUA', 'CA-001', 1.2, '2009-09-20'),
+('2395', 23, 'R-009', 'VICESA', 'CA-009', 1.2, '2009-11-16'),
+('2396', 22, 'R-008', 'VIGUA', 'CA-003', 1.2, '2011-01-19'),
+('2397', 111, 'R-004', 'VICESA', 'CA-010', 1.2, '2008-11-30'),
+('2398', 22, 'R-007', 'VICESA', 'CA-003', 1.2, '2009-04-14'),
+('2399', 36, 'R-001', 'VIGUA', 'CA-004', 1.2, '2010-10-18'),
+('2400', 47, 'R-003', 'VIGUA', 'CA-003', 1.2, '2010-08-24'),
+('2401', 44, 'R-008', 'VICESA', 'CA-003', 1.2, '2010-10-28'),
+('2402', 29, 'R-010', 'VICESA', 'CA-009', 1.2, '2010-12-30'),
+('2403', 77, 'R-003', 'VIGUA', 'CA-003', 1.2, '2011-03-16'),
+('2404', 28, 'R-005', 'VICESA', 'CA-001', 1.2, '2010-10-23'),
+('2405', 17, 'R-003', 'VICESA', 'CA-004', 1.2, '2009-01-02'),
+('2406', 63, 'R-005', 'VICESA', 'CA-004', 1.2, '2010-06-07'),
+('2407', 4, 'R-010', 'VICESA', 'CA-006', 1.2, '2011-08-30'),
+('2408', 74, 'R-007', 'VIGUA', 'CA-008', 1.2, '2010-08-04'),
+('2409', 115, 'R-009', 'VIGUA', 'CA-004', 1.2, '2011-07-02'),
+('2410', 58, 'R-001', 'VIGUA', 'CA-004', 1.2, '2010-10-24'),
+('2411', 61, 'R-007', 'VIGUA', 'CA-010', 1.2, '2010-01-01'),
+('2412', 61, 'R-005', 'VICESA', 'CA-002', 1.2, '2011-05-22'),
+('2413', 115, 'R-003', 'VIGUA', 'CA-006', 1.2, '2011-04-27'),
+('2414', 30, 'R-006', 'VIGUA', 'CA-010', 1.2, '2010-03-29'),
+('2415', 42, 'R-008', 'VICESA', 'CA-008', 1.2, '2009-10-21'),
+('2416', 28, 'R-008', 'VIGUA', 'CA-001', 1.2, '2011-05-13'),
+('2417', 104, 'R-005', 'VICESA', 'CA-010', 1.2, '2010-12-19'),
+('2418', 70, 'R-006', 'VICESA', 'CA-008', 1.2, '2009-05-08'),
+('2419', 83, 'R-005', 'VIGUA', 'CA-006', 1.2, '2009-07-13'),
+('2420', 10, 'R-001', 'VICESA', 'CA-009', 1.2, '2011-07-04'),
+('2421', 103, 'R-006', 'VICESA', 'CA-001', 1.2, '2009-06-14'),
+('2422', 40, 'R-008', 'VIGUA', 'CA-007', 1.2, '2010-10-06'),
+('2423', 105, 'R-002', 'VICESA', 'CA-008', 1.2, '2009-10-23'),
+('2424', 80, 'R-005', 'VICESA', 'CA-010', 1.2, '2009-10-19'),
+('2425', 86, 'R-004', 'VIGUA', 'CA-008', 1.2, '2011-03-26'),
+('2426', 62, 'R-006', 'VIGUA', 'CA-009', 1.2, '2010-05-29'),
+('2427', 86, 'R-007', 'VICESA', 'CA-001', 1.2, '2009-12-17'),
+('2428', 20, 'R-007', 'VICESA', 'CA-005', 1.2, '2010-06-12'),
+('2429', 107, 'R-010', 'VICESA', 'CA-009', 1.2, '2009-12-14'),
+('2430', 113, 'R-007', 'VIGUA', 'CA-008', 1.2, '2011-06-20'),
+('2431', 73, 'R-010', 'VICESA', 'CA-010', 1.2, '2011-05-15'),
+('2432', 93, 'R-004', 'VIGUA', 'CA-002', 1.2, '2011-08-24'),
+('2433', 33, 'R-008', 'VIGUA', 'CA-007', 1.2, '2011-04-07'),
+('2434', 97, 'R-003', 'VICESA', 'CA-003', 1.2, '2009-03-30'),
+('2435', 21, 'R-006', 'VICESA', 'CA-001', 1.2, '2011-08-23'),
+('2436', 73, 'R-002', 'VIGUA', 'CA-006', 1.2, '2009-02-01'),
+('2437', 67, 'R-007', 'VICESA', 'CA-010', 1.2, '2008-11-26'),
+('2438', 22, 'R-008', 'VICESA', 'CA-009', 1.2, '2008-12-02'),
+('2439', 4, 'R-004', 'VICESA', 'CA-006', 1.2, '2009-12-29'),
+('2440', 74, 'R-005', 'VICESA', 'CA-004', 1.2, '2009-02-16'),
+('2441', 54, 'R-007', 'VIGUA', 'CA-006', 1.2, '2009-10-06'),
+('2442', 48, 'R-001', 'VIGUA', 'CA-005', 1.2, '2011-02-22'),
+('2443', 101, 'R-001', 'VICESA', 'CA-003', 1.2, '2009-01-14'),
+('2444', 98, 'R-002', 'VICESA', 'CA-001', 1.2, '2009-05-09'),
+('2445', 71, 'R-005', 'VICESA', 'CA-003', 1.2, '2010-07-04'),
+('2446', 61, 'R-010', 'VIGUA', 'CA-008', 1.2, '2008-11-13'),
+('2447', 80, 'R-009', 'VICESA', 'CA-006', 1.2, '2009-04-01'),
+('2448', 94, 'R-001', 'VICESA', 'CA-005', 1.2, '2010-03-22'),
+('2449', 23, 'R-006', 'VIGUA', 'CA-010', 1.2, '2011-08-29'),
+('2450', 42, 'R-002', 'VIGUA', 'CA-002', 1.2, '2010-06-07'),
+('2451', 73, 'R-004', 'VICESA', 'CA-004', 1.2, '2010-05-01'),
+('2452', 66, 'R-003', 'VIGUA', 'CA-009', 1.2, '2011-10-04'),
+('2453', 102, 'R-004', 'VIGUA', 'CA-003', 1.2, '2009-12-03'),
+('2454', 114, 'R-008', 'VICESA', 'CA-001', 1.2, '2009-07-14'),
+('2455', 65, 'R-007', 'VICESA', 'CA-008', 1.2, '2010-11-28'),
+('2456', 59, 'R-010', 'VICESA', 'CA-010', 1.2, '2010-03-26'),
+('2457', 9, 'R-008', 'VIGUA', 'CA-008', 1.2, '2010-10-16'),
+('2458', 27, 'R-008', 'VICESA', 'CA-010', 1.2, '2009-07-22'),
+('2459', 56, 'R-009', 'VIGUA', 'CA-003', 1.2, '2011-07-27'),
+('2460', 35, 'R-002', 'VICESA', 'CA-001', 1.2, '2009-09-20'),
+('2461', 21, 'R-008', 'VIGUA', 'CA-001', 1.2, '2010-07-28'),
+('2462', 41, 'R-005', 'VICESA', 'CA-009', 1.2, '2008-11-06'),
+('2463', 95, 'R-008', 'VICESA', 'CA-002', 1.2, '2009-04-30'),
+('2464', 88, 'R-005', 'VICESA', 'CA-008', 1.2, '2008-12-09'),
+('2465', 91, 'R-009', 'VIGUA', 'CA-003', 1.2, '2009-11-05'),
+('2466', 25, 'R-002', 'VIGUA', 'CA-002', 1.2, '2009-04-01'),
+('2467', 98, 'R-006', 'VIGUA', 'CA-009', 1.2, '2008-12-25'),
+('2468', 62, 'R-008', 'VIGUA', 'CA-010', 1.2, '2010-05-31'),
+('2469', 11, 'R-010', 'VIGUA', 'CA-001', 1.2, '2009-10-10'),
+('2470', 45, 'R-004', 'VICESA', 'CA-010', 1.2, '2009-05-10'),
+('2471', 35, 'R-007', 'VICESA', 'CA-005', 1.2, '2011-01-20'),
+('2472', 31, 'R-007', 'VICESA', 'CA-005', 1.2, '2011-01-28'),
+('2473', 73, 'R-008', 'VIGUA', 'CA-010', 1.2, '2009-11-24'),
+('2474', 18, 'R-004', 'VICESA', 'CA-010', 1.2, '2010-03-02'),
+('2475', 107, 'R-002', 'VIGUA', 'CA-010', 1.2, '2009-08-06'),
+('2476', 63, 'R-009', 'VIGUA', 'CA-002', 1.2, '2009-08-22'),
+('2477', 58, 'R-002', 'VIGUA', 'CA-001', 1.2, '2011-02-28'),
+('2478', 53, 'R-010', 'VIGUA', 'CA-010', 1.2, '2010-08-10'),
+('2479', 14, 'R-003', 'VICESA', 'CA-004', 1.2, '2010-10-09'),
+('2480', 38, 'R-001', 'VICESA', 'CA-002', 1.2, '2008-11-21'),
+('2481', 31, 'R-002', 'VIGUA', 'CA-001', 1.2, '2010-07-09'),
+('2482', 110, 'R-010', 'VIGUA', 'CA-002', 1.2, '2011-07-18'),
+('2483', 95, 'R-008', 'VICESA', 'CA-010', 1.2, '2008-12-24'),
+('2484', 49, 'R-006', 'VICESA', 'CA-007', 1.2, '2010-11-26'),
+('2485', 101, 'R-006', 'VIGUA', 'CA-007', 1.2, '2010-03-13'),
+('2486', 83, 'R-003', 'VIGUA', 'CA-007', 1.2, '2009-10-11'),
+('2487', 43, 'R-007', 'VIGUA', 'CA-001', 1.2, '2009-01-16'),
+('2488', 18, 'R-005', 'VIGUA', 'CA-010', 1.2, '2009-12-30'),
+('2489', 111, 'R-003', 'VIGUA', 'CA-010', 1.2, '2008-11-03'),
+('2490', 96, 'R-004', 'VICESA', 'CA-002', 1.2, '2009-05-08'),
+('2491', 30, 'R-004', 'VIGUA', 'CA-002', 1.2, '2011-06-25'),
+('2492', 88, 'R-005', 'VICESA', 'CA-007', 1.2, '2008-11-12'),
+('2493', 58, 'R-010', 'VICESA', 'CA-007', 1.2, '2010-02-13'),
+('2494', 76, 'R-007', 'VICESA', 'CA-001', 1.2, '2011-04-06'),
+('2495', 108, 'R-002', 'VICESA', 'CA-010', 1.2, '2010-05-15'),
+('2496', 10, 'R-009', 'VIGUA', 'CA-003', 1.2, '2011-10-07'),
+('2497', 45, 'R-007', 'VIGUA', 'CA-003', 1.2, '2009-08-04'),
+('2498', 14, 'R-001', 'VIGUA', 'CA-002', 1.2, '2011-09-23'),
+('2499', 26, 'R-008', 'VIGUA', 'CA-002', 1.2, '2010-02-24'),
+('2500', 100, 'R-002', 'VICESA', 'CA-005', 1.2, '2009-02-01'),
+('2501', 89, 'R-009', 'VIGUA', 'CA-007', 1.2, '2010-07-03'),
+('2502', 46, 'R-007', 'VIGUA', 'CA-001', 1.2, '2010-01-31'),
+('2503', 73, 'R-010', 'VICESA', 'CA-002', 1.2, '2009-12-14'),
+('2504', 14, 'R-005', 'VIGUA', 'CA-006', 1.2, '2009-02-15'),
+('2505', 13, 'R-001', 'VICESA', 'CA-006', 1.2, '2011-08-06'),
+('2506', 54, 'R-005', 'VICESA', 'CA-003', 1.2, '2009-12-27'),
+('2507', 37, 'R-006', 'VIGUA', 'CA-008', 1.2, '2009-09-16'),
+('2508', 64, 'R-002', 'VICESA', 'CA-005', 1.2, '2009-09-02'),
+('2509', 20, 'R-003', 'VIGUA', 'CA-005', 1.2, '2011-06-27'),
+('2510', 22, 'R-002', 'VIGUA', 'CA-005', 1.2, '2008-12-15'),
+('2512', 71, 'R-008', 'VICESA', 'CA-007', 1.2, '2009-11-30'),
+('2513', 77, 'R-008', 'VIGUA', 'CA-010', 1.2, '2010-09-03'),
+('2514', 91, 'R-002', 'VIGUA', 'CA-008', 1.2, '2010-10-27'),
+('2515', 39, 'R-004', 'VICESA', 'CA-003', 1.2, '2009-10-19'),
+('2516', 76, 'R-009', 'VIGUA', 'CA-007', 1.2, '2011-02-28'),
+('2517', 99, 'R-006', 'VICESA', 'CA-002', 1.2, '2011-02-09'),
+('2518', 29, 'R-009', 'VIGUA', 'CA-006', 1.2, '2010-09-02'),
+('2519', 16, 'R-008', 'VICESA', 'CA-006', 1.2, '2010-10-18'),
+('2520', 8, 'R-002', 'VIGUA', 'CA-007', 1.2, '2010-07-13'),
+('2521', 88, 'R-010', 'VICESA', 'CA-002', 1.2, '2009-01-19'),
+('2522', 64, 'R-002', 'VICESA', 'CA-004', 1.2, '2009-07-08'),
+('2523', 57, 'R-003', 'VIGUA', 'CA-002', 1.2, '2011-02-15'),
+('2524', 63, 'R-006', 'VIGUA', 'CA-002', 1.2, '2010-08-19'),
+('2525', 88, 'R-003', 'VICESA', 'CA-009', 1.2, '2011-04-04'),
+('2526', 99, 'R-008', 'VICESA', 'CA-005', 1.2, '2009-09-27'),
+('2527', 42, 'R-005', 'VIGUA', 'CA-008', 1.2, '2009-08-01'),
+('2528', 7, 'R-008', 'VIGUA', 'CA-002', 1.2, '2010-11-27'),
+('2529', 56, 'R-008', 'VIGUA', 'CA-007', 1.2, '2011-08-24'),
+('2530', 37, 'R-001', 'VIGUA', 'CA-010', 1.2, '2009-01-10'),
+('2531', 2, 'R-008', 'VIGUA', 'CA-005', 1.2, '2010-03-28'),
+('2532', 104, 'R-002', 'VICESA', 'CA-001', 1.2, '2008-10-29'),
+('2533', 97, 'R-008', 'VIGUA', 'CA-006', 1.2, '2010-05-07'),
+('2534', 3, 'R-008', 'VICESA', 'CA-001', 1.2, '2011-09-15'),
+('2535', 113, 'R-009', 'VICESA', 'CA-008', 1.2, '2011-03-24'),
+('2536', 74, 'R-001', 'VICESA', 'CA-007', 1.2, '2010-09-25'),
+('2537', 38, 'R-008', 'VICESA', 'CA-006', 1.2, '2010-09-13'),
+('2538', 40, 'R-009', 'VIGUA', 'CA-010', 1.2, '2009-04-08'),
+('2539', 83, 'R-010', 'VICESA', 'CA-009', 1.2, '2011-05-15'),
+('2540', 31, 'R-004', 'VIGUA', 'CA-001', 1.2, '2009-01-01'),
+('2541', 92, 'R-006', 'VIGUA', 'CA-008', 1.2, '2009-07-30'),
+('2542', 108, 'R-003', 'VIGUA', 'CA-001', 1.2, '2011-01-31'),
+('2543', 32, 'R-005', 'VICESA', 'CA-002', 1.2, '2008-11-28'),
+('2544', 86, 'R-005', 'VICESA', 'CA-001', 1.2, '2009-02-28'),
+('2545', 83, 'R-006', 'VIGUA', 'CA-009', 1.2, '2009-12-21'),
+('2546', 42, 'R-002', 'VIGUA', 'CA-008', 1.2, '2010-02-12'),
+('2547', 54, 'R-007', 'VICESA', 'CA-001', 1.2, '2010-07-04'),
+('2548', 39, 'R-002', 'VICESA', 'CA-002', 1.2, '2009-10-28'),
+('2549', 56, 'R-004', 'VIGUA', 'CA-002', 1.2, '2009-03-31'),
+('2550', 27, 'R-005', 'VIGUA', 'CA-008', 1.2, '2010-06-23'),
+('2551', 18, 'R-004', 'VIGUA', 'CA-006', 1.2, '2009-07-30'),
+('2552', 93, 'R-001', 'VICESA', 'CA-002', 1.2, '2011-07-12'),
+('2553', 68, 'R-006', 'VICESA', 'CA-007', 1.2, '2011-05-12'),
+('2554', 97, 'R-006', 'VICESA', 'CA-007', 1.2, '2010-06-06'),
+('2555', 62, 'R-007', 'VIGUA', 'CA-001', 1.2, '2008-12-09'),
+('2556', 57, 'R-003', 'VICESA', 'CA-005', 1.2, '2010-07-17'),
+('2557', 37, 'R-003', 'VIGUA', 'CA-009', 1.2, '2011-05-27'),
+('2558', 82, 'R-003', 'VICESA', 'CA-001', 1.2, '2009-05-15'),
+('2559', 68, 'R-004', 'VIGUA', 'CA-010', 1.2, '2009-08-05'),
+('2560', 14, 'R-009', 'VICESA', 'CA-009', 1.2, '2011-08-31'),
+('2561', 94, 'R-010', 'VIGUA', 'CA-006', 1.2, '2010-05-20'),
+('2562', 68, 'R-006', 'VICESA', 'CA-001', 1.2, '2011-02-03'),
+('2563', 106, 'R-010', 'VIGUA', 'CA-006', 1.2, '2011-08-22'),
+('2564', 42, 'R-004', 'VIGUA', 'CA-007', 1.2, '2010-06-02'),
+('2565', 20, 'R-001', 'VICESA', 'CA-006', 1.2, '2009-09-30'),
+('2566', 38, 'R-010', 'VIGUA', 'CA-008', 1.2, '2009-11-19'),
+('2567', 43, 'R-004', 'VIGUA', 'CA-003', 1.2, '2009-03-04'),
+('2568', 76, 'R-007', 'VICESA', 'CA-001', 1.2, '2009-01-15'),
+('2569', 60, 'R-002', 'VICESA', 'CA-001', 1.2, '2009-07-23'),
+('2570', 91, 'R-009', 'VIGUA', 'CA-008', 1.2, '2009-11-26'),
+('2571', 61, 'R-001', 'VICESA', 'CA-009', 1.2, '2009-10-01'),
+('2572', 18, 'R-007', 'VIGUA', 'CA-008', 1.2, '2011-07-25'),
+('2573', 45, 'R-005', 'VIGUA', 'CA-001', 1.2, '2009-12-20'),
+('2574', 58, 'R-002', 'VIGUA', 'CA-008', 1.2, '2009-08-29'),
+('2575', 33, 'R-006', 'VICESA', 'CA-004', 1.2, '2010-10-10'),
+('2576', 87, 'R-004', 'VICESA', 'CA-007', 1.2, '2010-07-30'),
+('2577', 61, 'R-005', 'VICESA', 'CA-001', 1.2, '2011-04-25'),
+('2578', 75, 'R-009', 'VIGUA', 'CA-009', 1.2, '2010-04-02'),
+('2579', 81, 'R-001', 'VICESA', 'CA-010', 1.2, '2010-05-20'),
+('2580', 10, 'R-001', 'VIGUA', 'CA-006', 1.2, '2009-04-20'),
+('2581', 64, 'R-010', 'VIGUA', 'CA-006', 1.2, '2011-04-17'),
+('2582', 101, 'R-007', 'VIGUA', 'CA-003', 1.2, '2011-03-25'),
+('2583', 96, 'R-001', 'VIGUA', 'CA-007', 1.2, '2011-01-30'),
+('2584', 117, 'R-003', 'VIGUA', 'CA-003', 1.2, '2009-09-11'),
+('2585', 39, 'R-010', 'VICESA', 'CA-007', 1.2, '2010-08-05'),
+('2586', 117, 'R-007', 'VIGUA', 'CA-006', 1.2, '2011-08-03'),
+('2587', 4, 'R-005', 'VIGUA', 'CA-007', 1.2, '2010-02-28'),
+('2588', 46, 'R-003', 'VICESA', 'CA-004', 1.2, '2010-11-25'),
+('2589', 82, 'R-008', 'VICESA', 'CA-007', 1.2, '2010-08-10'),
+('2590', 2, 'R-009', 'VICESA', 'CA-004', 1.2, '2010-10-14'),
+('2591', 93, 'R-002', 'VIGUA', 'CA-004', 1.2, '2010-12-17'),
+('2592', 26, 'R-006', 'VICESA', 'CA-006', 1.2, '2009-09-02'),
+('2593', 104, 'R-008', 'VICESA', 'CA-008', 1.2, '2008-10-26'),
+('2594', 93, 'R-002', 'VIGUA', 'CA-004', 1.2, '2010-09-26'),
+('2595', 46, 'R-010', 'VICESA', 'CA-003', 1.2, '2009-12-14'),
+('2596', 75, 'R-002', 'VICESA', 'CA-006', 1.2, '2011-09-14'),
+('2598', 65, 'R-009', 'VICESA', 'CA-009', 1.2, '2009-05-29'),
+('2599', 25, 'R-008', 'VICESA', 'CA-008', 1.2, '2010-09-14'),
+('2600', 109, 'R-008', 'VIGUA', 'CA-004', 1.2, '2009-08-31'),
+('2601', 39, 'R-007', 'VICESA', 'CA-005', 1.2, '2010-02-24'),
+('2602', 59, 'R-009', 'VICESA', 'CA-002', 1.2, '2009-03-02'),
+('2603', 46, 'R-007', 'VICESA', 'CA-003', 1.2, '2010-01-04'),
+('2604', 84, 'R-002', 'VIGUA', 'CA-006', 1.2, '2008-12-11'),
+('2605', 56, 'R-007', 'VIGUA', 'CA-010', 1.2, '2011-06-08'),
+('2606', 50, 'R-009', 'VIGUA', 'CA-004', 1.2, '2010-09-07'),
+('2607', 75, 'R-002', 'VIGUA', 'CA-007', 1.2, '2011-08-01'),
+('2608', 44, 'R-006', 'VIGUA', 'CA-009', 1.2, '2011-04-04'),
+('2609', 62, 'R-002', 'VICESA', 'CA-003', 1.2, '2009-05-01'),
+('2610', 86, 'R-006', 'VICESA', 'CA-004', 1.2, '2010-11-17'),
+('2611', 75, 'R-009', 'VICESA', 'CA-005', 1.2, '2009-12-04'),
+('2612', 28, 'R-005', 'VICESA', 'CA-008', 1.2, '2009-03-25'),
+('2613', 40, 'R-001', 'VICESA', 'CA-006', 1.2, '2010-06-25'),
+('2614', 28, 'R-010', 'VICESA', 'CA-010', 1.2, '2010-07-11'),
+('2615', 15, 'R-004', 'VIGUA', 'CA-006', 1.2, '2011-02-25'),
+('2616', 83, 'R-001', 'VIGUA', 'CA-009', 1.2, '2009-11-15'),
+('2617', 76, 'R-001', 'VICESA', 'CA-001', 1.2, '2009-04-23'),
+('2618', 40, 'R-010', 'VIGUA', 'CA-005', 1.2, '2009-08-26'),
+('2619', 78, 'R-001', 'VIGUA', 'CA-006', 1.2, '2009-08-13'),
+('2620', 64, 'R-001', 'VIGUA', 'CA-005', 1.2, '2010-09-20'),
+('2621', 10, 'R-003', 'VICESA', 'CA-002', 1.2, '2010-05-07'),
+('2622', 96, 'R-004', 'VIGUA', 'CA-001', 1.2, '2009-09-03'),
+('2623', 60, 'R-008', 'VICESA', 'CA-004', 1.2, '2011-05-06'),
+('2624', 100, 'R-008', 'VIGUA', 'CA-004', 1.2, '2011-02-23'),
+('2625', 8, 'R-003', 'VICESA', 'CA-002', 1.2, '2011-01-18'),
+('2626', 116, 'R-003', 'VICESA', 'CA-005', 1.2, '2011-05-20'),
+('2627', 11, 'R-006', 'VICESA', 'CA-003', 1.2, '2010-04-28'),
+('2628', 68, 'R-007', 'VIGUA', 'CA-010', 1.2, '2011-01-03'),
+('2629', 115, 'R-004', 'VICESA', 'CA-005', 1.2, '2010-03-03'),
+('2630', 42, 'R-003', 'VICESA', 'CA-002', 1.2, '2011-02-06'),
+('2631', 91, 'R-006', 'VICESA', 'CA-002', 1.2, '2010-03-21'),
+('2632', 30, 'R-010', 'VICESA', 'CA-005', 1.2, '2009-01-26'),
+('2633', 54, 'R-006', 'VIGUA', 'CA-001', 1.2, '2010-11-11'),
+('2634', 66, 'R-005', 'VIGUA', 'CA-010', 1.2, '2010-12-10'),
+('2635', 112, 'R-010', 'VICESA', 'CA-002', 1.2, '2008-12-24'),
+('2636', 24, 'R-002', 'VICESA', 'CA-009', 1.2, '2009-12-26'),
+('2637', 86, 'R-006', 'VIGUA', 'CA-006', 1.2, '2009-06-03'),
+('2638', 21, 'R-010', 'VICESA', 'CA-008', 1.2, '2010-04-19'),
+('2639', 62, 'R-006', 'VICESA', 'CA-007', 1.2, '2010-05-08'),
+('2640', 100, 'R-009', 'VICESA', 'CA-005', 1.2, '2010-04-04'),
+('2641', 84, 'R-001', 'VICESA', 'CA-001', 1.2, '2009-03-09'),
+('2642', 50, 'R-004', 'VICESA', 'CA-007', 1.2, '2009-07-07'),
+('2643', 20, 'R-002', 'VIGUA', 'CA-002', 1.2, '2010-09-07'),
+('2644', 24, 'R-005', 'VIGUA', 'CA-006', 1.2, '2011-08-04'),
+('2645', 59, 'R-005', 'VIGUA', 'CA-008', 1.2, '2011-06-25'),
+('2646', 83, 'R-005', 'VICESA', 'CA-004', 1.2, '2009-04-11'),
+('2647', 69, 'R-008', 'VIGUA', 'CA-004', 1.2, '2009-03-28'),
+('2648', 40, 'R-007', 'VICESA', 'CA-009', 1.2, '2011-03-21'),
+('2649', 48, 'R-008', 'VICESA', 'CA-004', 1.2, '2009-11-26'),
+('2650', 51, 'R-010', 'VICESA', 'CA-010', 1.2, '2011-03-31'),
+('2651', 14, 'R-004', 'VIGUA', 'CA-003', 1.2, '2010-09-17'),
+('2652', 62, 'R-009', 'VICESA', 'CA-002', 1.2, '2009-08-14'),
+('2653', 61, 'R-006', 'VICESA', 'CA-010', 1.2, '2009-09-05'),
+('2654', 58, 'R-007', 'VICESA', 'CA-010', 1.2, '2010-10-20'),
+('2655', 37, 'R-001', 'VICESA', 'CA-002', 1.2, '2010-10-20'),
+('2656', 14, 'R-002', 'VIGUA', 'CA-005', 1.2, '2010-04-20'),
+('2657', 44, 'R-004', 'VICESA', 'CA-004', 1.2, '2011-09-22'),
+('2658', 31, 'R-002', 'VICESA', 'CA-003', 1.2, '2009-12-03'),
+('2659', 44, 'R-009', 'VICESA', 'CA-010', 1.2, '2011-06-13'),
+('2660', 91, 'R-005', 'VICESA', 'CA-009', 1.2, '2010-04-06'),
+('2661', 57, 'R-008', 'VICESA', 'CA-004', 1.2, '2010-02-01'),
+('2662', 47, 'R-006', 'VICESA', 'CA-001', 1.2, '2009-04-07'),
+('2663', 48, 'R-007', 'VICESA', 'CA-004', 1.2, '2011-07-02'),
+('2664', 30, 'R-009', 'VICESA', 'CA-008', 1.2, '2010-12-13'),
+('2665', 96, 'R-010', 'VIGUA', 'CA-004', 1.2, '2010-08-29'),
+('2666', 72, 'R-005', 'VIGUA', 'CA-002', 1.2, '2011-10-11'),
+('2667', 12, 'R-007', 'VICESA', 'CA-001', 1.2, '2011-06-03'),
+('2668', 84, 'R-002', 'VIGUA', 'CA-005', 1.2, '2011-02-10'),
+('2669', 72, 'R-010', 'VIGUA', 'CA-001', 1.2, '2008-10-29'),
+('2670', 45, 'R-002', 'VICESA', 'CA-001', 1.2, '2010-08-27'),
+('2671', 107, 'R-008', 'VICESA', 'CA-008', 1.2, '2010-02-07'),
+('2672', 3, 'R-010', 'VICESA', 'CA-004', 1.2, '2010-10-30'),
+('2673', 96, 'R-003', 'VIGUA', 'CA-008', 1.2, '2011-08-22'),
+('2674', 41, 'R-006', 'VICESA', 'CA-008', 1.2, '2010-02-20'),
+('2675', 12, 'R-005', 'VIGUA', 'CA-007', 1.2, '2010-10-06'),
+('2676', 115, 'R-009', 'VIGUA', 'CA-005', 1.2, '2011-08-17'),
+('2677', 66, 'R-003', 'VIGUA', 'CA-010', 1.2, '2011-07-24'),
+('2678', 7, 'R-006', 'VIGUA', 'CA-005', 1.2, '2009-01-05'),
+('2679', 64, 'R-007', 'VICESA', 'CA-004', 1.2, '2009-08-25'),
+('2680', 16, 'R-003', 'VIGUA', 'CA-003', 1.2, '2010-05-10'),
+('2681', 4, 'R-004', 'VICESA', 'CA-009', 1.2, '2010-10-20'),
+('2682', 84, 'R-002', 'VICESA', 'CA-001', 1.2, '2009-07-28'),
+('2683', 10, 'R-006', 'VICESA', 'CA-002', 1.2, '2010-05-19'),
+('2684', 117, 'R-002', 'VICESA', 'CA-009', 1.2, '2010-11-24'),
+('2685', 79, 'R-005', 'VIGUA', 'CA-001', 1.2, '2011-08-29'),
+('2686', 10, 'R-003', 'VICESA', 'CA-008', 1.2, '2010-10-11'),
+('2687', 114, 'R-002', 'VIGUA', 'CA-004', 1.2, '2009-07-30'),
+('2688', 114, 'R-010', 'VIGUA', 'CA-010', 1.2, '2010-01-10');
+INSERT INTO FACTURAS (CODIGO_FACTURA, CODIGO_PROVEEDOR, CODIGO_RECOLECTOR, SUCURSAL, CODIGO_CENTRO_ACOPIO, PRECIO_COMPRA, FECHA) VALUES
+('2689', 21, 'R-003', 'VIGUA', 'CA-009', 1.2, '2010-04-08'),
+('2690', 41, 'R-003', 'VIGUA', 'CA-002', 1.2, '2010-09-06'),
+('2692', 92, 'R-003', 'VIGUA', 'CA-007', 1.2, '2010-04-11'),
+('2693', 5, 'R-005', 'VIGUA', 'CA-005', 1.2, '2009-03-16'),
+('2694', 101, 'R-010', 'VICESA', 'CA-001', 1.2, '2009-06-12'),
+('2695', 43, 'R-008', 'VIGUA', 'CA-010', 1.2, '2010-10-19'),
+('2696', 21, 'R-009', 'VICESA', 'CA-007', 1.2, '2009-02-24'),
+('2697', 89, 'R-003', 'VIGUA', 'CA-002', 1.2, '2010-12-29'),
+('2698', 10, 'R-003', 'VICESA', 'CA-008', 1.2, '2010-05-16'),
+('2699', 21, 'R-004', 'VICESA', 'CA-005', 1.2, '2009-01-18'),
+('2700', 59, 'R-003', 'VIGUA', 'CA-006', 1.2, '2009-05-20'),
+('2701', 66, 'R-002', 'VICESA', 'CA-007', 1.2, '2011-08-12'),
+('2702', 95, 'R-007', 'VIGUA', 'CA-010', 1.2, '2009-05-09'),
+('2703', 76, 'R-010', 'VICESA', 'CA-003', 1.2, '2009-01-25'),
+('2704', 53, 'R-003', 'VIGUA', 'CA-007', 1.2, '2009-02-27'),
+('2705', 77, 'R-010', 'VICESA', 'CA-009', 1.2, '2010-02-26'),
+('2707', 52, 'R-005', 'VICESA', 'CA-009', 1.2, '2011-03-07'),
+('2708', 2, 'R-006', 'VIGUA', 'CA-003', 1.2, '2009-09-19'),
+('2709', 114, 'R-001', 'VIGUA', 'CA-002', 1.2, '2011-07-24'),
+('2710', 83, 'R-010', 'VIGUA', 'CA-001', 1.2, '2011-05-04'),
+('2711', 38, 'R-009', 'VICESA', 'CA-004', 1.2, '2009-10-13'),
+('2712', 93, 'R-006', 'VIGUA', 'CA-004', 1.2, '2011-09-09'),
+('2713', 53, 'R-002', 'VIGUA', 'CA-008', 1.2, '2011-03-27'),
+('2714', 76, 'R-007', 'VIGUA', 'CA-010', 1.2, '2011-06-03'),
+('2715', 92, 'R-009', 'VICESA', 'CA-007', 1.2, '2011-03-15'),
+('2716', 103, 'R-004', 'VICESA', 'CA-010', 1.2, '2010-06-15'),
+('2717', 30, 'R-008', 'VICESA', 'CA-001', 1.2, '2008-11-01'),
+('2718', 105, 'R-001', 'VICESA', 'CA-003', 1.2, '2011-03-19'),
+('2719', 88, 'R-007', 'VIGUA', 'CA-010', 1.2, '2011-01-31'),
+('2720', 42, 'R-003', 'VIGUA', 'CA-008', 1.2, '2011-04-07'),
+('2721', 83, 'R-006', 'VICESA', 'CA-002', 1.2, '2011-01-09'),
+('2722', 89, 'R-003', 'VICESA', 'CA-006', 1.2, '2009-03-02'),
+('2723', 51, 'R-009', 'VIGUA', 'CA-002', 1.2, '2008-11-22'),
+('2724', 40, 'R-005', 'VICESA', 'CA-003', 1.2, '2009-10-22'),
+('2725', 69, 'R-005', 'VICESA', 'CA-005', 1.2, '2010-01-01'),
+('2726', 100, 'R-003', 'VICESA', 'CA-004', 1.2, '2011-05-03'),
+('2727', 92, 'R-005', 'VICESA', 'CA-003', 1.2, '2011-07-01'),
+('2728', 14, 'R-003', 'VIGUA', 'CA-006', 1.2, '2009-05-31'),
+('2729', 65, 'R-003', 'VICESA', 'CA-008', 1.2, '2011-03-06'),
+('2730', 95, 'R-002', 'VICESA', 'CA-006', 1.2, '2009-09-20'),
+('2731', 100, 'R-002', 'VIGUA', 'CA-008', 1.2, '2009-06-03'),
+('2732', 2, 'R-005', 'VIGUA', 'CA-002', 1.2, '2008-12-27'),
+('2733', 31, 'R-005', 'VIGUA', 'CA-008', 1.2, '2010-04-12'),
+('2734', 66, 'R-007', 'VICESA', 'CA-004', 1.2, '2011-07-28'),
+('2735', 84, 'R-007', 'VIGUA', 'CA-007', 1.2, '2010-03-01'),
+('2736', 116, 'R-006', 'VIGUA', 'CA-009', 1.2, '2009-02-05'),
+('2737', 91, 'R-007', 'VIGUA', 'CA-004', 1.2, '2011-04-22'),
+('2738', 105, 'R-008', 'VICESA', 'CA-004', 1.2, '2010-12-29'),
+('2739', 11, 'R-008', 'VIGUA', 'CA-008', 1.2, '2009-09-18'),
+('2740', 87, 'R-006', 'VICESA', 'CA-003', 1.2, '2009-11-29'),
+('2741', 56, 'R-008', 'VICESA', 'CA-007', 1.2, '2011-08-30'),
+('2742', 111, 'R-003', 'VICESA', 'CA-008', 1.2, '2010-08-02'),
+('2743', 42, 'R-003', 'VIGUA', 'CA-007', 1.2, '2009-11-15'),
+('2744', 33, 'R-005', 'VICESA', 'CA-010', 1.2, '2009-10-20'),
+('2745', 16, 'R-004', 'VICESA', 'CA-009', 1.2, '2010-05-15'),
+('2746', 9, 'R-008', 'VIGUA', 'CA-001', 1.2, '2009-12-20'),
+('2747', 55, 'R-001', 'VICESA', 'CA-005', 1.2, '2010-03-04'),
+('2748', 62, 'R-008', 'VICESA', 'CA-004', 1.2, '2011-05-19'),
+('2749', 25, 'R-004', 'VIGUA', 'CA-008', 1.2, '2011-08-26'),
+('2750', 29, 'R-001', 'VIGUA', 'CA-010', 1.2, '2010-06-05'),
+('2751', 50, 'R-006', 'VIGUA', 'CA-009', 1.2, '2009-08-26'),
+('2752', 104, 'R-003', 'VIGUA', 'CA-007', 1.2, '2008-11-25'),
+('2753', 22, 'R-002', 'VIGUA', 'CA-010', 1.2, '2011-01-20'),
+('2754', 72, 'R-006', 'VICESA', 'CA-002', 1.2, '2010-11-10'),
+('2755', 5, 'R-007', 'VICESA', 'CA-006', 1.2, '2010-03-01'),
+('2756', 49, 'R-008', 'VICESA', 'CA-009', 1.2, '2011-09-20'),
+('2757', 8, 'R-010', 'VIGUA', 'CA-002', 1.2, '2009-01-06'),
+('2758', 4, 'R-009', 'VIGUA', 'CA-006', 1.2, '2010-11-02'),
+('2759', 37, 'R-003', 'VICESA', 'CA-009', 1.2, '2011-05-01'),
+('2760', 35, 'R-004', 'VICESA', 'CA-006', 1.2, '2009-05-17'),
+('2761', 55, 'R-007', 'VICESA', 'CA-005', 1.2, '2008-12-19'),
+('2762', 49, 'R-007', 'VIGUA', 'CA-001', 1.2, '2009-09-25'),
+('2763', 76, 'R-001', 'VICESA', 'CA-009', 1.2, '2009-06-05'),
+('2764', 108, 'R-009', 'VIGUA', 'CA-008', 1.2, '2011-06-13'),
+('2765', 7, 'R-008', 'VIGUA', 'CA-001', 1.2, '2011-10-09'),
+('2766', 49, 'R-008', 'VICESA', 'CA-008', 1.2, '2010-02-26'),
+('2767', 26, 'R-005', 'VIGUA', 'CA-007', 1.2, '2010-12-25'),
+('2768', 31, 'R-010', 'VICESA', 'CA-003', 1.2, '2009-04-01'),
+('2769', 50, 'R-008', 'VIGUA', 'CA-005', 1.2, '2009-01-08'),
+('2770', 68, 'R-007', 'VIGUA', 'CA-007', 1.2, '2009-04-06'),
+('2771', 42, 'R-003', 'VICESA', 'CA-005', 1.2, '2010-12-13'),
+('2772', 11, 'R-003', 'VICESA', 'CA-008', 1.2, '2010-06-05'),
+('2773', 101, 'R-010', 'VICESA', 'CA-010', 1.2, '2009-04-06'),
+('2774', 48, 'R-007', 'VIGUA', 'CA-003', 1.2, '2009-09-12'),
+('2775', 91, 'R-007', 'VICESA', 'CA-002', 1.2, '2011-10-17'),
+('2776', 7, 'R-003', 'VIGUA', 'CA-006', 1.2, '2009-02-20'),
+('2777', 59, 'R-008', 'VICESA', 'CA-004', 1.2, '2009-12-07'),
+('2778', 14, 'R-003', 'VICESA', 'CA-002', 1.2, '2009-01-23'),
+('2779', 23, 'R-006', 'VIGUA', 'CA-006', 1.2, '2009-04-03'),
+('2780', 75, 'R-005', 'VIGUA', 'CA-005', 1.2, '2008-11-07'),
+('2781', 1, 'R-006', 'VICESA', 'CA-008', 1.2, '2011-09-07'),
+('2782', 85, 'R-001', 'VIGUA', 'CA-009', 1.2, '2009-05-21'),
+('2783', 65, 'R-001', 'VIGUA', 'CA-010', 1.2, '2009-04-27'),
+('2784', 17, 'R-005', 'VICESA', 'CA-005', 1.2, '2010-05-14'),
+('2785', 69, 'R-006', 'VICESA', 'CA-010', 1.2, '2010-02-14'),
+('2786', 87, 'R-005', 'VICESA', 'CA-008', 1.2, '2011-03-05'),
+('2787', 46, 'R-008', 'VICESA', 'CA-006', 1.2, '2010-12-18'),
+('2788', 17, 'R-005', 'VICESA', 'CA-004', 1.2, '2009-04-26'),
+('2789', 30, 'R-005', 'VICESA', 'CA-005', 1.2, '2011-08-28'),
+('2790', 38, 'R-005', 'VIGUA', 'CA-009', 1.2, '2010-03-05'),
+('2791', 61, 'R-009', 'VIGUA', 'CA-005', 1.2, '2010-03-12'),
+('2792', 47, 'R-007', 'VIGUA', 'CA-009', 1.2, '2010-07-31'),
+('2793', 7, 'R-002', 'VIGUA', 'CA-004', 1.2, '2008-10-24'),
+('2794', 11, 'R-008', 'VIGUA', 'CA-010', 1.2, '2011-05-10'),
+('2795', 28, 'R-008', 'VICESA', 'CA-008', 1.2, '2009-05-03'),
+('2796', 42, 'R-008', 'VICESA', 'CA-006', 1.2, '2008-11-14'),
+('2797', 44, 'R-005', 'VIGUA', 'CA-009', 1.2, '2010-04-10'),
+('2798', 102, 'R-008', 'VICESA', 'CA-010', 1.2, '2008-11-17'),
+('2799', 71, 'R-007', 'VIGUA', 'CA-007', 1.2, '2011-08-22'),
+('2800', 30, 'R-008', 'VIGUA', 'CA-010', 1.2, '2009-08-10'),
+('2801', 116, 'R-003', 'VICESA', 'CA-009', 1.2, '2010-07-31'),
+('2802', 28, 'R-003', 'VIGUA', 'CA-008', 1.2, '2009-12-16'),
+('2803', 25, 'R-004', 'VIGUA', 'CA-001', 1.2, '2011-09-11'),
+('2804', 70, 'R-001', 'VICESA', 'CA-009', 1.2, '2011-06-06'),
+('2805', 49, 'R-001', 'VIGUA', 'CA-005', 1.2, '2009-06-20'),
+('2806', 65, 'R-002', 'VIGUA', 'CA-010', 1.2, '2008-11-07'),
+('2807', 114, 'R-004', 'VIGUA', 'CA-010', 1.2, '2010-01-16'),
+('2808', 20, 'R-005', 'VIGUA', 'CA-004', 1.2, '2011-02-02'),
+('2809', 88, 'R-006', 'VICESA', 'CA-002', 1.2, '2010-02-04'),
+('2810', 89, 'R-006', 'VIGUA', 'CA-005', 1.2, '2009-12-30'),
+('2811', 66, 'R-005', 'VICESA', 'CA-007', 1.2, '2011-07-23'),
+('2812', 29, 'R-005', 'VIGUA', 'CA-001', 1.2, '2010-10-11'),
+('2813', 15, 'R-009', 'VIGUA', 'CA-010', 1.2, '2009-09-02'),
+('2814', 97, 'R-001', 'VIGUA', 'CA-007', 1.2, '2011-09-22'),
+('2815', 109, 'R-008', 'VIGUA', 'CA-010', 1.2, '2009-11-23'),
+('2816', 89, 'R-003', 'VICESA', 'CA-010', 1.2, '2010-10-26'),
+('2817', 18, 'R-007', 'VIGUA', 'CA-006', 1.2, '2010-03-31'),
+('2818', 92, 'R-006', 'VIGUA', 'CA-002', 1.2, '2008-10-31'),
+('2819', 84, 'R-009', 'VICESA', 'CA-006', 1.2, '2010-04-21'),
+('2820', 101, 'R-009', 'VICESA', 'CA-003', 1.2, '2008-11-28'),
+('2821', 89, 'R-008', 'VIGUA', 'CA-004', 1.2, '2010-09-25'),
+('2822', 35, 'R-010', 'VICESA', 'CA-007', 1.2, '2011-07-10'),
+('2823', 1, 'R-009', 'VIGUA', 'CA-007', 1.2, '2009-05-01'),
+('2824', 114, 'R-001', 'VIGUA', 'CA-002', 1.2, '2009-06-07'),
+('2825', 109, 'R-006', 'VIGUA', 'CA-005', 1.2, '2009-03-19'),
+('2826', 26, 'R-003', 'VICESA', 'CA-004', 1.2, '2011-10-20'),
+('2827', 117, 'R-002', 'VIGUA', 'CA-003', 1.2, '2009-09-15'),
+('2828', 62, 'R-010', 'VICESA', 'CA-005', 1.2, '2009-05-04'),
+('2829', 37, 'R-006', 'VICESA', 'CA-001', 1.2, '2010-11-04'),
+('2830', 19, 'R-007', 'VIGUA', 'CA-008', 1.2, '2008-12-19'),
+('2831', 38, 'R-002', 'VIGUA', 'CA-003', 1.2, '2009-01-25'),
+('2832', 101, 'R-008', 'VICESA', 'CA-005', 1.2, '2011-01-30'),
+('2833', 115, 'R-005', 'VIGUA', 'CA-004', 1.2, '2011-09-10'),
+('2834', 108, 'R-010', 'VICESA', 'CA-005', 1.2, '2010-01-11'),
+('2835', 88, 'R-003', 'VICESA', 'CA-009', 1.2, '2009-03-17'),
+('2836', 96, 'R-006', 'VIGUA', 'CA-010', 1.2, '2009-03-28'),
+('2837', 112, 'R-007', 'VIGUA', 'CA-004', 1.2, '2011-09-27'),
+('2838', 39, 'R-004', 'VIGUA', 'CA-005', 1.2, '2011-01-12'),
+('2839', 92, 'R-008', 'VICESA', 'CA-006', 1.2, '2009-09-02'),
+('2840', 13, 'R-001', 'VIGUA', 'CA-007', 1.2, '2011-02-22'),
+('2841', 106, 'R-007', 'VICESA', 'CA-001', 1.2, '2010-11-05'),
+('2842', 42, 'R-009', 'VIGUA', 'CA-010', 1.2, '2009-03-05'),
+('2843', 78, 'R-006', 'VICESA', 'CA-003', 1.2, '2010-09-06'),
+('2844', 61, 'R-006', 'VIGUA', 'CA-001', 1.2, '2010-07-07'),
+('2845', 36, 'R-010', 'VICESA', 'CA-010', 1.2, '2010-02-25'),
+('2846', 98, 'R-005', 'VIGUA', 'CA-007', 1.2, '2009-08-22'),
+('2847', 79, 'R-010', 'VICESA', 'CA-009', 1.2, '2009-10-29'),
+('2848', 72, 'R-007', 'VIGUA', 'CA-002', 1.2, '2008-12-31'),
+('2849', 41, 'R-003', 'VIGUA', 'CA-004', 1.2, '2009-04-02'),
+('2850', 89, 'R-002', 'VIGUA', 'CA-001', 1.2, '2009-06-06'),
+('2851', 93, 'R-006', 'VIGUA', 'CA-010', 1.2, '2010-08-18'),
+('2852', 9, 'R-007', 'VIGUA', 'CA-003', 1.2, '2010-11-12'),
+('2853', 18, 'R-004', 'VICESA', 'CA-007', 1.2, '2011-04-16'),
+('2854', 5, 'R-002', 'VICESA', 'CA-007', 1.2, '2011-03-31'),
+('2855', 42, 'R-005', 'VICESA', 'CA-010', 1.2, '2011-08-05'),
+('2856', 94, 'R-005', 'VICESA', 'CA-002', 1.2, '2011-05-01'),
+('2857', 93, 'R-002', 'VIGUA', 'CA-005', 1.2, '2009-03-26'),
+('2858', 2, 'R-006', 'VICESA', 'CA-003', 1.2, '2011-09-14'),
+('2859', 86, 'R-008', 'VIGUA', 'CA-004', 1.2, '2011-03-07'),
+('2860', 55, 'R-001', 'VICESA', 'CA-003', 1.2, '2009-01-22'),
+('2861', 108, 'R-009', 'VIGUA', 'CA-006', 1.2, '2011-07-12'),
+('2862', 32, 'R-009', 'VIGUA', 'CA-009', 1.2, '2010-11-05'),
+('2863', 95, 'R-010', 'VIGUA', 'CA-003', 1.2, '2008-11-23'),
+('2864', 97, 'R-008', 'VIGUA', 'CA-001', 1.2, '2011-03-10'),
+('2865', 101, 'R-005', 'VICESA', 'CA-005', 1.2, '2009-05-22'),
+('2866', 65, 'R-006', 'VIGUA', 'CA-006', 1.2, '2009-05-28'),
+('2867', 32, 'R-010', 'VIGUA', 'CA-002', 1.2, '2010-04-16'),
+('2868', 48, 'R-003', 'VIGUA', 'CA-006', 1.2, '2009-10-24'),
+('2869', 40, 'R-004', 'VIGUA', 'CA-002', 1.2, '2009-02-10'),
+('2870', 21, 'R-008', 'VIGUA', 'CA-005', 1.2, '2009-02-19'),
+('2871', 109, 'R-005', 'VICESA', 'CA-003', 1.2, '2011-06-28'),
+('2872', 68, 'R-001', 'VIGUA', 'CA-010', 1.2, '2010-06-06'),
+('2873', 49, 'R-009', 'VIGUA', 'CA-009', 1.2, '2011-05-07'),
+('2874', 102, 'R-003', 'VIGUA', 'CA-009', 1.2, '2009-04-18'),
+('2875', 16, 'R-004', 'VIGUA', 'CA-007', 1.2, '2010-02-22'),
+('2876', 112, 'R-007', 'VIGUA', 'CA-005', 1.2, '2011-02-07'),
+('2877', 108, 'R-006', 'VICESA', 'CA-003', 1.2, '2010-01-09'),
+('2878', 36, 'R-006', 'VICESA', 'CA-001', 1.2, '2010-09-20'),
+('2879', 82, 'R-002', 'VICESA', 'CA-004', 1.2, '2009-10-14'),
+('2880', 115, 'R-002', 'VIGUA', 'CA-010', 1.2, '2008-10-26'),
+('2881', 25, 'R-005', 'VICESA', 'CA-008', 1.2, '2010-05-02'),
+('2882', 44, 'R-008', 'VIGUA', 'CA-006', 1.2, '2009-07-11'),
+('2883', 25, 'R-009', 'VICESA', 'CA-002', 1.2, '2010-11-07'),
+('2884', 30, 'R-008', 'VICESA', 'CA-008', 1.2, '2009-11-07'),
+('2885', 99, 'R-001', 'VICESA', 'CA-002', 1.2, '2009-11-15'),
+('2886', 63, 'R-010', 'VIGUA', 'CA-009', 1.2, '2010-10-09'),
+('2887', 39, 'R-005', 'VIGUA', 'CA-002', 1.2, '2009-02-01'),
+('2888', 41, 'R-007', 'VICESA', 'CA-006', 1.2, '2011-01-20'),
+('2889', 48, 'R-005', 'VIGUA', 'CA-005', 1.2, '2009-04-05'),
+('2890', 61, 'R-009', 'VICESA', 'CA-002', 1.2, '2008-11-07'),
+('2891', 12, 'R-004', 'VIGUA', 'CA-010', 1.2, '2008-11-08'),
+('2892', 65, 'R-003', 'VICESA', 'CA-009', 1.2, '2009-12-16'),
+('2893', 68, 'R-009', 'VICESA', 'CA-003', 1.2, '2009-02-14'),
+('2894', 85, 'R-004', 'VICESA', 'CA-004', 1.2, '2011-01-30'),
+('2895', 95, 'R-002', 'VIGUA', 'CA-007', 1.2, '2009-03-14'),
+('2896', 39, 'R-005', 'VIGUA', 'CA-007', 1.2, '2010-07-14'),
+('2897', 78, 'R-009', 'VICESA', 'CA-008', 1.2, '2009-03-27'),
+('2898', 99, 'R-005', 'VIGUA', 'CA-001', 1.2, '2010-08-05'),
+('2899', 70, 'R-005', 'VIGUA', 'CA-009', 1.2, '2009-08-17'),
+('2900', 43, 'R-008', 'VICESA', 'CA-002', 1.2, '2011-02-15'),
+('2901', 99, 'R-009', 'VIGUA', 'CA-009', 1.2, '2009-05-25'),
+('2902', 56, 'R-001', 'VICESA', 'CA-003', 1.2, '2011-02-20'),
+('2903', 9, 'R-003', 'VIGUA', 'CA-006', 1.2, '2011-03-08'),
+('2904', 27, 'R-009', 'VIGUA', 'CA-009', 1.2, '2010-09-07'),
+('2905', 53, 'R-006', 'VIGUA', 'CA-001', 1.2, '2011-07-18'),
+('2906', 26, 'R-007', 'VIGUA', 'CA-002', 1.2, '2009-06-20'),
+('2907', 94, 'R-010', 'VIGUA', 'CA-007', 1.2, '2009-09-02'),
+('2908', 58, 'R-001', 'VIGUA', 'CA-007', 1.2, '2009-01-08'),
+('2909', 36, 'R-004', 'VICESA', 'CA-009', 1.2, '2010-01-14'),
+('2910', 54, 'R-001', 'VIGUA', 'CA-005', 1.2, '2010-05-10'),
+('2911', 68, 'R-003', 'VICESA', 'CA-006', 1.2, '2009-05-09'),
+('2912', 100, 'R-007', 'VICESA', 'CA-007', 1.2, '2009-12-12'),
+('2913', 113, 'R-005', 'VIGUA', 'CA-003', 1.2, '2009-07-04'),
+('2914', 9, 'R-009', 'VICESA', 'CA-009', 1.2, '2009-06-12'),
+('2915', 5, 'R-009', 'VIGUA', 'CA-007', 1.2, '2009-06-30'),
+('2916', 64, 'R-004', 'VIGUA', 'CA-007', 1.2, '2010-01-19'),
+('2917', 106, 'R-010', 'VIGUA', 'CA-006', 1.2, '2011-04-02'),
+('2918', 18, 'R-010', 'VIGUA', 'CA-010', 1.2, '2009-03-18'),
+('2919', 77, 'R-006', 'VIGUA', 'CA-008', 1.2, '2010-04-18'),
+('2920', 79, 'R-005', 'VICESA', 'CA-005', 1.2, '2011-07-19'),
+('2921', 90, 'R-009', 'VIGUA', 'CA-009', 1.2, '2009-12-03'),
+('2922', 74, 'R-008', 'VIGUA', 'CA-003', 1.2, '2008-11-02'),
+('2923', 61, 'R-005', 'VIGUA', 'CA-010', 1.2, '2009-04-11'),
+('2924', 54, 'R-010', 'VICESA', 'CA-002', 1.2, '2009-08-09'),
+('2925', 14, 'R-006', 'VICESA', 'CA-010', 1.2, '2009-12-28'),
+('2926', 38, 'R-003', 'VIGUA', 'CA-003', 1.2, '2011-03-21'),
+('2927', 19, 'R-006', 'VIGUA', 'CA-001', 1.2, '2010-09-10'),
+('2928', 85, 'R-001', 'VIGUA', 'CA-007', 1.2, '2009-01-20'),
+('2929', 94, 'R-002', 'VIGUA', 'CA-003', 1.2, '2011-09-24'),
+('2930', 110, 'R-006', 'VIGUA', 'CA-009', 1.2, '2011-05-23'),
+('2932', 21, 'R-008', 'VICESA', 'CA-002', 1.2, '2009-01-29'),
+('2933', 75, 'R-002', 'VICESA', 'CA-003', 1.2, '2009-04-02'),
+('2934', 26, 'R-010', 'VICESA', 'CA-008', 1.2, '2011-05-01'),
+('2935', 85, 'R-002', 'VICESA', 'CA-006', 1.2, '2010-09-08'),
+('2936', 2, 'R-009', 'VIGUA', 'CA-006', 1.2, '2009-09-04'),
+('2937', 78, 'R-009', 'VICESA', 'CA-003', 1.2, '2009-03-18'),
+('2938', 13, 'R-003', 'VIGUA', 'CA-002', 1.2, '2010-07-31'),
+('2939', 69, 'R-005', 'VICESA', 'CA-004', 1.2, '2011-03-08'),
+('2940', 117, 'R-007', 'VICESA', 'CA-006', 1.2, '2008-10-26'),
+('2941', 87, 'R-007', 'VICESA', 'CA-005', 1.2, '2009-07-03'),
+('2942', 113, 'R-002', 'VIGUA', 'CA-006', 1.2, '2011-05-22'),
+('2943', 88, 'R-006', 'VICESA', 'CA-001', 1.2, '2008-11-24'),
+('2944', 23, 'R-008', 'VIGUA', 'CA-005', 1.2, '2010-06-08'),
+('2945', 9, 'R-001', 'VIGUA', 'CA-006', 1.2, '2009-01-17'),
+('2946', 19, 'R-003', 'VICESA', 'CA-006', 1.2, '2009-07-27'),
+('2947', 83, 'R-003', 'VICESA', 'CA-007', 1.2, '2011-08-22'),
+('2948', 102, 'R-007', 'VICESA', 'CA-007', 1.2, '2010-06-30'),
+('2949', 35, 'R-006', 'VICESA', 'CA-008', 1.2, '2009-08-23'),
+('2950', 110, 'R-003', 'VICESA', 'CA-001', 1.2, '2008-11-15'),
+('2951', 8, 'R-009', 'VICESA', 'CA-008', 1.2, '2009-04-21'),
+('2952', 100, 'R-010', 'VICESA', 'CA-003', 1.2, '2011-06-08'),
+('2953', 15, 'R-004', 'VICESA', 'CA-006', 1.2, '2010-03-15'),
+('2954', 38, 'R-009', 'VIGUA', 'CA-004', 1.2, '2009-07-07'),
+('2955', 114, 'R-004', 'VIGUA', 'CA-003', 1.2, '2010-03-11'),
+('2956', 83, 'R-007', 'VICESA', 'CA-007', 1.2, '2009-02-24'),
+('2957', 34, 'R-005', 'VIGUA', 'CA-004', 1.2, '2008-11-05'),
+('2958', 98, 'R-002', 'VIGUA', 'CA-002', 1.2, '2010-12-23'),
+('2959', 97, 'R-002', 'VIGUA', 'CA-002', 1.2, '2010-11-13'),
+('2960', 69, 'R-006', 'VICESA', 'CA-002', 1.2, '2009-08-11'),
+('2961', 36, 'R-003', 'VIGUA', 'CA-006', 1.2, '2009-12-01'),
+('2962', 25, 'R-007', 'VIGUA', 'CA-004', 1.2, '2010-06-18'),
+('2963', 11, 'R-006', 'VIGUA', 'CA-003', 1.2, '2011-08-18'),
+('2964', 74, 'R-001', 'VICESA', 'CA-001', 1.2, '2009-11-12'),
+('2965', 96, 'R-010', 'VIGUA', 'CA-010', 1.2, '2009-03-01'),
+('2966', 115, 'R-005', 'VIGUA', 'CA-010', 1.2, '2009-06-09'),
+('2967', 67, 'R-008', 'VICESA', 'CA-005', 1.2, '2011-02-04'),
+('2968', 29, 'R-008', 'VICESA', 'CA-006', 1.2, '2011-08-18'),
+('2969', 35, 'R-007', 'VIGUA', 'CA-003', 1.2, '2010-08-24'),
+('2970', 24, 'R-005', 'VICESA', 'CA-009', 1.2, '2010-06-29'),
+('2971', 116, 'R-002', 'VICESA', 'CA-006', 1.2, '2010-06-29'),
+('2972', 63, 'R-002', 'VIGUA', 'CA-002', 1.2, '2010-12-31'),
+('2973', 46, 'R-005', 'VIGUA', 'CA-002', 1.2, '2009-08-09'),
+('2974', 15, 'R-003', 'VICESA', 'CA-002', 1.2, '2010-11-10'),
+('2975', 17, 'R-010', 'VICESA', 'CA-008', 1.2, '2009-09-07'),
+('2976', 82, 'R-009', 'VIGUA', 'CA-008', 1.2, '2011-02-05'),
+('2977', 22, 'R-008', 'VIGUA', 'CA-001', 1.2, '2008-12-10'),
+('2978', 15, 'R-008', 'VICESA', 'CA-003', 1.2, '2010-11-01'),
+('2979', 72, 'R-009', 'VICESA', 'CA-010', 1.2, '2010-05-08'),
+('2980', 64, 'R-004', 'VICESA', 'CA-003', 1.2, '2010-04-01'),
+('2981', 68, 'R-007', 'VICESA', 'CA-006', 1.2, '2010-03-21'),
+('2982', 55, 'R-006', 'VICESA', 'CA-009', 1.2, '2010-01-05'),
+('2983', 26, 'R-004', 'VIGUA', 'CA-002', 1.2, '2011-09-08'),
+('2984', 83, 'R-009', 'VIGUA', 'CA-010', 1.2, '2010-08-27'),
+('2985', 80, 'R-005', 'VIGUA', 'CA-005', 1.2, '2009-03-30'),
+('2986', 91, 'R-002', 'VICESA', 'CA-006', 1.2, '2008-11-05'),
+('2987', 70, 'R-001', 'VIGUA', 'CA-009', 1.2, '2010-10-12'),
+('2988', 65, 'R-004', 'VICESA', 'CA-005', 1.2, '2010-05-02'),
+('2989', 58, 'R-002', 'VIGUA', 'CA-007', 1.2, '2010-11-12'),
+('2990', 103, 'R-009', 'VIGUA', 'CA-008', 1.2, '2009-12-07'),
+('2991', 99, 'R-010', 'VICESA', 'CA-001', 1.2, '2011-05-04'),
+('2992', 106, 'R-005', 'VIGUA', 'CA-007', 1.2, '2010-04-16'),
+('2993', 91, 'R-007', 'VIGUA', 'CA-004', 1.2, '2009-07-24'),
+('2994', 30, 'R-004', 'VICESA', 'CA-010', 1.2, '2010-03-02'),
+('2995', 15, 'R-010', 'VICESA', 'CA-004', 1.2, '2009-05-16'),
+('2996', 72, 'R-008', 'VIGUA', 'CA-002', 1.2, '2011-05-21'),
+('2997', 103, 'R-005', 'VICESA', 'CA-007', 1.2, '2009-10-15'),
+('2998', 79, 'R-005', 'VIGUA', 'CA-009', 1.2, '2009-11-05'),
+('2999', 91, 'R-005', 'VICESA', 'CA-010', 1.2, '2011-04-20');
+/*==============================================================*/
+/* Table: COMPRAS                           	     			*/
+/*==============================================================*/
+INSERT INTO COMPRAS (CODIGO_COMPRA, CODIGO_FACTURA) VALUES
+(1, '1001'),
+(2, '1004'),
+(3, '1008'),
+(4, '1009'),
+(5, '1011'),
+(6, '1012'),
+(7, '1013'),
+(8, '1014'),
+(9, '1015'),
+(10, '1016'),
+(11, '1017'),
+(12, '1018'),
+(13, '1019'),
+(14, '1020'),
+(15, '1021'),
+(16, '1022'),
+(17, '1023'),
+(18, '1024'),
+(19, '1025'),
+(20, '1026'),
+(21, '1027'),
+(22, '1028'),
+(23, '1029'),
+(24, '1030'),
+(25, '1031'),
+(26, '1032'),
+(27, '1033'),
+(28, '1035'),
+(29, '1036'),
+(30, '1037'),
+(31, '1038'),
+(32, '1039'),
+(33, '1040'),
+(34, '1041'),
+(35, '1042'),
+(36, '1043'),
+(37, '1044'),
+(38, '1045'),
+(39, '1046'),
+(40, '1047'),
+(41, '1048'),
+(42, '1049'),
+(43, '1050'),
+(44, '1051'),
+(45, '1052'),
+(46, '1053'),
+(47, '1054'),
+(48, '1055'),
+(49, '1056'),
+(50, '1057'),
+(51, '1058'),
+(52, '1059'),
+(53, '1060'),
+(54, '1061'),
+(55, '1062'),
+(56, '1063'),
+(57, '1064'),
+(58, '1065'),
+(59, '1066'),
+(60, '1067'),
+(61, '1068'),
+(62, '1069'),
+(63, '1070'),
+(64, '1071'),
+(65, '1072'),
+(66, '1073'),
+(67, '1074'),
+(68, '1075'),
+(69, '1076'),
+(70, '1077'),
+(71, '1078'),
+(72, '1079'),
+(73, '1080'),
+(74, '1081'),
+(75, '1082'),
+(76, '1083'),
+(77, '1084'),
+(78, '1085'),
+(79, '1086'),
+(80, '1087'),
+(81, '1088'),
+(82, '1089'),
+(83, '1090'),
+(84, '1091'),
+(85, '1092'),
+(86, '1093'),
+(87, '1094'),
+(88, '1095'),
+(89, '1096'),
+(90, '1097'),
+(91, '1098'),
+(92, '1099'),
+(93, '1100'),
+(94, '1101'),
+(95, '1102'),
+(96, '1103'),
+(97, '1104'),
+(98, '1105'),
+(99, '1106'),
+(100, '1107'),
+(101, '1108'),
+(102, '1109'),
+(103, '1110'),
+(104, '1111'),
+(105, '1112'),
+(106, '1113'),
+(107, '1114'),
+(108, '1115'),
+(109, '1116'),
+(110, '1117'),
+(111, '1118'),
+(112, '1119'),
+(113, '1120'),
+(114, '1121'),
+(115, '1122'),
+(116, '1123'),
+(117, '1124'),
+(118, '1125'),
+(119, '1126'),
+(120, '1127'),
+(121, '1128'),
+(122, '1129'),
+(123, '1130'),
+(124, '1131'),
+(125, '1132'),
+(126, '1133'),
+(127, '1134'),
+(128, '1135'),
+(129, '1136'),
+(130, '1137'),
+(131, '1138'),
+(132, '1139'),
+(133, '1140'),
+(134, '1141'),
+(135, '1142'),
+(136, '1143'),
+(137, '1144'),
+(138, '1145'),
+(139, '1146'),
+(140, '1147'),
+(141, '1148'),
+(142, '1149'),
+(143, '1150'),
+(144, '1151'),
+(145, '1152'),
+(146, '1153'),
+(147, '1154'),
+(148, '1155'),
+(149, '1156'),
+(150, '1157'),
+(151, '1158'),
+(152, '1159'),
+(153, '1160'),
+(154, '1161'),
+(155, '1162'),
+(156, '1163'),
+(157, '1164'),
+(158, '1165'),
+(159, '1166'),
+(160, '1167'),
+(161, '1168'),
+(162, '1169'),
+(163, '1170'),
+(164, '1171'),
+(165, '1172'),
+(166, '1173'),
+(167, '1174'),
+(168, '1175'),
+(169, '1176'),
+(170, '1177'),
+(171, '1178'),
+(172, '1179'),
+(173, '1180'),
+(174, '1181'),
+(175, '1182'),
+(176, '1183'),
+(177, '1184'),
+(178, '1185'),
+(179, '1186'),
+(180, '1187'),
+(181, '1188'),
+(182, '1189'),
+(183, '1190'),
+(184, '1191'),
+(185, '1192'),
+(186, '1193'),
+(187, '1194'),
+(188, '1195'),
+(189, '1196'),
+(190, '1197'),
+(191, '1198'),
+(192, '1199'),
+(193, '1200'),
+(194, '1201'),
+(195, '1202'),
+(196, '1203'),
+(197, '1204'),
+(198, '1205'),
+(199, '1206'),
+(200, '1207'),
+(201, '1208'),
+(202, '1209'),
+(203, '1210'),
+(204, '1211'),
+(205, '1212'),
+(206, '1213'),
+(207, '1214'),
+(208, '1215'),
+(209, '1216'),
+(210, '1217'),
+(211, '1218'),
+(212, '1219'),
+(213, '1220'),
+(214, '1221'),
+(215, '1222'),
+(216, '1223'),
+(217, '1224'),
+(218, '1225'),
+(219, '1226'),
+(220, '1227'),
+(221, '1228'),
+(222, '1229'),
+(223, '1230'),
+(224, '1231'),
+(225, '1232'),
+(226, '1233'),
+(227, '1234'),
+(228, '1235'),
+(229, '1236'),
+(230, '1237'),
+(231, '1238'),
+(232, '1239'),
+(233, '1240'),
+(234, '1241'),
+(235, '1242'),
+(236, '1243'),
+(237, '1244'),
+(238, '1245'),
+(239, '1246'),
+(240, '1247'),
+(241, '1248'),
+(242, '1249'),
+(243, '1250'),
+(244, '1251'),
+(245, '1252'),
+(246, '1253'),
+(247, '1254'),
+(248, '1255'),
+(249, '1256'),
+(250, '1257'),
+(251, '1258'),
+(252, '1259'),
+(253, '1260'),
+(254, '1261'),
+(255, '1262'),
+(256, '1263'),
+(257, '1264'),
+(258, '1265'),
+(259, '1266'),
+(260, '1267'),
+(261, '1268'),
+(262, '1269'),
+(263, '1270'),
+(264, '1271'),
+(265, '1272'),
+(266, '1273'),
+(267, '1274'),
+(268, '1275'),
+(269, '1276'),
+(270, '1277'),
+(271, '1278'),
+(272, '1279'),
+(273, '1280'),
+(274, '1281'),
+(275, '1282'),
+(276, '1283'),
+(277, '1284'),
+(278, '1285'),
+(279, '1286'),
+(280, '1287'),
+(281, '1288'),
+(282, '1289'),
+(283, '1290'),
+(284, '1291'),
+(285, '1292'),
+(286, '1293'),
+(287, '1294'),
+(288, '1295'),
+(289, '1296'),
+(290, '1297'),
+(291, '1298'),
+(292, '1299'),
+(293, '1300'),
+(294, '1301'),
+(295, '1302'),
+(296, '1303'),
+(297, '1304'),
+(298, '1305'),
+(299, '1306'),
+(300, '1307'),
+(301, '1308'),
+(302, '1309'),
+(303, '1310'),
+(304, '1311'),
+(305, '1312'),
+(306, '1313'),
+(307, '1314'),
+(308, '1315'),
+(309, '1316'),
+(310, '1317'),
+(311, '1318'),
+(312, '1319'),
+(313, '1320'),
+(314, '1321'),
+(315, '1322'),
+(316, '1323'),
+(317, '1324'),
+(318, '1325'),
+(319, '1326'),
+(320, '1327'),
+(321, '1328'),
+(322, '1329'),
+(323, '1330'),
+(324, '1331'),
+(325, '1332'),
+(326, '1333'),
+(327, '1334'),
+(328, '1335'),
+(329, '1336'),
+(330, '1337'),
+(331, '1338'),
+(332, '1339'),
+(333, '1340'),
+(334, '1341'),
+(335, '1343'),
+(336, '1344'),
+(337, '1345'),
+(338, '1346'),
+(339, '1347'),
+(340, '1348'),
+(341, '1349'),
+(342, '1350'),
+(343, '1351'),
+(344, '1352'),
+(345, '1353'),
+(346, '1354'),
+(347, '1355'),
+(348, '1356'),
+(349, '1357'),
+(350, '1358'),
+(351, '1359'),
+(352, '1360'),
+(353, '1361'),
+(354, '1362'),
+(355, '1363'),
+(356, '1364'),
+(357, '1365'),
+(358, '1366'),
+(359, '1367'),
+(360, '1368'),
+(361, '1369'),
+(362, '1370'),
+(363, '1371'),
+(364, '1372'),
+(365, '1373'),
+(366, '1374'),
+(367, '1375'),
+(368, '1376'),
+(369, '1377'),
+(370, '1378'),
+(371, '1379'),
+(372, '1380'),
+(373, '1381'),
+(374, '1382'),
+(375, '1383'),
+(376, '1384'),
+(377, '1385'),
+(378, '1386'),
+(379, '1387'),
+(380, '1388'),
+(381, '1389'),
+(382, '1390'),
+(383, '1391'),
+(384, '1392'),
+(385, '1393'),
+(386, '1394'),
+(387, '1395'),
+(388, '1396'),
+(389, '1397'),
+(390, '1398'),
+(391, '1399'),
+(392, '1400'),
+(393, '1402'),
+(394, '1403'),
+(395, '1404'),
+(396, '1405'),
+(397, '1406'),
+(398, '1407'),
+(399, '1408'),
+(400, '1409'),
+(401, '1410'),
+(402, '1411'),
+(403, '1412'),
+(404, '1413'),
+(405, '1414'),
+(406, '1415'),
+(407, '1416'),
+(408, '1417'),
+(409, '1418'),
+(410, '1419'),
+(411, '1420'),
+(412, '1421'),
+(413, '1422'),
+(414, '1423'),
+(415, '1424'),
+(416, '1425'),
+(417, '1426'),
+(418, '1427'),
+(419, '1428'),
+(420, '1429'),
+(421, '1430'),
+(422, '1431'),
+(423, '1432'),
+(424, '1433'),
+(425, '1434'),
+(426, '1435'),
+(427, '1436'),
+(428, '1437'),
+(429, '1438'),
+(430, '1439'),
+(431, '1440'),
+(432, '1442'),
+(433, '1443'),
+(434, '1444'),
+(435, '1445'),
+(436, '1446'),
+(437, '1447'),
+(438, '1448'),
+(439, '1449'),
+(440, '1450'),
+(441, '1451'),
+(442, '1452'),
+(443, '1453'),
+(444, '1454'),
+(445, '1455'),
+(446, '1456'),
+(447, '1457'),
+(448, '1458'),
+(449, '1459'),
+(450, '1460'),
+(451, '1461'),
+(452, '1462'),
+(453, '1463'),
+(454, '1464'),
+(455, '1465'),
+(456, '1466'),
+(457, '1467'),
+(458, '1468'),
+(459, '1469'),
+(460, '1470'),
+(461, '1471'),
+(462, '1472'),
+(463, '1473'),
+(464, '1474'),
+(465, '1475'),
+(466, '1476'),
+(467, '1477'),
+(468, '1478'),
+(469, '1479'),
+(470, '1480'),
+(471, '1481'),
+(472, '1482'),
+(473, '1483'),
+(474, '1484'),
+(475, '1485'),
+(476, '1486'),
+(477, '1487'),
+(478, '1488'),
+(479, '1489'),
+(480, '1490'),
+(481, '1491'),
+(482, '1492'),
+(483, '1493'),
+(484, '1494'),
+(485, '1495'),
+(486, '1496'),
+(487, '1497'),
+(488, '1498'),
+(489, '1499'),
+(490, '1500'),
+(491, '1501'),
+(492, '1502'),
+(493, '1503'),
+(494, '1504'),
+(495, '1505'),
+(496, '1506'),
+(497, '1507'),
+(498, '1508'),
+(499, '1509'),
+(500, '1510'),
+(501, '1511'),
+(502, '1512'),
+(503, '1513'),
+(504, '1514'),
+(505, '1515'),
+(506, '1516'),
+(507, '1517'),
+(508, '1518'),
+(509, '1519'),
+(510, '1520'),
+(511, '1521'),
+(512, '1522'),
+(513, '1523'),
+(514, '1524'),
+(515, '1525'),
+(516, '1526'),
+(517, '1527'),
+(518, '1528'),
+(519, '1529'),
+(520, '1530'),
+(521, '1531'),
+(522, '1532'),
+(523, '1533'),
+(524, '1534'),
+(525, '1535'),
+(526, '1536'),
+(527, '1537'),
+(528, '1538'),
+(529, '1539'),
+(530, '1540'),
+(531, '1541'),
+(532, '1542'),
+(533, '1543'),
+(534, '1544'),
+(535, '1545'),
+(536, '1546'),
+(537, '1547'),
+(538, '1548'),
+(539, '1549'),
+(540, '1550'),
+(541, '1551'),
+(542, '1552'),
+(543, '1553'),
+(544, '1554'),
+(545, '1555'),
+(546, '1556'),
+(547, '1557'),
+(548, '1558'),
+(549, '1559'),
+(550, '1560'),
+(551, '1561'),
+(552, '1562'),
+(553, '1563'),
+(554, '1564'),
+(555, '1565'),
+(556, '1566'),
+(557, '1567'),
+(558, '1568'),
+(559, '1569'),
+(560, '1570'),
+(561, '1571'),
+(562, '1572'),
+(563, '1573'),
+(564, '1574'),
+(565, '1575'),
+(566, '1576'),
+(567, '1577'),
+(568, '1578'),
+(569, '1579'),
+(570, '1580'),
+(571, '1581'),
+(572, '1583'),
+(573, '1584'),
+(574, '1585'),
+(575, '1586'),
+(576, '1587'),
+(577, '1588'),
+(578, '1589'),
+(579, '1590'),
+(580, '1591'),
+(581, '1592'),
+(582, '1593'),
+(583, '1594'),
+(584, '1595'),
+(585, '1596'),
+(586, '1597'),
+(587, '1598'),
+(588, '1599'),
+(589, '1600'),
+(590, '1601'),
+(591, '1602'),
+(592, '1603'),
+(593, '1604'),
+(594, '1605'),
+(595, '1606'),
+(596, '1607'),
+(597, '1608'),
+(598, '1609'),
+(599, '1610'),
+(600, '1611'),
+(601, '1612'),
+(602, '1613'),
+(603, '1614'),
+(604, '1615'),
+(605, '1616'),
+(606, '1617'),
+(607, '1618'),
+(608, '1619'),
+(609, '1620'),
+(610, '1621'),
+(611, '1622'),
+(612, '1623'),
+(613, '1624'),
+(614, '1625'),
+(615, '1626'),
+(616, '1627'),
+(617, '1628'),
+(618, '1629'),
+(619, '1630'),
+(620, '1631'),
+(621, '1632'),
+(622, '1633'),
+(623, '1634'),
+(624, '1635'),
+(625, '1636'),
+(626, '1637'),
+(627, '1638'),
+(628, '1639'),
+(629, '1640'),
+(630, '1641'),
+(631, '1642'),
+(632, '1643'),
+(633, '1644'),
+(634, '1645'),
+(635, '1646'),
+(636, '1647'),
+(637, '1648'),
+(638, '1649'),
+(639, '1650'),
+(640, '1651'),
+(641, '1652'),
+(642, '1653'),
+(643, '1654'),
+(644, '1655'),
+(645, '1656'),
+(646, '1657'),
+(647, '1658'),
+(648, '1659'),
+(649, '1660'),
+(650, '1661'),
+(651, '1662'),
+(652, '1663'),
+(653, '1664'),
+(654, '1665'),
+(655, '1666'),
+(656, '1667'),
+(657, '1668'),
+(658, '1669'),
+(659, '1670'),
+(660, '1671'),
+(661, '1672'),
+(662, '1673'),
+(663, '1674'),
+(664, '1675'),
+(665, '1676'),
+(666, '1677'),
+(667, '1678'),
+(668, '1679'),
+(669, '1680'),
+(670, '1681'),
+(671, '1682'),
+(672, '1683'),
+(673, '1684'),
+(674, '1685'),
+(675, '1686'),
+(676, '1687'),
+(677, '1688'),
+(678, '1689'),
+(679, '1690'),
+(680, '1691'),
+(681, '1692'),
+(682, '1693'),
+(683, '1694'),
+(684, '1695'),
+(685, '1696'),
+(686, '1697'),
+(687, '1698'),
+(688, '1699'),
+(689, '1700'),
+(690, '1701'),
+(691, '1702'),
+(692, '1703'),
+(693, '1704'),
+(694, '1705'),
+(695, '1706'),
+(696, '1707'),
+(697, '1708'),
+(698, '1709'),
+(699, '1710'),
+(700, '1711'),
+(701, '1712'),
+(702, '1713'),
+(703, '1714'),
+(704, '1715'),
+(705, '1716'),
+(706, '1717'),
+(707, '1718'),
+(708, '1719'),
+(709, '1720'),
+(710, '1721'),
+(711, '1722'),
+(712, '1723'),
+(713, '1724'),
+(714, '1725'),
+(715, '1726'),
+(716, '1727'),
+(717, '1728'),
+(718, '1729'),
+(719, '1730'),
+(720, '1731'),
+(721, '1732'),
+(722, '1733'),
+(723, '1734'),
+(724, '1735'),
+(725, '1736'),
+(726, '1737'),
+(727, '1738'),
+(728, '1739'),
+(729, '1740'),
+(730, '1741'),
+(731, '1742'),
+(732, '1743'),
+(733, '1744'),
+(734, '1745'),
+(735, '1746'),
+(736, '1747'),
+(737, '1748'),
+(738, '1749'),
+(739, '1750'),
+(740, '1751'),
+(741, '1752'),
+(742, '1753'),
+(743, '1754'),
+(744, '1755'),
+(745, '1756'),
+(746, '1757'),
+(747, '1758'),
+(748, '1759'),
+(749, '1760'),
+(750, '1761'),
+(751, '1762'),
+(752, '1763'),
+(753, '1764'),
+(754, '1765'),
+(755, '1766'),
+(756, '1767'),
+(757, '1768'),
+(758, '1769'),
+(759, '1770'),
+(760, '1771'),
+(761, '1772'),
+(762, '1773'),
+(763, '1774'),
+(764, '1775'),
+(765, '1776'),
+(766, '1777'),
+(767, '1778'),
+(768, '1779'),
+(769, '1780'),
+(770, '1781'),
+(771, '1782'),
+(772, '1783'),
+(773, '1784'),
+(774, '1785'),
+(775, '1786'),
+(776, '1787'),
+(777, '1788'),
+(778, '1789'),
+(779, '1790'),
+(780, '1791'),
+(781, '1792'),
+(782, '1793'),
+(783, '1794'),
+(784, '1795'),
+(785, '1796'),
+(786, '1797'),
+(787, '1798'),
+(788, '1799'),
+(789, '1800'),
+(790, '1801'),
+(791, '1802'),
+(792, '1803'),
+(793, '1804'),
+(794, '1805'),
+(795, '1806'),
+(796, '1807'),
+(797, '1808'),
+(798, '1809'),
+(799, '1810'),
+(800, '1811'),
+(801, '1812'),
+(802, '1813'),
+(803, '1814'),
+(804, '1815'),
+(805, '1816'),
+(806, '1817'),
+(807, '1818'),
+(808, '1819'),
+(809, '1820'),
+(810, '1821'),
+(811, '1822'),
+(812, '1824'),
+(813, '1825'),
+(814, '1826'),
+(815, '1827'),
+(816, '1828'),
+(817, '1829'),
+(818, '1830'),
+(819, '1832'),
+(820, '1833'),
+(821, '1834'),
+(822, '1835'),
+(823, '1836'),
+(824, '1837'),
+(825, '1838'),
+(826, '1839'),
+(827, '1840'),
+(828, '1841'),
+(829, '1842'),
+(830, '1843'),
+(831, '1844'),
+(832, '1845'),
+(833, '1846'),
+(834, '1847'),
+(835, '1848'),
+(836, '1849'),
+(837, '1850'),
+(838, '1851'),
+(839, '1852'),
+(840, '1853'),
+(841, '1854'),
+(842, '1855'),
+(843, '1856'),
+(844, '1857'),
+(845, '1858'),
+(846, '1859'),
+(847, '1860'),
+(848, '1861'),
+(849, '1862'),
+(850, '1863'),
+(851, '1864'),
+(852, '1865'),
+(853, '1866'),
+(854, '1867'),
+(855, '1868'),
+(856, '1869'),
+(857, '1870'),
+(858, '1871'),
+(859, '1872'),
+(860, '1873'),
+(861, '1874'),
+(862, '1875'),
+(863, '1876'),
+(864, '1877'),
+(865, '1878'),
+(866, '1879'),
+(867, '1880'),
+(868, '1881'),
+(869, '1882'),
+(870, '1883'),
+(871, '1884'),
+(872, '1885'),
+(873, '1886'),
+(874, '1887'),
+(875, '1888'),
+(876, '1889'),
+(877, '1890'),
+(878, '1891'),
+(879, '1892'),
+(880, '1893'),
+(881, '1894'),
+(882, '1895'),
+(883, '1896'),
+(884, '1897'),
+(885, '1898'),
+(886, '1899'),
+(887, '1900'),
+(888, '1901'),
+(889, '1902'),
+(890, '1903'),
+(891, '1904'),
+(892, '1905'),
+(893, '1906'),
+(894, '1907'),
+(895, '1908'),
+(896, '1909'),
+(897, '1910'),
+(898, '1911'),
+(899, '1912'),
+(900, '1913'),
+(901, '1914'),
+(902, '1915'),
+(903, '1916'),
+(904, '1917'),
+(905, '1918'),
+(906, '1919'),
+(907, '1920'),
+(908, '1921'),
+(909, '1922'),
+(910, '1923'),
+(911, '1924'),
+(912, '1925'),
+(913, '1926'),
+(914, '1927'),
+(915, '1928'),
+(916, '1929'),
+(917, '1930'),
+(918, '1931'),
+(919, '1932'),
+(920, '1933'),
+(921, '1934'),
+(922, '1935'),
+(923, '1936'),
+(924, '1937'),
+(925, '1938'),
+(926, '1939'),
+(927, '1940'),
+(928, '1941'),
+(929, '1942'),
+(930, '1943'),
+(931, '1944'),
+(932, '1945'),
+(933, '1946'),
+(934, '1947'),
+(935, '1948'),
+(936, '1949'),
+(937, '1950'),
+(938, '1951'),
+(939, '1952'),
+(940, '1953'),
+(941, '1954'),
+(942, '1955'),
+(943, '1956'),
+(944, '1957'),
+(945, '1958'),
+(946, '1959'),
+(947, '1960'),
+(948, '1961'),
+(949, '1962'),
+(950, '1963'),
+(951, '1964'),
+(952, '1965'),
+(953, '1966'),
+(954, '1967'),
+(955, '1968'),
+(956, '1969'),
+(957, '1970'),
+(958, '1971'),
+(959, '1972'),
+(960, '1973'),
+(961, '1974'),
+(962, '1975'),
+(963, '1976'),
+(964, '1977'),
+(965, '1978'),
+(966, '1979'),
+(967, '1980'),
+(968, '1981'),
+(969, '1982'),
+(970, '1983'),
+(971, '1984'),
+(972, '1985'),
+(973, '1986'),
+(974, '1987'),
+(975, '1988'),
+(976, '1989'),
+(977, '1990'),
+(978, '1991'),
+(979, '1992'),
+(980, '1993'),
+(981, '1994'),
+(982, '1995'),
+(983, '1996'),
+(984, '1997'),
+(985, '1998'),
+(986, '1999'),
+(987, '2000'),
+(988, '2001'),
+(989, '2002'),
+(990, '2003'),
+(991, '2004'),
+(992, '2005'),
+(993, '2006'),
+(994, '2007'),
+(995, '2008'),
+(996, '2009'),
+(997, '2010'),
+(998, '2011'),
+(999, '2012'),
+(1000, '2013'),
+(1001, '2014'),
+(1002, '2015'),
+(1003, '2016'),
+(1004, '2017'),
+(1005, '2018'),
+(1006, '2019'),
+(1007, '2020'),
+(1008, '2021'),
+(1009, '2022'),
+(1010, '2023'),
+(1011, '2024'),
+(1012, '2025'),
+(1013, '2026'),
+(1014, '2027'),
+(1015, '2028'),
+(1016, '2029'),
+(1017, '2030'),
+(1018, '2031'),
+(1019, '2032'),
+(1020, '2033'),
+(1021, '2034'),
+(1022, '2035'),
+(1023, '2036'),
+(1024, '2037'),
+(1025, '2038'),
+(1026, '2039'),
+(1027, '2040'),
+(1028, '2041'),
+(1029, '2042'),
+(1030, '2043'),
+(1031, '2044'),
+(1032, '2045'),
+(1033, '2046'),
+(1034, '2047'),
+(1035, '2048'),
+(1036, '2049'),
+(1037, '2050'),
+(1038, '2051'),
+(1039, '2052'),
+(1040, '2053'),
+(1041, '2054'),
+(1042, '2055'),
+(1043, '2056'),
+(1044, '2057'),
+(1045, '2058'),
+(1046, '2059'),
+(1047, '2060'),
+(1048, '2061'),
+(1049, '2062'),
+(1050, '2063'),
+(1051, '2064'),
+(1052, '2065'),
+(1053, '2066'),
+(1054, '2067'),
+(1055, '2068'),
+(1056, '2069'),
+(1057, '2070'),
+(1058, '2071'),
+(1059, '2072'),
+(1060, '2073'),
+(1061, '2074'),
+(1062, '2075'),
+(1063, '2076'),
+(1064, '2077'),
+(1065, '2078'),
+(1066, '2079'),
+(1067, '2080'),
+(1068, '2081'),
+(1069, '2082'),
+(1070, '2083'),
+(1071, '2084'),
+(1072, '2085'),
+(1073, '2086'),
+(1074, '2087'),
+(1075, '2088'),
+(1076, '2089'),
+(1077, '2090'),
+(1078, '2091'),
+(1079, '2092'),
+(1080, '2093'),
+(1081, '2094'),
+(1082, '2095'),
+(1083, '2096'),
+(1084, '2097'),
+(1085, '2098'),
+(1086, '2099'),
+(1087, '2100'),
+(1088, '2101'),
+(1089, '2102'),
+(1090, '2103'),
+(1091, '2104'),
+(1092, '2105'),
+(1093, '2106'),
+(1094, '2107'),
+(1095, '2108'),
+(1096, '2109'),
+(1097, '2110'),
+(1098, '2111'),
+(1099, '2112'),
+(1100, '2113'),
+(1101, '2114'),
+(1102, '2115'),
+(1103, '2116'),
+(1104, '2117'),
+(1105, '2118'),
+(1106, '2119'),
+(1107, '2120'),
+(1108, '2121'),
+(1109, '2122'),
+(1110, '2123'),
+(1111, '2124'),
+(1112, '2125'),
+(1113, '2126'),
+(1114, '2127'),
+(1115, '2128'),
+(1116, '2129'),
+(1117, '2130'),
+(1118, '2131'),
+(1119, '2132'),
+(1120, '2133'),
+(1121, '2134'),
+(1122, '2135'),
+(1123, '2136'),
+(1124, '2137'),
+(1125, '2138'),
+(1126, '2139'),
+(1127, '2140'),
+(1128, '2141'),
+(1129, '2142'),
+(1130, '2143'),
+(1131, '2144'),
+(1132, '2145'),
+(1133, '2146'),
+(1134, '2147'),
+(1135, '2148'),
+(1136, '2149'),
+(1137, '2150'),
+(1138, '2151'),
+(1139, '2152'),
+(1140, '2153'),
+(1141, '2154'),
+(1142, '2155'),
+(1143, '2156'),
+(1144, '2157'),
+(1145, '2158'),
+(1146, '2159'),
+(1147, '2160'),
+(1148, '2161'),
+(1149, '2162'),
+(1150, '2163'),
+(1151, '2164'),
+(1152, '2165'),
+(1153, '2166'),
+(1154, '2167'),
+(1155, '2168'),
+(1156, '2169'),
+(1157, '2170'),
+(1158, '2171'),
+(1159, '2172'),
+(1160, '2173'),
+(1161, '2174'),
+(1162, '2175'),
+(1163, '2176'),
+(1164, '2177'),
+(1165, '2178'),
+(1166, '2179'),
+(1167, '2180'),
+(1168, '2181'),
+(1169, '2182'),
+(1170, '2183'),
+(1171, '2184'),
+(1172, '2185'),
+(1173, '2186'),
+(1174, '2187'),
+(1175, '2188'),
+(1176, '2189'),
+(1177, '2190'),
+(1178, '2191'),
+(1179, '2192'),
+(1180, '2193'),
+(1181, '2194'),
+(1182, '2195'),
+(1183, '2196'),
+(1184, '2197'),
+(1185, '2198'),
+(1186, '2199'),
+(1187, '2200'),
+(1188, '2201'),
+(1189, '2202'),
+(1190, '2203'),
+(1191, '2204'),
+(1192, '2205'),
+(1193, '2206'),
+(1194, '2207'),
+(1195, '2208'),
+(1196, '2209'),
+(1197, '2210'),
+(1198, '2211'),
+(1199, '2212'),
+(1200, '2213'),
+(1201, '2214'),
+(1202, '2215'),
+(1203, '2216'),
+(1204, '2217'),
+(1205, '2218'),
+(1206, '2219'),
+(1207, '2220'),
+(1208, '2221'),
+(1209, '2222'),
+(1210, '2223'),
+(1211, '2224'),
+(1212, '2225'),
+(1213, '2226'),
+(1214, '2227'),
+(1215, '2228'),
+(1216, '2229'),
+(1217, '2230'),
+(1218, '2231'),
+(1219, '2232'),
+(1220, '2233'),
+(1221, '2234'),
+(1222, '2235'),
+(1223, '2236'),
+(1224, '2237'),
+(1225, '2238'),
+(1226, '2239'),
+(1227, '2240'),
+(1228, '2241'),
+(1229, '2242'),
+(1230, '2243'),
+(1231, '2244'),
+(1232, '2245'),
+(1233, '2246'),
+(1234, '2247'),
+(1235, '2248'),
+(1236, '2249'),
+(1237, '2250'),
+(1238, '2251'),
+(1239, '2252'),
+(1240, '2253'),
+(1241, '2254'),
+(1242, '2255'),
+(1243, '2256'),
+(1244, '2257'),
+(1245, '2258'),
+(1246, '2259'),
+(1247, '2260'),
+(1248, '2261'),
+(1249, '2262'),
+(1250, '2263'),
+(1251, '2264'),
+(1252, '2265'),
+(1253, '2266'),
+(1254, '2267'),
+(1255, '2268'),
+(1256, '2269'),
+(1257, '2270'),
+(1258, '2271'),
+(1259, '2272'),
+(1260, '2273'),
+(1261, '2274'),
+(1262, '2275'),
+(1263, '2276'),
+(1264, '2277'),
+(1265, '2278'),
+(1266, '2279'),
+(1267, '2280'),
+(1268, '2281'),
+(1269, '2282'),
+(1270, '2283'),
+(1271, '2284'),
+(1272, '2285'),
+(1273, '2286'),
+(1274, '2287'),
+(1275, '2288'),
+(1276, '2289'),
+(1277, '2290'),
+(1278, '2291'),
+(1279, '2292'),
+(1280, '2293'),
+(1281, '2294'),
+(1282, '2295'),
+(1283, '2296'),
+(1284, '2297'),
+(1285, '2298'),
+(1286, '2299'),
+(1287, '2300'),
+(1288, '2301'),
+(1289, '2302'),
+(1290, '2303'),
+(1291, '2304'),
+(1292, '2305'),
+(1293, '2306'),
+(1294, '2307'),
+(1295, '2308'),
+(1296, '2309'),
+(1297, '2310'),
+(1298, '2311'),
+(1299, '2312'),
+(1300, '2313'),
+(1301, '2314'),
+(1302, '2315'),
+(1303, '2316'),
+(1304, '2317'),
+(1305, '2318'),
+(1306, '2319'),
+(1307, '2320'),
+(1308, '2321'),
+(1309, '2322'),
+(1310, '2323'),
+(1311, '2324'),
+(1312, '2325'),
+(1313, '2326'),
+(1314, '2327'),
+(1315, '2328'),
+(1316, '2329'),
+(1317, '2330'),
+(1318, '2331'),
+(1319, '2332'),
+(1320, '2333'),
+(1321, '2334'),
+(1322, '2335'),
+(1323, '2336'),
+(1324, '2337'),
+(1325, '2338'),
+(1326, '2339'),
+(1327, '2341'),
+(1328, '2342'),
+(1329, '2343'),
+(1330, '2344'),
+(1331, '2345'),
+(1332, '2346'),
+(1333, '2347'),
+(1334, '2348'),
+(1335, '2349'),
+(1336, '2350'),
+(1337, '2351'),
+(1338, '2352'),
+(1339, '2353'),
+(1340, '2354'),
+(1341, '2355'),
+(1342, '2356'),
+(1343, '2357'),
+(1344, '2358'),
+(1345, '2359'),
+(1346, '2360'),
+(1347, '2361'),
+(1348, '2362'),
+(1349, '2363'),
+(1350, '2364'),
+(1351, '2365'),
+(1352, '2366'),
+(1353, '2367'),
+(1354, '2368'),
+(1355, '2369'),
+(1356, '2370'),
+(1357, '2371'),
+(1358, '2372'),
+(1359, '2373'),
+(1360, '2374'),
+(1361, '2375'),
+(1362, '2376'),
+(1363, '2377'),
+(1364, '2378'),
+(1365, '2379'),
+(1366, '2380'),
+(1367, '2381'),
+(1368, '2382'),
+(1369, '2383'),
+(1370, '2384'),
+(1371, '2385'),
+(1372, '2386'),
+(1373, '2387'),
+(1374, '2388'),
+(1375, '2389'),
+(1376, '2390'),
+(1377, '2391'),
+(1378, '2392'),
+(1379, '2393'),
+(1380, '2394'),
+(1381, '2395'),
+(1382, '2396'),
+(1383, '2397'),
+(1384, '2398'),
+(1385, '2399'),
+(1386, '2400'),
+(1387, '2401'),
+(1388, '2402'),
+(1389, '2403'),
+(1390, '2404'),
+(1391, '2405'),
+(1392, '2406'),
+(1393, '2407'),
+(1394, '2408'),
+(1395, '2409'),
+(1396, '2410'),
+(1397, '2411'),
+(1398, '2412'),
+(1399, '2413'),
+(1400, '2414'),
+(1401, '2415'),
+(1402, '2416'),
+(1403, '2417'),
+(1404, '2418'),
+(1405, '2419'),
+(1406, '2420'),
+(1407, '2421'),
+(1408, '2422'),
+(1409, '2423'),
+(1410, '2424'),
+(1411, '2425'),
+(1412, '2426'),
+(1413, '2427'),
+(1414, '2428'),
+(1415, '2429'),
+(1416, '2430'),
+(1417, '2431'),
+(1418, '2432'),
+(1419, '2433'),
+(1420, '2434'),
+(1421, '2435'),
+(1422, '2436'),
+(1423, '2437'),
+(1424, '2438'),
+(1425, '2439'),
+(1426, '2440'),
+(1427, '2441'),
+(1428, '2442'),
+(1429, '2443'),
+(1430, '2444'),
+(1431, '2445'),
+(1432, '2446'),
+(1433, '2447'),
+(1434, '2448'),
+(1435, '2449'),
+(1436, '2450'),
+(1437, '2451'),
+(1438, '2452'),
+(1439, '2453'),
+(1440, '2454'),
+(1441, '2455'),
+(1442, '2456'),
+(1443, '2457'),
+(1444, '2458'),
+(1445, '2459'),
+(1446, '2460'),
+(1447, '2461'),
+(1448, '2462'),
+(1449, '2463'),
+(1450, '2464'),
+(1451, '2465'),
+(1452, '2466'),
+(1453, '2467'),
+(1454, '2468'),
+(1455, '2469'),
+(1456, '2470'),
+(1457, '2471'),
+(1458, '2472'),
+(1459, '2473'),
+(1460, '2474'),
+(1461, '2475'),
+(1462, '2476'),
+(1463, '2477'),
+(1464, '2478'),
+(1465, '2479'),
+(1466, '2480'),
+(1467, '2481'),
+(1468, '2482'),
+(1469, '2483'),
+(1470, '2484'),
+(1471, '2485'),
+(1472, '2486'),
+(1473, '2487'),
+(1474, '2488'),
+(1475, '2489'),
+(1476, '2490'),
+(1477, '2491'),
+(1478, '2492'),
+(1479, '2493'),
+(1480, '2494'),
+(1481, '2495'),
+(1482, '2496'),
+(1483, '2497'),
+(1484, '2498'),
+(1485, '2499'),
+(1486, '2500'),
+(1487, '2501'),
+(1488, '2502'),
+(1489, '2503'),
+(1490, '2504'),
+(1491, '2505'),
+(1492, '2506'),
+(1493, '2507'),
+(1494, '2508'),
+(1495, '2509'),
+(1496, '2510'),
+(1497, '2512'),
+(1498, '2513'),
+(1499, '2514'),
+(1500, '2515'),
+(1501, '2516'),
+(1502, '2517'),
+(1503, '2518'),
+(1504, '2519'),
+(1505, '2520'),
+(1506, '2521'),
+(1507, '2522'),
+(1508, '2523'),
+(1509, '2524'),
+(1510, '2525'),
+(1511, '2526'),
+(1512, '2527'),
+(1513, '2528'),
+(1514, '2529'),
+(1515, '2530'),
+(1516, '2531'),
+(1517, '2532'),
+(1518, '2533'),
+(1519, '2534'),
+(1520, '2535'),
+(1521, '2536'),
+(1522, '2537'),
+(1523, '2538'),
+(1524, '2539'),
+(1525, '2540'),
+(1526, '2541'),
+(1527, '2542'),
+(1528, '2543'),
+(1529, '2544'),
+(1530, '2545'),
+(1531, '2546'),
+(1532, '2547'),
+(1533, '2548'),
+(1534, '2549'),
+(1535, '2550'),
+(1536, '2551'),
+(1537, '2552'),
+(1538, '2553'),
+(1539, '2554'),
+(1540, '2555'),
+(1541, '2556'),
+(1542, '2557'),
+(1543, '2558'),
+(1544, '2559'),
+(1545, '2560'),
+(1546, '2561'),
+(1547, '2562'),
+(1548, '2563'),
+(1549, '2564'),
+(1550, '2565'),
+(1551, '2566'),
+(1552, '2567'),
+(1553, '2568'),
+(1554, '2569'),
+(1555, '2570'),
+(1556, '2571'),
+(1557, '2572'),
+(1558, '2573'),
+(1559, '2574'),
+(1560, '2575'),
+(1561, '2576'),
+(1562, '2577'),
+(1563, '2578'),
+(1564, '2579'),
+(1565, '2580'),
+(1566, '2581'),
+(1567, '2582'),
+(1568, '2583'),
+(1569, '2584'),
+(1570, '2585'),
+(1571, '2586'),
+(1572, '2587'),
+(1573, '2588'),
+(1574, '2589'),
+(1575, '2590'),
+(1576, '2591'),
+(1577, '2592'),
+(1578, '2593'),
+(1579, '2594'),
+(1580, '2595'),
+(1581, '2596'),
+(1582, '2598'),
+(1583, '2599'),
+(1584, '2600'),
+(1585, '2601'),
+(1586, '2602'),
+(1587, '2603'),
+(1588, '2604'),
+(1589, '2605'),
+(1590, '2606'),
+(1591, '2607'),
+(1592, '2608'),
+(1593, '2609'),
+(1594, '2610'),
+(1595, '2611'),
+(1596, '2612'),
+(1597, '2613'),
+(1598, '2614'),
+(1599, '2615'),
+(1600, '2616'),
+(1601, '2617'),
+(1602, '2618'),
+(1603, '2619'),
+(1604, '2620'),
+(1605, '2621'),
+(1606, '2622'),
+(1607, '2623'),
+(1608, '2624'),
+(1609, '2625'),
+(1610, '2626'),
+(1611, '2627'),
+(1612, '2628'),
+(1613, '2629'),
+(1614, '2630'),
+(1615, '2631'),
+(1616, '2632'),
+(1617, '2633'),
+(1618, '2634'),
+(1619, '2635'),
+(1620, '2636'),
+(1621, '2637'),
+(1622, '2638'),
+(1623, '2639'),
+(1624, '2640'),
+(1625, '2641'),
+(1626, '2642'),
+(1627, '2643'),
+(1628, '2644'),
+(1629, '2645'),
+(1630, '2646'),
+(1631, '2647'),
+(1632, '2648'),
+(1633, '2649'),
+(1634, '2650'),
+(1635, '2651'),
+(1636, '2652'),
+(1637, '2653'),
+(1638, '2654'),
+(1639, '2655'),
+(1640, '2656'),
+(1641, '2657'),
+(1642, '2658'),
+(1643, '2659'),
+(1644, '2660'),
+(1645, '2661'),
+(1646, '2662'),
+(1647, '2663'),
+(1648, '2664'),
+(1649, '2665'),
+(1650, '2666'),
+(1651, '2667'),
+(1652, '2668'),
+(1653, '2669'),
+(1654, '2670'),
+(1655, '2671'),
+(1656, '2672'),
+(1657, '2673'),
+(1658, '2674'),
+(1659, '2675'),
+(1660, '2676'),
+(1661, '2677'),
+(1662, '2678'),
+(1663, '2679'),
+(1664, '2680'),
+(1665, '2681'),
+(1666, '2682'),
+(1667, '2683'),
+(1668, '2684'),
+(1669, '2685'),
+(1670, '2686'),
+(1671, '2687'),
+(1672, '2688'),
+(1673, '2689'),
+(1674, '2690'),
+(1675, '2692'),
+(1676, '2693'),
+(1677, '2694'),
+(1678, '2695'),
+(1679, '2696'),
+(1680, '2697'),
+(1681, '2698'),
+(1682, '2699'),
+(1683, '2700'),
+(1684, '2701'),
+(1685, '2702'),
+(1686, '2703'),
+(1687, '2704'),
+(1688, '2705'),
+(1689, '2707'),
+(1690, '2708'),
+(1691, '2709'),
+(1692, '2710'),
+(1693, '2711'),
+(1694, '2712'),
+(1695, '2713'),
+(1696, '2714'),
+(1697, '2715'),
+(1698, '2716'),
+(1699, '2717'),
+(1700, '2718'),
+(1701, '2719'),
+(1702, '2720'),
+(1703, '2721'),
+(1704, '2722'),
+(1705, '2723'),
+(1706, '2724'),
+(1707, '2725'),
+(1708, '2726'),
+(1709, '2727'),
+(1710, '2728'),
+(1711, '2729'),
+(1712, '2730'),
+(1713, '2731'),
+(1714, '2732'),
+(1715, '2733'),
+(1716, '2734'),
+(1717, '2735'),
+(1718, '2736'),
+(1719, '2737'),
+(1720, '2738'),
+(1721, '2739'),
+(1722, '2740'),
+(1723, '2741'),
+(1724, '2742'),
+(1725, '2743'),
+(1726, '2744'),
+(1727, '2745'),
+(1728, '2746'),
+(1729, '2747'),
+(1730, '2748'),
+(1731, '2749'),
+(1732, '2750'),
+(1733, '2751'),
+(1734, '2752'),
+(1735, '2753'),
+(1736, '2754'),
+(1737, '2755'),
+(1738, '2756'),
+(1739, '2757'),
+(1740, '2758'),
+(1741, '2759'),
+(1742, '2760'),
+(1743, '2761'),
+(1744, '2762'),
+(1745, '2763'),
+(1746, '2764'),
+(1747, '2765'),
+(1748, '2766'),
+(1749, '2767'),
+(1750, '2768'),
+(1751, '2769'),
+(1752, '2770'),
+(1753, '2771'),
+(1754, '2772'),
+(1755, '2773'),
+(1756, '2774'),
+(1757, '2775'),
+(1758, '2776'),
+(1759, '2777'),
+(1760, '2778'),
+(1761, '2779'),
+(1762, '2780'),
+(1763, '2781'),
+(1764, '2782'),
+(1765, '2783'),
+(1766, '2784'),
+(1767, '2785'),
+(1768, '2786'),
+(1769, '2787'),
+(1770, '2788'),
+(1771, '2789'),
+(1772, '2790'),
+(1773, '2791'),
+(1774, '2792'),
+(1775, '2793'),
+(1776, '2794'),
+(1777, '2795'),
+(1778, '2796'),
+(1779, '2797'),
+(1780, '2798'),
+(1781, '2799'),
+(1782, '2800'),
+(1783, '2801'),
+(1784, '2802'),
+(1785, '2803'),
+(1786, '2804'),
+(1787, '2805'),
+(1788, '2806'),
+(1789, '2807'),
+(1790, '2808'),
+(1791, '2809'),
+(1792, '2810'),
+(1793, '2811'),
+(1794, '2812'),
+(1795, '2813'),
+(1796, '2814'),
+(1797, '2815'),
+(1798, '2816'),
+(1799, '2817'),
+(1800, '2818'),
+(1801, '2819'),
+(1802, '2820'),
+(1803, '2821'),
+(1804, '2822'),
+(1805, '2823'),
+(1806, '2824'),
+(1807, '2825'),
+(1808, '2826'),
+(1809, '2827'),
+(1810, '2828'),
+(1811, '2829'),
+(1812, '2830'),
+(1813, '2831'),
+(1814, '2832'),
+(1815, '2833'),
+(1816, '2834'),
+(1817, '2835'),
+(1818, '2836'),
+(1819, '2837'),
+(1820, '2838'),
+(1821, '2839'),
+(1822, '2840'),
+(1823, '2841'),
+(1824, '2842'),
+(1825, '2843'),
+(1826, '2844'),
+(1827, '2845'),
+(1828, '2846'),
+(1829, '2847'),
+(1830, '2848'),
+(1831, '2849'),
+(1832, '2850'),
+(1833, '2851'),
+(1834, '2852'),
+(1835, '2853'),
+(1836, '2854'),
+(1837, '2855'),
+(1838, '2856'),
+(1839, '2857'),
+(1840, '2858'),
+(1841, '2859'),
+(1842, '2860'),
+(1843, '2861'),
+(1844, '2862'),
+(1845, '2863'),
+(1846, '2864'),
+(1847, '2865'),
+(1848, '2866'),
+(1849, '2867'),
+(1850, '2868'),
+(1851, '2869'),
+(1852, '2870'),
+(1853, '2871'),
+(1854, '2872'),
+(1855, '2873'),
+(1856, '2874'),
+(1857, '2875'),
+(1858, '2876'),
+(1859, '2877'),
+(1860, '2878'),
+(1861, '2879'),
+(1862, '2880'),
+(1863, '2881'),
+(1864, '2882'),
+(1865, '2883'),
+(1866, '2884'),
+(1867, '2885'),
+(1868, '2886'),
+(1869, '2887'),
+(1870, '2888'),
+(1871, '2889'),
+(1872, '2890'),
+(1873, '2891'),
+(1874, '2892'),
+(1875, '2893'),
+(1876, '2894'),
+(1877, '2895'),
+(1878, '2896'),
+(1879, '2897'),
+(1880, '2898'),
+(1881, '2899'),
+(1882, '2900'),
+(1883, '2901'),
+(1884, '2902'),
+(1885, '2903'),
+(1886, '2904'),
+(1887, '2905'),
+(1888, '2906'),
+(1889, '2907'),
+(1890, '2908'),
+(1891, '2909'),
+(1892, '2910'),
+(1893, '2911'),
+(1894, '2912'),
+(1895, '2913'),
+(1896, '2914'),
+(1897, '2915'),
+(1898, '2916'),
+(1899, '2917'),
+(1900, '2918'),
+(1901, '2919'),
+(1902, '2920'),
+(1903, '2921'),
+(1904, '2922'),
+(1905, '2923'),
+(1906, '2924'),
+(1907, '2925'),
+(1908, '2926'),
+(1909, '2927'),
+(1910, '2928'),
+(1911, '2929'),
+(1912, '2930'),
+(1913, '2932'),
+(1914, '2933'),
+(1915, '2934'),
+(1916, '2935'),
+(1917, '2936'),
+(1918, '2937'),
+(1919, '2938'),
+(1920, '2939'),
+(1921, '2940'),
+(1922, '2941'),
+(1923, '2942'),
+(1924, '2943'),
+(1925, '2944'),
+(1926, '2945'),
+(1927, '2946'),
+(1928, '2947'),
+(1929, '2948'),
+(1930, '2949'),
+(1931, '2950'),
+(1932, '2951'),
+(1933, '2952'),
+(1934, '2953'),
+(1935, '2954'),
+(1936, '2955'),
+(1937, '2956'),
+(1938, '2957'),
+(1939, '2958'),
+(1940, '2959'),
+(1941, '2960'),
+(1942, '2961'),
+(1943, '2962'),
+(1944, '2963'),
+(1945, '2964'),
+(1946, '2965'),
+(1947, '2966'),
+(1948, '2967'),
+(1949, '2968'),
+(1950, '2969'),
+(1951, '2970'),
+(1952, '2971'),
+(1953, '2972'),
+(1954, '2973'),
+(1955, '2974'),
+(1956, '2975'),
+(1957, '2976'),
+(1958, '2977'),
+(1959, '2978'),
+(1960, '2979'),
+(1961, '2980'),
+(1962, '2981'),
+(1963, '2982'),
+(1964, '2983'),
+(1965, '2984'),
+(1966, '2985'),
+(1967, '2986'),
+(1968, '2987'),
+(1969, '2988'),
+(1970, '2989'),
+(1971, '2990'),
+(1972, '2991'),
+(1973, '2992'),
+(1974, '2993'),
+(1975, '2994'),
+(1976, '2995'),
+(1977, '2996'),
+(1978, '2997'),
+(1979, '2998'),
+(1980, '2999');
 /*==============================================================*/
 /* Table: VIDRIO                                                */
 /*==============================================================*/
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1','TV-01','CV-02','1000','1.00','1.20'),
-('2','TV-01','CV-02','1000','2.00','2.40'),
-('3','TV-01','CV-02','1000','3.00','3.60'),
-('4','TV-01','CV-02','1000','4.00','4.80'),
-('5','TV-01','CV-02','1000','5.00','6.00'),
-('6','TV-01','CV-02','1000','6.00','7.20'),
-('7','TV-01','CV-01','1000','7.00','8.40'),
-('8','TV-01','CV-01','1000','1.50','1.80');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('9','TV-01','CV-01','1000','3.60','4.32'),
-('10','TV-01','CV-01','1000','1.80','2.16'),
-('11','TV-01','CV-01','1000','1.90','2.28'),
-('12','TV-01','CV-01','1000','5.30','6.36'),
-('13','TV-01','CV-01','1001','3.60','4.32'),
-('14','TV-01','CV-02','1001','4.32','5.18'),
-('15','TV-02','CV-01','1001','2.40','2.88'),
-('16','TV-02','CV-02','1001','2.88','3.46');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('17','TV-02','CV-01','1001','1.20','1.44'),
-('18','TV-02','CV-02','1001','1.44','1.73'),
-('19','TV-01','CV-01','1001','1.72','2.06'),
-('20','TV-01','CV-02','1001','20.60','24.72'),
-('21','TV-01','CV-01','1001','2.06','2.47'),
-('22','TV-02','CV-02','1001','1.50','1.80'),
-('23','TV-02','CV-01','1001','1.80','2.16'),
-('24','TV-02','CV-02','1001','1.09','1.31');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('25','TV-02','CV-01','1001','1.05','1.26'),
-('26','TV-01','CV-02','1001','1.26','1.51'),
-('27','TV-01','CV-01','1001','1.31','1.57'),
-('28','TV-01','CV-02','1001','1.51','1.81'),
-('29','TV-01','CV-03','1001','2.57','3.08'),
-('30','TV-01','CV-03','1001','3.08','3.70'),
-('31','TV-01','CV-03','1001','7.30','8.76'),
-('32','TV-02','CV-04','1001','1.60','1.92');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('33','TV-02','CV-05','1001','2.90','3.48'),
-('34','TV-02','CV-02','1001','4.80','5.76'),
-('35','TV-02','CV-02','1001','1.05','1.26'),
-('36','TV-02','CV-02','1001','1.07','1.28'),
-('37','TV-02','CV-02','1001','2.08','2.50'),
-('38','TV-01','CV-02','1001','2.09','2.51'),
-('39','TV-01','CV-02','1001','20.70','24.84'),
-('40','TV-01','CV-01','1002','20.60','24.72');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('41','TV-01','CV-01','1002','2.06','2.47'),
-('42','TV-01','CV-01','1002','2.08','2.50'),
-('43','TV-01','CV-01','1002','1.06','1.27'),
-('44','TV-01','CV-01','1002','1.05','1.26'),
-('45','TV-01','CV-01','1002','1.59','1.91'),
-('46','TV-01','CV-01','1002','1.48','1.78'),
-('47','TV-01','CV-02','1002','1.49','1.79'),
-('48','TV-01','CV-01','1002','1.90','2.28'),
-('49','TV-01','CV-02','1002','1.49','1.79');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('50','TV-01','CV-01','1002','1.13','1.36'),
-('51','TV-01','CV-02','1002','1.49','1.79'),
-('52','TV-01','CV-01','1002','1.89','2.27'),
-('53','TV-01','CV-02','1002','1.82','2.18'),
-('54','TV-01','CV-01','1002','1.36','1.63'),
-('55','TV-02','CV-02','1002','1.78','2.14'),
-('56','TV-02','CV-01','1003','1.79','2.15'),
-('57','TV-02','CV-02','1003','1.65','1.98');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('58','TV-01','CV-01','1003','1.50','1.80'),
-('59','TV-02','CV-02','1003','1.41','1.69'),
-('60','TV-01','CV-01','1003','1.10','1.32'),
-('61','TV-02','CV-02','1003','1.15','1.38'),
-('62','TV-01','CV-03','1003','1.38','1.66'),
-('63','TV-02','CV-03','1003','1.66','1.99'),
-('64','TV-01','CV-03','1003','1.99','2.39'),
-('65','TV-02','CV-04','1003','2.39','2.87');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('66','TV-01','CV-05','1004','2.87','3.44'),
-('67','TV-02','CV-02','1004','4.40','5.28'),
-('68','TV-01','CV-02','1004','4.60','5.52'),
-('69','TV-02','CV-02','1004','4.85','5.82'),
-('70','TV-01','CV-02','1004','1.90','2.28'),
-('71','TV-01','CV-02','1005','1.98','2.38'),
-('72','TV-01','CV-02','1005','1.49','1.79'),
-('73','TV-01','CV-01','1005','2.49','2.99');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('74','TV-01','CV-01','1005','1.19','1.43'),
-('75','TV-02','CV-01','1005','2.57','3.08'),
-('76','TV-02','CV-01','1005','2.40','2.88'),
-('77','TV-02','CV-01','1005','3.48','4.18'),
-('78','TV-01','CV-01','1005','0.50','0.60'),
-('79','TV-02','CV-01','1005','0.54','0.65'),
-('80','TV-01','CV-02','1005','0.78','0.94'),
-('81','TV-02','CV-01','1006','0.49','0.59');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('82','TV-01','CV-02','1006','1.56','1.87'),
-('83','TV-02','CV-01','1006','1.94','2.33'),
-('84','TV-01','CV-02','1006','0.89','1.07'),
-('85','TV-02','CV-01','1006','1.06','1.27'),
-('86','TV-01','CV-02','1006','1.08','1.30'),
-('87','TV-02','CV-01','1006','1.59','1.91'),
-('88','TV-01','CV-02','1006','2.59','3.11'),
-('89','TV-02','CV-01','1006','2.20','2.64');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('90','TV-01','CV-02','1006','3.19','3.83'),
-('91','TV-01','CV-01','1007','4.20','5.04'),
-('92','TV-01','CV-02','1007','5.19','6.23'),
-('93','TV-01','CV-01','1007','6.18','7.42'),
-('94','TV-01','CV-02','1007','7.19','8.63'),
-('95','TV-01','CV-03','1007','8.09','9.71'),
-('96','TV-01','CV-03','1007','9.02','10.82'),
-('97','TV-01','CV-03','1007','10.90','13.08');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('98','TV-01','CV-04','1007','11.19','13.43'),
-('99','TV-01','CV-05','1007','12.50','15.00'),
-('100','TV-01','CV-02','1007','13.89','16.67'),
-('101','TV-01','CV-02','1008','14.19','17.03'),
-('102','TV-01','CV-02','1008','15.19','18.23'),
-('103','TV-01','CV-02','1008','16.09','19.31'),
-('104','TV-01','CV-02','1008','1.00','1.20'),
-('105','TV-02','CV-02','1008','2.00','2.40');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('106','TV-02','CV-01','1008','3.00','3.60'),
-('107','TV-02','CV-01','1008','4.00','4.80'),
-('108','TV-02','CV-01','1008','5.00','6.00'),
-('109','TV-01','CV-01','1008','6.00','7.20'),
-('110','TV-01','CV-01','1008','7.00','8.40'),
-('111','TV-01','CV-01','1009','1.50','1.80'),
-('112','TV-02','CV-01','1009','3.60','4.32'),
-('113','TV-02','CV-02','1009','1.80','2.16');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('114','TV-02','CV-01','1009','1.90','2.28'),
-('115','TV-02','CV-02','1009','5.30','6.36'),
-('116','TV-01','CV-01','1009','3.60','4.32'),
-('117','TV-01','CV-02','1009','4.32','5.18'),
-('118','TV-01','CV-01','1009','2.40','2.88'),
-('119','TV-01','CV-02','1009','2.88','3.46'),
-('120','TV-01','CV-01','1009','1.20','1.44'),
-('121','TV-01','CV-02','1010','1.44','1.73');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('122','TV-02','CV-01','1010','1.72','2.06'),
-('123','TV-02','CV-02','1010','20.60','24.72'),
-('124','TV-02','CV-01','1010','2.06','2.47'),
-('125','TV-02','CV-02','1010','1.50','1.80'),
-('126','TV-02','CV-01','1011','1.80','2.16'),
-('127','TV-02','CV-02','1011','1.09','1.31'),
-('128','TV-01','CV-03','1011','1.05','1.26'),
-('129','TV-01','CV-03','1011','1.26','1.51');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('130','TV-01','CV-03','1011','1.31','1.57'),
-('131','TV-01','CV-04','1012','1.51','1.81'),
-('132','TV-01','CV-05','1012','2.57','3.08'),
-('133','TV-01','CV-01','1012','3.08','3.70'),
-('134','TV-01','CV-01','1012','7.30','8.76'),
-('135','TV-01','CV-01','1012','1.60','1.92'),
-('136','TV-01','CV-01','1013','2.90','3.48'),
-('137','TV-01','CV-01','1013','4.80','5.76');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('138','TV-01','CV-01','1013','1.05','1.26'),
-('139','TV-01','CV-01','1013','1.07','1.28'),
-('140','TV-01','CV-01','1013','2.08','2.50'),
-('141','TV-01','CV-01','1014','2.09','2.51'),
-('142','TV-01','CV-01','1014','20.70','24.84'),
-('143','TV-01','CV-01','1014','20.60','24.72'),
-('144','TV-01','CV-01','1014','2.06','2.47'),
-('145','TV-02','CV-01','1014','2.08','2.50');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('146','TV-02','CV-01','1016','1.06','1.27'),
-('147','TV-02','CV-01','1016','1.05','1.26'),
-('148','TV-01','CV-02','1016','1.59','1.91'),
-('149','TV-02','CV-02','1016','1.48','1.78'),
-('150','TV-01','CV-02','1016','1.49','1.79'),
-('151','TV-02','CV-02','1017','1.90','2.28'),
-('152','TV-01','CV-02','1017','1.49','1.79'),
-('153','TV-02','CV-02','1017','1.13','1.36');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('154','TV-01','CV-01','1017','1.49','1.79'),
-('155','TV-02','CV-01','1017','1.89','2.27'),
-('156','TV-01','CV-01','1018','1.82','2.18'),
-('157','TV-02','CV-01','1018','1.36','1.63'),
-('158','TV-01','CV-01','1018','1.78','2.14'),
-('159','TV-02','CV-01','1018','1.79','2.15'),
-('160','TV-01','CV-01','1018','1.65','1.98'),
-('161','TV-01','CV-02','1019','1.50','1.80');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('162','TV-01','CV-01','1019','1.41','1.69'),
-('163','TV-01','CV-02','1019','1.10','1.32'),
-('164','TV-01','CV-01','1019','1.15','1.38'),
-('165','TV-02','CV-02','1019','1.38','1.66'),
-('166','TV-02','CV-01','1020','1.66','1.99'),
-('167','TV-02','CV-02','1020','1.99','2.39'),
-('168','TV-01','CV-01','1020','2.39','2.87'),
-('169','TV-02','CV-02','1020','2.87','3.44');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('170','TV-01','CV-01','1020','4.40','5.28'),
-('171','TV-02','CV-02','1021','4.60','5.52'),
-('172','TV-01','CV-01','1021','4.85','5.82'),
-('173','TV-02','CV-02','1021','1.90','2.28'),
-('174','TV-01','CV-01','1021','1.98','2.38'),
-('175','TV-02','CV-02','1021','1.49','1.79'),
-('176','TV-01','CV-03','1022','2.49','2.99'),
-('177','TV-02','CV-03','1022','1.19','1.43');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('178','TV-01','CV-03','1022','2.57','3.08'),
-('179','TV-02','CV-04','1022','2.40','2.88'),
-('180','TV-01','CV-05','1022','3.48','4.18'),
-('181','TV-01','CV-02','1023','0.50','0.60'),
-('182','TV-01','CV-02','1023','0.54','0.65'),
-('183','TV-01','CV-02','1023','0.78','0.94'),
-('184','TV-01','CV-02','1023','0.49','0.59'),
-('185','TV-01','CV-02','1023','1.56','1.87');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('186','TV-01','CV-02','1024','1.94','2.33'),
-('187','TV-01','CV-01','1024','0.89','1.07'),
-('188','TV-01','CV-01','1024','1.06','1.27'),
-('189','TV-01','CV-01','1024','1.08','1.30'),
-('190','TV-01','CV-01','1024','1.59','1.91'),
-('191','TV-01','CV-01','1025','2.59','3.11'),
-('192','TV-01','CV-01','1025','2.20','2.64'),
-('193','TV-01','CV-01','1025','3.19','3.83');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('194','TV-01','CV-02','1025','4.20','5.04'),
-('195','TV-02','CV-01','1025','5.19','6.23'),
-('196','TV-02','CV-02','1026','6.18','7.42'),
-('197','TV-02','CV-01','1026','7.19','8.63'),
-('198','TV-02','CV-02','1026','8.09','9.71'),
-('199','TV-01','CV-01','1026','9.02','10.82'),
-('200','TV-01','CV-02','1026','10.90','13.08'),
-('201','TV-01','CV-01','1027','11.19','13.43');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('202','TV-02','CV-02','1027','12.50','15.00'),
-('203','TV-02','CV-01','1027','13.89','16.67'),
-('204','TV-02','CV-02','1027','14.19','17.03'),
-('205','TV-02','CV-01','1027','15.19','18.23'),
-('206','TV-01','CV-02','1027','16.09','19.31'),
-('207','TV-01','CV-01','1027','1.00','1.20'),
-('208','TV-01','CV-02','1028','2.00','2.40'),
-('209','TV-01','CV-03','1028','3.00','3.60');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('210','TV-01','CV-03','1028','4.00','4.80'),
-('211','TV-01','CV-03','1028','5.00','6.00'),
-('212','TV-02','CV-04','1028','6.00','7.20'),
-('213','TV-02','CV-05','1029','7.00','8.40'),
-('214','TV-02','CV-02','1029','1.50','1.80'),
-('215','TV-02','CV-02','1029','3.60','4.32'),
-('216','TV-02','CV-02','1029','1.80','2.16'),
-('217','TV-02','CV-02','1029','1.90','2.28');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('218','TV-01','CV-02','1029','5.30','6.36'),
-('219','TV-01','CV-02','1029','3.60','4.32'),
-('220','TV-01','CV-01','1029','4.32','5.18'),
-('221','TV-01','CV-01','1030','2.40','2.88'),
-('222','TV-01','CV-01','1030','2.88','3.46'),
-('223','TV-01','CV-01','1030','1.20','1.44'),
-('224','TV-01','CV-01','1030','1.44','1.73'),
-('225','TV-01','CV-01','1030','1.72','2.06');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('226','TV-01','CV-01','1031','20.60','24.72'),
-('227','TV-01','CV-02','1031','2.06','2.47'),
-('228','TV-01','CV-01','1031','1.50','1.80'),
-('229','TV-01','CV-02','1031','1.80','2.16'),
-('230','TV-01','CV-01','1031','1.09','1.31'),
-('231','TV-01','CV-02','1031','1.05','1.26'),
-('232','TV-01','CV-01','1032','1.26','1.51'),
-('233','TV-01','CV-02','1032','1.31','1.57');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('234','TV-01','CV-01','1032','1.51','1.81'),
-('235','TV-02','CV-02','1032','2.57','3.08'),
-('236','TV-02','CV-01','1032','3.08','3.70'),
-('237','TV-02','CV-02','1032','7.30','8.76'),
-('238','TV-01','CV-01','1033','1.60','1.92'),
-('239','TV-02','CV-02','1033','2.90','3.48'),
-('240','TV-01','CV-01','1033','4.80','5.76'),
-('241','TV-02','CV-02','1033','1.05','1.26');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('242','TV-01','CV-03','1033','1.07','1.28'),
-('243','TV-02','CV-03','1033','2.08','2.50'),
-('244','TV-01','CV-03','1034','2.09','2.51'),
-('245','TV-02','CV-04','1034','20.70','24.84'),
-('246','TV-01','CV-05','1034','20.60','24.72'),
-('247','TV-02','CV-02','1034','2.06','2.47'),
-('248','TV-01','CV-02','1034','2.08','2.50'),
-('249','TV-02','CV-02','1034','1.06','1.27');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('250','TV-01','CV-02','1034','1.05','1.26'),
-('251','TV-01','CV-02','1035','1.59','1.91'),
-('252','TV-01','CV-02','1036','1.48','1.78'),
-('253','TV-01','CV-01','1037','1.49','1.79'),
-('254','TV-01','CV-01','1038','1.90','2.28'),
-('255','TV-02','CV-01','1039','1.49','1.79'),
-('256','TV-02','CV-01','1040','1.13','1.36'),
-('257','TV-02','CV-01','1041','1.49','1.79'),
-('258','TV-01','CV-01','1042','1.89','2.27');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('259','TV-02','CV-01','1043','1.82','2.18'),
-('260','TV-01','CV-02','1044','1.36','1.63'),
-('261','TV-02','CV-01','1045','1.78','2.14'),
-('262','TV-01','CV-02','1046','1.79','2.15'),
-('263','TV-02','CV-01','1047','1.65','1.98'),
-('264','TV-01','CV-02','1048','1.50','1.80'),
-('265','TV-02','CV-01','1049','1.41','1.69'),
-('266','TV-01','CV-02','1050','1.10','1.32');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('267','TV-02','CV-01','1051','1.15','1.38'),
-('268','TV-01','CV-02','1052','1.38','1.66'),
-('269','TV-02','CV-01','1053','1.66','1.99'),
-('270','TV-01','CV-02','1054','1.99','2.39'),
-('271','TV-01','CV-01','1055','2.39','2.87'),
-('272','TV-01','CV-02','1056','2.87','3.44'),
-('273','TV-01','CV-01','1057','4.40','5.28'),
-('274','TV-01','CV-02','1058','4.60','5.52');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('275','TV-01','CV-03','1059','4.85','5.82'),
-('276','TV-01','CV-03','1060','1.90','2.28'),
-('277','TV-01','CV-03','1061','1.98','2.38'),
-('278','TV-01','CV-04','1062','1.49','1.79'),
-('279','TV-01','CV-05','1063','2.49','2.99'),
-('280','TV-01','CV-01','1064','1.19','1.43'),
-('281','TV-01','CV-01','1065','2.57','3.08'),
-('282','TV-01','CV-01','1066','2.40','2.88');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('283','TV-01','CV-01','1067','3.48','4.18'),
-('284','TV-01','CV-01','1068','0.50','0.60'),
-('285','TV-02','CV-01','1069','0.54','0.65'),
-('286','TV-02','CV-01','1070','0.78','0.94'),
-('287','TV-02','CV-01','1071','0.49','0.59'),
-('288','TV-02','CV-01','1072','1.56','1.87'),
-('289','TV-01','CV-01','1073','1.94','2.33'),
-('290','TV-01','CV-01','1074','0.89','1.07');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('291','TV-01','CV-01','1075','1.06','1.27'),
-('292','TV-02','CV-01','1076','1.08','1.30'),
-('293','TV-02','CV-01','1077','1.59','1.91'),
-('294','TV-02','CV-01','1078','2.59','3.11'),
-('295','TV-02','CV-02','1079','2.20','2.64'),
-('296','TV-01','CV-03','1080','3.19','3.83'),
-('297','TV-01','CV-04','1081','4.20','5.04'),
-('298','TV-01','CV-05','1082','5.19','6.23');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('299','TV-01','CV-02','1083','6.18','7.42'),
-('300','TV-01','CV-01','1084','7.19','8.63'),
-('301','TV-01','CV-02','1085','8.09','9.71'),
-('302','TV-02','CV-03','1086','9.02','10.82'),
-('303','TV-02','CV-03','1087','10.90','13.08'),
-('304','TV-02','CV-03','1088','11.19','13.43'),
-('305','TV-02','CV-04','1089','12.50','15.00'),
-('306','TV-02','CV-05','1090','13.89','16.67');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('307','TV-02','CV-01','1091','14.19','17.03'),
-('308','TV-01','CV-01','1092','15.19','18.23'),
-('309','TV-01','CV-01','1093','16.09','19.31'),
-('310','TV-01','CV-01','1094','1.00','1.20'),
-('311','TV-01','CV-01','1095','2.00','2.40'),
-('312','TV-01','CV-01','1096','3.00','3.60'),
-('313','TV-01','CV-01','1097','4.00','4.80'),
-('314','TV-01','CV-01','1098','5.00','6.00');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('315','TV-01','CV-01','1099','6.00','7.20'),
-('316','TV-01','CV-01','1100','7.00','8.40'),
-('317','TV-01','CV-01','1101','1.50','1.80'),
-('318','TV-01','CV-01','1102','3.60','4.32'),
-('319','TV-01','CV-01','1103','1.80','2.16'),
-('320','TV-01','CV-01','1104','1.90','2.28'),
-('321','TV-01','CV-01','1105','5.30','6.36'),
-('322','TV-01','CV-02','1106','3.60','4.32');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('323','TV-01','CV-03','1107','4.32','5.18'),
-('324','TV-01','CV-04','1108','2.40','2.88'),
-('325','TV-02','CV-05','1109','2.88','3.46'),
-('326','TV-02','CV-02','1110','1.20','1.44'),
-('327','TV-02','CV-01','1111','1.44','1.73'),
-('328','TV-01','CV-02','1112','1.72','2.06'),
-('329','TV-02','CV-03','1113','20.60','24.72'),
-('330','TV-01','CV-03','1114','2.06','2.47');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('331','TV-02','CV-03','1115','1.50','1.80'),
-('332','TV-01','CV-04','1116','1.80','2.16'),
-('333','TV-02','CV-05','1117','1.09','1.31'),
-('334','TV-01','CV-01','1118','1.05','1.26'),
-('335','TV-02','CV-01','1119','1.26','1.51'),
-('336','TV-01','CV-01','1120','1.31','1.57'),
-('337','TV-02','CV-01','1121','1.51','1.81'),
-('338','TV-01','CV-01','1122','2.57','3.08');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('339','TV-02','CV-01','1123','3.08','3.70'),
-('340','TV-01','CV-01','1124','7.30','8.76'),
-('341','TV-01','CV-01','1125','1.60','1.92'),
-('342','TV-01','CV-01','1126','2.90','3.48'),
-('343','TV-01','CV-01','1127','4.80','5.76'),
-('344','TV-01','CV-01','1128','1.05','1.26'),
-('345','TV-02','CV-01','1129','1.07','1.28'),
-('346','TV-02','CV-01','1130','2.08','2.50');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('347','TV-02','CV-01','1131','2.09','2.51'),
-('348','TV-01','CV-01','1132','20.70','24.84'),
-('349','TV-02','CV-02','1133','20.60','24.72'),
-('350','TV-01','CV-03','1134','2.06','2.47'),
-('351','TV-02','CV-04','1135','2.08','2.50'),
-('352','TV-01','CV-05','1136','1.06','1.27'),
-('353','TV-02','CV-02','1137','1.05','1.26'),
-('354','TV-01','CV-02','1138','1.59','1.91');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('355','TV-02','CV-02','1139','1.48','1.78'),
-('356','TV-01','CV-02','1140','1.49','1.79'),
-('357','TV-02','CV-02','1141','1.90','2.28'),
-('358','TV-01','CV-02','1142','1.49','1.79'),
-('359','TV-02','CV-01','1143','1.13','1.36'),
-('360','TV-01','CV-01','1144','1.49','1.79'),
-('361','TV-01','CV-01','1145','1.89','2.27');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('362','TV-01','CV-01','1146','1.82','2.18'),
-('363','TV-01','CV-01','1147','1.36','1.63'),
-('364','TV-01','CV-01','1148','1.78','2.14'),
-('365','TV-01','CV-01','1149','1.79','2.15'),
-('366','TV-01','CV-02','1150','1.65','1.98'),
-('367','TV-01','CV-01','1151','1.50','1.80'),
-('368','TV-01','CV-02','1152','1.41','1.69'),
-('369','TV-01','CV-01','1153','1.10','1.32');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('370','TV-01','CV-02','1154','1.15','1.38'),
-('371','TV-01','CV-01','1155','1.38','1.66'),
-('372','TV-01','CV-02','1156','1.66','1.99'),
-('373','TV-01','CV-01','1157','1.99','2.39'),
-('374','TV-01','CV-02','1158','2.39','2.87'),
-('375','TV-02','CV-01','1159','2.87','3.44'),
-('376','TV-02','CV-02','1160','4.40','5.28');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('377','TV-02','CV-01','1161','4.60','5.52'),
-('378','TV-02','CV-02','1162','4.85','5.82'),
-('379','TV-01','CV-01','1163','1.90','2.28'),
-('380','TV-01','CV-02','1164','1.98','2.38'),
-('381','TV-01','CV-03','1165','1.49','1.79'),
-('382','TV-02','CV-03','1166','2.49','2.99'),
-('383','TV-02','CV-03','1167','1.19','1.43');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('384','TV-02','CV-04','1168','2.57','3.08'),
-('385','TV-02','CV-05','1169','2.40','2.88'),
-('386','TV-01','CV-02','1170','3.48','4.18'),
-('387','TV-01','CV-02','1171','0.50','0.60'),
-('388','TV-01','CV-02','1172','0.54','0.65'),
-('389','TV-01','CV-02','1173','0.78','0.94'),
-('390','TV-01','CV-02','1174','0.49','0.59'),
-('391','TV-01','CV-02','1175','1.56','1.87');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('392','TV-02','CV-01','1176','1.94','2.33'),
-('393','TV-02','CV-01','1177','0.89','1.07'),
-('394','TV-02','CV-01','1178','1.06','1.27'),
-('395','TV-02','CV-01','1179','1.08','1.30'),
-('396','TV-02','CV-01','1180','1.59','1.91'),
-('397','TV-02','CV-01','1181','2.59','3.11'),
-('398','TV-01','CV-01','1182','2.20','2.64'),
-('399','TV-01','CV-02','1183','3.19','3.83');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('400','TV-01','CV-01','1184','4.20','5.04'),
-('401','TV-01','CV-02','1185','5.19','6.23'),
-('402','TV-01','CV-01','1186','6.18','7.42'),
-('403','TV-01','CV-02','1187','7.19','8.63'),
-('404','TV-01','CV-01','1188','8.09','9.71'),
-('405','TV-01','CV-02','1189','9.02','10.82'),
-('406','TV-01','CV-01','1190','10.90','13.08');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('407','TV-01','CV-02','1191','11.19','13.43'),
-('408','TV-01','CV-01','1192','12.50','15.00'),
-('409','TV-01','CV-02','1193','13.89','16.67'),
-('410','TV-01','CV-01','1194','14.19','17.03'),
-('411','TV-01','CV-02','1195','15.19','18.23'),
-('412','TV-01','CV-01','1196','16.09','19.31'),
-('413','TV-01','CV-02','1197','4.13','4.96');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('414','TV-01','CV-03','1198','13.40','16.08'),
-('415','TV-02','CV-03','1199','2.49','2.99'),
-('416','TV-02','CV-03','1200','1.50','1.80'),
-('417','TV-02','CV-04','1201','1.49','1.79'),
-('418','TV-01','CV-05','1202','1.90','2.28'),
-('419','TV-02','CV-02','1203','1.99','2.39'),
-('420','TV-01','CV-02','1204','2.09','2.51');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('421','TV-02','CV-02','1205','0.79','0.95'),
-('422','TV-01','CV-02','1206','0.98','1.18'),
-('423','TV-02','CV-02','1207','0.70','0.84'),
-('424','TV-01','CV-02','1208','1.19','1.43'),
-('425','TV-02','CV-01','1209','1.98','2.38'),
-('426','TV-01','CV-01','1210','1.89','2.27'),
-('427','TV-02','CV-01','1211','8.19','9.83'),
-('428','TV-01','CV-01','1212','0.89','1.07');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('429','TV-02','CV-01','1213','1.45','1.74'),
-('430','TV-01','CV-01','1214','1.05','1.26'),
-('431','TV-01','CV-01','1215','1.50','1.80'),
-('432','TV-01','CV-02','1216','1.98','2.38'),
-('433','TV-01','CV-01','1217','1.89','2.27'),
-('434','TV-01','CV-02','1218','1.89','2.27'),
-('435','TV-02','CV-01','1219','1.98','2.37'),
-('436','TV-02','CV-02','1220','1.40','1.68');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('437','TV-02','CV-01','1221','1.20','1.44'),
-('438','TV-01','CV-02','1222','1.89','2.27'),
-('439','TV-02','CV-01','1223','1.80','2.16'),
-('440','TV-01','CV-02','1224','1.50','1.80'),
-('441','TV-02','CV-01','1225','1.50','1.80'),
-('442','TV-01','CV-02','1226','1.79','2.15'),
-('443','TV-02','CV-01','1227','2.49','2.99'),
-('444','TV-01','CV-02','1228','1.98','2.38');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('445','TV-02','CV-01','1229','1.49','1.79'),
-('446','TV-01','CV-02','1230','2.08','2.50'),
-('447','TV-02','CV-03','1231','3.09','3.70'),
-('448','TV-01','CV-03','1232','5.07','6.08'),
-('449','TV-02','CV-03','1233','5.09','6.11'),
-('450','TV-01','CV-04','1234','2.09','2.51'),
-('451','TV-01','CV-05','1235','3.81','4.57'),
-('452','TV-02','CV-02','1236','4.09','4.91');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('453','TV-01','CV-02','1237','1.08','1.30'),
-('454','TV-01','CV-02','1238','1.48','1.78'),
-('455','TV-02','CV-02','1239','1.78','2.14'),
-('456','TV-01','CV-02','1240','1.90','2.28'),
-('457','TV-02','CV-02','1241','1.09','1.31'),
-('458','TV-01','CV-01','1242','2.90','3.48'),
-('459','TV-02','CV-01','1243','2.79','3.35'),
-('460','TV-01','CV-01','1244','3.80','4.56');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('461','TV-02','CV-01','1245','2.98','3.58'),
-('462','TV-01','CV-01','1246','3.98','4.78'),
-('463','TV-02','CV-01','1247','1.74','2.09'),
-('464','TV-01','CV-01','1248','1.50','1.80'),
-('465','TV-02','CV-02','1249','1.30','1.56'),
-('466','TV-01','CV-01','1250','1.01','1.21'),
-('467','TV-02','CV-02','1251','1.02','1.22');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('468','TV-01','CV-01','1252','1.03','1.24'),
-('469','TV-02','CV-02','1253','1.04','1.25'),
-('470','TV-01','CV-01','1254','1.05','1.26'),
-('471','TV-01','CV-02','1255','1.06','1.27'),
-('472','TV-01','CV-01','1256','1.07','1.28'),
-('473','TV-01','CV-02','1257','1.08','1.30'),
-('474','TV-01','CV-01','1258','1.09','1.31'),
-('475','TV-01','CV-02','1259','1.10','1.32');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('476','TV-01','CV-01','1260','1.00','1.20'),
-('477','TV-01','CV-02','1261','2.00','2.40'),
-('478','TV-01','CV-01','1262','3.00','3.60'),
-('479','TV-01','CV-02','1263','4.00','4.80'),
-('480','TV-01','CV-03','1264','5.00','6.00'),
-('481','TV-01','CV-03','1265','6.00','7.20'),
-('482','TV-01','CV-03','1266','7.00','8.40');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('483','TV-01','CV-04','1267','1.50','1.80'),
-('484','TV-01','CV-05','1268','3.60','4.32'),
-('485','TV-01','CV-01','1269','1.80','2.16'),
-('486','TV-02','CV-01','1270','1.90','2.28'),
-('487','TV-02','CV-01','1271','5.30','6.36'),
-('488','TV-02','CV-01','1272','3.60','4.32'),
-('489','TV-02','CV-01','1273','4.32','5.18'),
-('490','TV-01','CV-01','1274','2.40','2.88');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('491','TV-01','CV-01','1275','2.88','3.46'),
-('492','TV-01','CV-01','1276','1.20','1.44'),
-('493','TV-02','CV-01','1277','1.44','1.73'),
-('494','TV-02','CV-01','1278','1.72','2.06'),
-('495','TV-02','CV-01','1279','20.60','24.72'),
-('496','TV-02','CV-01','1280','2.06','2.47'),
-('497','TV-01','CV-01','1281','1.50','1.80'),
-('498','TV-01','CV-01','1281','1.80','2.16');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('499','TV-01','CV-01','1281','1.09','1.31'),
-('500','TV-01','CV-02','1281','1.05','1.26'),
-('501','TV-01','CV-02','1281','1.26','1.51'),
-('502','TV-01','CV-02','1281','1.31','1.57'),
-('503','TV-02','CV-02','1281','1.51','1.81'),
-('504','TV-02','CV-02','1281','2.57','3.08'),
-('505','TV-02','CV-02','1281','3.08','3.70');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('506','TV-02','CV-01','1282','7.30','8.76'),
-('507','TV-02','CV-01','1282','1.60','1.92'),
-('508','TV-02','CV-01','1282','2.90','3.48'),
-('509','TV-01','CV-01','1282','4.80','5.76'),
-('510','TV-01','CV-01','1282','1.05','1.26'),
-('511','TV-01','CV-01','1282','1.07','1.28'),
-('512','TV-01','CV-01','1282','2.08','2.50'),
-('513','TV-01','CV-02','1282','2.09','2.51');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('514','TV-01','CV-01','1282','20.70','24.84'),
-('515','TV-01','CV-02','1282','20.60','24.72'),
-('516','TV-01','CV-01','1283','2.06','2.47'),
-('517','TV-01','CV-02','1283','2.08','2.50'),
-('518','TV-01','CV-01','1283','1.06','1.27'),
-('519','TV-01','CV-02','1283','1.05','1.26'),
-('520','TV-01','CV-01','1283','1.59','1.91'),
-('521','TV-01','CV-02','1283','1.48','1.78');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('522','TV-01','CV-01','1283','1.49','1.79'),
-('523','TV-01','CV-02','1283','1.90','2.28'),
-('524','TV-01','CV-01','1283','1.49','1.79'),
-('525','TV-01','CV-02','1284','1.13','1.36'),
-('526','TV-02','CV-01','1284','1.49','1.79'),
-('527','TV-02','CV-02','1284','1.89','2.27'),
-('528','TV-02','CV-03','1284','1.82','2.18'),
-('529','TV-01','CV-03','1284','1.36','1.63');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('530','TV-02','CV-03','1284','1.78','2.14'),
-('531','TV-01','CV-04','1284','1.79','2.15'),
-('532','TV-02','CV-05','1284','1.65','1.98'),
-('533','TV-01','CV-02','1284','1.50','1.80'),
-('534','TV-02','CV-02','1284','1.41','1.69'),
-('535','TV-01','CV-02','1284','1.10','1.32'),
-('536','TV-02','CV-02','1284','1.15','1.38'),
-('537','TV-01','CV-02','1285','1.38','1.66');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('538','TV-02','CV-02','1285','1.66','1.99'),
-('539','TV-01','CV-01','1285','1.99','2.39'),
-('540','TV-02','CV-01','1285','2.39','2.87'),
-('541','TV-01','CV-01','1285','2.87','3.44'),
-('542','TV-01','CV-01','1285','4.40','5.28'),
-('543','TV-01','CV-01','1285','4.60','5.52'),
-('544','TV-01','CV-01','1285','4.85','5.82'),
-('545','TV-01','CV-01','1285','1.90','2.28');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('546','TV-02','CV-02','1285','1.98','2.38'),
-('547','TV-02','CV-01','1285','1.49','1.79'),
-('548','TV-02','CV-02','1285','2.49','2.99'),
-('549','TV-01','CV-01','1285','1.19','1.43'),
-('550','TV-02','CV-02','1285','2.57','3.08'),
-('551','TV-01','CV-01','1285','2.40','2.88'),
-('552','TV-02','CV-02','1285','3.48','4.18'),
-('553','TV-01','CV-01','1286','0.50','0.60');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('554','TV-02','CV-02','1286','0.54','0.65'),
-('555','TV-01','CV-01','1286','0.78','0.94'),
-('556','TV-02','CV-02','1286','0.49','0.59'),
-('557','TV-01','CV-01','1286','1.56','1.87'),
-('558','TV-02','CV-02','1286','1.94','2.33'),
-('559','TV-01','CV-01','1287','0.89','1.07'),
-('560','TV-02','CV-02','1287','1.06','1.27'),
-('561','TV-01','CV-03','1287','1.08','1.30');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('562','TV-01','CV-03','1287','1.59','1.91'),
-('563','TV-02','CV-03','1287','2.59','3.11'),
-('564','TV-01','CV-04','1287','2.20','2.64'),
-('565','TV-01','CV-05','1287','3.19','3.83'),
-('566','TV-02','CV-02','1288','4.20','5.04'),
-('567','TV-01','CV-02','1288','5.19','6.23'),
-('568','TV-02','CV-02','1288','6.18','7.42'),
-('569','TV-01','CV-02','1288','7.19','8.63');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('570','TV-02','CV-02','1288','8.09','9.71'),
-('571','TV-01','CV-02','1288','9.02','10.82'),
-('572','TV-02','CV-01','1288','10.90','13.08'),
-('573','TV-01','CV-01','1288','11.19','13.43'),
-('574','TV-02','CV-01','1289','12.50','15.00'),
-('575','TV-01','CV-01','1289','13.89','16.67'),
-('576','TV-02','CV-01','1289','14.19','17.03'),
-('577','TV-01','CV-01','1289','15.19','18.23');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('578','TV-02','CV-01','1289','16.09','19.31'),
-('579','TV-01','CV-02','1289','1.00','1.20'),
-('580','TV-02','CV-01','1289','2.00','2.40'),
-('581','TV-01','CV-02','1290','3.00','3.60'),
-('582','TV-01','CV-01','1290','4.00','4.80'),
-('583','TV-01','CV-02','1290','5.00','6.00'),
-('584','TV-01','CV-01','1290','6.00','7.20');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('585','TV-01','CV-02','1290','7.00','8.40'),
-('586','TV-01','CV-01','1290','1.50','1.80'),
-('587','TV-01','CV-02','1291','3.60','4.32'),
-('588','TV-01','CV-01','1291','1.80','2.16'),
-('589','TV-01','CV-02','1291','1.90','2.28'),
-('590','TV-01','CV-01','1291','5.30','6.36'),
-('591','TV-01','CV-02','1291','3.60','4.32'),
-('592','TV-01','CV-01','1291','4.32','5.18');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('593','TV-01','CV-02','1292','2.40','2.88'),
-('594','TV-01','CV-03','1292','2.88','3.46'),
-('595','TV-01','CV-03','1292','1.20','1.44'),
-('596','TV-01','CV-03','1292','1.44','1.73'),
-('597','TV-02','CV-04','1292','1.72','2.06'),
-('598','TV-02','CV-05','1292','20.60','24.72'),
-('599','TV-02','CV-02','1292','2.06','2.47'),
-('600','TV-02','CV-02','1292','1.50','1.80');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('601','TV-01','CV-02','1292','1.80','2.16'),
-('602','TV-01','CV-02','1293','1.09','1.31'),
-('603','TV-01','CV-02','1293','1.05','1.26'),
-('604','TV-02','CV-02','1293','1.26','1.51'),
-('605','TV-02','CV-01','1293','1.31','1.57'),
-('606','TV-02','CV-01','1293','1.51','1.81'),
-('607','TV-02','CV-01','1294','2.57','3.08'),
-('608','TV-01','CV-01','1294','3.08','3.70');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('609','TV-01','CV-01','1294','7.30','8.76'),
-('610','TV-01','CV-01','1294','1.60','1.92'),
-('611','TV-01','CV-01','1294','2.90','3.48'),
-('612','TV-01','CV-02','1294','4.80','5.76'),
-('613','TV-01','CV-01','1295','1.05','1.26'),
-('614','TV-02','CV-02','1295','1.07','1.28'),
-('615','TV-02','CV-01','1295','2.08','2.50');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('616','TV-02','CV-02','1295','2.09','2.51'),
-('617','TV-02','CV-01','1295','20.70','24.84'),
-('618','TV-02','CV-02','1295','20.60','24.72'),
-('619','TV-02','CV-01','1295','2.06','2.47'),
-('620','TV-01','CV-02','1295','2.08','2.50'),
-('621','TV-01','CV-01','1296','1.06','1.27'),
-('622','TV-01','CV-02','1296','1.05','1.26'),
-('623','TV-01','CV-01','1296','1.59','1.91');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('624','TV-01','CV-02','1296','1.48','1.78'),
-('625','TV-01','CV-01','1296','1.49','1.79'),
-('626','TV-01','CV-02','1296','1.90','2.28'),
-('627','TV-01','CV-03','1296','1.49','1.79'),
-('628','TV-01','CV-03','1296','1.13','1.36'),
-('629','TV-01','CV-03','1297','1.49','1.79'),
-('630','TV-01','CV-04','1297','1.89','2.27'),
-('631','TV-01','CV-05','1297','1.82','2.18');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('632','TV-01','CV-01','1297','1.36','1.63'),
-('633','TV-01','CV-01','1297','1.78','2.14'),
-('634','TV-01','CV-01','1297','1.79','2.15'),
-('635','TV-01','CV-01','1297','1.65','1.98'),
-('636','TV-01','CV-01','1297','1.50','1.80'),
-('637','TV-02','CV-01','1297','1.41','1.69'),
-('638','TV-02','CV-01','1297','1.10','1.32'),
-('639','TV-02','CV-01','1298','1.15','1.38');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('640','TV-01','CV-01','1298','1.38','1.66'),
-('641','TV-02','CV-01','1298','1.66','1.99'),
-('642','TV-01','CV-01','1298','1.99','2.39'),
-('643','TV-02','CV-01','1298','2.39','2.87'),
-('644','TV-01','CV-01','1298','2.87','3.44'),
-('645','TV-02','CV-01','1299','4.40','5.28'),
-('646','TV-01','CV-01','1299','4.60','5.52'),
-('647','TV-02','CV-02','1299','4.85','5.82'),
-('648','TV-01','CV-03','1299','1.90','2.28');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('649','TV-02','CV-04','1299','1.98','2.38'),
-('650','TV-01','CV-05','1299','1.49','1.79'),
-('651','TV-02','CV-02','1299','2.49','2.99'),
-('652','TV-01','CV-01','1299','1.19','1.43'),
-('653','TV-01','CV-02','1299','2.57','3.08'),
-('654','TV-01','CV-03','1300','2.40','2.88'),
-('655','TV-01','CV-03','1300','3.48','4.18'),
-('656','TV-01','CV-03','1300','0.50','0.60'),
-('657','TV-02','CV-04','1300','0.54','0.65');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('658','TV-02','CV-05','1300','0.78','0.94'),
-('659','TV-02','CV-01','1300','0.49','0.59'),
-('660','TV-01','CV-01','1300','1.56','1.87'),
-('661','TV-02','CV-01','1300','1.94','2.33'),
-('662','TV-01','CV-01','1300','0.89','1.07'),
-('663','TV-02','CV-01','1300','1.06','1.27'),
-('664','TV-01','CV-01','1301','1.08','1.30'),
-('665','TV-02','CV-01','1302','1.59','1.91');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('666','TV-01','CV-01','1303','2.59','3.11'),
-('667','TV-02','CV-01','1304','2.20','2.64'),
-('668','TV-01','CV-01','1305','3.19','3.83'),
-('669','TV-02','CV-01','1306','4.20','5.04'),
-('670','TV-01','CV-01','1307','5.19','6.23'),
-('671','TV-02','CV-01','1308','6.18','7.42'),
-('672','TV-01','CV-01','1309','7.19','8.63'),
-('673','TV-01','CV-01','1310','8.09','9.71'),
-('674','TV-02','CV-02','1311','9.02','10.82');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('675','TV-01','CV-03','1312','10.90','13.08'),
-('676','TV-01','CV-04','1313','11.19','13.43'),
-('677','TV-02','CV-05','1314','12.50','15.00'),
-('678','TV-01','CV-02','1315','13.89','16.67'),
-('679','TV-02','CV-01','1316','14.19','17.03'),
-('680','TV-01','CV-02','1317','15.19','18.23'),
-('681','TV-02','CV-03','1318','16.09','19.31'),
-('682','TV-01','CV-03','1319','1.00','1.20');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('683','TV-02','CV-03','1320','2.00','2.40'),
-('684','TV-01','CV-04','1321','3.00','3.60'),
-('685','TV-02','CV-05','1322','4.00','4.80'),
-('686','TV-01','CV-01','1323','5.00','6.00'),
-('687','TV-02','CV-01','1324','6.00','7.20'),
-('688','TV-01','CV-01','1325','7.00','8.40'),
-('689','TV-02','CV-01','1326','1.50','1.80'),
-('690','TV-01','CV-01','1327','3.60','4.32'),
-('691','TV-02','CV-01','1328','1.80','2.16');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('692','TV-01','CV-01','1329','1.90','2.28'),
-('693','TV-01','CV-01','1330','5.30','6.36'),
-('694','TV-01','CV-01','1331','3.60','4.32'),
-('695','TV-01','CV-01','1332','4.32','5.18'),
-('696','TV-01','CV-01','1333','2.40','2.88'),
-('697','TV-01','CV-01','1334','2.88','3.46'),
-('698','TV-01','CV-01','1335','1.20','1.44'),
-('699','TV-01','CV-01','1336','1.44','1.73');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('700','TV-01','CV-01','1337','1.72','2.06'),
-('701','TV-01','CV-02','1338','20.60','24.72'),
-('702','TV-01','CV-03','1339','2.06','2.47'),
-('703','TV-01','CV-04','1340','1.50','1.80'),
-('704','TV-01','CV-05','1341','1.80','2.16'),
-('705','TV-01','CV-02','1342','1.09','1.31'),
-('706','TV-01','CV-02','1343','1.05','1.26'),
-('707','TV-02','CV-02','1344','1.26','1.51');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('708','TV-02','CV-02','1345','1.31','1.57'),
-('709','TV-02','CV-02','1346','1.51','1.81'),
-('710','TV-02','CV-02','1347','2.57','3.08'),
-('711','TV-01','CV-01','1348','3.08','3.70'),
-('712','TV-01','CV-01','1349','7.30','8.76'),
-('713','TV-01','CV-01','1350','1.60','1.92'),
-('714','TV-02','CV-01','1351','2.90','3.48'),
-('715','TV-02','CV-01','1352','4.80','5.76');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('716','TV-02','CV-01','1353','1.05','1.26'),
-('717','TV-02','CV-01','1354','1.07','1.28'),
-('718','TV-01','CV-02','1355','2.08','2.50'),
-('719','TV-01','CV-01','1356','2.09','2.51'),
-('720','TV-01','CV-02','1357','20.70','24.84'),
-('721','TV-01','CV-01','1358','20.60','24.72'),
-('722','TV-01','CV-02','1359','2.06','2.47'),
-('723','TV-01','CV-01','1360','2.08','2.50'),
-('724','TV-02','CV-02','1361','1.06','1.27');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('725','TV-02','CV-01','1362','1.05','1.26'),
-('726','TV-02','CV-02','1363','1.59','1.91'),
-('727','TV-02','CV-01','1364','1.48','1.78'),
-('728','TV-02','CV-02','1365','1.49','1.79'),
-('729','TV-02','CV-01','1366','1.90','2.28'),
-('730','TV-01','CV-02','1367','1.49','1.79'),
-('731','TV-01','CV-01','1368','1.13','1.36'),
-('732','TV-01','CV-02','1369','1.49','1.79');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('733','TV-01','CV-03','1370','1.89','2.27'),
-('734','TV-01','CV-03','1371','1.82','2.18'),
-('735','TV-01','CV-03','1372','1.36','1.63'),
-('736','TV-01','CV-04','1373','1.78','2.14'),
-('737','TV-01','CV-05','1374','1.79','2.15'),
-('738','TV-01','CV-02','1375','1.65','1.98'),
-('739','TV-01','CV-02','1376','1.50','1.80'),
-('740','TV-01','CV-02','1377','1.41','1.69');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('741','TV-01','CV-02','1378','1.10','1.32'),
-('742','TV-01','CV-02','1379','1.15','1.38'),
-('743','TV-01','CV-02','1380','1.38','1.66'),
-('744','TV-01','CV-02','1381','1.66','1.99'),
-('745','TV-01','CV-02','1382','1.99','2.39'),
-('746','TV-01','CV-02','1383','2.39','2.87'),
-('747','TV-02','CV-02','1384','2.87','3.44'),
-('748','TV-02','CV-02','1385','4.40','5.28'),
-('749','TV-02','CV-02','1386','4.60','5.52');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('750','TV-01','CV-01','1387','4.85','5.82'),
-('751','TV-02','CV-01','1388','1.90','2.28'),
-('752','TV-01','CV-01','1389','1.98','2.38'),
-('753','TV-02','CV-01','1390','1.49','1.79'),
-('754','TV-01','CV-01','1391','2.49','2.99'),
-('755','TV-02','CV-01','1392','1.19','1.43'),
-('756','TV-01','CV-01','1393','2.57','3.08'),
-('757','TV-02','CV-02','1394','2.40','2.88'),
-('758','TV-01','CV-01','1395','3.48','4.18');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('759','TV-02','CV-02','1396','0.50','0.60'),
-('760','TV-01','CV-01','1397','0.54','0.65'),
-('761','TV-02','CV-02','1398','0.78','0.94'),
-('762','TV-01','CV-01','1399','0.49','0.59'),
-('763','TV-01','CV-02','1400','1.56','1.87'),
-('764','TV-01','CV-01','1401','1.94','2.33'),
-('765','TV-01','CV-02','1402','0.89','1.07'),
-('766','TV-01','CV-01','1403','1.06','1.27');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('767','TV-02','CV-02','1404','1.08','1.30'),
-('768','TV-02','CV-01','1405','1.59','1.91'),
-('769','TV-02','CV-02','1406','2.59','3.11'),
-('770','TV-01','CV-01','1407','2.20','2.64'),
-('771','TV-02','CV-02','1408','3.19','3.83'),
-('772','TV-01','CV-03','1409','4.20','5.04'),
-('773','TV-02','CV-03','1410','5.19','6.23'),
-('774','TV-01','CV-03','1411','6.18','7.42');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('775','TV-02','CV-04','1412','7.19','8.63'),
-('776','TV-01','CV-05','1413','8.09','9.71'),
-('777','TV-02','CV-02','1414','9.02','10.82'),
-('778','TV-01','CV-02','1415','10.90','13.08'),
-('779','TV-02','CV-02','1416','11.19','13.43'),
-('780','TV-01','CV-02','1417','12.50','15.00'),
-('781','TV-02','CV-02','1418','13.89','16.67'),
-('782','TV-01','CV-02','1419','14.19','17.03');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('783','TV-01','CV-02','1420','15.19','18.23'),
-('784','TV-01','CV-02','1421','16.09','19.31'),
-('785','TV-01','CV-02','1422','1.00','1.20'),
-('786','TV-01','CV-02','1423','2.00','2.40'),
-('787','TV-01','CV-02','1424','3.00','3.60'),
-('788','TV-01','CV-02','1425','4.00','4.80'),
-('789','TV-01','CV-01','1426','5.00','6.00'),
-('790','TV-01','CV-01','1427','6.00','7.20');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('791','TV-01','CV-01','1428','7.00','8.40'),
-('792','TV-01','CV-01','1429','1.50','1.80'),
-('793','TV-01','CV-01','1430','3.60','4.32'),
-('794','TV-01','CV-01','1431','1.80','2.16'),
-('795','TV-01','CV-01','1432','1.90','2.28'),
-('796','TV-01','CV-02','1433','5.30','6.36'),
-('797','TV-02','CV-01','1434','3.60','4.32'),
-('798','TV-02','CV-02','1435','4.32','5.18'),
-('799','TV-02','CV-01','1436','2.40','2.88');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('800','TV-02','CV-02','1437','2.88','3.46'),
-('801','TV-01','CV-01','1438','1.20','1.44'),
-('802','TV-01','CV-02','1439','1.44','1.73'),
-('803','TV-01','CV-01','1440','1.72','2.06'),
-('804','TV-02','CV-02','1441','20.60','24.72'),
-('805','TV-02','CV-01','1442','2.06','2.47'),
-('806','TV-02','CV-02','1443','1.50','1.80'),
-('807','TV-02','CV-01','1444','1.80','2.16');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('808','TV-01','CV-02','1445','1.09','1.31'),
-('809','TV-01','CV-01','1446','1.05','1.26'),
-('810','TV-01','CV-02','1447','1.26','1.51'),
-('811','TV-01','CV-03','1448','1.31','1.57'),
-('812','TV-01','CV-03','1449','1.51','1.81'),
-('813','TV-01','CV-03','1450','2.57','3.08'),
-('814','TV-02','CV-04','1451','3.08','3.70'),
-('815','TV-02','CV-05','1452','7.30','8.76');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('816','TV-02','CV-02','1453','1.60','1.92'),
-('817','TV-02','CV-02','1454','2.90','3.48'),
-('818','TV-02','CV-02','1455','4.80','5.76'),
-('819','TV-02','CV-02','1456','1.05','1.26'),
-('820','TV-01','CV-02','1457','1.07','1.28'),
-('821','TV-01','CV-02','1458','2.08','2.50'),
-('822','TV-01','CV-01','1459','2.09','2.51'),
-('823','TV-01','CV-01','1460','20.70','24.84'),
-('824','TV-01','CV-01','1461','20.60','24.72');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('825','TV-01','CV-01','1462','2.06','2.47'),
-('826','TV-01','CV-01','1463','2.08','2.50'),
-('827','TV-01','CV-01','1464','1.06','1.27'),
-('828','TV-01','CV-01','1465','1.05','1.26'),
-('829','TV-01','CV-02','1466','1.59','1.91'),
-('830','TV-01','CV-01','1467','1.48','1.78'),
-('831','TV-01','CV-02','1468','1.49','1.79');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('832','TV-01','CV-01','1469','1.90','2.28'),
-('833','TV-01','CV-02','1470','1.49','1.79'),
-('834','TV-01','CV-01','1471','1.13','1.36'),
-('835','TV-01','CV-02','1472','1.49','1.79'),
-('836','TV-01','CV-01','1473','1.89','2.27'),
-('837','TV-02','CV-02','1474','1.82','2.18'),
-('838','TV-02','CV-01','1475','1.36','1.63');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('839','TV-02','CV-02','1476','1.78','2.14'),
-('840','TV-01','CV-01','1477','1.79','2.15'),
-('841','TV-02','CV-02','1478','1.65','1.98'),
-('842','TV-01','CV-01','1479','1.50','1.80'),
-('843','TV-02','CV-02','1480','1.41','1.69'),
-('844','TV-01','CV-03','1481','1.10','1.32'),
-('845','TV-02','CV-03','1482','1.15','1.38');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('846','TV-01','CV-03','1483','1.38','1.66'),
-('847','TV-02','CV-04','1484','1.66','1.99'),
-('848','TV-01','CV-05','1485','1.99','2.39'),
-('849','TV-02','CV-02','1486','2.39','2.87'),
-('850','TV-01','CV-02','1487','2.87','3.44'),
-('851','TV-02','CV-02','1488','4.40','5.28'),
-('852','TV-01','CV-02','1489','4.60','5.52'),
-('853','TV-01','CV-02','1490','4.85','5.82');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('854','TV-01','CV-02','1491','1.90','2.28'),
-('855','TV-01','CV-01','1492','1.98','2.38'),
-('856','TV-01','CV-01','1493','1.49','1.79'),
-('857','TV-02','CV-01','1494','2.49','2.99'),
-('858','TV-02','CV-01','1495','1.19','1.43'),
-('859','TV-02','CV-01','1496','2.57','3.08'),
-('860','TV-01','CV-01','1497','2.40','2.88'),
-('861','TV-02','CV-01','1498','3.48','4.18');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('862','TV-01','CV-02','1499','0.50','0.60'),
-('863','TV-02','CV-01','1500','0.54','0.65'),
-('864','TV-01','CV-02','1501','0.78','0.94'),
-('865','TV-02','CV-01','1501','0.49','0.59'),
-('866','TV-01','CV-02','1501','1.56','1.87'),
-('867','TV-02','CV-01','1501','1.94','2.33'),
-('868','TV-01','CV-02','1501','0.89','1.07'),
-('869','TV-02','CV-01','1501','1.06','1.27');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('870','TV-01','CV-02','1501','1.08','1.30'),
-('871','TV-02','CV-01','1501','1.59','1.91'),
-('872','TV-01','CV-02','1501','2.59','3.11'),
-('873','TV-01','CV-01','1502','2.20','2.64'),
-('874','TV-01','CV-02','1502','3.19','3.83'),
-('875','TV-01','CV-01','1502','4.20','5.04'),
-('876','TV-01','CV-02','1502','5.19','6.23'),
-('877','TV-01','CV-03','1502','6.18','7.42'),
-('878','TV-01','CV-03','1502','7.19','8.63');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('879','TV-01','CV-03','1502','8.09','9.71'),
-('880','TV-01','CV-04','1503','9.02','10.82'),
-('881','TV-01','CV-05','1503','10.90','13.08'),
-('882','TV-01','CV-02','1503','11.19','13.43'),
-('883','TV-01','CV-02','1503','12.50','15.00'),
-('884','TV-01','CV-02','1503','13.89','16.67'),
-('885','TV-01','CV-02','1503','14.19','17.03'),
-('886','TV-01','CV-02','1503','15.19','18.23');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('887','TV-02','CV-02','1504','16.09','19.31'),
-('888','TV-02','CV-01','1504','4.13','4.96'),
-('889','TV-02','CV-01','1504','13.40','16.08'),
-('890','TV-02','CV-01','1504','2.49','2.99'),
-('891','TV-01','CV-01','1504','1.50','1.80'),
-('892','TV-01','CV-01','1504','1.49','1.79'),
-('893','TV-01','CV-01','1504','1.90','2.28'),
-('894','TV-02','CV-01','1504','1.99','2.39');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('895','TV-02','CV-02','1505','2.09','2.51'),
-('896','TV-02','CV-01','1505','0.79','0.95'),
-('897','TV-02','CV-02','1505','0.98','1.18'),
-('898','TV-01','CV-01','1505','0.70','0.84'),
-('899','TV-01','CV-02','1505','1.19','1.43'),
-('900','TV-01','CV-01','1505','1.98','2.38'),
-('901','TV-01','CV-02','1505','1.89','2.27'),
-('902','TV-01','CV-01','1505','8.19','9.83'),
-('903','TV-01','CV-02','1505','0.89','1.07');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('904','TV-02','CV-01','1506','1.45','1.74'),
-('905','TV-02','CV-02','1506','1.05','1.26'),
-('906','TV-02','CV-01','1506','1.50','1.80'),
-('907','TV-02','CV-02','1506','1.98','2.38'),
-('908','TV-02','CV-01','1506','1.89','2.27'),
-('909','TV-02','CV-02','1506','1.89','2.27'),
-('910','TV-01','CV-03','1506','1.98','2.37'),
-('911','TV-01','CV-03','1506','1.40','1.68');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('912','TV-01','CV-03','1506','1.20','1.44'),
-('913','TV-01','CV-04','1506','1.89','2.27'),
-('914','TV-01','CV-05','1507','1.80','2.16'),
-('915','TV-01','CV-01','1507','1.50','1.80'),
-('916','TV-01','CV-01','1507','1.50','1.80'),
-('917','TV-01','CV-01','1507','1.79','2.15'),
-('918','TV-01','CV-01','1507','2.49','2.99'),
-('919','TV-01','CV-01','1507','1.98','2.38');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('920','TV-01','CV-01','1507','1.49','1.79'),
-('921','TV-01','CV-01','1507','2.08','2.50'),
-('922','TV-01','CV-01','1507','3.09','3.70'),
-('923','TV-01','CV-01','1507','5.07','6.08'),
-('924','TV-01','CV-01','1508','5.09','6.11'),
-('925','TV-01','CV-01','1508','2.09','2.51'),
-('926','TV-01','CV-01','1508','3.81','4.57'),
-('927','TV-02','CV-01','1508','4.09','4.91');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('928','TV-02','CV-01','1508','1.08','1.30'),
-('929','TV-02','CV-01','1509','1.48','1.78'),
-('930','TV-01','CV-02','1509','1.78','2.14'),
-('931','TV-02','CV-02','1509','1.90','2.28'),
-('932','TV-01','CV-02','1509','1.09','1.31'),
-('933','TV-02','CV-02','1510','2.90','3.48'),
-('934','TV-01','CV-02','1510','2.79','3.35'),
-('935','TV-02','CV-02','1510','3.80','4.56');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('936','TV-01','CV-01','1510','2.98','3.58'),
-('937','TV-02','CV-01','1510','3.98','4.78'),
-('938','TV-01','CV-01','1510','1.74','2.09'),
-('939','TV-02','CV-01','1511','1.50','1.80'),
-('940','TV-01','CV-01','1511','1.30','1.56'),
-('941','TV-02','CV-01','1511','1.01','1.21'),
-('942','TV-01','CV-01','1511','1.02','1.22'),
-('943','TV-01','CV-02','1511','1.03','1.24'),
-('944','TV-01','CV-01','1512','1.04','1.25');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('945','TV-01','CV-02','1512','1.05','1.26'),
-('946','TV-01','CV-01','1512','1.06','1.27'),
-('947','TV-02','CV-02','1512','1.07','1.28'),
-('948','TV-02','CV-01','1512','1.08','1.30'),
-('949','TV-02','CV-02','1513','1.09','1.31'),
-('950','TV-01','CV-01','1513','1.10','1.32'),
-('951','TV-02','CV-02','1513','1.00','1.20'),
-('952','TV-01','CV-01','1513','2.00','2.40'),
-('953','TV-02','CV-02','1513','3.00','3.60');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('954','TV-01','CV-01','1514','4.00','4.80'),
-('955','TV-02','CV-02','1514','5.00','6.00'),
-('956','TV-01','CV-01','1514','6.00','7.20'),
-('957','TV-02','CV-02','1514','7.00','8.40'),
-('958','TV-01','CV-03','1514','1.50','1.80'),
-('959','TV-02','CV-03','1515','3.60','4.32'),
-('960','TV-01','CV-03','1515','1.80','2.16'),
-('961','TV-02','CV-04','1515','1.90','2.28');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('962','TV-01','CV-05','1515','5.30','6.36'),
-('963','TV-01','CV-02','1516','3.60','4.32'),
-('964','TV-01','CV-02','1516','4.32','5.18'),
-('965','TV-01','CV-02','1516','2.40','2.88'),
-('966','TV-01','CV-02','1516','2.88','3.46'),
-('967','TV-01','CV-02','1516','1.20','1.44'),
-('968','TV-01','CV-02','1516','1.44','1.73'),
-('969','TV-01','CV-01','1517','1.72','2.06'),
-('970','TV-01','CV-01','1517','20.60','24.72');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('971','TV-01','CV-01','1517','2.06','2.47'),
-('972','TV-01','CV-01','1517','1.50','1.80'),
-('973','TV-01','CV-01','1517','1.80','2.16'),
-('974','TV-01','CV-01','1518','1.09','1.31'),
-('975','TV-01','CV-01','1518','1.05','1.26'),
-('976','TV-01','CV-02','1518','1.26','1.51'),
-('977','TV-02','CV-01','1518','1.31','1.57'),
-('978','TV-02','CV-02','1519','1.51','1.81'),
-('979','TV-02','CV-01','1519','2.57','3.08');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('980','TV-02','CV-02','1519','3.08','3.70'),
-('981','TV-01','CV-01','1519','7.30','8.76'),
-('982','TV-01','CV-02','1519','1.60','1.92'),
-('983','TV-01','CV-01','1520','2.90','3.48'),
-('984','TV-02','CV-02','1520','4.80','5.76'),
-('985','TV-02','CV-01','1520','1.05','1.26'),
-('986','TV-02','CV-02','1520','1.07','1.28'),
-('987','TV-02','CV-01','1521','2.08','2.50');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('988','TV-01','CV-02','1521','2.09','2.51'),
-('989','TV-01','CV-01','1521','20.70','24.84'),
-('990','TV-01','CV-02','1521','20.60','24.72'),
-('991','TV-01','CV-03','1522','2.06','2.47'),
-('992','TV-01','CV-03','1522','2.08','2.50'),
-('993','TV-01','CV-03','1522','1.06','1.27'),
-('994','TV-02','CV-04','1522','1.05','1.26'),
-('995','TV-02','CV-05','1524','1.59','1.91'),
-('996','TV-02','CV-02','1524','1.48','1.78');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('997','TV-02','CV-02','1524','1.49','1.79'),
-('998','TV-02','CV-02','1524','1.90','2.28'),
-('999','TV-02','CV-02','1525','1.49','1.79'),
-('1000','TV-01','CV-02','1525','1.13','1.36'),
-('1001','TV-01','CV-02','1525','1.49','1.79'),
-('1002','TV-01','CV-01','1525','1.89','2.27'),
-('1003','TV-01','CV-01','1525','1.82','2.18'),
-('1004','TV-01','CV-01','1526','1.36','1.63');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1005','TV-01','CV-01','1526','1.78','2.14'),
-('1006','TV-01','CV-01','1526','1.79','2.15'),
-('1007','TV-01','CV-01','1526','1.65','1.98'),
-('1008','TV-01','CV-01','1527','1.50','1.80'),
-('1009','TV-01','CV-02','1527','1.41','1.69'),
-('1010','TV-01','CV-01','1527','1.10','1.32'),
-('1011','TV-01','CV-02','1527','1.15','1.38'),
-('1012','TV-01','CV-01','1528','1.38','1.66'),
-('1013','TV-01','CV-02','1528','1.66','1.99');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1014','TV-01','CV-01','1528','1.99','2.39'),
-('1015','TV-01','CV-02','1528','2.39','2.87'),
-('1016','TV-01','CV-01','1528','2.87','3.44'),
-('1017','TV-02','CV-02','1529','4.40','5.28'),
-('1018','TV-02','CV-01','1529','4.60','5.52'),
-('1019','TV-02','CV-02','1529','4.85','5.82'),
-('1020','TV-01','CV-01','1529','1.90','2.28'),
-('1021','TV-02','CV-02','1529','1.98','2.38');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1022','TV-01','CV-01','1530','1.49','1.79'),
-('1023','TV-02','CV-02','1530','2.49','2.99'),
-('1024','TV-01','CV-03','1530','1.19','1.43'),
-('1025','TV-02','CV-03','1530','2.57','3.08'),
-('1026','TV-01','CV-03','1531','2.40','2.88'),
-('1027','TV-02','CV-04','1531','3.48','4.18'),
-('1028','TV-01','CV-05','1531','0.50','0.60'),
-('1029','TV-02','CV-02','1531','0.54','0.65');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1030','TV-01','CV-02','1532','0.78','0.94'),
-('1031','TV-02','CV-02','1532','0.49','0.59'),
-('1032','TV-01','CV-02','1532','1.56','1.87'),
-('1033','TV-01','CV-02','1532','1.94','2.33'),
-('1034','TV-01','CV-02','1532','0.89','1.07'),
-('1035','TV-01','CV-01','1533','1.06','1.27'),
-('1036','TV-01','CV-01','1533','1.08','1.30'),
-('1037','TV-02','CV-01','1533','1.59','1.91');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1038','TV-02','CV-01','1533','2.59','3.11'),
-('1039','TV-02','CV-01','1533','2.20','2.64'),
-('1040','TV-01','CV-01','1533','3.19','3.83'),
-('1041','TV-02','CV-01','1534','4.20','5.04'),
-('1042','TV-01','CV-02','1534','5.19','6.23'),
-('1043','TV-02','CV-01','1534','6.18','7.42'),
-('1044','TV-01','CV-02','1534','7.19','8.63'),
-('1045','TV-02','CV-01','1534','8.09','9.71');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1046','TV-01','CV-02','1535','9.02','10.82'),
-('1047','TV-02','CV-01','1535','10.90','13.08'),
-('1048','TV-01','CV-02','1535','11.19','13.43'),
-('1049','TV-02','CV-01','1535','12.50','15.00'),
-('1050','TV-01','CV-02','1535','13.89','16.67'),
-('1051','TV-02','CV-01','1536','14.19','17.03'),
-('1052','TV-01','CV-02','1536','15.19','18.23'),
-('1053','TV-01','CV-01','1536','16.09','19.31');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1054','TV-01','CV-02','1536','1.00','1.20'),
-('1055','TV-01','CV-01','1536','2.00','2.40'),
-('1056','TV-01','CV-02','1537','3.00','3.60'),
-('1057','TV-01','CV-03','1537','4.00','4.80'),
-('1058','TV-01','CV-03','1537','5.00','6.00'),
-('1059','TV-01','CV-03','1537','6.00','7.20'),
-('1060','TV-01','CV-04','1538','7.00','8.40'),
-('1061','TV-01','CV-05','1538','1.50','1.80');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1062','TV-01','CV-01','1538','3.60','4.32'),
-('1063','TV-01','CV-01','1538','1.80','2.16'),
-('1064','TV-01','CV-01','1539','1.90','2.28'),
-('1065','TV-01','CV-01','1539','5.30','6.36'),
-('1066','TV-01','CV-01','1539','3.60','4.32'),
-('1067','TV-02','CV-01','1539','4.32','5.18'),
-('1068','TV-02','CV-01','1539','2.40','2.88');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1069','TV-02','CV-01','1539','2.88','3.46'),
-('1070','TV-02','CV-01','1539','1.20','1.44'),
-('1071','TV-01','CV-01','1540','1.44','1.73'),
-('1072','TV-01','CV-01','1540','1.72','2.06'),
-('1073','TV-01','CV-01','1540','20.60','24.72'),
-('1074','TV-02','CV-01','1540','2.06','2.47'),
-('1075','TV-02','CV-01','1540','1.50','1.80');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1076','TV-02','CV-01','1541','1.80','2.16'),
-('1077','TV-02','CV-02','1541','1.09','1.31'),
-('1078','TV-01','CV-03','1541','1.05','1.26'),
-('1079','TV-01','CV-04','1541','1.26','1.51'),
-('1080','TV-01','CV-05','1541','1.31','1.57'),
-('1081','TV-01','CV-02','1542','1.51','1.81'),
-('1082','TV-01','CV-01','1542','2.57','3.08');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1083','TV-01','CV-02','1542','3.08','3.70'),
-('1084','TV-02','CV-03','1542','7.30','8.76'),
-('1085','TV-02','CV-03','1542','1.60','1.92'),
-('1086','TV-02','CV-03','1542','2.90','3.48'),
-('1087','TV-02','CV-04','1543','4.80','5.76'),
-('1088','TV-02','CV-05','1543','1.05','1.26'),
-('1089','TV-02','CV-01','1543','1.07','1.28'),
-('1090','TV-01','CV-01','1543','2.08','2.50');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1091','TV-01','CV-01','1543','2.09','2.51'),
-('1092','TV-01','CV-01','1544','20.70','24.84'),
-('1093','TV-01','CV-01','1544','20.60','24.72'),
-('1094','TV-01','CV-01','1544','2.06','2.47'),
-('1095','TV-01','CV-01','1545','2.08','2.50'),
-('1096','TV-01','CV-01','1545','1.06','1.27'),
-('1097','TV-01','CV-01','1545','1.05','1.26'),
-('1098','TV-01','CV-01','1546','1.59','1.91');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1099','TV-01','CV-01','1546','1.48','1.78'),
-('1100','TV-01','CV-01','1546','1.49','1.79'),
-('1101','TV-01','CV-01','1547','1.90','2.28'),
-('1102','TV-01','CV-01','1547','1.49','1.79'),
-('1103','TV-01','CV-01','1547','1.13','1.36'),
-('1104','TV-01','CV-02','1548','1.49','1.79'),
-('1105','TV-01','CV-03','1548','1.89','2.27'),
-('1106','TV-01','CV-04','1548','1.82','2.18');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1107','TV-02','CV-05','1549','1.36','1.63'),
-('1108','TV-02','CV-02','1549','1.78','2.14'),
-('1109','TV-02','CV-01','1549','1.79','2.15'),
-('1110','TV-01','CV-02','1549','1.65','1.98'),
-('1111','TV-02','CV-03','1550','1.50','1.80'),
-('1112','TV-01','CV-03','1550','1.41','1.69'),
-('1113','TV-02','CV-03','1550','1.10','1.32');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1114','TV-01','CV-04','1551','1.15','1.38'),
-('1115','TV-02','CV-05','1551','1.38','1.66'),
-('1116','TV-01','CV-01','1551','1.66','1.99'),
-('1117','TV-02','CV-01','1552','1.99','2.39'),
-('1118','TV-01','CV-01','1552','2.39','2.87'),
-('1119','TV-02','CV-01','1552','2.87','3.44'),
-('1120','TV-01','CV-01','1553','4.40','5.28'),
-('1121','TV-02','CV-01','1553','4.60','5.52');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1122','TV-01','CV-01','1553','4.85','5.82'),
-('1123','TV-01','CV-01','1553','1.90','2.28'),
-('1124','TV-01','CV-01','1554','1.98','2.38'),
-('1125','TV-01','CV-01','1554','1.49','1.79'),
-('1126','TV-01','CV-01','1554','2.49','2.99'),
-('1127','TV-02','CV-01','1555','1.19','1.43'),
-('1128','TV-02','CV-01','1555','2.57','3.08'),
-('1129','TV-02','CV-01','1555','2.40','2.88');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1130','TV-01','CV-01','1556','3.48','4.18'),
-('1131','TV-02','CV-02','1556','0.50','0.60'),
-('1132','TV-01','CV-03','1556','0.54','0.65'),
-('1133','TV-02','CV-04','1557','0.78','0.94'),
-('1134','TV-01','CV-05','1557','0.49','0.59'),
-('1135','TV-02','CV-02','1557','1.56','1.87'),
-('1136','TV-01','CV-02','1557','1.94','2.33'),
-('1137','TV-02','CV-02','1558','0.89','1.07');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1138','TV-01','CV-02','1558','1.06','1.27'),
-('1139','TV-02','CV-02','1558','1.08','1.30'),
-('1140','TV-01','CV-02','1558','1.59','1.91'),
-('1141','TV-02','CV-01','1559','2.59','3.11'),
-('1142','TV-01','CV-01','1559','2.20','2.64'),
-('1143','TV-01','CV-01','1559','3.19','3.83'),
-('1144','TV-02','CV-01','1560','4.20','5.04');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1145','TV-01','CV-01','1560','5.19','6.23'),
-('1146','TV-01','CV-01','1560','6.18','7.42'),
-('1147','TV-02','CV-01','1560','7.19','8.63'),
-('1148','TV-01','CV-02','1560','8.09','9.71'),
-('1149','TV-02','CV-01','1561','9.02','10.82'),
-('1150','TV-01','CV-02','1561','10.90','13.08'),
-('1151','TV-02','CV-01','1561','11.19','13.43'),
-('1152','TV-01','CV-02','1561','12.50','15.00');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1153','TV-02','CV-01','1561','13.89','16.67'),
-('1154','TV-01','CV-02','1562','14.19','17.03'),
-('1155','TV-02','CV-01','1562','15.19','18.23'),
-('1156','TV-01','CV-02','1562','16.09','19.31'),
-('1157','TV-02','CV-01','1562','1.00','1.20'),
-('1158','TV-01','CV-02','1562','2.00','2.40'),
-('1159','TV-02','CV-01','1563','3.00','3.60'),
-('1160','TV-01','CV-02','1563','4.00','4.80');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1161','TV-02','CV-01','1563','5.00','6.00'),
-('1162','TV-01','CV-02','1564','6.00','7.20'),
-('1163','TV-01','CV-03','1564','7.00','8.40'),
-('1164','TV-01','CV-03','1564','1.50','1.80'),
-('1165','TV-01','CV-03','1565','3.60','4.32'),
-('1166','TV-01','CV-04','1565','1.80','2.16'),
-('1167','TV-01','CV-05','1565','1.90','2.28'),
-('1168','TV-01','CV-02','1566','5.30','6.36');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1169','TV-01','CV-02','1566','3.60','4.32'),
-('1170','TV-01','CV-02','1566','4.32','5.18'),
-('1171','TV-01','CV-02','1567','2.40','2.88'),
-('1172','TV-01','CV-02','1567','2.88','3.46'),
-('1173','TV-01','CV-02','1567','1.20','1.44'),
-('1174','TV-01','CV-01','1568','1.44','1.73'),
-('1175','TV-01','CV-01','1568','1.72','2.06');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1176','TV-01','CV-01','1568','20.60','24.72'),
-('1177','TV-01','CV-01','1569','2.06','2.47'),
-('1178','TV-02','CV-01','1569','1.50','1.80'),
-('1179','TV-02','CV-01','1569','1.80','2.16'),
-('1180','TV-02','CV-01','1570','1.09','1.31'),
-('1181','TV-02','CV-02','1570','1.05','1.26'),
-('1182','TV-01','CV-01','1570','1.26','1.51'),
-('1183','TV-01','CV-02','1571','1.31','1.57');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1184','TV-01','CV-01','1571','1.51','1.81'),
-('1185','TV-02','CV-02','1572','2.57','3.08'),
-('1186','TV-02','CV-01','1572','3.08','3.70'),
-('1187','TV-02','CV-02','1573','7.30','8.76'),
-('1188','TV-02','CV-01','1573','1.60','1.92'),
-('1189','TV-01','CV-02','1574','2.90','3.48'),
-('1190','TV-01','CV-01','1574','4.80','5.76'),
-('1191','TV-01','CV-02','1575','1.05','1.26');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1192','TV-01','CV-01','1575','1.07','1.28'),
-('1193','TV-01','CV-02','1576','2.08','2.50'),
-('1194','TV-01','CV-01','1576','2.09','2.51'),
-('1195','TV-02','CV-02','1577','20.70','24.84'),
-('1196','TV-02','CV-03','1577','20.60','24.72'),
-('1197','TV-02','CV-03','1578','2.06','2.47'),
-('1198','TV-02','CV-03','1578','2.08','2.50'),
-('1199','TV-02','CV-04','1579','1.06','1.27'),
-('1200','TV-02','CV-05','1579','1.05','1.26');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1201','TV-01','CV-02','1580','1.59','1.91'),
-('1202','TV-01','CV-02','1580','1.48','1.78'),
-('1203','TV-01','CV-02','1581','1.49','1.79'),
-('1204','TV-01','CV-02','1581','1.90','2.28'),
-('1205','TV-01','CV-02','1582','1.49','1.79'),
-('1206','TV-01','CV-02','1582','1.13','1.36'),
-('1207','TV-01','CV-01','1583','1.49','1.79'),
-('1208','TV-01','CV-01','1583','1.89','2.27'),
-('1209','TV-01','CV-01','1583','1.82','2.18');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1210','TV-01','CV-01','1584','1.36','1.63'),
-('1211','TV-01','CV-01','1584','1.78','2.14'),
-('1212','TV-01','CV-01','1584','1.79','2.15'),
-('1213','TV-01','CV-01','1585','1.65','1.98'),
-('1214','TV-01','CV-02','1585','1.50','1.80'),
-('1215','TV-01','CV-01','1585','1.41','1.69'),
-('1216','TV-01','CV-02','1586','1.10','1.32'),
-('1217','TV-01','CV-01','1586','1.15','1.38');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1218','TV-02','CV-02','1586','1.38','1.66'),
-('1219','TV-02','CV-01','1587','1.66','1.99'),
-('1220','TV-02','CV-02','1587','1.99','2.39'),
-('1221','TV-01','CV-01','1587','2.39','2.87'),
-('1222','TV-02','CV-02','1588','2.87','3.44'),
-('1223','TV-01','CV-01','1588','4.40','5.28'),
-('1224','TV-02','CV-02','1588','4.60','5.52'),
-('1225','TV-01','CV-01','1589','4.85','5.82');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1226','TV-02','CV-02','1589','1.90','2.28'),
-('1227','TV-01','CV-01','1589','1.98','2.38'),
-('1228','TV-02','CV-02','1590','1.49','1.79'),
-('1229','TV-01','CV-03','1590','2.49','2.99'),
-('1230','TV-02','CV-03','1590','1.19','1.43'),
-('1231','TV-01','CV-03','1591','2.57','3.08'),
-('1232','TV-02','CV-04','1591','2.40','2.88'),
-('1233','TV-01','CV-05','1591','3.48','4.18');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1234','TV-01','CV-02','1592','0.50','0.60'),
-('1235','TV-01','CV-02','1592','0.54','0.65'),
-('1236','TV-01','CV-02','1592','0.78','0.94'),
-('1237','TV-01','CV-02','1593','0.49','0.59'),
-('1238','TV-02','CV-02','1593','1.56','1.87'),
-('1239','TV-02','CV-02','1593','1.94','2.33'),
-('1240','TV-02','CV-01','1594','0.89','1.07');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1241','TV-01','CV-01','1594','1.06','1.27'),
-('1242','TV-02','CV-01','1594','1.08','1.30'),
-('1243','TV-01','CV-01','1595','1.59','1.91'),
-('1244','TV-02','CV-01','1595','2.59','3.11'),
-('1245','TV-01','CV-01','1595','2.20','2.64'),
-('1246','TV-02','CV-01','1596','3.19','3.83'),
-('1247','TV-01','CV-02','1596','4.20','5.04');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1248','TV-02','CV-01','1596','5.19','6.23'),
-('1249','TV-01','CV-02','1597','6.18','7.42'),
-('1250','TV-02','CV-01','1597','7.19','8.63'),
-('1251','TV-01','CV-02','1597','8.09','9.71'),
-('1252','TV-02','CV-01','1598','9.02','10.82'),
-('1253','TV-01','CV-02','1598','10.90','13.08'),
-('1254','TV-01','CV-01','1598','11.19','13.43');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1255','TV-02','CV-02','1599','12.50','15.00'),
-('1256','TV-01','CV-01','1599','13.89','16.67'),
-('1257','TV-01','CV-02','1599','14.19','17.03'),
-('1258','TV-02','CV-01','1600','15.19','18.23'),
-('1259','TV-01','CV-02','1600','16.09','19.31'),
-('1260','TV-02','CV-01','1600','1.00','1.20'),
-('1261','TV-01','CV-02','1600','2.00','2.40'),
-('1262','TV-02','CV-03','1601','3.00','3.60');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1263','TV-01','CV-03','1602','4.00','4.80'),
-('1264','TV-02','CV-03','1603','5.00','6.00'),
-('1265','TV-01','CV-04','1604','6.00','7.20'),
-('1266','TV-02','CV-05','1605','7.00','8.40'),
-('1267','TV-01','CV-01','1606','1.50','1.80'),
-('1268','TV-02','CV-01','1607','3.60','4.32'),
-('1269','TV-01','CV-01','1608','1.80','2.16'),
-('1270','TV-02','CV-01','1609','1.90','2.28');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1271','TV-01','CV-01','1610','5.30','6.36'),
-('1272','TV-02','CV-01','1611','3.60','4.32'),
-('1273','TV-01','CV-01','1612','4.32','5.18'),
-('1274','TV-01','CV-01','1613','2.40','2.88'),
-('1275','TV-01','CV-01','1614','2.88','3.46'),
-('1276','TV-01','CV-01','1615','1.20','1.44'),
-('1277','TV-01','CV-01','1616','1.44','1.73'),
-('1278','TV-01','CV-01','1617','1.72','2.06');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1279','TV-01','CV-01','1618','20.60','24.72'),
-('1280','TV-01','CV-01','1619','2.06','2.47'),
-('1281','TV-01','CV-01','1620','1.50','1.80'),
-('1282','TV-01','CV-02','1621','1.80','2.16'),
-('1283','TV-01','CV-02','1622','1.09','1.31'),
-('1284','TV-01','CV-02','1623','1.05','1.26'),
-('1285','TV-01','CV-02','1624','1.26','1.51'),
-('1286','TV-01','CV-02','1625','1.31','1.57');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1287','TV-01','CV-02','1626','1.51','1.81'),
-('1288','TV-01','CV-01','1627','2.57','3.08'),
-('1289','TV-02','CV-01','1628','3.08','3.70'),
-('1290','TV-02','CV-01','1629','7.30','8.76'),
-('1291','TV-02','CV-01','1630','1.60','1.92'),
-('1292','TV-02','CV-01','1631','2.90','3.48'),
-('1293','TV-01','CV-01','1632','4.80','5.76'),
-('1294','TV-01','CV-01','1633','1.05','1.26');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1295','TV-01','CV-02','1634','1.07','1.28'),
-('1296','TV-02','CV-01','1635','2.08','2.50'),
-('1297','TV-02','CV-02','1636','2.09','2.51'),
-('1298','TV-02','CV-01','1637','20.70','24.84'),
-('1299','TV-02','CV-02','1638','20.60','24.72'),
-('1300','TV-01','CV-01','1639','2.06','2.47'),
-('1301','TV-01','CV-02','1640','2.08','2.50'),
-('1302','TV-01','CV-01','1641','1.06','1.27');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1303','TV-01','CV-02','1642','1.05','1.26'),
-('1304','TV-01','CV-01','1643','1.59','1.91'),
-('1305','TV-01','CV-02','1644','1.48','1.78'),
-('1306','TV-02','CV-01','1645','1.49','1.79'),
-('1307','TV-02','CV-02','1646','1.90','2.28'),
-('1308','TV-02','CV-01','1647','1.49','1.79'),
-('1309','TV-02','CV-02','1648','1.13','1.36');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1310','TV-02','CV-03','1649','1.49','1.79'),
-('1311','TV-02','CV-03','1650','1.89','2.27'),
-('1312','TV-01','CV-03','1651','1.82','2.18'),
-('1313','TV-01','CV-04','1652','1.36','1.63'),
-('1314','TV-01','CV-05','1653','1.78','2.14'),
-('1315','TV-01','CV-02','1654','1.79','2.15'),
-('1316','TV-01','CV-02','1655','1.65','1.98'),
-('1317','TV-01','CV-02','1656','1.50','1.80');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1318','TV-01','CV-02','1657','1.41','1.69'),
-('1319','TV-01','CV-02','1658','1.10','1.32'),
-('1320','TV-01','CV-02','1659','1.15','1.38'),
-('1321','TV-01','CV-01','1660','1.38','1.66'),
-('1322','TV-01','CV-01','1661','1.66','1.99'),
-('1323','TV-01','CV-01','1662','1.99','2.39'),
-('1324','TV-01','CV-01','1663','2.39','2.87'),
-('1325','TV-01','CV-01','1664','2.87','3.44');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1326','TV-01','CV-01','1665','4.40','5.28'),
-('1327','TV-01','CV-01','1666','4.60','5.52'),
-('1328','TV-01','CV-02','1667','4.85','5.82'),
-('1329','TV-02','CV-01','1668','1.90','2.28'),
-('1330','TV-02','CV-02','1669','1.98','2.38'),
-('1331','TV-02','CV-01','1670','1.49','1.79'),
-('1332','TV-01','CV-02','1671','2.49','2.99'),
-('1333','TV-02','CV-01','1672','1.19','1.43');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1334','TV-01','CV-02','1673','2.57','3.08'),
-('1335','TV-02','CV-01','1674','2.40','2.88'),
-('1336','TV-01','CV-02','1675','3.48','4.18'),
-('1337','TV-02','CV-01','1676','0.50','0.60'),
-('1338','TV-01','CV-02','1677','0.54','0.65'),
-('1339','TV-02','CV-01','1678','0.78','0.94'),
-('1340','TV-01','CV-02','1679','0.49','0.59');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1341','TV-02','CV-01','1680','1.56','1.87'),
-('1342','TV-01','CV-02','1681','1.94','2.33'),
-('1343','TV-02','CV-03','1682','0.89','1.07'),
-('1344','TV-01','CV-03','1683','1.06','1.27'),
-('1345','TV-01','CV-03','1684','1.08','1.30'),
-('1346','TV-01','CV-04','1685','1.59','1.91'),
-('1347','TV-01','CV-05','1686','2.59','3.11'),
-('1348','TV-01','CV-02','1687','2.20','2.64');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1349','TV-02','CV-02','1688','3.19','3.83'),
-('1350','TV-02','CV-02','1689','4.20','5.04'),
-('1351','TV-02','CV-02','1690','5.19','6.23'),
-('1352','TV-01','CV-02','1691','6.18','7.42'),
-('1353','TV-02','CV-02','1692','7.19','8.63'),
-('1354','TV-01','CV-01','1693','8.09','9.71'),
-('1355','TV-02','CV-01','1694','9.02','10.82');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1356','TV-01','CV-01','1695','10.90','13.08'),
-('1357','TV-02','CV-01','1696','11.19','13.43'),
-('1358','TV-01','CV-01','1697','12.50','15.00'),
-('1359','TV-02','CV-01','1698','13.89','16.67'),
-('1360','TV-01','CV-01','1699','14.19','17.03'),
-('1361','TV-02','CV-02','1700','15.19','18.23'),
-('1362','TV-01','CV-01','1701','16.09','19.31'),
-('1363','TV-02','CV-02','1702','4.13','4.96');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1364','TV-01','CV-01','1703','13.40','16.08'),
-('1365','TV-01','CV-02','1704','2.49','2.99'),
-('1366','TV-02','CV-01','1705','1.50','1.80'),
-('1367','TV-01','CV-02','1706','1.49','1.79'),
-('1368','TV-01','CV-01','1707','1.90','2.28'),
-('1369','TV-02','CV-02','1708','1.99','2.39'),
-('1370','TV-01','CV-01','1709','2.09','2.51'),
-('1371','TV-02','CV-02','1710','0.79','0.95');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1372','TV-01','CV-01','1711','0.98','1.18'),
-('1373','TV-02','CV-02','1712','0.70','0.84'),
-('1374','TV-01','CV-01','1713','1.19','1.43'),
-('1375','TV-02','CV-02','1714','1.98','2.38'),
-('1376','TV-01','CV-03','1715','1.89','2.27'),
-('1377','TV-02','CV-03','1716','8.19','9.83'),
-('1378','TV-01','CV-03','1717','0.89','1.07'),
-('1379','TV-02','CV-04','1718','1.45','1.74');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1380','TV-01','CV-05','1719','1.05','1.26'),
-('1381','TV-02','CV-02','1720','1.50','1.80'),
-('1382','TV-01','CV-02','1721','1.98','2.38'),
-('1383','TV-02','CV-02','1722','1.89','2.27'),
-('1384','TV-01','CV-02','1723','1.89','2.27'),
-('1385','TV-01','CV-02','1724','1.98','2.37'),
-('1386','TV-01','CV-02','1725','1.40','1.68'),
-('1387','TV-01','CV-01','1726','1.20','1.44');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1388','TV-01','CV-01','1727','1.89','2.27'),
-('1389','TV-01','CV-01','1728','1.80','2.16'),
-('1390','TV-01','CV-01','1729','1.50','1.80'),
-('1391','TV-01','CV-01','1730','1.50','1.80'),
-('1392','TV-01','CV-01','1731','1.79','2.15'),
-('1393','TV-01','CV-01','1732','2.49','2.99'),
-('1394','TV-01','CV-02','1733','1.98','2.38'),
-('1395','TV-01','CV-01','1734','1.49','1.79');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1396','TV-01','CV-02','1735','2.08','2.50'),
-('1397','TV-01','CV-01','1736','3.09','3.70'),
-('1398','TV-01','CV-02','1737','5.07','6.08'),
-('1399','TV-02','CV-01','1738','5.09','6.11'),
-('1400','TV-02','CV-02','1739','2.09','2.51'),
-('1401','TV-02','CV-01','1740','3.81','4.57'),
-('1402','TV-02','CV-02','1741','4.09','4.91'),
-('1403','TV-01','CV-01','1742','1.08','1.30');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1404','TV-01','CV-02','1743','1.48','1.78'),
-('1405','TV-01','CV-01','1744','1.78','2.14'),
-('1406','TV-02','CV-02','1745','1.90','2.28'),
-('1407','TV-02','CV-01','1746','1.09','1.31'),
-('1408','TV-02','CV-02','1747','2.90','3.48'),
-('1409','TV-02','CV-03','1748','2.79','3.35'),
-('1410','TV-01','CV-03','1749','3.80','4.56'),
-('1411','TV-01','CV-03','1750','2.98','3.58'),
-('1412','TV-01','CV-04','1751','3.98','4.78');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1413','TV-01','CV-05','1752','1.74','2.09'),
-('1414','TV-01','CV-01','1753','1.50','1.80'),
-('1415','TV-01','CV-01','1754','1.30','1.56'),
-('1416','TV-02','CV-01','1755','1.01','1.21'),
-('1417','TV-02','CV-01','1756','1.02','1.22'),
-('1418','TV-02','CV-01','1757','1.03','1.24'),
-('1419','TV-02','CV-01','1758','1.04','1.25'),
-('1420','TV-02','CV-01','1759','1.05','1.26'),
-('1421','TV-02','CV-01','1760','1.06','1.27');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1422','TV-01','CV-01','1761','1.07','1.28'),
-('1423','TV-01','CV-01','1762','1.08','1.30'),
-('1424','TV-01','CV-01','1763','1.09','1.31'),
-('1425','TV-01','CV-01','1764','1.10','1.32'),
-('1426','TV-01','CV-01','1765','1.00','1.20'),
-('1427','TV-01','CV-01','1766','2.00','2.40'),
-('1428','TV-01','CV-01','1767','3.00','3.60'),
-('1429','TV-01','CV-02','1768','4.00','4.80'),
-('1430','TV-01','CV-03','1769','5.00','6.00');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1431','TV-01','CV-04','1770','6.00','7.20'),
-('1432','TV-01','CV-05','1771','7.00','8.40'),
-('1433','TV-01','CV-02','1772','1.50','1.80'),
-('1434','TV-01','CV-01','1773','3.60','4.32'),
-('1435','TV-01','CV-02','1774','1.80','2.16'),
-('1436','TV-01','CV-03','1775','1.90','2.28'),
-('1437','TV-01','CV-03','1776','5.30','6.36'),
-('1438','TV-01','CV-03','1777','3.60','4.32');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1439','TV-02','CV-04','1778','4.32','5.18'),
-('1440','TV-02','CV-05','1779','2.40','2.88'),
-('1441','TV-02','CV-01','1780','2.88','3.46'),
-('1442','TV-01','CV-01','1781','1.20','1.44'),
-('1443','TV-02','CV-01','1782','1.44','1.73'),
-('1444','TV-01','CV-01','1783','1.72','2.06'),
-('1445','TV-02','CV-01','1784','20.60','24.72'),
-('1446','TV-01','CV-01','1785','2.06','2.47');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1447','TV-02','CV-01','1786','1.50','1.80'),
-('1448','TV-01','CV-01','1787','1.80','2.16'),
-('1449','TV-02','CV-01','1788','1.09','1.31'),
-('1450','TV-01','CV-01','1789','1.05','1.26'),
-('1451','TV-02','CV-01','1790','1.26','1.51'),
-('1452','TV-01','CV-01','1791','1.31','1.57'),
-('1453','TV-02','CV-01','1792','1.51','1.81'),
-('1454','TV-01','CV-01','1793','2.57','3.08');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1455','TV-01','CV-01','1794','3.08','3.70'),
-('1456','TV-01','CV-02','1795','7.30','8.76'),
-('1457','TV-01','CV-03','1796','1.60','1.92'),
-('1458','TV-01','CV-04','1797','2.90','3.48'),
-('1459','TV-02','CV-05','1798','4.80','5.76'),
-('1460','TV-02','CV-02','1799','1.05','1.26'),
-('1461','TV-02','CV-01','1800','1.07','1.28'),
-('1462','TV-01','CV-02','1801','2.08','2.50');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1463','TV-02','CV-03','1801','2.09','2.51'),
-('1464','TV-01','CV-03','1801','20.70','24.84'),
-('1465','TV-02','CV-03','1801','20.60','24.72'),
-('1466','TV-01','CV-04','1801','2.06','2.47'),
-('1467','TV-02','CV-05','1801','2.08','2.50'),
-('1468','TV-01','CV-01','1801','1.06','1.27'),
-('1469','TV-02','CV-01','1801','1.05','1.26'),
-('1470','TV-01','CV-01','1801','1.59','1.91');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1471','TV-02','CV-01','1802','1.48','1.78'),
-('1472','TV-01','CV-01','1802','1.49','1.79'),
-('1473','TV-02','CV-01','1802','1.90','2.28'),
-('1474','TV-01','CV-01','1802','1.49','1.79'),
-('1475','TV-01','CV-01','1802','1.13','1.36'),
-('1476','TV-01','CV-01','1802','1.49','1.79'),
-('1477','TV-01','CV-01','1802','1.89','2.27'),
-('1478','TV-01','CV-01','1803','1.82','2.18');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1479','TV-01','CV-01','1803','1.36','1.63'),
-('1480','TV-01','CV-01','1803','1.78','2.14'),
-('1481','TV-01','CV-01','1803','1.79','2.15'),
-('1482','TV-01','CV-01','1803','1.65','1.98'),
-('1483','TV-01','CV-02','1803','1.50','1.80'),
-('1484','TV-01','CV-03','1803','1.41','1.69'),
-('1485','TV-01','CV-04','1804','1.10','1.32'),
-('1486','TV-01','CV-05','1804','1.15','1.38');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1487','TV-01','CV-02','1804','1.38','1.66'),
-('1488','TV-01','CV-02','1804','1.66','1.99'),
-('1489','TV-02','CV-02','1804','1.99','2.39'),
-('1490','TV-02','CV-02','1804','2.39','2.87'),
-('1491','TV-02','CV-02','1804','2.87','3.44'),
-('1492','TV-02','CV-02','1804','4.40','5.28'),
-('1493','TV-01','CV-01','1805','4.60','5.52');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1494','TV-01','CV-01','1805','4.85','5.82'),
-('1495','TV-01','CV-01','1805','1.90','2.28'),
-('1496','TV-02','CV-01','1805','1.98','2.38'),
-('1497','TV-02','CV-01','1805','1.49','1.79'),
-('1498','TV-02','CV-01','1805','2.49','2.99'),
-('1499','TV-02','CV-01','1805','1.19','1.43'),
-('1500','TV-01','CV-02','1805','2.57','3.08');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1501','TV-01','CV-01','1805','2.40','2.88'),
-('1502','TV-01','CV-02','1806','3.48','4.18'),
-('1503','TV-01','CV-01','1806','0.50','0.60'),
-('1504','TV-01','CV-02','1806','0.54','0.65'),
-('1505','TV-01','CV-01','1806','0.78','0.94'),
-('1506','TV-02','CV-02','1806','0.49','0.59'),
-('1507','TV-02','CV-01','1806','1.56','1.87'),
-('1508','TV-02','CV-02','1806','1.94','2.33');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1509','TV-02','CV-01','1806','0.89','1.07'),
-('1510','TV-02','CV-02','1806','1.06','1.27'),
-('1511','TV-02','CV-01','1806','1.08','1.30'),
-('1512','TV-01','CV-02','1807','1.59','1.91'),
-('1513','TV-01','CV-01','1807','2.59','3.11'),
-('1514','TV-01','CV-02','1807','2.20','2.64'),
-('1515','TV-01','CV-03','1807','3.19','3.83'),
-('1516','TV-01','CV-03','1807','4.20','5.04');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1517','TV-01','CV-03','1807','5.19','6.23'),
-('1518','TV-01','CV-04','1807','6.18','7.42'),
-('1519','TV-01','CV-05','1807','7.19','8.63'),
-('1520','TV-01','CV-02','1807','8.09','9.71'),
-('1521','TV-01','CV-02','1807','9.02','10.82'),
-('1522','TV-01','CV-02','1808','10.90','13.08'),
-('1523','TV-01','CV-02','1808','11.19','13.43'),
-('1524','TV-01','CV-02','1808','12.50','15.00');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1525','TV-01','CV-02','1808','13.89','16.67'),
-('1526','TV-01','CV-02','1808','14.19','17.03'),
-('1527','TV-01','CV-02','1809','15.19','18.23'),
-('1528','TV-01','CV-02','1809','16.09','19.31'),
-('1529','TV-02','CV-02','1809','1.00','1.20'),
-('1530','TV-02','CV-02','1809','2.00','2.40'),
-('1531','TV-02','CV-02','1810','3.00','3.60');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1532','TV-01','CV-01','1810','4.00','4.80'),
-('1533','TV-02','CV-01','1810','5.00','6.00'),
-('1534','TV-01','CV-01','1810','6.00','7.20'),
-('1535','TV-02','CV-01','1810','7.00','8.40'),
-('1536','TV-01','CV-01','1810','1.50','1.80'),
-('1537','TV-02','CV-01','1811','3.60','4.32'),
-('1538','TV-01','CV-01','1811','1.80','2.16'),
-('1539','TV-02','CV-02','1811','1.90','2.28');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1540','TV-01','CV-01','1811','5.30','6.36'),
-('1541','TV-02','CV-02','1811','3.60','4.32'),
-('1542','TV-01','CV-01','1812','4.32','5.18'),
-('1543','TV-02','CV-02','1812','2.40','2.88'),
-('1544','TV-01','CV-01','1812','2.88','3.46'),
-('1545','TV-01','CV-02','1812','1.20','1.44'),
-('1546','TV-01','CV-01','1812','1.44','1.73');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1547','TV-01','CV-02','1813','1.72','2.06'),
-('1548','TV-01','CV-01','1813','20.60','24.72'),
-('1549','TV-02','CV-02','1813','2.06','2.47'),
-('1550','TV-02','CV-01','1813','1.50','1.80'),
-('1551','TV-02','CV-02','1813','1.80','2.16'),
-('1552','TV-01','CV-01','1814','1.09','1.31'),
-('1553','TV-02','CV-02','1814','1.05','1.26');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1554','TV-01','CV-03','1814','1.26','1.51'),
-('1555','TV-02','CV-03','1814','1.31','1.57'),
-('1556','TV-01','CV-03','1814','1.51','1.81'),
-('1557','TV-02','CV-04','1815','2.57','3.08'),
-('1558','TV-01','CV-05','1815','3.08','3.70'),
-('1559','TV-02','CV-02','1815','7.30','8.76'),
-('1560','TV-01','CV-02','1815','1.60','1.92');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1561','TV-02','CV-02','1816','2.90','3.48'),
-('1562','TV-01','CV-02','1816','4.80','5.76'),
-('1563','TV-02','CV-02','1816','1.05','1.26'),
-('1564','TV-01','CV-02','1816','1.07','1.28'),
-('1565','TV-01','CV-02','1816','2.08','2.50'),
-('1566','TV-01','CV-02','1816','2.09','2.51'),
-('1567','TV-01','CV-02','1817','20.70','24.84'),
-('1568','TV-01','CV-02','1817','20.60','24.72');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1569','TV-01','CV-02','1817','2.06','2.47'),
-('1570','TV-01','CV-02','1817','2.08','2.50'),
-('1571','TV-01','CV-01','1817','1.06','1.27'),
-('1572','TV-01','CV-01','1818','1.05','1.26'),
-('1573','TV-01','CV-01','1818','1.59','1.91'),
-('1574','TV-01','CV-01','1818','1.48','1.78'),
-('1575','TV-01','CV-01','1818','1.49','1.79'),
-('1576','TV-01','CV-01','1819','1.90','2.28');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1577','TV-01','CV-01','1819','1.49','1.79'),
-('1578','TV-01','CV-02','1819','1.13','1.36'),
-('1579','TV-02','CV-01','1819','1.49','1.79'),
-('1580','TV-02','CV-02','1819','1.89','2.27'),
-('1581','TV-02','CV-01','1820','1.82','2.18'),
-('1582','TV-02','CV-02','1820','1.36','1.63'),
-('1583','TV-01','CV-01','1820','1.78','2.14'),
-('1584','TV-01','CV-02','1820','1.79','2.15');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1585','TV-01','CV-01','1821','1.65','1.98'),
-('1586','TV-02','CV-02','1821','1.50','1.80'),
-('1587','TV-02','CV-01','1821','1.41','1.69'),
-('1588','TV-02','CV-02','1821','1.10','1.32'),
-('1589','TV-02','CV-01','1822','1.15','1.38'),
-('1590','TV-01','CV-02','1822','1.38','1.66'),
-('1591','TV-01','CV-01','1822','1.66','1.99'),
-('1592','TV-01','CV-02','1822','1.99','2.39');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1593','TV-01','CV-03','1824','2.39','2.87'),
-('1594','TV-01','CV-03','1824','2.87','3.44'),
-('1595','TV-01','CV-03','1824','4.40','5.28'),
-('1596','TV-02','CV-04','1824','4.60','5.52'),
-('1597','TV-02','CV-05','1825','4.85','5.82'),
-('1598','TV-02','CV-02','1825','1.90','2.28'),
-('1599','TV-02','CV-02','1825','1.98','2.38');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1600','TV-02','CV-02','1825','1.49','1.79'),
-('1601','TV-02','CV-02','1825','2.49','2.99'),
-('1602','TV-01','CV-02','1826','1.19','1.43'),
-('1603','TV-01','CV-02','1826','2.57','3.08'),
-('1604','TV-01','CV-01','1826','2.40','2.88'),
-('1605','TV-01','CV-01','1826','3.48','4.18'),
-('1606','TV-01','CV-01','1827','0.50','0.60');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1607','TV-01','CV-01','1827','0.54','0.65'),
-('1608','TV-01','CV-01','1827','0.78','0.94'),
-('1609','TV-01','CV-01','1827','0.49','0.59'),
-('1610','TV-01','CV-01','1828','1.56','1.87'),
-('1611','TV-01','CV-02','1828','1.94','2.33'),
-('1612','TV-01','CV-01','1828','0.89','1.07'),
-('1613','TV-01','CV-02','1828','1.06','1.27'),
-('1614','TV-01','CV-01','1828','1.08','1.30');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1615','TV-01','CV-02','1829','1.59','1.91'),
-('1616','TV-01','CV-01','1829','2.59','3.11'),
-('1617','TV-01','CV-02','1829','2.20','2.64'),
-('1618','TV-01','CV-01','1829','3.19','3.83'),
-('1619','TV-02','CV-02','1829','4.20','5.04'),
-('1620','TV-02','CV-01','1830','5.19','6.23'),
-('1621','TV-02','CV-02','1830','6.18','7.42'),
-('1622','TV-01','CV-01','1830','7.19','8.63');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1623','TV-02','CV-02','1830','8.09','9.71'),
-('1624','TV-01','CV-01','1831','9.02','10.82'),
-('1625','TV-02','CV-02','1831','10.90','13.08'),
-('1626','TV-01','CV-03','1831','11.19','13.43'),
-('1627','TV-02','CV-03','1831','12.50','15.00'),
-('1628','TV-01','CV-03','1832','13.89','16.67'),
-('1629','TV-02','CV-04','1832','14.19','17.03'),
-('1630','TV-01','CV-05','1832','15.19','18.23');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1631','TV-02','CV-02','1832','16.09','19.31'),
-('1632','TV-01','CV-02','1832','1.00','1.20'),
-('1633','TV-02','CV-02','1833','2.00','2.40'),
-('1634','TV-01','CV-02','1833','3.00','3.60'),
-('1635','TV-01','CV-02','1833','4.00','4.80'),
-('1636','TV-01','CV-02','1833','5.00','6.00'),
-('1637','TV-01','CV-01','1833','6.00','7.20'),
-('1638','TV-01','CV-01','1833','7.00','8.40');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1639','TV-02','CV-01','1834','1.50','1.80'),
-('1640','TV-02','CV-01','1834','3.60','4.32'),
-('1641','TV-02','CV-01','1834','1.80','2.16'),
-('1642','TV-01','CV-01','1834','1.90','2.28'),
-('1643','TV-02','CV-01','1834','5.30','6.36'),
-('1644','TV-01','CV-02','1835','3.60','4.32'),
-('1645','TV-02','CV-01','1835','4.32','5.18'),
-('1646','TV-01','CV-02','1835','2.40','2.88');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1647','TV-02','CV-01','1835','2.88','3.46'),
-('1648','TV-01','CV-02','1835','1.20','1.44'),
-('1649','TV-02','CV-01','1836','1.44','1.73'),
-('1650','TV-01','CV-02','1836','1.72','2.06'),
-('1651','TV-02','CV-01','1836','20.60','24.72'),
-('1652','TV-01','CV-02','1836','2.06','2.47'),
-('1653','TV-02','CV-01','1836','1.50','1.80'),
-('1654','TV-01','CV-02','1837','1.80','2.16');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1655','TV-01','CV-01','1837','1.09','1.31'),
-('1656','TV-01','CV-02','1837','1.05','1.26'),
-('1657','TV-01','CV-01','1837','1.26','1.51'),
-('1658','TV-01','CV-02','1838','1.31','1.57'),
-('1659','TV-01','CV-03','1838','1.51','1.81'),
-('1660','TV-01','CV-03','1838','2.57','3.08'),
-('1661','TV-01','CV-03','1838','3.08','3.70'),
-('1662','TV-01','CV-04','1839','7.30','8.76');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1663','TV-01','CV-05','1839','1.60','1.92'),
-('1664','TV-01','CV-02','1839','2.90','3.48'),
-('1665','TV-01','CV-02','1839','4.80','5.76'),
-('1666','TV-01','CV-02','1839','1.05','1.26'),
-('1667','TV-01','CV-02','1839','1.07','1.28'),
-('1668','TV-01','CV-02','1839','2.08','2.50'),
-('1669','TV-02','CV-02','1840','2.09','2.51'),
-('1670','TV-02','CV-01','1840','20.70','24.84');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1671','TV-02','CV-01','1840','20.60','24.72'),
-('1672','TV-02','CV-01','1840','2.06','2.47'),
-('1673','TV-01','CV-01','1840','2.08','2.50'),
-('1674','TV-01','CV-01','1841','1.06','1.27'),
-('1675','TV-01','CV-01','1841','1.05','1.26'),
-('1676','TV-02','CV-01','1841','1.59','1.91'),
-('1677','TV-02','CV-02','1841','1.48','1.78'),
-('1678','TV-02','CV-01','1841','1.49','1.79');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1679','TV-02','CV-02','1842','1.90','2.28'),
-('1680','TV-01','CV-01','1842','1.49','1.79'),
-('1681','TV-01','CV-02','1842','1.13','1.36'),
-('1682','TV-01','CV-01','1842','1.49','1.79'),
-('1683','TV-01','CV-02','1842','1.89','2.27'),
-('1684','TV-01','CV-01','1842','1.82','2.18'),
-('1685','TV-01','CV-02','1843','1.36','1.63'),
-('1686','TV-02','CV-01','1843','1.78','2.14');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1687','TV-02','CV-02','1843','1.79','2.15'),
-('1688','TV-02','CV-01','1843','1.65','1.98'),
-('1689','TV-02','CV-02','1843','1.50','1.80'),
-('1690','TV-02','CV-01','1844','1.41','1.69'),
-('1691','TV-02','CV-02','1844','1.10','1.32'),
-('1692','TV-01','CV-03','1844','1.15','1.38'),
-('1693','TV-01','CV-03','1845','1.38','1.66'),
-('1694','TV-01','CV-03','1845','1.66','1.99');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1695','TV-01','CV-04','1845','1.99','2.39'),
-('1696','TV-01','CV-05','1846','2.39','2.87'),
-('1697','TV-01','CV-01','1846','2.87','3.44'),
-('1698','TV-01','CV-01','1846','4.40','5.28'),
-('1699','TV-01','CV-01','1847','4.60','5.52'),
-('1700','TV-01','CV-01','1847','4.85','5.82'),
-('1701','TV-01','CV-01','1847','1.90','2.28'),
-('1702','TV-01','CV-01','1848','1.98','2.38');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1703','TV-01','CV-01','1848','1.49','1.79'),
-('1704','TV-01','CV-01','1848','2.49','2.99'),
-('1705','TV-01','CV-01','1849','1.19','1.43'),
-('1706','TV-01','CV-01','1849','2.57','3.08'),
-('1707','TV-01','CV-01','1849','2.40','2.88'),
-('1708','TV-01','CV-01','1849','3.48','4.18'),
-('1709','TV-02','CV-01','1850','0.50','0.60'),
-('1710','TV-02','CV-01','1850','0.54','0.65');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1711','TV-02','CV-01','1850','0.78','0.94'),
-('1712','TV-01','CV-02','1851','0.49','0.59'),
-('1713','TV-02','CV-02','1851','1.56','1.87'),
-('1714','TV-01','CV-02','1851','1.94','2.33'),
-('1715','TV-02','CV-02','1852','0.89','1.07'),
-('1716','TV-01','CV-02','1852','1.06','1.27'),
-('1717','TV-02','CV-02','1852','1.08','1.30'),
-('1718','TV-01','CV-01','1853','1.59','1.91');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1719','TV-02','CV-01','1853','2.59','3.11'),
-('1720','TV-01','CV-01','1853','2.20','2.64'),
-('1721','TV-02','CV-01','1853','3.19','3.83'),
-('1722','TV-01','CV-01','1854','4.20','5.04'),
-('1723','TV-02','CV-01','1854','5.19','6.23'),
-('1724','TV-01','CV-01','1854','6.18','7.42'),
-('1725','TV-01','CV-02','1855','7.19','8.63'),
-('1726','TV-01','CV-01','1855','8.09','9.71');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1727','TV-01','CV-02','1855','9.02','10.82'),
-('1728','TV-01','CV-01','1856','10.90','13.08'),
-('1729','TV-02','CV-02','1856','11.19','13.43'),
-('1730','TV-02','CV-01','1856','12.50','15.00'),
-('1731','TV-02','CV-02','1857','13.89','16.67'),
-('1732','TV-01','CV-01','1857','14.19','17.03'),
-('1733','TV-02','CV-02','1857','15.19','18.23'),
-('1734','TV-01','CV-01','1857','16.09','19.31');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1735','TV-02','CV-02','1858','1.00','1.20'),
-('1736','TV-01','CV-01','1858','2.00','2.40'),
-('1737','TV-02','CV-02','1858','3.00','3.60'),
-('1738','TV-01','CV-01','1858','4.00','4.80'),
-('1739','TV-02','CV-02','1859','5.00','6.00'),
-('1740','TV-01','CV-03','1859','6.00','7.20'),
-('1741','TV-02','CV-03','1859','7.00','8.40'),
-('1742','TV-01','CV-03','1860','1.50','1.80');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1743','TV-02','CV-04','1860','3.60','4.32'),
-('1744','TV-01','CV-05','1860','1.80','2.16'),
-('1745','TV-01','CV-02','1860','1.90','2.28'),
-('1746','TV-01','CV-02','1860','5.30','6.36'),
-('1747','TV-01','CV-02','1861','3.60','4.32'),
-('1748','TV-01','CV-02','1861','4.32','5.18'),
-('1749','TV-01','CV-02','1861','2.40','2.88'),
-('1750','TV-01','CV-02','1861','2.88','3.46');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1751','TV-01','CV-01','1861','1.20','1.44'),
-('1752','TV-01','CV-01','1862','1.44','1.73'),
-('1753','TV-01','CV-01','1862','1.72','2.06'),
-('1754','TV-01','CV-01','1862','20.60','24.72'),
-('1755','TV-01','CV-01','1862','2.06','2.47'),
-('1756','TV-01','CV-01','1862','1.50','1.80'),
-('1757','TV-01','CV-01','1863','1.80','2.16'),
-('1758','TV-01','CV-02','1863','1.09','1.31'),
-('1759','TV-02','CV-01','1863','1.05','1.26');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1760','TV-02','CV-02','1864','1.26','1.51'),
-('1761','TV-02','CV-01','1864','1.31','1.57'),
-('1762','TV-02','CV-02','1864','1.51','1.81'),
-('1763','TV-01','CV-01','1865','2.57','3.08'),
-('1764','TV-01','CV-02','1865','3.08','3.70'),
-('1765','TV-01','CV-01','1865','7.30','8.76'),
-('1766','TV-02','CV-02','1866','1.60','1.92');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1767','TV-02','CV-01','1866','2.90','3.48'),
-('1768','TV-02','CV-02','1866','4.80','5.76'),
-('1769','TV-02','CV-01','1867','1.05','1.26'),
-('1770','TV-01','CV-02','1867','1.07','1.28'),
-('1771','TV-01','CV-01','1867','2.08','2.50'),
-('1772','TV-01','CV-02','1868','2.09','2.51'),
-('1773','TV-01','CV-03','1868','20.70','24.84'),
-('1774','TV-01','CV-03','1868','20.60','24.72');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1775','TV-01','CV-03','1869','2.06','2.47'),
-('1776','TV-02','CV-04','1869','2.08','2.50'),
-('1777','TV-02','CV-05','1869','1.06','1.27'),
-('1778','TV-02','CV-02','1870','1.05','1.26'),
-('1779','TV-02','CV-02','1870','1.59','1.91'),
-('1780','TV-02','CV-02','1870','1.48','1.78'),
-('1781','TV-02','CV-02','1871','1.49','1.79'),
-('1782','TV-01','CV-02','1871','1.90','2.28');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1783','TV-01','CV-02','1872','1.49','1.79'),
-('1784','TV-01','CV-01','1872','1.13','1.36'),
-('1785','TV-01','CV-01','1873','1.49','1.79'),
-('1786','TV-01','CV-01','1873','1.89','2.27'),
-('1787','TV-01','CV-01','1874','1.82','2.18'),
-('1788','TV-01','CV-01','1874','1.36','1.63'),
-('1789','TV-01','CV-01','1875','1.78','2.14'),
-('1790','TV-01','CV-01','1875','1.79','2.15');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1791','TV-01','CV-02','1876','1.65','1.98'),
-('1792','TV-01','CV-01','1876','1.50','1.80'),
-('1793','TV-01','CV-02','1877','1.41','1.69'),
-('1794','TV-01','CV-01','1877','1.10','1.32'),
-('1795','TV-01','CV-02','1878','1.15','1.38'),
-('1796','TV-01','CV-01','1878','1.38','1.66'),
-('1797','TV-01','CV-02','1879','1.66','1.99'),
-('1798','TV-01','CV-01','1879','1.99','2.39');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1799','TV-02','CV-02','1880','2.39','2.87'),
-('1800','TV-02','CV-01','1880','2.87','3.44'),
-('1801','TV-02','CV-02','1881','4.40','5.28'),
-('1802','TV-01','CV-01','1881','4.60','5.52'),
-('1803','TV-02','CV-02','1882','4.85','5.82'),
-('1804','TV-01','CV-01','1882','1.90','2.28'),
-('1805','TV-02','CV-02','1883','1.98','2.38'),
-('1806','TV-01','CV-03','1883','1.49','1.79');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1807','TV-02','CV-03','1883','2.49','2.99'),
-('1808','TV-01','CV-03','1884','1.19','1.43'),
-('1809','TV-02','CV-04','1884','2.57','3.08'),
-('1810','TV-01','CV-05','1884','2.40','2.88'),
-('1811','TV-02','CV-02','1885','3.48','4.18'),
-('1812','TV-01','CV-02','1885','0.50','0.60'),
-('1813','TV-02','CV-02','1885','0.54','0.65');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1814','TV-01','CV-02','1886','0.78','0.94'),
-('1815','TV-01','CV-02','1886','0.49','0.59'),
-('1816','TV-01','CV-02','1886','1.56','1.87'),
-('1817','TV-01','CV-01','1887','1.94','2.33'),
-('1818','TV-01','CV-01','1887','0.89','1.07'),
-('1819','TV-02','CV-01','1887','1.06','1.27'),
-('1820','TV-02','CV-01','1888','1.08','1.30'),
-('1821','TV-02','CV-01','1888','1.59','1.91'),
-('1822','TV-01','CV-01','1888','2.59','3.11');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1823','TV-02','CV-01','1889','2.20','2.64'),
-('1824','TV-01','CV-02','1889','3.19','3.83'),
-('1825','TV-02','CV-01','1889','4.20','5.04'),
-('1826','TV-01','CV-02','1890','5.19','6.23'),
-('1827','TV-02','CV-01','1890','6.18','7.42'),
-('1828','TV-01','CV-02','1890','7.19','8.63'),
-('1829','TV-02','CV-01','1891','8.09','9.71'),
-('1830','TV-01','CV-02','1891','9.02','10.82');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1831','TV-02','CV-01','1891','10.90','13.08'),
-('1832','TV-01','CV-02','1892','11.19','13.43'),
-('1833','TV-02','CV-01','1892','12.50','15.00'),
-('1834','TV-01','CV-02','1892','13.89','16.67'),
-('1835','TV-01','CV-01','1893','14.19','17.03'),
-('1836','TV-02','CV-02','1893','15.19','18.23'),
-('1837','TV-01','CV-01','1893','16.09','19.31');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1838','TV-01','CV-02','1894','4.13','4.96'),
-('1839','TV-02','CV-03','1894','13.40','16.08'),
-('1840','TV-01','CV-03','1894','2.49','2.99'),
-('1841','TV-02','CV-03','1895','1.50','1.80'),
-('1842','TV-01','CV-04','1895','1.49','1.79'),
-('1843','TV-02','CV-05','1895','1.90','2.28'),
-('1844','TV-01','CV-01','1896','1.99','2.39'),
-('1845','TV-02','CV-01','1896','2.09','2.51');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1846','TV-01','CV-01','1896','0.79','0.95'),
-('1847','TV-02','CV-01','1897','0.98','1.18'),
-('1848','TV-01','CV-01','1897','0.70','0.84'),
-('1849','TV-02','CV-01','1897','1.19','1.43'),
-('1850','TV-01','CV-01','1898','1.98','2.38'),
-('1851','TV-02','CV-01','1898','1.89','2.27'),
-('1852','TV-01','CV-01','1898','8.19','9.83'),
-('1853','TV-02','CV-01','1899','0.89','1.07');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1854','TV-01','CV-01','1899','1.45','1.74'),
-('1855','TV-01','CV-01','1899','1.05','1.26'),
-('1856','TV-01','CV-01','1900','1.50','1.80'),
-('1857','TV-01','CV-01','1900','1.98','2.38'),
-('1858','TV-01','CV-01','1900','1.89','2.27'),
-('1859','TV-01','CV-02','1900','1.89','2.27'),
-('1860','TV-01','CV-03','1900','1.98','2.37'),
-('1861','TV-01','CV-04','1900','1.40','1.68');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1862','TV-01','CV-05','1900','1.20','1.44'),
-('1863','TV-01','CV-02','1901','1.89','2.27'),
-('1864','TV-01','CV-01','1901','1.80','2.16'),
-('1865','TV-01','CV-02','1901','1.50','1.80'),
-('1866','TV-01','CV-03','1901','1.50','1.80'),
-('1867','TV-01','CV-03','1901','1.79','2.15'),
-('1868','TV-01','CV-03','1902','2.49','2.99'),
-('1869','TV-01','CV-04','1902','1.98','2.38');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1870','TV-02','CV-05','1902','1.49','1.79'),
-('1871','TV-02','CV-01','1902','2.08','2.50'),
-('1872','TV-02','CV-01','1902','3.09','3.70'),
-('1873','TV-02','CV-01','1903','5.07','6.08'),
-('1874','TV-01','CV-01','1903','5.09','6.11'),
-('1875','TV-01','CV-01','1903','2.09','2.51'),
-('1876','TV-01','CV-01','1903','3.81','4.57'),
-('1877','TV-02','CV-01','1903','4.09','4.91');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1878','TV-02','CV-01','1903','1.08','1.30'),
-('1879','TV-02','CV-01','1903','1.48','1.78'),
-('1880','TV-02','CV-01','1903','1.78','2.14'),
-('1881','TV-01','CV-01','1903','1.90','2.28'),
-('1882','TV-01','CV-01','1904','1.09','1.31'),
-('1883','TV-01','CV-01','1904','2.90','3.48'),
-('1884','TV-01','CV-01','1904','2.79','3.35'),
-('1885','TV-01','CV-01','1904','3.80','4.56');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1886','TV-01','CV-02','1904','2.98','3.58'),
-('1887','TV-02','CV-03','1904','3.98','4.78'),
-('1888','TV-02','CV-04','1905','1.74','2.09'),
-('1889','TV-02','CV-05','1905','1.50','1.80'),
-('1890','TV-02','CV-02','1905','1.30','1.56'),
-('1891','TV-02','CV-01','1905','1.01','1.21'),
-('1892','TV-02','CV-02','1905','1.02','1.22'),
-('1893','TV-01','CV-03','1905','1.03','1.24');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1894','TV-01','CV-03','1906','1.04','1.25'),
-('1895','TV-01','CV-03','1906','1.05','1.26'),
-('1896','TV-01','CV-04','1906','1.06','1.27'),
-('1897','TV-01','CV-05','1906','1.07','1.28'),
-('1898','TV-01','CV-01','1906','1.08','1.30'),
-('1899','TV-01','CV-01','1906','1.09','1.31'),
-('1900','TV-01','CV-01','1906','1.10','1.32');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1901','TV-01','CV-01','1907','1.74','2.09'),
-('1902','TV-01','CV-01','1907','1.50','1.80'),
-('1903','TV-01','CV-01','1907','1.30','1.56'),
-('1904','TV-01','CV-01','1907','1.01','1.21'),
-('1905','TV-01','CV-01','1908','1.02','1.22'),
-('1906','TV-01','CV-01','1908','1.03','1.24'),
-('1907','TV-01','CV-01','1908','1.04','1.25');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1908','TV-01','CV-01','1908','1.05','1.26'),
-('1909','TV-01','CV-01','1908','1.06','1.27'),
-('1910','TV-02','CV-01','1908','1.07','1.28'),
-('1911','TV-02','CV-01','1909','1.08','1.30'),
-('1912','TV-02','CV-01','1909','1.09','1.31'),
-('1913','TV-01','CV-02','1909','1.10','1.32'),
-('1914','TV-02','CV-03','1909','4.13','4.96');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1915','TV-01','CV-04','1909','13.40','16.08'),
-('1916','TV-02','CV-05','1909','2.49','2.99'),
-('1917','TV-01','CV-02','1909','1.50','1.80'),
-('1918','TV-02','CV-02','1909','1.49','1.79'),
-('1919','TV-01','CV-02','1909','1.90','2.28'),
-('1920','TV-02','CV-02','1910','1.99','2.39'),
-('1921','TV-01','CV-02','1910','2.09','2.51');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1922','TV-02','CV-02','1910','0.79','0.95'),
-('1923','TV-01','CV-01','1910','0.98','1.18'),
-('1924','TV-02','CV-01','1910','0.70','0.84'),
-('1925','TV-01','CV-01','1910','1.19','1.43'),
-('1926','TV-01','CV-01','1910','1.98','2.38'),
-('1927','TV-01','CV-01','1911','1.89','2.27'),
-('1928','TV-01','CV-01','1911','8.19','9.83');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1929','TV-01','CV-01','1911','0.89','1.07'),
-('1930','TV-02','CV-02','1911','1.45','1.74'),
-('1931','TV-02','CV-01','1911','1.05','1.26'),
-('1932','TV-02','CV-02','1911','1.50','1.80'),
-('1933','TV-01','CV-01','1911','1.98','2.38'),
-('1934','TV-02','CV-02','1912','1.89','2.27'),
-('1935','TV-01','CV-01','1912','1.89','2.27');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1936','TV-02','CV-02','1912','1.98','2.37'),
-('1937','TV-01','CV-01','1912','1.40','1.68'),
-('1938','TV-02','CV-02','1913','1.20','1.44'),
-('1939','TV-01','CV-01','1913','1.89','2.27'),
-('1940','TV-02','CV-02','1913','1.80','2.16'),
-('1941','TV-01','CV-01','1913','1.50','1.80'),
-('1942','TV-02','CV-02','1914','1.50','1.80'),
-('1943','TV-01','CV-01','1914','1.79','2.15');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1944','TV-02','CV-02','1914','2.49','2.99'),
-('1945','TV-01','CV-03','1915','1.98','2.38'),
-('1946','TV-01','CV-03','1915','1.49','1.79'),
-('1947','TV-02','CV-03','1915','2.08','2.50'),
-('1948','TV-01','CV-04','1915','3.09','3.70'),
-('1949','TV-01','CV-05','1915','5.07','6.08'),
-('1950','TV-02','CV-02','1915','5.09','6.11');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1951','TV-01','CV-02','1916','2.09','2.51'),
-('1952','TV-02','CV-02','1916','3.81','4.57'),
-('1953','TV-01','CV-02','1916','4.09','4.91'),
-('1954','TV-02','CV-02','1916','1.08','1.30'),
-('1955','TV-01','CV-02','1916','1.48','1.78'),
-('1956','TV-02','CV-01','1917','1.78','2.14');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1957','TV-01','CV-01','1917','1.90','2.28'),
-('1958','TV-02','CV-01','1917','1.09','1.31'),
-('1959','TV-01','CV-01','1917','2.90','3.48'),
-('1960','TV-02','CV-01','1917','2.79','3.35'),
-('1961','TV-01','CV-01','1917','3.80','4.56'),
-('1962','TV-02','CV-01','1918','2.98','3.58');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1963','TV-01','CV-02','1918','3.98','4.78'),
-('1964','TV-02','CV-01','1918','1.74','2.09'),
-('1965','TV-01','CV-02','1918','1.50','1.80'),
-('1966','TV-01','CV-01','1918','1.30','1.56'),
-('1967','TV-01','CV-02','1918','1.01','1.21'),
-('1968','TV-01','CV-01','1919','1.02','1.22'),
-('1969','TV-01','CV-02','1919','1.03','1.24');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1970','TV-01','CV-01','1919','1.04','1.25'),
-('1971','TV-01','CV-02','1919','1.05','1.26'),
-('1972','TV-01','CV-01','1919','1.06','1.27'),
-('1973','TV-01','CV-02','1919','1.07','1.28'),
-('1974','TV-01','CV-01','1919','1.08','1.30'),
-('1975','TV-01','CV-02','1919','1.09','1.31'),
-('1976','TV-01','CV-01','1919','1.10','1.32'),
-('1977','TV-01','CV-02','1919','1.74','2.09');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1978','TV-01','CV-03','1920','1.50','1.80'),
-('1979','TV-01','CV-03','1920','1.30','1.56'),
-('1980','TV-01','CV-03','1920','1.01','1.21'),
-('1981','TV-02','CV-04','1920','1.02','1.22'),
-('1982','TV-02','CV-05','1920','1.03','1.24'),
-('1983','TV-02','CV-02','1920','1.04','1.25'),
-('1984','TV-02','CV-02','1920','1.05','1.26'),
-('1985','TV-01','CV-02','1921','1.06','1.27');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1986','TV-01','CV-02','1921','1.07','1.28'),
-('1987','TV-01','CV-02','1921','1.08','1.30'),
-('1988','TV-02','CV-02','1921','1.09','1.31'),
-('1989','TV-02','CV-01','1921','1.10','1.32'),
-('1990','TV-02','CV-01','1922','4.13','4.96'),
-('1991','TV-02','CV-01','1922','13.40','16.08'),
-('1992','TV-01','CV-01','1922','2.49','2.99'),
-('1993','TV-01','CV-01','1922','1.50','1.80');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('1994','TV-01','CV-01','1922','1.49','1.79'),
-('1995','TV-01','CV-01','1922','1.90','2.28'),
-('1996','TV-01','CV-02','1923','1.99','2.39'),
-('1997','TV-01','CV-01','1923','2.09','2.51'),
-('1998','TV-02','CV-02','1923','0.79','0.95'),
-('1999','TV-02','CV-01','1924','0.98','1.18'),
-('2000','TV-02','CV-02','1925','0.70','0.84'),
-('2001','TV-02','CV-01','1926','1.19','1.43');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('2002','TV-02','CV-02','1927','1.98','2.38'),
-('2003','TV-02','CV-01','1928','1.89','2.27'),
-('2004','TV-01','CV-02','1929','8.19','9.83'),
-('2005','TV-01','CV-01','1930','0.89','1.07'),
-('2006','TV-01','CV-02','1931','1.45','1.74'),
-('2007','TV-01','CV-01','1932','1.05','1.26'),
-('2008','TV-01','CV-02','1933','1.50','1.80'),
-('2009','TV-01','CV-01','1934','1.98','2.38');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('2010','TV-01','CV-02','1935','1.89','2.27'),
-('2011','TV-01','CV-03','1936','1.89','2.27'),
-('2012','TV-01','CV-03','1937','1.98','2.37'),
-('2013','TV-01','CV-03','1938','1.40','1.68'),
-('2014','TV-01','CV-04','1939','1.20','1.44'),
-('2015','TV-01','CV-05','1940','1.89','2.27'),
-('2016','TV-01','CV-02','1941','1.80','2.16'),
-('2017','TV-01','CV-02','1942','1.50','1.80');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('2018','TV-01','CV-02','1943','1.50','1.80'),
-('2019','TV-01','CV-02','1944','1.79','2.15'),
-('2020','TV-01','CV-02','1945','2.49','2.99'),
-('2021','TV-02','CV-02','1946','1.98','2.38'),
-('2022','TV-02','CV-01','1947','1.49','1.79'),
-('2023','TV-02','CV-01','1948','2.08','2.50'),
-('2024','TV-01','CV-01','1949','3.09','3.70'),
-('2025','TV-02','CV-01','1950','5.07','6.08');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('2026','TV-01','CV-01','1951','5.09','6.11'),
-('2027','TV-02','CV-01','1952','2.09','2.51'),
-('2028','TV-01','CV-01','1953','3.81','4.57'),
-('2029','TV-02','CV-02','1954','4.09','4.91'),
-('2030','TV-01','CV-01','1955','1.08','1.30'),
-('2031','TV-02','CV-02','1956','1.48','1.78'),
-('2032','TV-01','CV-01','1957','1.78','2.14');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('2033','TV-02','CV-02','1958','1.90','2.28'),
-('2034','TV-01','CV-01','1959','1.09','1.31'),
-('2035','TV-02','CV-02','1960','2.90','3.48'),
-('2036','TV-01','CV-01','1961','2.79','3.35'),
-('2037','TV-01','CV-02','1962','3.80','4.56'),
-('2038','TV-01','CV-01','1963','2.98','3.58'),
-('2039','TV-01','CV-02','1964','3.98','4.78');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('2040','TV-01','CV-01','1965','1.74','2.09'),
-('2041','TV-02','CV-02','1966','1.50','1.80'),
-('2042','TV-02','CV-01','1967','1.30','1.56'),
-('2043','TV-02','CV-02','1968','1.01','1.21'),
-('2044','TV-01','CV-03','1969','1.02','1.22'),
-('2045','TV-02','CV-03','1970','1.03','1.24'),
-('2046','TV-01','CV-03','1971','1.04','1.25'),
-('2047','TV-02','CV-04','1972','1.05','1.26');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('2048','TV-01','CV-05','1973','1.06','1.27'),
-('2049','TV-02','CV-01','1974','1.07','1.28'),
-('2050','TV-01','CV-01','1975','1.08','1.30'),
-('2051','TV-02','CV-01','1976','1.09','1.31'),
-('2052','TV-01','CV-01','1977','1.10','1.32'),
-('2053','TV-02','CV-01','1978','1.74','2.09'),
-('2054','TV-01','CV-01','1979','1.50','1.80'),
-('2055','TV-02','CV-01','1980','1.30','1.56');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('2056','TV-01','CV-01','1981','1.01','1.21'),
-('2057','TV-01','CV-01','1982','1.02','1.22'),
-('2058','TV-02','CV-01','1983','1.03','1.24'),
-('2059','TV-01','CV-01','1984','1.04','1.25'),
-('2060','TV-01','CV-01','1985','1.05','1.26'),
-('2061','TV-02','CV-01','1986','1.06','1.27'),
-('2062','TV-01','CV-01','1987','1.07','1.28'),
-('2063','TV-02','CV-01','1988','1.08','1.30');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('2064','TV-01','CV-02','1989','1.09','1.31'),
-('2065','TV-02','CV-02','1990','1.10','1.32'),
-('2066','TV-01','CV-02','1991','1.01','1.21'),
-('2067','TV-02','CV-02','1992','1.02','1.22'),
-('2068','TV-01','CV-02','1993','1.03','1.24'),
-('2069','TV-02','CV-02','1994','1.04','1.25'),
-('2070','TV-02','CV-01','1996','1.06','1.27');
-
--- -------------------------------------------------------------------------------------
-
-INSERT INTO `vical`.`vidrio` (`CODIGO_VIDRIO`,`CODIGO_TIPO`,`CODIGO_COLOR`,`CODIGO_FACTURA`,`CANTIDAD_VIDRIO`,`PRECIO`)
-VALUES
-('2071','TV-01','CV-01','1997','1.07','1.28'),
-('2072','TV-02','CV-01','1998','1.08','1.30'),
-('2073','TV-01','CV-01','1999','1.09','1.31'),
-('2074','TV-02','CV-01','2000','1.10','1.32'),
-('2075','TV-01','CV-01','2000','1.10','1.32');
-
-/*==============================================================*/
-/* Table: USUARIOS                                               */
-/*==============================================================*/
-INSERT INTO `vical`.`usuarios` (`NOMBRE`,`USUARIO`,`PASSWORD`,`NIVEL`)
-VALUES
-('William Sanchez','william','william','1'),
-('Carlos Lopez','carlos','carlos','2'),
-('Alfredo Fernande','alfredo','alfredo','3');
--- -------------------------------------------------------------------------------------
+INSERT INTO VIDRIO (CODIGO_VIDRIO, CODIGO_TIPO, CODIGO_COLOR, CODIGO_FACTURA, CANTIDAD_VIDRIO, PRECIO_VIDRIO) VALUES
+(1, 'TV-02', 'CV-05', '2358', 64.13, 76.956),
+(3, 'TV-01', 'CV-01', '2749', 56.91, 68.292),
+(4, 'TV-01', 'CV-04', '2901', 69.48, 83.376),
+(5, 'TV-02', 'CV-05', '1768', 44.72, 53.664),
+(6, 'TV-01', 'CV-05', '1827', 57.04, 68.448),
+(7, 'TV-01', 'CV-01', '2857', 36.87, 44.244),
+(8, 'TV-01', 'CV-02', '1235', 7.58, 9.096),
+(9, 'TV-02', 'CV-02', '2408', 16.41, 19.692),
+(10, 'TV-02', 'CV-04', '1025', 60.65, 72.78),
+(11, 'TV-01', 'CV-05', '1004', 9.76, 11.712),
+(12, 'TV-01', 'CV-03', '1454', 6.84, 8.208),
+(13, 'TV-01', 'CV-01', '2002', 92.55, 111.06),
+(14, 'TV-01', 'CV-04', '2010', 42.42, 50.904),
+(16, 'TV-01', 'CV-01', '2213', 27.87, 33.444),
+(17, 'TV-02', 'CV-02', '1654', 55.69, 66.828),
+(18, 'TV-01', 'CV-02', '2311', 46.15, 55.38),
+(19, 'TV-01', 'CV-05', '1898', 30.21, 36.252),
+(20, 'TV-01', 'CV-01', '2741', 20.48, 24.576),
+(21, 'TV-01', 'CV-04', '2605', 75.49, 90.588),
+(22, 'TV-02', 'CV-04', '2847', 11.03, 13.236),
+(23, 'TV-02', 'CV-03', '1983', 90.54, 108.648),
+(24, 'TV-01', 'CV-04', '2587', 14.35, 17.22),
+(27, 'TV-01', 'CV-02', '2646', 96.23, 115.476),
+(28, 'TV-02', 'CV-02', '2812', 55.12, 66.144),
+(29, 'TV-01', 'CV-04', '2026', 25.64, 30.768),
+(30, 'TV-02', 'CV-02', '1145', 13.63, 16.356),
+(31, 'TV-01', 'CV-04', '1369', 33.75, 40.5),
+(32, 'TV-01', 'CV-01', '2592', 40.31, 48.372),
+(33, 'TV-01', 'CV-05', '2311', 28.08, 33.696),
+(34, 'TV-02', 'CV-02', '2153', 44.91, 53.892),
+(35, 'TV-02', 'CV-01', '2318', 19.74, 23.688),
+(37, 'TV-01', 'CV-02', '2772', 85.37, 102.444),
+(38, 'TV-01', 'CV-01', '2687', 29.89, 35.868),
+(39, 'TV-02', 'CV-04', '2463', 94.34, 113.208),
+(40, 'TV-01', 'CV-02', '1571', 11.85, 14.22),
+(41, 'TV-01', 'CV-02', '2239', 4.59, 5.508),
+(42, 'TV-02', 'CV-02', '1506', 41.68, 50.016),
+(43, 'TV-01', 'CV-05', '2895', 16.09, 19.308),
+(44, 'TV-02', 'CV-02', '2410', 62.11, 74.532),
+(46, 'TV-02', 'CV-03', '2446', 10.31, 12.372),
+(48, 'TV-02', 'CV-01', '1111', 82.62, 99.144),
+(50, 'TV-01', 'CV-04', '2493', 0.96, 1.152),
+(51, 'TV-02', 'CV-04', '1908', 27.79, 33.348),
+(52, 'TV-01', 'CV-04', '1729', 59.78, 71.736),
+(53, 'TV-01', 'CV-05', '2780', 51.85, 62.22),
+(54, 'TV-01', 'CV-05', '2599', 76.55, 91.86),
+(55, 'TV-01', 'CV-01', '1470', 4.17, 5.004),
+(56, 'TV-02', 'CV-04', '1438', 21.31, 25.572),
+(57, 'TV-01', 'CV-03', '2657', 31.48, 37.776),
+(58, 'TV-01', 'CV-03', '1482', 47.66, 57.192),
+(59, 'TV-01', 'CV-04', '1221', 96.22, 115.464),
+(60, 'TV-01', 'CV-03', '2605', 9.95, 11.94),
+(61, 'TV-01', 'CV-05', '1726', 44.11, 52.932),
+(62, 'TV-02', 'CV-03', '1859', 73, 87.6),
+(63, 'TV-01', 'CV-02', '1980', 71.47, 85.764),
+(64, 'TV-01', 'CV-03', '1651', 79.78, 95.736),
+(65, 'TV-02', 'CV-02', '2823', 52.26, 62.712),
+(66, 'TV-02', 'CV-05', '2286', 64.8, 77.76),
+(67, 'TV-02', 'CV-01', '2518', 97.66, 117.192),
+(68, 'TV-01', 'CV-05', '1083', 3.22, 3.864),
+(69, 'TV-01', 'CV-04', '2450', 13.19, 15.828),
+(70, 'TV-02', 'CV-01', '2072', 48.21, 57.852),
+(71, 'TV-01', 'CV-03', '2394', 19.04, 22.848),
+(72, 'TV-02', 'CV-03', '2160', 86.9, 104.28),
+(73, 'TV-01', 'CV-04', '1841', 75.3, 90.36),
+(74, 'TV-01', 'CV-01', '2488', 31.64, 37.968),
+(75, 'TV-01', 'CV-01', '1012', 8.79, 10.548),
+(76, 'TV-01', 'CV-01', '1764', 74.9, 89.88),
+(77, 'TV-02', 'CV-02', '2810', 7.06, 8.472),
+(78, 'TV-02', 'CV-01', '1899', 59.22, 71.064),
+(79, 'TV-01', 'CV-04', '1553', 53.65, 64.38),
+(80, 'TV-02', 'CV-03', '2286', 24.32, 29.184),
+(81, 'TV-02', 'CV-05', '2470', 5.63, 6.756),
+(82, 'TV-01', 'CV-01', '1100', 72.34, 86.808),
+(84, 'TV-01', 'CV-04', '2146', 11.18, 13.416),
+(85, 'TV-02', 'CV-05', '1230', 3.43, 4.116),
+(86, 'TV-01', 'CV-03', '1458', 40.58, 48.696),
+(87, 'TV-02', 'CV-05', '1936', 26.54, 31.848),
+(88, 'TV-02', 'CV-05', '1025', 99.33, 119.196),
+(89, 'TV-02', 'CV-01', '2801', 71.92, 86.304),
+(90, 'TV-01', 'CV-05', '1009', 89.64, 107.568),
+(92, 'TV-02', 'CV-05', '1160', 89.17, 107.004),
+(94, 'TV-01', 'CV-04', '2051', 65.4, 78.48),
+(95, 'TV-01', 'CV-03', '1213', 24.04, 28.848),
+(96, 'TV-02', 'CV-05', '1255', 58.4, 70.08),
+(98, 'TV-02', 'CV-02', '1451', 3.71, 4.452),
+(99, 'TV-01', 'CV-01', '2167', 55.4, 66.48),
+(100, 'TV-01', 'CV-03', '2293', 16.63, 19.956),
+(101, 'TV-02', 'CV-01', '1768', 27.79, 33.348),
+(102, 'TV-01', 'CV-05', '2666', 95.33, 114.396),
+(103, 'TV-01', 'CV-02', '1773', 56.01, 67.212),
+(104, 'TV-01', 'CV-02', '2374', 66.43, 79.716),
+(105, 'TV-01', 'CV-01', '2961', 36.56, 43.872),
+(108, 'TV-01', 'CV-02', '2769', 85.53, 102.636),
+(109, 'TV-02', 'CV-01', '2258', 90.17, 108.204),
+(110, 'TV-01', 'CV-01', '1619', 0.82, 0.984),
+(111, 'TV-01', 'CV-03', '1583', 93.85, 112.62),
+(112, 'TV-01', 'CV-03', '2502', 90.81, 108.972),
+(113, 'TV-01', 'CV-03', '2454', 49.72, 59.664),
+(115, 'TV-02', 'CV-02', '2060', 9.58, 11.496),
+(116, 'TV-02', 'CV-05', '1355', 98.17, 117.804),
+(117, 'TV-02', 'CV-03', '1254', 60.85, 73.02),
+(118, 'TV-02', 'CV-02', '1349', 43.1, 51.72),
+(119, 'TV-02', 'CV-01', '2374', 64.58, 77.496),
+(120, 'TV-02', 'CV-05', '2443', 73.75, 88.5),
+(121, 'TV-01', 'CV-05', '2733', 16.23, 19.476),
+(122, 'TV-01', 'CV-01', '1279', 66.61, 79.932),
+(123, 'TV-02', 'CV-03', '2037', 31.81, 38.172),
+(124, 'TV-01', 'CV-03', '2105', 17.23, 20.676),
+(125, 'TV-02', 'CV-01', '2679', 85.44, 102.528),
+(126, 'TV-01', 'CV-01', '2438', 9.88, 11.856),
+(128, 'TV-02', 'CV-03', '1073', 4.55, 5.46),
+(129, 'TV-01', 'CV-04', '1283', 99.18, 119.016),
+(130, 'TV-01', 'CV-03', '1593', 47.23, 56.676),
+(131, 'TV-02', 'CV-03', '2979', 29.47, 35.364),
+(132, 'TV-01', 'CV-05', '2880', 25.83, 30.996),
+(133, 'TV-02', 'CV-01', '1549', 13.04, 15.648),
+(134, 'TV-01', 'CV-02', '2989', 4.95, 5.94),
+(136, 'TV-02', 'CV-02', '2415', 95.19, 114.228),
+(137, 'TV-01', 'CV-03', '1570', 9.79, 11.748),
+(138, 'TV-01', 'CV-03', '1152', 6.82, 8.184),
+(139, 'TV-01', 'CV-01', '1345', 26.63, 31.956),
+(141, 'TV-01', 'CV-02', '1035', 21.6, 25.92),
+(142, 'TV-02', 'CV-05', '2507', 31.39, 37.668),
+(143, 'TV-01', 'CV-01', '1510', 85.98, 103.176),
+(144, 'TV-02', 'CV-01', '2085', 99.65, 119.58),
+(145, 'TV-02', 'CV-02', '2884', 84.12, 100.944),
+(146, 'TV-02', 'CV-02', '2722', 31.42, 37.704),
+(147, 'TV-02', 'CV-01', '2063', 4.47, 5.364),
+(148, 'TV-02', 'CV-05', '2823', 5.31, 6.372),
+(149, 'TV-01', 'CV-03', '1295', 91.33, 109.596),
+(150, 'TV-02', 'CV-03', '2154', 70.02, 84.024),
+(151, 'TV-01', 'CV-03', '1880', 41.07, 49.284),
+(153, 'TV-02', 'CV-02', '2754', 89.89, 107.868),
+(154, 'TV-02', 'CV-02', '1446', 35.43, 42.516),
+(155, 'TV-02', 'CV-05', '1349', 41, 49.2),
+(156, 'TV-01', 'CV-04', '1530', 53.23, 63.876),
+(158, 'TV-02', 'CV-02', '2116', 44.64, 53.568),
+(159, 'TV-01', 'CV-01', '1682', 84.7, 101.64),
+(160, 'TV-01', 'CV-04', '2402', 9.38, 11.256),
+(161, 'TV-01', 'CV-01', '1021', 10.58, 12.696),
+(162, 'TV-02', 'CV-03', '1296', 64.63, 77.556),
+(163, 'TV-01', 'CV-04', '2530', 65.69, 78.828),
+(164, 'TV-02', 'CV-04', '2845', 33.98, 40.776),
+(165, 'TV-02', 'CV-01', '1892', 53.91, 64.692),
+(166, 'TV-01', 'CV-02', '1239', 89.65, 107.58),
+(167, 'TV-01', 'CV-02', '1639', 25.61, 30.732),
+(168, 'TV-02', 'CV-02', '1602', 67.65, 81.18),
+(169, 'TV-01', 'CV-03', '1706', 62.33, 74.796),
+(171, 'TV-01', 'CV-01', '1011', 84.74, 101.688),
+(172, 'TV-02', 'CV-02', '1402', 48.47, 58.164),
+(173, 'TV-02', 'CV-03', '2323', 13.43, 16.116),
+(174, 'TV-02', 'CV-05', '2477', 8.27, 9.924),
+(175, 'TV-02', 'CV-04', '2204', 37.47, 44.964),
+(176, 'TV-02', 'CV-03', '1287', 23.46, 28.152),
+(177, 'TV-01', 'CV-05', '1275', 38.95, 46.74),
+(178, 'TV-01', 'CV-05', '1384', 68.9, 82.68),
+(179, 'TV-01', 'CV-01', '2974', 72.32, 86.784),
+(180, 'TV-01', 'CV-03', '2626', 10.61, 12.732),
+(181, 'TV-01', 'CV-04', '1020', 68.85, 82.62),
+(182, 'TV-01', 'CV-02', '2998', 69.2, 83.04),
+(183, 'TV-02', 'CV-02', '2417', 3.76, 4.512),
+(184, 'TV-01', 'CV-03', '1259', 3.99, 4.788),
+(185, 'TV-01', 'CV-01', '2069', 92.41, 110.892),
+(187, 'TV-01', 'CV-03', '2638', 65.15, 78.18),
+(188, 'TV-02', 'CV-04', '1148', 40.38, 48.456),
+(190, 'TV-01', 'CV-02', '2385', 70.29, 84.348),
+(191, 'TV-01', 'CV-03', '1296', 20.15, 24.18),
+(192, 'TV-01', 'CV-04', '1410', 98.22, 117.864),
+(193, 'TV-01', 'CV-04', '2301', 66.78, 80.136),
+(194, 'TV-01', 'CV-01', '1541', 78.39, 94.068),
+(195, 'TV-02', 'CV-01', '1617', 87.2, 104.64),
+(196, 'TV-01', 'CV-03', '1216', 85.75, 102.9),
+(197, 'TV-02', 'CV-05', '2114', 28.36, 34.032),
+(198, 'TV-01', 'CV-02', '2534', 42.47, 50.964),
+(199, 'TV-02', 'CV-01', '1995', 55.03, 66.036),
+(200, 'TV-02', 'CV-05', '2470', 66.5, 79.8),
+(201, 'TV-02', 'CV-03', '1355', 0.45, 0.54),
+(202, 'TV-01', 'CV-03', '2412', 86.28, 103.536),
+(203, 'TV-02', 'CV-04', '2312', 40.3, 48.36),
+(204, 'TV-02', 'CV-01', '2810', 90.93, 109.116),
+(205, 'TV-01', 'CV-03', '1445', 28.95, 34.74),
+(206, 'TV-01', 'CV-03', '1425', 61.2, 73.44),
+(207, 'TV-02', 'CV-04', '2296', 40.64, 48.768),
+(209, 'TV-01', 'CV-01', '1552', 64.48, 77.376),
+(210, 'TV-02', 'CV-02', '1289', 87.14, 104.568),
+(213, 'TV-02', 'CV-04', '2283', 20.44, 24.528),
+(214, 'TV-02', 'CV-03', '1070', 63.71, 76.452),
+(215, 'TV-01', 'CV-04', '2633', 13.97, 16.764),
+(216, 'TV-02', 'CV-04', '2851', 3.94, 4.728),
+(217, 'TV-01', 'CV-04', '2949', 72.35, 86.82),
+(218, 'TV-02', 'CV-04', '2649', 44.14, 52.968),
+(219, 'TV-02', 'CV-05', '2017', 85.87, 103.044),
+(220, 'TV-02', 'CV-02', '2581', 1.93, 2.316),
+(221, 'TV-01', 'CV-04', '2720', 25.33, 30.396),
+(222, 'TV-01', 'CV-04', '1168', 83.67, 100.404),
+(224, 'TV-02', 'CV-01', '1994', 50.99, 61.188),
+(225, 'TV-02', 'CV-04', '2834', 91.26, 109.512),
+(226, 'TV-01', 'CV-03', '1142', 87.86, 105.432),
+(227, 'TV-01', 'CV-03', '2720', 83.88, 100.656),
+(228, 'TV-02', 'CV-05', '1133', 61.29, 73.548),
+(229, 'TV-01', 'CV-02', '2747', 13.6, 16.32),
+(230, 'TV-01', 'CV-05', '2658', 85.17, 102.204),
+(231, 'TV-02', 'CV-02', '1241', 19.24, 23.088),
+(232, 'TV-01', 'CV-02', '1115', 92.35, 110.82),
+(233, 'TV-02', 'CV-03', '2554', 12.33, 14.796),
+(234, 'TV-01', 'CV-01', '1299', 0.03, 0.036),
+(235, 'TV-02', 'CV-04', '1865', 19.75, 23.7),
+(236, 'TV-01', 'CV-03', '1359', 35.36, 42.432),
+(238, 'TV-01', 'CV-05', '1097', 48.01, 57.612),
+(239, 'TV-02', 'CV-02', '2060', 44.18, 53.016),
+(240, 'TV-02', 'CV-04', '1953', 79.8, 95.76),
+(242, 'TV-02', 'CV-05', '2650', 73.38, 88.056),
+(243, 'TV-02', 'CV-05', '2672', 88.76, 106.512),
+(244, 'TV-01', 'CV-05', '2427', 98.62, 118.344),
+(245, 'TV-01', 'CV-01', '2872', 47.37, 56.844),
+(246, 'TV-01', 'CV-01', '1671', 37.11, 44.532),
+(247, 'TV-02', 'CV-05', '2244', 35.49, 42.588),
+(248, 'TV-01', 'CV-02', '2346', 74.4, 89.28),
+(249, 'TV-02', 'CV-05', '1821', 89.1, 106.92),
+(250, 'TV-02', 'CV-02', '2358', 54.29, 65.148),
+(251, 'TV-02', 'CV-03', '1794', 75.81, 90.972),
+(252, 'TV-01', 'CV-03', '2427', 54.67, 65.604),
+(254, 'TV-02', 'CV-03', '1688', 78.96, 94.752),
+(255, 'TV-02', 'CV-05', '1703', 83.75, 100.5),
+(256, 'TV-02', 'CV-03', '2464', 59.72, 71.664),
+(257, 'TV-02', 'CV-04', '1979', 29.31, 35.172),
+(258, 'TV-01', 'CV-01', '2018', 74.85, 89.82),
+(259, 'TV-01', 'CV-02', '2084', 97.56, 117.072),
+(260, 'TV-01', 'CV-01', '2410', 81.71, 98.052),
+(261, 'TV-02', 'CV-04', '1271', 65.54, 78.648),
+(263, 'TV-02', 'CV-05', '2541', 53.92, 64.704),
+(264, 'TV-01', 'CV-05', '1808', 29.98, 35.976),
+(265, 'TV-02', 'CV-05', '1420', 33.85, 40.62),
+(266, 'TV-02', 'CV-05', '1513', 96.68, 116.016),
+(267, 'TV-01', 'CV-03', '1974', 96.48, 115.776),
+(268, 'TV-02', 'CV-01', '2672', 10.1, 12.12),
+(269, 'TV-01', 'CV-05', '1660', 55.91, 67.092),
+(270, 'TV-02', 'CV-03', '2472', 92.34, 110.808),
+(271, 'TV-02', 'CV-03', '1310', 99.2, 119.04),
+(272, 'TV-02', 'CV-02', '1202', 56.65, 67.98),
+(273, 'TV-01', 'CV-04', '2545', 94.03, 112.836),
+(274, 'TV-01', 'CV-05', '1024', 41.96, 50.352),
+(275, 'TV-02', 'CV-04', '2181', 88.24, 105.888),
+(276, 'TV-02', 'CV-04', '2939', 63.46, 76.152),
+(277, 'TV-01', 'CV-01', '1310', 80.38, 96.456),
+(278, 'TV-01', 'CV-02', '1286', 82, 98.4),
+(279, 'TV-01', 'CV-02', '2054', 28.86, 34.632),
+(280, 'TV-01', 'CV-05', '2122', 52.69, 63.228),
+(281, 'TV-02', 'CV-04', '2841', 14.11, 16.932),
+(282, 'TV-02', 'CV-04', '2798', 13.7, 16.44),
+(283, 'TV-02', 'CV-01', '2918', 53.21, 63.852),
+(284, 'TV-02', 'CV-05', '1233', 75.59, 90.708),
+(285, 'TV-01', 'CV-01', '1070', 28.4, 34.08),
+(286, 'TV-01', 'CV-05', '1347', 39.56, 47.472),
+(287, 'TV-02', 'CV-04', '1824', 74.92, 89.904),
+(288, 'TV-02', 'CV-05', '2838', 23.76, 28.512),
+(289, 'TV-02', 'CV-02', '2092', 94.44, 113.328),
+(291, 'TV-02', 'CV-03', '1534', 42.61, 51.132),
+(292, 'TV-01', 'CV-03', '2683', 67.21, 80.652),
+(293, 'TV-02', 'CV-04', '2917', 59.99, 71.988),
+(294, 'TV-02', 'CV-05', '2582', 80.04, 96.048),
+(295, 'TV-02', 'CV-04', '1460', 88.91, 106.692),
+(296, 'TV-01', 'CV-05', '2907', 61.96, 74.352),
+(297, 'TV-02', 'CV-01', '1786', 78.47, 94.164),
+(298, 'TV-02', 'CV-01', '1078', 5.89, 7.068),
+(299, 'TV-01', 'CV-03', '2556', 2.9, 3.48),
+(300, 'TV-01', 'CV-03', '1574', 7.14, 8.568),
+(301, 'TV-01', 'CV-05', '2623', 42.33, 50.796),
+(302, 'TV-02', 'CV-03', '2605', 11.01, 13.212),
+(303, 'TV-02', 'CV-04', '1600', 86.09, 103.308),
+(304, 'TV-02', 'CV-05', '2306', 15.94, 19.128),
+(305, 'TV-01', 'CV-03', '2010', 86.79, 104.148),
+(306, 'TV-01', 'CV-02', '2115', 32.24, 38.688),
+(307, 'TV-02', 'CV-04', '1164', 28.51, 34.212),
+(308, 'TV-02', 'CV-04', '2839', 13.68, 16.416),
+(309, 'TV-02', 'CV-02', '1435', 77.49, 92.988),
+(310, 'TV-02', 'CV-05', '1181', 35.99, 43.188),
+(311, 'TV-01', 'CV-03', '2655', 0.16, 0.192),
+(312, 'TV-01', 'CV-04', '1938', 93.24, 111.888),
+(313, 'TV-02', 'CV-04', '1697', 80.87, 97.044),
+(314, 'TV-01', 'CV-05', '2650', 16.83, 20.196),
+(315, 'TV-02', 'CV-04', '1727', 74.7, 89.64),
+(316, 'TV-01', 'CV-05', '1505', 36.31, 43.572),
+(317, 'TV-02', 'CV-01', '1868', 27.11, 32.532),
+(319, 'TV-01', 'CV-03', '2763', 20.56, 24.672),
+(320, 'TV-02', 'CV-02', '2018', 46.25, 55.5),
+(321, 'TV-01', 'CV-05', '2319', 13.1, 15.72),
+(322, 'TV-02', 'CV-03', '2310', 19.77, 23.724),
+(323, 'TV-01', 'CV-01', '1440', 4.82, 5.784),
+(325, 'TV-01', 'CV-01', '1211', 18.08, 21.696),
+(326, 'TV-01', 'CV-03', '2716', 61.35, 73.62),
+(327, 'TV-02', 'CV-05', '2169', 88.1, 105.72),
+(328, 'TV-01', 'CV-05', '1356', 13.02, 15.624),
+(329, 'TV-02', 'CV-02', '1276', 98.32, 117.984),
+(330, 'TV-02', 'CV-01', '2741', 17.72, 21.264),
+(331, 'TV-01', 'CV-02', '1445', 46.65, 55.98),
+(333, 'TV-02', 'CV-02', '2956', 73.75, 88.5),
+(334, 'TV-01', 'CV-01', '1819', 73.04, 87.648),
+(335, 'TV-01', 'CV-03', '1645', 66.38, 79.656),
+(336, 'TV-01', 'CV-03', '2301', 3.97, 4.764),
+(337, 'TV-01', 'CV-04', '1597', 39.63, 47.556),
+(338, 'TV-02', 'CV-05', '2870', 94.52, 113.424),
+(339, 'TV-02', 'CV-01', '2113', 55.94, 67.128),
+(340, 'TV-02', 'CV-04', '1288', 1.07, 1.284),
+(341, 'TV-02', 'CV-04', '1424', 69.62, 83.544),
+(342, 'TV-02', 'CV-03', '1704', 74.97, 89.964),
+(343, 'TV-01', 'CV-05', '1833', 1.51, 1.812),
+(344, 'TV-01', 'CV-04', '2081', 42.41, 50.892),
+(345, 'TV-01', 'CV-03', '1374', 67.65, 81.18),
+(346, 'TV-02', 'CV-02', '2986', 45.19, 54.228),
+(347, 'TV-01', 'CV-02', '2310', 78.92, 94.704),
+(348, 'TV-02', 'CV-05', '2914', 43.6, 52.32),
+(349, 'TV-01', 'CV-02', '1217', 85.69, 102.828),
+(350, 'TV-01', 'CV-04', '1783', 23.21, 27.852),
+(351, 'TV-01', 'CV-01', '1708', 60.72, 72.864),
+(352, 'TV-02', 'CV-01', '1981', 83.05, 99.66),
+(353, 'TV-02', 'CV-03', '1944', 84.8, 101.76),
+(354, 'TV-01', 'CV-04', '2640', 57.82, 69.384),
+(355, 'TV-01', 'CV-01', '1907', 85.89, 103.068),
+(356, 'TV-02', 'CV-05', '2509', 34.12, 40.944),
+(357, 'TV-02', 'CV-01', '2606', 54.53, 65.436),
+(358, 'TV-01', 'CV-01', '2945', 7.48, 8.976),
+(359, 'TV-01', 'CV-02', '2347', 97, 116.4),
+(360, 'TV-01', 'CV-02', '2401', 48.19, 57.828),
+(361, 'TV-02', 'CV-04', '1740', 44.09, 52.908),
+(362, 'TV-02', 'CV-01', '2724', 7.61, 9.132),
+(363, 'TV-01', 'CV-02', '2933', 37.75, 45.3),
+(364, 'TV-01', 'CV-04', '2448', 69.17, 83.004),
+(365, 'TV-01', 'CV-05', '1540', 10.08, 12.096),
+(366, 'TV-02', 'CV-01', '2494', 90.56, 108.672),
+(367, 'TV-01', 'CV-01', '1199', 51.07, 61.284),
+(368, 'TV-01', 'CV-04', '1558', 54.36, 65.232),
+(369, 'TV-02', 'CV-02', '1470', 43.29, 51.948),
+(370, 'TV-02', 'CV-04', '2593', 82.98, 99.576),
+(371, 'TV-02', 'CV-04', '2939', 67.39, 80.868),
+(372, 'TV-02', 'CV-02', '1092', 28.45, 34.14),
+(373, 'TV-01', 'CV-04', '1054', 80.38, 96.456),
+(374, 'TV-01', 'CV-01', '2842', 54.69, 65.628),
+(375, 'TV-02', 'CV-02', '1014', 0, 0),
+(376, 'TV-01', 'CV-03', '1420', 25.25, 30.3),
+(377, 'TV-02', 'CV-03', '2417', 3.17, 3.804),
+(378, 'TV-02', 'CV-01', '2928', 95.37, 114.444),
+(379, 'TV-02', 'CV-04', '1258', 27.65, 33.18),
+(380, 'TV-02', 'CV-02', '1760', 91.7, 110.04),
+(381, 'TV-01', 'CV-05', '1411', 79.7, 95.64),
+(382, 'TV-01', 'CV-03', '2468', 21.49, 25.788),
+(383, 'TV-01', 'CV-03', '1345', 78.34, 94.008),
+(384, 'TV-01', 'CV-03', '1790', 77.35, 92.82),
+(385, 'TV-01', 'CV-04', '1729', 84.52, 101.424),
+(386, 'TV-02', 'CV-01', '2819', 62.79, 75.348),
+(387, 'TV-01', 'CV-02', '1528', 40.07, 48.084),
+(388, 'TV-01', 'CV-03', '1020', 46.4, 55.68),
+(389, 'TV-01', 'CV-02', '2574', 79.05, 94.86),
+(390, 'TV-01', 'CV-03', '2169', 32.63, 39.156),
+(391, 'TV-02', 'CV-05', '1110', 89.73, 107.676),
+(392, 'TV-01', 'CV-03', '2097', 3.4, 4.08),
+(393, 'TV-01', 'CV-04', '1961', 78.74, 94.488),
+(394, 'TV-02', 'CV-01', '1494', 54.22, 65.064),
+(395, 'TV-01', 'CV-02', '1854', 54.7, 65.64),
+(396, 'TV-02', 'CV-03', '2752', 75.74, 90.888),
+(397, 'TV-02', 'CV-04', '2425', 1.12, 1.344),
+(398, 'TV-02', 'CV-03', '2710', 74.34, 89.208),
+(399, 'TV-02', 'CV-02', '2790', 67.44, 80.928),
+(400, 'TV-02', 'CV-02', '1135', 2.11, 2.532),
+(401, 'TV-01', 'CV-04', '2824', 75.3, 90.36),
+(402, 'TV-01', 'CV-03', '2858', 91.64, 109.968),
+(403, 'TV-01', 'CV-02', '1308', 11.43, 13.716),
+(404, 'TV-02', 'CV-03', '2450', 26.25, 31.5),
+(405, 'TV-01', 'CV-03', '2497', 53.92, 64.704),
+(406, 'TV-01', 'CV-04', '1354', 87.22, 104.664),
+(407, 'TV-02', 'CV-05', '1087', 70.79, 84.948),
+(408, 'TV-01', 'CV-04', '2170', 57.84, 69.408),
+(409, 'TV-01', 'CV-02', '2185', 20.34, 24.408),
+(410, 'TV-02', 'CV-05', '2786', 52.92, 63.504),
+(411, 'TV-02', 'CV-04', '2671', 9.59, 11.508),
+(412, 'TV-02', 'CV-01', '2715', 7.93, 9.516),
+(413, 'TV-02', 'CV-03', '1641', 13.51, 16.212),
+(414, 'TV-01', 'CV-02', '1020', 12.96, 15.552),
+(415, 'TV-02', 'CV-04', '2415', 57.45, 68.94),
+(416, 'TV-02', 'CV-03', '2209', 30.98, 37.176),
+(417, 'TV-02', 'CV-01', '2549', 89.98, 107.976),
+(418, 'TV-01', 'CV-04', '2967', 54.79, 65.748),
+(419, 'TV-01', 'CV-01', '2146', 33.63, 40.356),
+(420, 'TV-02', 'CV-01', '2390', 56.65, 67.98),
+(421, 'TV-02', 'CV-04', '2082', 66.93, 80.316),
+(424, 'TV-01', 'CV-03', '1352', 84.87, 101.844),
+(425, 'TV-01', 'CV-05', '2017', 47.6, 57.12),
+(426, 'TV-02', 'CV-02', '1812', 85.46, 102.552),
+(427, 'TV-02', 'CV-02', '2426', 41.13, 49.356),
+(428, 'TV-01', 'CV-02', '2384', 26.48, 31.776),
+(429, 'TV-01', 'CV-03', '2018', 93.04, 111.648),
+(430, 'TV-02', 'CV-01', '2735', 59.07, 70.884),
+(431, 'TV-02', 'CV-04', '2688', 89.42, 107.304),
+(432, 'TV-01', 'CV-05', '1786', 36.73, 44.076),
+(434, 'TV-01', 'CV-01', '1479', 54.19, 65.028),
+(435, 'TV-01', 'CV-04', '2614', 2.47, 2.964),
+(436, 'TV-01', 'CV-05', '1170', 47.26, 56.712),
+(437, 'TV-02', 'CV-04', '2515', 4.12, 4.944),
+(438, 'TV-02', 'CV-04', '1170', 25.27, 30.324),
+(439, 'TV-02', 'CV-04', '2210', 86.31, 103.572),
+(440, 'TV-02', 'CV-03', '1651', 15.73, 18.876),
+(441, 'TV-01', 'CV-03', '2582', 8.33, 9.996),
+(442, 'TV-01', 'CV-05', '1798', 53.09, 63.708),
+(443, 'TV-01', 'CV-01', '1104', 39.5, 47.4),
+(444, 'TV-02', 'CV-03', '2454', 34.57, 41.484),
+(445, 'TV-01', 'CV-04', '2818', 47.24, 56.688),
+(446, 'TV-01', 'CV-03', '2059', 31.49, 37.788),
+(447, 'TV-02', 'CV-05', '2199', 7.06, 8.472),
+(448, 'TV-01', 'CV-01', '2996', 83.71, 100.452),
+(449, 'TV-01', 'CV-01', '2582', 10.95, 13.14),
+(450, 'TV-02', 'CV-04', '2544', 84.58, 101.496),
+(451, 'TV-02', 'CV-02', '2206', 88.96, 106.752),
+(452, 'TV-01', 'CV-02', '2662', 74.96, 89.952),
+(454, 'TV-01', 'CV-02', '2580', 32.62, 39.144),
+(455, 'TV-01', 'CV-01', '1609', 83.77, 100.524),
+(456, 'TV-02', 'CV-02', '2766', 83.93, 100.716),
+(457, 'TV-02', 'CV-01', '1752', 69.62, 83.544),
+(458, 'TV-02', 'CV-05', '2017', 53.82, 64.584),
+(459, 'TV-02', 'CV-04', '1370', 64.55, 77.46),
+(460, 'TV-01', 'CV-02', '1400', 11.17, 13.404),
+(461, 'TV-02', 'CV-03', '2754', 80.26, 96.312),
+(462, 'TV-02', 'CV-04', '1235', 56.5, 67.8),
+(463, 'TV-02', 'CV-05', '1311', 92.21, 110.652),
+(464, 'TV-02', 'CV-05', '1231', 28.24, 33.888),
+(465, 'TV-01', 'CV-05', '2563', 14.47, 17.364),
+(466, 'TV-01', 'CV-02', '1467', 33.46, 40.152),
+(468, 'TV-01', 'CV-01', '2614', 20.27, 24.324),
+(469, 'TV-01', 'CV-04', '2443', 14.06, 16.872),
+(470, 'TV-02', 'CV-04', '1328', 86.4, 103.68),
+(471, 'TV-01', 'CV-05', '2428', 69.79, 83.748),
+(472, 'TV-01', 'CV-02', '2626', 76.28, 91.536),
+(473, 'TV-02', 'CV-01', '2724', 67.4, 80.88),
+(474, 'TV-01', 'CV-02', '2794', 39.81, 47.772),
+(475, 'TV-01', 'CV-01', '1457', 33.86, 40.632),
+(476, 'TV-02', 'CV-04', '2925', 32.78, 39.336),
+(477, 'TV-02', 'CV-05', '2133', 46.43, 55.716),
+(478, 'TV-01', 'CV-01', '1945', 72.86, 87.432),
+(479, 'TV-01', 'CV-02', '1751', 98.67, 118.404),
+(481, 'TV-02', 'CV-04', '1490', 51.53, 61.836),
+(482, 'TV-01', 'CV-01', '2701', 85.65, 102.78),
+(483, 'TV-02', 'CV-03', '2917', 98.89, 118.668),
+(484, 'TV-01', 'CV-02', '1454', 57.3, 68.76),
+(485, 'TV-02', 'CV-05', '1186', 44.61, 53.532),
+(486, 'TV-02', 'CV-03', '2670', 42.73, 51.276),
+(487, 'TV-02', 'CV-03', '2282', 34.47, 41.364),
+(488, 'TV-02', 'CV-02', '1848', 16.97, 20.364),
+(489, 'TV-01', 'CV-02', '2987', 8.28, 9.936),
+(490, 'TV-02', 'CV-01', '1764', 10.86, 13.032),
+(491, 'TV-01', 'CV-03', '1967', 95.18, 114.216),
+(492, 'TV-02', 'CV-02', '1391', 91.02, 109.224),
+(493, 'TV-01', 'CV-05', '1874', 88.46, 106.152),
+(494, 'TV-01', 'CV-01', '1673', 27.83, 33.396),
+(495, 'TV-01', 'CV-03', '1721', 60.56, 72.672),
+(496, 'TV-02', 'CV-05', '2007', 47.39, 56.868),
+(497, 'TV-02', 'CV-04', '2825', 69.65, 83.58),
+(498, 'TV-02', 'CV-01', '2615', 94.84, 113.808),
+(499, 'TV-02', 'CV-02', '2823', 45.68, 54.816),
+(500, 'TV-02', 'CV-04', '1835', 50.32, 60.384),
+(502, 'TV-01', 'CV-04', '1412', 54.71, 65.652),
+(503, 'TV-02', 'CV-03', '2250', 44.78, 53.736),
+(504, 'TV-01', 'CV-03', '2443', 58.83, 70.596),
+(505, 'TV-01', 'CV-04', '1652', 6.78, 8.136),
+(506, 'TV-01', 'CV-02', '2980', 66.33, 79.596),
+(507, 'TV-02', 'CV-02', '1752', 66.15, 79.38),
+(508, 'TV-02', 'CV-04', '1363', 79.85, 95.82),
+(509, 'TV-01', 'CV-01', '2487', 93.33, 111.996),
+(510, 'TV-01', 'CV-01', '1991', 84.19, 101.028),
+(511, 'TV-01', 'CV-03', '2635', 13.7, 16.44),
+(512, 'TV-01', 'CV-04', '1652', 24.66, 29.592),
+(513, 'TV-01', 'CV-03', '1356', 56.57, 67.884),
+(514, 'TV-01', 'CV-01', '2264', 37.01, 44.412),
+(515, 'TV-01', 'CV-04', '1459', 76.64, 91.968),
+(516, 'TV-02', 'CV-05', '2254', 89.24, 107.088),
+(517, 'TV-01', 'CV-03', '2156', 28.33, 33.996),
+(518, 'TV-02', 'CV-04', '2326', 92.36, 110.832),
+(519, 'TV-01', 'CV-03', '1739', 12.33, 14.796),
+(520, 'TV-01', 'CV-04', '2357', 39.56, 47.472),
+(521, 'TV-02', 'CV-05', '1527', 12.54, 15.048),
+(522, 'TV-01', 'CV-04', '1857', 17.64, 21.168),
+(523, 'TV-02', 'CV-03', '1188', 4.05, 4.86),
+(524, 'TV-02', 'CV-04', '1677', 17.56, 21.072),
+(525, 'TV-02', 'CV-03', '2007', 73.24, 87.888),
+(526, 'TV-01', 'CV-03', '2927', 37.43, 44.916),
+(528, 'TV-02', 'CV-04', '2792', 54.28, 65.136),
+(529, 'TV-01', 'CV-02', '2898', 67.7, 81.24),
+(530, 'TV-02', 'CV-02', '1094', 2.51, 3.012),
+(531, 'TV-01', 'CV-05', '1408', 13.64, 16.368),
+(532, 'TV-02', 'CV-05', '2705', 38.6, 46.32),
+(533, 'TV-01', 'CV-05', '2184', 66.82, 80.184),
+(534, 'TV-01', 'CV-03', '2719', 57.21, 68.652),
+(535, 'TV-02', 'CV-01', '2819', 50.71, 60.852),
+(536, 'TV-02', 'CV-02', '1847', 80.06, 96.072),
+(537, 'TV-02', 'CV-03', '2301', 16.44, 19.728),
+(539, 'TV-01', 'CV-01', '1736', 28.42, 34.104),
+(540, 'TV-02', 'CV-03', '1450', 12.85, 15.42),
+(541, 'TV-01', 'CV-03', '1945', 5.26, 6.312),
+(542, 'TV-01', 'CV-04', '1889', 12.25, 14.7),
+(543, 'TV-01', 'CV-03', '1657', 83.56, 100.272),
+(544, 'TV-01', 'CV-03', '2104', 67.19, 80.628),
+(545, 'TV-02', 'CV-04', '1202', 38.36, 46.032),
+(546, 'TV-02', 'CV-03', '2274', 92.05, 110.46),
+(547, 'TV-01', 'CV-02', '2133', 88.3, 105.96),
+(548, 'TV-01', 'CV-01', '2239', 91.42, 109.704),
+(549, 'TV-01', 'CV-02', '2099', 83.88, 100.656),
+(550, 'TV-01', 'CV-02', '1125', 39.86, 47.832),
+(552, 'TV-01', 'CV-01', '1442', 33.61, 40.332),
+(553, 'TV-02', 'CV-02', '2985', 16.9, 20.28),
+(554, 'TV-02', 'CV-01', '1292', 24.57, 29.484),
+(556, 'TV-02', 'CV-02', '2929', 24.62, 29.544),
+(557, 'TV-01', 'CV-03', '1308', 40.69, 48.828),
+(558, 'TV-01', 'CV-02', '1176', 28.32, 33.984),
+(559, 'TV-01', 'CV-03', '2364', 53.11, 63.732),
+(560, 'TV-01', 'CV-02', '2785', 94.96, 113.952),
+(561, 'TV-02', 'CV-05', '1126', 66.89, 80.268),
+(562, 'TV-01', 'CV-02', '2563', 99.11, 118.932),
+(563, 'TV-02', 'CV-03', '2851', 5.39, 6.468),
+(564, 'TV-02', 'CV-02', '1014', 89.67, 107.604),
+(565, 'TV-01', 'CV-01', '1036', 48.95, 58.74),
+(566, 'TV-01', 'CV-04', '2552', 73.21, 87.852),
+(567, 'TV-02', 'CV-05', '1489', 90.16, 108.192),
+(569, 'TV-01', 'CV-04', '2603', 84.1, 100.92),
+(570, 'TV-01', 'CV-05', '2365', 73.79, 88.548),
+(571, 'TV-02', 'CV-02', '2739', 36.02, 43.224),
+(572, 'TV-02', 'CV-04', '2507', 47.25, 56.7),
+(573, 'TV-01', 'CV-02', '1888', 91.87, 110.244),
+(574, 'TV-02', 'CV-04', '1966', 13.12, 15.744),
+(575, 'TV-01', 'CV-04', '2983', 32.65, 39.18),
+(576, 'TV-01', 'CV-01', '2675', 36.01, 43.212),
+(577, 'TV-02', 'CV-02', '2964', 25.33, 30.396),
+(578, 'TV-01', 'CV-01', '1763', 98.66, 118.392),
+(579, 'TV-02', 'CV-02', '2673', 76.57, 91.884),
+(580, 'TV-01', 'CV-01', '1909', 69, 82.8),
+(581, 'TV-02', 'CV-01', '1917', 26.39, 31.668),
+(582, 'TV-02', 'CV-01', '2502', 25.47, 30.564),
+(583, 'TV-02', 'CV-05', '1834', 76.48, 91.776),
+(584, 'TV-01', 'CV-01', '1976', 9.13, 10.956),
+(585, 'TV-01', 'CV-05', '1016', 0.54, 0.648),
+(586, 'TV-01', 'CV-04', '2070', 80.12, 96.144),
+(587, 'TV-01', 'CV-03', '2407', 4.62, 5.544),
+(588, 'TV-01', 'CV-04', '2040', 8.56, 10.272),
+(589, 'TV-02', 'CV-01', '2452', 47.75, 57.3),
+(590, 'TV-02', 'CV-05', '2439', 72.14, 86.568),
+(591, 'TV-02', 'CV-03', '2441', 60.52, 72.624),
+(592, 'TV-01', 'CV-05', '1790', 80.16, 96.192),
+(594, 'TV-02', 'CV-02', '2562', 8.85, 10.62),
+(595, 'TV-02', 'CV-01', '1082', 5.11, 6.132),
+(596, 'TV-02', 'CV-01', '1987', 74.43, 89.316),
+(598, 'TV-01', 'CV-02', '2602', 21.33, 25.596),
+(599, 'TV-02', 'CV-04', '2765', 15.35, 18.42),
+(600, 'TV-01', 'CV-03', '2344', 95.93, 115.116),
+(601, 'TV-02', 'CV-01', '1116', 22.25, 26.7),
+(602, 'TV-01', 'CV-02', '2528', 63.29, 75.948),
+(604, 'TV-01', 'CV-05', '2501', 67.99, 81.588),
+(605, 'TV-02', 'CV-02', '2560', 9.13, 10.956),
+(606, 'TV-01', 'CV-05', '1024', 76.35, 91.62),
+(607, 'TV-01', 'CV-05', '1479', 14.01, 16.812),
+(608, 'TV-02', 'CV-01', '1021', 77.98, 93.576),
+(609, 'TV-02', 'CV-03', '1996', 69.1, 82.92),
+(610, 'TV-02', 'CV-02', '2900', 43.44, 52.128),
+(611, 'TV-01', 'CV-03', '1937', 25.21, 30.252),
+(612, 'TV-02', 'CV-01', '1296', 86, 103.2),
+(613, 'TV-01', 'CV-01', '2954', 71.32, 85.584),
+(614, 'TV-01', 'CV-03', '2661', 83.3, 99.96),
+(615, 'TV-01', 'CV-03', '1688', 60.96, 73.152),
+(616, 'TV-02', 'CV-02', '2945', 82.12, 98.544),
+(617, 'TV-02', 'CV-03', '1381', 39.56, 47.472),
+(618, 'TV-02', 'CV-05', '2332', 71.77, 86.124),
+(619, 'TV-01', 'CV-03', '2641', 5.01, 6.012),
+(621, 'TV-02', 'CV-04', '1466', 12.38, 14.856),
+(622, 'TV-02', 'CV-04', '1967', 23.02, 27.624),
+(623, 'TV-02', 'CV-01', '2599', 38.13, 45.756),
+(624, 'TV-02', 'CV-03', '2800', 47.18, 56.616),
+(625, 'TV-01', 'CV-04', '1594', 88.69, 106.428),
+(626, 'TV-02', 'CV-02', '2233', 78.48, 94.176),
+(627, 'TV-02', 'CV-03', '2101', 55.26, 66.312),
+(628, 'TV-02', 'CV-03', '2075', 71.33, 85.596),
+(629, 'TV-02', 'CV-04', '2800', 51.7, 62.04),
+(631, 'TV-01', 'CV-05', '1042', 22.15, 26.58),
+(632, 'TV-01', 'CV-05', '2073', 97.66, 117.192),
+(633, 'TV-01', 'CV-01', '1327', 1.27, 1.524),
+(634, 'TV-01', 'CV-01', '1964', 78.79, 94.548),
+(635, 'TV-02', 'CV-03', '1873', 12.28, 14.736),
+(636, 'TV-01', 'CV-05', '1369', 69.39, 83.268),
+(637, 'TV-01', 'CV-03', '2157', 7.48, 8.976),
+(640, 'TV-01', 'CV-05', '2818', 38.78, 46.536),
+(641, 'TV-01', 'CV-02', '1527', 36.81, 44.172),
+(642, 'TV-02', 'CV-05', '1318', 43.18, 51.816),
+(643, 'TV-01', 'CV-01', '2491', 61.53, 73.836),
+(644, 'TV-01', 'CV-05', '1070', 5.68, 6.816),
+(645, 'TV-01', 'CV-04', '1860', 72.79, 87.348),
+(646, 'TV-02', 'CV-02', '2356', 79.83, 95.796),
+(647, 'TV-02', 'CV-01', '2644', 5.37, 6.444),
+(648, 'TV-02', 'CV-05', '1924', 15.68, 18.816),
+(649, 'TV-02', 'CV-05', '2793', 95.88, 115.056),
+(651, 'TV-01', 'CV-01', '2268', 0.16, 0.192),
+(652, 'TV-01', 'CV-01', '1369', 48.72, 58.464),
+(653, 'TV-01', 'CV-05', '2060', 48.63, 58.356),
+(654, 'TV-01', 'CV-04', '2122', 21.63, 25.956),
+(655, 'TV-01', 'CV-02', '2526', 35.51, 42.612),
+(656, 'TV-01', 'CV-05', '1537', 79.14, 94.968),
+(657, 'TV-02', 'CV-02', '1186', 46.2, 55.44),
+(658, 'TV-02', 'CV-02', '2549', 75.23, 90.276),
+(659, 'TV-01', 'CV-04', '2990', 80.99, 97.188),
+(660, 'TV-02', 'CV-03', '1449', 45.87, 55.044),
+(661, 'TV-01', 'CV-04', '2807', 5.43, 6.516),
+(662, 'TV-01', 'CV-05', '2436', 36.73, 44.076),
+(663, 'TV-01', 'CV-05', '2461', 60.25, 72.3),
+(664, 'TV-01', 'CV-03', '1735', 32.98, 39.576),
+(665, 'TV-01', 'CV-02', '2674', 76.54, 91.848),
+(666, 'TV-02', 'CV-05', '1253', 33.16, 39.792),
+(667, 'TV-01', 'CV-04', '2392', 77.97, 93.564),
+(668, 'TV-01', 'CV-04', '2708', 41.59, 49.908),
+(669, 'TV-01', 'CV-02', '2564', 25.14, 30.168),
+(670, 'TV-02', 'CV-04', '2490', 42.43, 50.916),
+(672, 'TV-02', 'CV-02', '2352', 3.21, 3.852),
+(673, 'TV-01', 'CV-02', '2325', 95.94, 115.128),
+(674, 'TV-01', 'CV-01', '1302', 89.22, 107.064),
+(675, 'TV-01', 'CV-04', '1553', 16.63, 19.956),
+(676, 'TV-01', 'CV-01', '2821', 65.45, 78.54),
+(677, 'TV-01', 'CV-03', '2981', 69.98, 83.976),
+(678, 'TV-02', 'CV-03', '2729', 65.42, 78.504),
+(679, 'TV-01', 'CV-05', '1734', 67.9, 81.48),
+(680, 'TV-02', 'CV-04', '1931', 79.37, 95.244),
+(681, 'TV-01', 'CV-04', '1193', 5.64, 6.768),
+(682, 'TV-01', 'CV-04', '2730', 89.67, 107.604),
+(683, 'TV-02', 'CV-01', '1190', 93.02, 111.624),
+(684, 'TV-02', 'CV-02', '2418', 80.25, 96.3),
+(685, 'TV-01', 'CV-02', '1922', 13.37, 16.044),
+(686, 'TV-02', 'CV-01', '1688', 97.7, 117.24),
+(687, 'TV-02', 'CV-01', '1133', 65.18, 78.216),
+(689, 'TV-01', 'CV-01', '1738', 85.16, 102.192),
+(690, 'TV-01', 'CV-04', '1320', 67.78, 81.336),
+(691, 'TV-01', 'CV-04', '2015', 77.63, 93.156),
+(692, 'TV-01', 'CV-05', '2460', 79.39, 95.268),
+(693, 'TV-01', 'CV-03', '1640', 21.09, 25.308),
+(694, 'TV-01', 'CV-03', '2679', 8.66, 10.392),
+(695, 'TV-02', 'CV-05', '1310', 97.02, 116.424),
+(696, 'TV-01', 'CV-05', '2420', 19.82, 23.784),
+(697, 'TV-01', 'CV-02', '1122', 53.81, 64.572),
+(698, 'TV-01', 'CV-02', '2362', 22.43, 26.916),
+(699, 'TV-01', 'CV-05', '2481', 41.73, 50.076),
+(700, 'TV-02', 'CV-03', '2006', 48.83, 58.596),
+(702, 'TV-02', 'CV-03', '2968', 25.19, 30.228),
+(703, 'TV-01', 'CV-02', '2830', 54.74, 65.688),
+(704, 'TV-01', 'CV-03', '1270', 70.26, 84.312),
+(705, 'TV-01', 'CV-02', '1351', 83.7, 100.44),
+(707, 'TV-01', 'CV-04', '1038', 18.03, 21.636),
+(708, 'TV-02', 'CV-04', '1626', 77.74, 93.288),
+(709, 'TV-01', 'CV-04', '2783', 7.22, 8.664),
+(711, 'TV-02', 'CV-05', '2290', 88.35, 106.02),
+(712, 'TV-02', 'CV-05', '2046', 36.25, 43.5),
+(713, 'TV-01', 'CV-02', '1866', 21.43, 25.716),
+(714, 'TV-01', 'CV-02', '2990', 33.87, 40.644),
+(716, 'TV-02', 'CV-02', '1384', 33.38, 40.056),
+(717, 'TV-01', 'CV-03', '1461', 54.54, 65.448),
+(718, 'TV-02', 'CV-04', '1187', 68.09, 81.708),
+(719, 'TV-02', 'CV-02', '1474', 18.65, 22.38),
+(720, 'TV-01', 'CV-01', '2588', 75.12, 90.144),
+(721, 'TV-01', 'CV-01', '2142', 51.45, 61.74),
+(723, 'TV-02', 'CV-04', '1675', 81.8, 98.16),
+(724, 'TV-02', 'CV-05', '2914', 67.11, 80.532),
+(726, 'TV-01', 'CV-01', '1819', 75.55, 90.66),
+(728, 'TV-02', 'CV-01', '2802', 14.83, 17.796),
+(730, 'TV-01', 'CV-01', '2215', 46.47, 55.764),
+(731, 'TV-01', 'CV-04', '1123', 14.59, 17.508),
+(732, 'TV-01', 'CV-02', '2972', 22.92, 27.504),
+(734, 'TV-01', 'CV-02', '2785', 93.35, 112.02),
+(735, 'TV-02', 'CV-04', '2899', 1.19, 1.428),
+(736, 'TV-02', 'CV-01', '2870', 96.81, 116.172),
+(737, 'TV-01', 'CV-05', '1648', 33.66, 40.392),
+(738, 'TV-01', 'CV-01', '2485', 20.94, 25.128),
+(739, 'TV-01', 'CV-01', '1477', 46.82, 56.184),
+(740, 'TV-01', 'CV-02', '1130', 23.38, 28.056),
+(741, 'TV-02', 'CV-05', '2612', 58.85, 70.62),
+(742, 'TV-02', 'CV-03', '2358', 87.37, 104.844),
+(743, 'TV-01', 'CV-04', '1916', 72.81, 87.372),
+(744, 'TV-02', 'CV-01', '2714', 82.66, 99.192),
+(745, 'TV-01', 'CV-05', '2402', 45.47, 54.564),
+(746, 'TV-02', 'CV-05', '2944', 18.29, 21.948),
+(747, 'TV-01', 'CV-02', '2076', 2.87, 3.444),
+(749, 'TV-01', 'CV-04', '2613', 41.66, 49.992),
+(750, 'TV-02', 'CV-04', '2046', 58.73, 70.476),
+(751, 'TV-01', 'CV-01', '1718', 97.1, 116.52),
+(752, 'TV-02', 'CV-05', '1713', 65.53, 78.636),
+(753, 'TV-02', 'CV-03', '2236', 81.45, 97.74),
+(754, 'TV-02', 'CV-04', '1023', 85.79, 102.948),
+(755, 'TV-01', 'CV-01', '2533', 25.38, 30.456),
+(756, 'TV-01', 'CV-01', '1203', 37.27, 44.724),
+(758, 'TV-02', 'CV-01', '1166', 49.67, 59.604),
+(759, 'TV-01', 'CV-04', '1375', 34.95, 41.94),
+(760, 'TV-02', 'CV-03', '2087', 72.68, 87.216),
+(762, 'TV-01', 'CV-02', '1264', 4.5, 5.4),
+(763, 'TV-02', 'CV-03', '2983', 97.25, 116.7),
+(765, 'TV-02', 'CV-04', '2635', 29.37, 35.244),
+(766, 'TV-01', 'CV-04', '2305', 26.44, 31.728),
+(767, 'TV-02', 'CV-03', '2915', 7.53, 9.036),
+(768, 'TV-02', 'CV-03', '1455', 89.11, 106.932),
+(769, 'TV-01', 'CV-04', '1647', 95.04, 114.048),
+(770, 'TV-02', 'CV-01', '2325', 36.38, 43.656),
+(771, 'TV-02', 'CV-01', '1341', 66.08, 79.296),
+(773, 'TV-01', 'CV-02', '2419', 67.4, 80.88),
+(774, 'TV-01', 'CV-05', '2242', 25.33, 30.396),
+(776, 'TV-02', 'CV-03', '1790', 85.12, 102.144),
+(777, 'TV-01', 'CV-03', '2357', 90.22, 108.264),
+(778, 'TV-02', 'CV-03', '1084', 80.41, 96.492),
+(779, 'TV-01', 'CV-04', '1030', 25.54, 30.648),
+(781, 'TV-01', 'CV-02', '1812', 98.43, 118.116),
+(782, 'TV-02', 'CV-05', '2302', 24.27, 29.124),
+(783, 'TV-01', 'CV-03', '1230', 19.32, 23.184),
+(784, 'TV-01', 'CV-01', '2684', 17.76, 21.312),
+(785, 'TV-02', 'CV-03', '1423', 71.79, 86.148),
+(786, 'TV-01', 'CV-05', '2562', 88.72, 106.464),
+(787, 'TV-02', 'CV-05', '2804', 63.63, 76.356),
+(788, 'TV-01', 'CV-04', '1337', 17.38, 20.856),
+(789, 'TV-01', 'CV-04', '1336', 68.03, 81.636),
+(790, 'TV-02', 'CV-04', '2595', 5.07, 6.084),
+(791, 'TV-01', 'CV-04', '2102', 30.27, 36.324),
+(793, 'TV-01', 'CV-01', '2071', 39.14, 46.968),
+(794, 'TV-01', 'CV-04', '1865', 76.5, 91.8),
+(796, 'TV-01', 'CV-01', '2912', 12.92, 15.504),
+(797, 'TV-01', 'CV-03', '2239', 56.21, 67.452),
+(798, 'TV-01', 'CV-01', '1771', 82.73, 99.276),
+(800, 'TV-01', 'CV-01', '2392', 51.38, 61.656),
+(801, 'TV-02', 'CV-05', '1525', 28.49, 34.188),
+(802, 'TV-02', 'CV-02', '2954', 45.32, 54.384),
+(803, 'TV-01', 'CV-01', '1527', 34.46, 41.352),
+(804, 'TV-02', 'CV-01', '2394', 87.53, 105.036),
+(805, 'TV-01', 'CV-05', '1909', 49.08, 58.896),
+(806, 'TV-02', 'CV-02', '2339', 8.15, 9.78),
+(807, 'TV-02', 'CV-05', '2599', 99.54, 119.448),
+(808, 'TV-02', 'CV-04', '2310', 93.59, 112.308),
+(809, 'TV-02', 'CV-01', '1488', 55.06, 66.072),
+(810, 'TV-02', 'CV-05', '1214', 7.06, 8.472),
+(811, 'TV-02', 'CV-04', '2815', 7.25, 8.7),
+(812, 'TV-01', 'CV-03', '2641', 88.38, 106.056),
+(814, 'TV-01', 'CV-04', '2749', 45.66, 54.792),
+(815, 'TV-02', 'CV-05', '1608', 28.16, 33.792),
+(816, 'TV-01', 'CV-02', '2698', 39.62, 47.544),
+(817, 'TV-01', 'CV-05', '1062', 62.53, 75.036),
+(818, 'TV-01', 'CV-02', '2607', 25.63, 30.756),
+(820, 'TV-01', 'CV-04', '2513', 45.9, 55.08),
+(821, 'TV-01', 'CV-01', '1116', 41.5, 49.8),
+(822, 'TV-01', 'CV-03', '2560', 81.42, 97.704),
+(823, 'TV-02', 'CV-05', '1333', 74.67, 89.604),
+(825, 'TV-01', 'CV-04', '2576', 95.94, 115.128),
+(826, 'TV-01', 'CV-02', '2668', 27.29, 32.748),
+(827, 'TV-01', 'CV-02', '2510', 66.42, 79.704),
+(828, 'TV-01', 'CV-03', '1075', 13.61, 16.332),
+(829, 'TV-01', 'CV-04', '1209', 47.87, 57.444),
+(830, 'TV-01', 'CV-04', '2460', 2.34, 2.808),
+(832, 'TV-01', 'CV-05', '1900', 72.25, 86.7),
+(833, 'TV-02', 'CV-03', '2246', 32.86, 39.432),
+(834, 'TV-01', 'CV-04', '2704', 52.29, 62.748),
+(835, 'TV-01', 'CV-02', '2748', 10.13, 12.156),
+(836, 'TV-01', 'CV-05', '2188', 31.81, 38.172),
+(837, 'TV-01', 'CV-05', '2784', 15.14, 18.168),
+(839, 'TV-02', 'CV-01', '2193', 2.78, 3.336),
+(840, 'TV-02', 'CV-04', '2158', 90.1, 108.12),
+(841, 'TV-02', 'CV-02', '1978', 27.18, 32.616),
+(842, 'TV-02', 'CV-03', '1253', 76.44, 91.728),
+(843, 'TV-01', 'CV-03', '2522', 68.78, 82.536),
+(844, 'TV-01', 'CV-01', '2577', 31.55, 37.86),
+(845, 'TV-02', 'CV-02', '2022', 38.17, 45.804),
+(846, 'TV-02', 'CV-05', '2049', 95.47, 114.564),
+(847, 'TV-02', 'CV-05', '2888', 66.11, 79.332),
+(848, 'TV-02', 'CV-02', '1194', 66.98, 80.376),
+(849, 'TV-02', 'CV-05', '1833', 44.98, 53.976),
+(851, 'TV-01', 'CV-01', '2450', 1.39, 1.668),
+(852, 'TV-01', 'CV-05', '2188', 91.09, 109.308),
+(853, 'TV-01', 'CV-05', '1528', 85, 102),
+(854, 'TV-01', 'CV-04', '1297', 99.33, 119.196),
+(855, 'TV-01', 'CV-03', '2389', 68.76, 82.512),
+(856, 'TV-01', 'CV-02', '1565', 28.82, 34.584),
+(857, 'TV-01', 'CV-05', '2996', 69.99, 83.988),
+(858, 'TV-02', 'CV-01', '1458', 4.18, 5.016),
+(859, 'TV-02', 'CV-01', '2380', 11.5, 13.8),
+(860, 'TV-02', 'CV-01', '2566', 45.73, 54.876),
+(861, 'TV-01', 'CV-02', '2920', 14.32, 17.184),
+(862, 'TV-02', 'CV-02', '1115', 65.12, 78.144),
+(863, 'TV-01', 'CV-04', '2371', 15.29, 18.348),
+(864, 'TV-01', 'CV-03', '1917', 8.94, 10.728),
+(865, 'TV-02', 'CV-05', '1392', 30.74, 36.888),
+(866, 'TV-02', 'CV-04', '1044', 69.59, 83.508),
+(867, 'TV-01', 'CV-02', '2017', 45.33, 54.396),
+(868, 'TV-01', 'CV-01', '2983', 99.96, 119.952),
+(869, 'TV-02', 'CV-03', '2680', 48.8, 58.56),
+(870, 'TV-01', 'CV-01', '2850', 11.44, 13.728),
+(871, 'TV-02', 'CV-05', '2141', 10.51, 12.612),
+(872, 'TV-01', 'CV-04', '2242', 69.54, 83.448),
+(873, 'TV-01', 'CV-04', '2814', 30.07, 36.084),
+(874, 'TV-01', 'CV-04', '1380', 7.25, 8.7),
+(875, 'TV-01', 'CV-04', '1062', 94.94, 113.928),
+(876, 'TV-01', 'CV-02', '2519', 5.8, 6.96),
+(877, 'TV-02', 'CV-01', '1336', 69.98, 83.976),
+(878, 'TV-02', 'CV-02', '2294', 10, 12),
+(879, 'TV-01', 'CV-03', '1528', 1.89, 2.268),
+(880, 'TV-02', 'CV-05', '1479', 92.18, 110.616),
+(881, 'TV-02', 'CV-01', '2803', 58.96, 70.752),
+(882, 'TV-01', 'CV-01', '2673', 19.09, 22.908),
+(883, 'TV-01', 'CV-03', '2583', 59.06, 70.872),
+(885, 'TV-02', 'CV-01', '2701', 87.88, 105.456),
+(886, 'TV-01', 'CV-02', '1169', 65.06, 78.072),
+(887, 'TV-02', 'CV-03', '2683', 57.44, 68.928),
+(888, 'TV-02', 'CV-03', '2492', 5.48, 6.576),
+(889, 'TV-02', 'CV-04', '2228', 67.16, 80.592),
+(890, 'TV-02', 'CV-03', '2530', 4.55, 5.46),
+(891, 'TV-01', 'CV-03', '1071', 79.62, 95.544),
+(892, 'TV-01', 'CV-05', '1892', 1.11, 1.332),
+(893, 'TV-01', 'CV-04', '1844', 98.85, 118.62),
+(894, 'TV-02', 'CV-01', '1392', 65.12, 78.144),
+(895, 'TV-01', 'CV-04', '2836', 63.17, 75.804),
+(896, 'TV-01', 'CV-04', '1236', 41.93, 50.316),
+(897, 'TV-01', 'CV-04', '2756', 15.42, 18.504),
+(898, 'TV-01', 'CV-02', '2154', 9.91, 11.892),
+(899, 'TV-01', 'CV-05', '1450', 10.31, 12.372),
+(901, 'TV-02', 'CV-01', '1636', 9.2, 11.04),
+(903, 'TV-02', 'CV-02', '2449', 4.78, 5.736),
+(904, 'TV-02', 'CV-04', '1894', 56.48, 67.776),
+(905, 'TV-01', 'CV-05', '2675', 23.04, 27.648),
+(906, 'TV-02', 'CV-05', '1012', 60.44, 72.528),
+(907, 'TV-01', 'CV-03', '1061', 96.63, 115.956),
+(908, 'TV-02', 'CV-03', '2553', 18.01, 21.612),
+(909, 'TV-02', 'CV-04', '2046', 18.56, 22.272),
+(910, 'TV-02', 'CV-04', '1894', 89.05, 106.86),
+(911, 'TV-02', 'CV-05', '1840', 9.21, 11.052),
+(912, 'TV-02', 'CV-01', '2203', 8.56, 10.272),
+(913, 'TV-01', 'CV-04', '1340', 34.14, 40.968),
+(914, 'TV-02', 'CV-01', '2533', 37.65, 45.18),
+(915, 'TV-01', 'CV-02', '2425', 93.54, 112.248),
+(916, 'TV-02', 'CV-03', '2844', 33.44, 40.128),
+(917, 'TV-01', 'CV-02', '2365', 56.42, 67.704),
+(918, 'TV-02', 'CV-05', '1551', 96.65, 115.98),
+(919, 'TV-02', 'CV-01', '2166', 21.97, 26.364),
+(920, 'TV-01', 'CV-05', '1969', 20.17, 24.204),
+(921, 'TV-02', 'CV-03', '2765', 55.52, 66.624),
+(922, 'TV-02', 'CV-03', '2357', 13.81, 16.572),
+(923, 'TV-02', 'CV-02', '1900', 63.58, 76.296),
+(924, 'TV-02', 'CV-02', '2341', 7.16, 8.592),
+(926, 'TV-02', 'CV-03', '2596', 45.1, 54.12),
+(927, 'TV-02', 'CV-03', '2975', 13.63, 16.356),
+(928, 'TV-01', 'CV-02', '1697', 58.32, 69.984),
+(929, 'TV-02', 'CV-02', '2619', 69.47, 83.364),
+(930, 'TV-01', 'CV-02', '1380', 75.54, 90.648),
+(931, 'TV-01', 'CV-04', '1855', 83.21, 99.852),
+(932, 'TV-01', 'CV-04', '1073', 38.97, 46.764),
+(933, 'TV-01', 'CV-01', '2738', 64.41, 77.292),
+(934, 'TV-01', 'CV-04', '2073', 46.96, 56.352),
+(935, 'TV-01', 'CV-02', '1340', 33.93, 40.716),
+(936, 'TV-02', 'CV-04', '2883', 45.48, 54.576),
+(937, 'TV-01', 'CV-03', '2909', 8.59, 10.308),
+(939, 'TV-02', 'CV-03', '1284', 58.79, 70.548),
+(940, 'TV-01', 'CV-04', '2384', 70.43, 84.516),
+(941, 'TV-02', 'CV-04', '1633', 91.37, 109.644),
+(942, 'TV-01', 'CV-02', '1028', 8.87, 10.644),
+(944, 'TV-02', 'CV-05', '2479', 49.87, 59.844),
+(945, 'TV-01', 'CV-05', '2505', 45.52, 54.624),
+(946, 'TV-02', 'CV-03', '1179', 93.14, 111.768),
+(947, 'TV-01', 'CV-01', '2757', 61.84, 74.208),
+(948, 'TV-01', 'CV-03', '2084', 15.07, 18.084),
+(949, 'TV-01', 'CV-03', '2274', 69.98, 83.976),
+(950, 'TV-02', 'CV-04', '1463', 10.4, 12.48),
+(951, 'TV-01', 'CV-01', '2553', 19.22, 23.064),
+(953, 'TV-02', 'CV-03', '1915', 74.52, 89.424),
+(954, 'TV-02', 'CV-04', '1795', 99.32, 119.184),
+(955, 'TV-02', 'CV-05', '2831', 44.1, 52.92),
+(956, 'TV-01', 'CV-04', '1799', 36.89, 44.268),
+(957, 'TV-01', 'CV-03', '2576', 83.72, 100.464),
+(958, 'TV-01', 'CV-01', '1541', 71.79, 86.148),
+(960, 'TV-01', 'CV-02', '1606', 68.63, 82.356),
+(961, 'TV-02', 'CV-03', '2879', 68.04, 81.648),
+(962, 'TV-01', 'CV-03', '2189', 13.58, 16.296),
+(964, 'TV-02', 'CV-04', '1330', 45.05, 54.06),
+(965, 'TV-01', 'CV-02', '1950', 51.8, 62.16),
+(966, 'TV-02', 'CV-01', '2230', 98.42, 118.104),
+(967, 'TV-01', 'CV-02', '2001', 86.09, 103.308),
+(968, 'TV-02', 'CV-01', '2743', 44.02, 52.824),
+(969, 'TV-01', 'CV-04', '2673', 55.6, 66.72),
+(970, 'TV-01', 'CV-04', '2838', 99.59, 119.508),
+(971, 'TV-01', 'CV-01', '2502', 50.16, 60.192),
+(972, 'TV-02', 'CV-01', '1574', 21.79, 26.148),
+(973, 'TV-02', 'CV-01', '1635', 89.23, 107.076),
+(976, 'TV-01', 'CV-04', '1499', 21.14, 25.368),
+(977, 'TV-01', 'CV-05', '1479', 21.58, 25.896),
+(978, 'TV-01', 'CV-02', '1302', 20.84, 25.008),
+(979, 'TV-01', 'CV-02', '1304', 34.34, 41.208),
+(980, 'TV-01', 'CV-03', '1408', 66.32, 79.584),
+(981, 'TV-02', 'CV-05', '2678', 46.92, 56.304),
+(982, 'TV-02', 'CV-01', '2848', 10.44, 12.528),
+(983, 'TV-01', 'CV-03', '2475', 24.36, 29.232),
+(984, 'TV-01', 'CV-02', '1652', 15, 18),
+(985, 'TV-01', 'CV-03', '2085', 32.67, 39.204),
+(986, 'TV-01', 'CV-02', '2779', 65.2, 78.24),
+(987, 'TV-02', 'CV-02', '1214', 33.63, 40.356),
+(988, 'TV-02', 'CV-04', '2216', 73.83, 88.596),
+(989, 'TV-02', 'CV-02', '2662', 10.34, 12.408),
+(990, 'TV-02', 'CV-05', '2116', 18.98, 22.776),
+(991, 'TV-02', 'CV-01', '1643', 33.61, 40.332),
+(992, 'TV-01', 'CV-05', '2987', 11.04, 13.248),
+(994, 'TV-02', 'CV-05', '1681', 95.66, 114.792),
+(995, 'TV-01', 'CV-03', '1701', 38.43, 46.116),
+(996, 'TV-02', 'CV-04', '2549', 63.19, 75.828),
+(997, 'TV-01', 'CV-04', '2483', 80.35, 96.42),
+(998, 'TV-01', 'CV-02', '2256', 36.48, 43.776),
+(999, 'TV-02', 'CV-01', '2632', 36.25, 43.5),
+(1000, 'TV-01', 'CV-03', '1181', 84.11, 100.932),
+(1002, 'TV-01', 'CV-01', '2304', 62.28, 74.736),
+(1003, 'TV-01', 'CV-02', '1818', 98.8, 118.56),
+(1004, 'TV-02', 'CV-03', '2338', 82.8, 99.36),
+(1005, 'TV-02', 'CV-01', '1593', 53.58, 64.296),
+(1006, 'TV-02', 'CV-02', '2485', 52.63, 63.156),
+(1007, 'TV-02', 'CV-03', '2657', 86.07, 103.284),
+(1008, 'TV-01', 'CV-05', '1362', 37.59, 45.108),
+(1009, 'TV-01', 'CV-03', '2492', 4.06, 4.872),
+(1010, 'TV-01', 'CV-01', '1314', 74.87, 89.844),
+(1011, 'TV-02', 'CV-04', '1480', 80.93, 97.116),
+(1012, 'TV-02', 'CV-04', '1120', 19.42, 23.304),
+(1013, 'TV-01', 'CV-05', '1248', 8.59, 10.308),
+(1014, 'TV-01', 'CV-05', '1163', 93.19, 111.828),
+(1015, 'TV-01', 'CV-05', '1870', 97.44, 116.928),
+(1016, 'TV-01', 'CV-05', '2640', 60.72, 72.864),
+(1017, 'TV-01', 'CV-03', '1868', 51.76, 62.112),
+(1018, 'TV-02', 'CV-04', '1623', 2.04, 2.448),
+(1019, 'TV-01', 'CV-03', '1944', 12.58, 15.096),
+(1020, 'TV-02', 'CV-04', '1760', 84.46, 101.352),
+(1021, 'TV-02', 'CV-02', '1774', 12.62, 15.144),
+(1022, 'TV-01', 'CV-03', '2692', 67.02, 80.424),
+(1023, 'TV-01', 'CV-01', '2382', 28.17, 33.804),
+(1024, 'TV-02', 'CV-03', '2037', 92.75, 111.3),
+(1025, 'TV-02', 'CV-01', '2004', 53.26, 63.912),
+(1028, 'TV-01', 'CV-05', '2023', 93.82, 112.584),
+(1029, 'TV-01', 'CV-05', '2740', 16.81, 20.172),
+(1030, 'TV-01', 'CV-05', '2275', 63.62, 76.344),
+(1031, 'TV-01', 'CV-05', '1271', 5.49, 6.588),
+(1032, 'TV-01', 'CV-04', '1056', 75.76, 90.912),
+(1033, 'TV-01', 'CV-05', '1021', 93.35, 112.02),
+(1034, 'TV-01', 'CV-04', '1710', 17.96, 21.552),
+(1035, 'TV-01', 'CV-01', '1729', 2.97, 3.564),
+(1036, 'TV-01', 'CV-03', '2908', 19.35, 23.22),
+(1037, 'TV-01', 'CV-04', '1461', 61.95, 74.34),
+(1038, 'TV-01', 'CV-05', '2404', 6.9, 8.28),
+(1039, 'TV-02', 'CV-01', '2288', 50.58, 60.696),
+(1040, 'TV-01', 'CV-02', '2571', 40.93, 49.116),
+(1041, 'TV-01', 'CV-02', '2118', 44.13, 52.956),
+(1042, 'TV-02', 'CV-02', '1292', 75.23, 90.276),
+(1043, 'TV-02', 'CV-03', '2735', 94.89, 113.868),
+(1044, 'TV-01', 'CV-02', '2966', 26.44, 31.728),
+(1046, 'TV-02', 'CV-03', '1861', 41.83, 50.196),
+(1047, 'TV-02', 'CV-02', '2981', 66.61, 79.932),
+(1048, 'TV-02', 'CV-03', '1036', 2.76, 3.312),
+(1049, 'TV-01', 'CV-04', '2578', 79.95, 95.94),
+(1050, 'TV-02', 'CV-03', '1959', 14.17, 17.004),
+(1051, 'TV-01', 'CV-03', '1522', 62.54, 75.048),
+(1052, 'TV-01', 'CV-01', '2663', 23.82, 28.584),
+(1053, 'TV-01', 'CV-04', '1153', 53.56, 64.272),
+(1054, 'TV-02', 'CV-05', '1026', 73.22, 87.864),
+(1055, 'TV-01', 'CV-04', '1542', 98.67, 118.404),
+(1056, 'TV-02', 'CV-05', '1318', 40.59, 48.708),
+(1057, 'TV-01', 'CV-03', '2718', 49.27, 59.124),
+(1058, 'TV-02', 'CV-02', '1832', 11.28, 13.536),
+(1059, 'TV-01', 'CV-01', '2658', 99.84, 119.808),
+(1060, 'TV-01', 'CV-05', '1761', 94.31, 113.172),
+(1061, 'TV-02', 'CV-03', '1739', 47.56, 57.072),
+(1064, 'TV-01', 'CV-05', '2544', 11.56, 13.872),
+(1065, 'TV-01', 'CV-04', '1384', 26.38, 31.656),
+(1066, 'TV-02', 'CV-01', '2519', 49.19, 59.028),
+(1067, 'TV-02', 'CV-05', '1752', 45.59, 54.708),
+(1068, 'TV-02', 'CV-05', '1097', 44.77, 53.724),
+(1069, 'TV-02', 'CV-04', '1787', 27.24, 32.688),
+(1071, 'TV-01', 'CV-01', '2558', 80.26, 96.312),
+(1072, 'TV-01', 'CV-01', '2863', 81.61, 97.932),
+(1073, 'TV-01', 'CV-01', '1481', 34.04, 40.848),
+(1074, 'TV-01', 'CV-01', '1989', 15.53, 18.636),
+(1075, 'TV-02', 'CV-01', '2484', 64.93, 77.916),
+(1076, 'TV-01', 'CV-05', '2030', 65.97, 79.164),
+(1077, 'TV-02', 'CV-02', '1411', 43.79, 52.548),
+(1078, 'TV-01', 'CV-04', '2751', 23.31, 27.972),
+(1079, 'TV-01', 'CV-04', '2791', 0.4, 0.48),
+(1080, 'TV-01', 'CV-04', '2768', 58.12, 69.744),
+(1081, 'TV-01', 'CV-02', '2709', 86.21, 103.452),
+(1082, 'TV-01', 'CV-03', '2046', 34.57, 41.484),
+(1084, 'TV-01', 'CV-05', '2019', 50.17, 60.204),
+(1085, 'TV-02', 'CV-04', '1302', 86.54, 103.848),
+(1086, 'TV-02', 'CV-02', '2096', 32.78, 39.336),
+(1087, 'TV-01', 'CV-05', '1533', 26.23, 31.476),
+(1088, 'TV-02', 'CV-05', '2133', 37.29, 44.748),
+(1089, 'TV-02', 'CV-02', '1331', 67.44, 80.928),
+(1090, 'TV-01', 'CV-05', '2686', 99.42, 119.304),
+(1091, 'TV-02', 'CV-04', '2241', 4.43, 5.316),
+(1093, 'TV-01', 'CV-03', '2353', 42.69, 51.228),
+(1094, 'TV-02', 'CV-02', '1009', 74.41, 89.292),
+(1095, 'TV-01', 'CV-02', '2207', 15.93, 19.116),
+(1096, 'TV-02', 'CV-03', '1694', 8.56, 10.272),
+(1097, 'TV-01', 'CV-02', '2976', 70.41, 84.492),
+(1098, 'TV-02', 'CV-05', '1052', 62.56, 75.072),
+(1099, 'TV-01', 'CV-03', '2863', 94.85, 113.82),
+(1100, 'TV-02', 'CV-02', '2549', 61.71, 74.052),
+(1101, 'TV-02', 'CV-04', '1980', 27.78, 33.336),
+(1102, 'TV-02', 'CV-01', '1377', 88.66, 106.392),
+(1103, 'TV-02', 'CV-05', '2392', 70.85, 85.02),
+(1104, 'TV-02', 'CV-03', '2111', 17.28, 20.736),
+(1105, 'TV-01', 'CV-05', '1265', 53.91, 64.692),
+(1106, 'TV-02', 'CV-05', '1580', 90.38, 108.456),
+(1107, 'TV-01', 'CV-02', '1749', 53.08, 63.696),
+(1108, 'TV-02', 'CV-01', '1186', 55.45, 66.54),
+(1109, 'TV-01', 'CV-01', '1533', 87.32, 104.784),
+(1110, 'TV-01', 'CV-01', '1132', 94.4, 113.28),
+(1111, 'TV-02', 'CV-02', '2194', 97.14, 116.568),
+(1114, 'TV-02', 'CV-05', '2335', 62.38, 74.856),
+(1115, 'TV-01', 'CV-01', '1114', 14.35, 17.22),
+(1116, 'TV-02', 'CV-02', '1245', 47.54, 57.048),
+(1117, 'TV-01', 'CV-02', '1075', 78.21, 93.852),
+(1118, 'TV-01', 'CV-02', '2561', 36.26, 43.512),
+(1119, 'TV-02', 'CV-02', '2632', 98.54, 118.248),
+(1120, 'TV-02', 'CV-02', '2357', 19.44, 23.328),
+(1121, 'TV-02', 'CV-04', '2483', 76.39, 91.668),
+(1122, 'TV-02', 'CV-04', '2810', 72.72, 87.264),
+(1123, 'TV-01', 'CV-04', '2021', 94.44, 113.328),
+(1124, 'TV-01', 'CV-05', '2880', 93.62, 112.344),
+(1125, 'TV-02', 'CV-01', '1402', 75.45, 90.54),
+(1126, 'TV-01', 'CV-04', '2800', 65.31, 78.372),
+(1127, 'TV-01', 'CV-04', '1615', 53.61, 64.332),
+(1128, 'TV-01', 'CV-04', '2879', 75.51, 90.612),
+(1129, 'TV-02', 'CV-04', '2870', 50.49, 60.588),
+(1131, 'TV-01', 'CV-02', '2301', 68.11, 81.732),
+(1132, 'TV-02', 'CV-01', '2803', 45.98, 55.176),
+(1133, 'TV-02', 'CV-05', '1633', 21.82, 26.184),
+(1134, 'TV-02', 'CV-02', '1119', 48.96, 58.752),
+(1135, 'TV-02', 'CV-05', '2757', 49.43, 59.316),
+(1136, 'TV-01', 'CV-03', '1907', 47.62, 57.144),
+(1137, 'TV-02', 'CV-02', '2861', 99.79, 119.748),
+(1139, 'TV-02', 'CV-04', '1533', 7.06, 8.472),
+(1140, 'TV-02', 'CV-05', '2468', 69.64, 83.568),
+(1141, 'TV-01', 'CV-01', '2258', 23.36, 28.032),
+(1142, 'TV-02', 'CV-02', '1376', 20.92, 25.104),
+(1143, 'TV-01', 'CV-01', '1616', 74.23, 89.076),
+(1144, 'TV-01', 'CV-04', '2281', 80.02, 96.024),
+(1145, 'TV-01', 'CV-04', '2439', 74.77, 89.724),
+(1147, 'TV-01', 'CV-02', '2139', 98.69, 118.428),
+(1149, 'TV-02', 'CV-03', '1439', 62.35, 74.82),
+(1150, 'TV-01', 'CV-04', '1763', 20.29, 24.348),
+(1151, 'TV-02', 'CV-04', '1553', 67.05, 80.46),
+(1153, 'TV-01', 'CV-04', '1923', 53.58, 64.296),
+(1154, 'TV-02', 'CV-04', '1868', 83.18, 99.816),
+(1155, 'TV-01', 'CV-03', '1075', 19.35, 23.22),
+(1156, 'TV-02', 'CV-03', '2882', 9.26, 11.112),
+(1157, 'TV-01', 'CV-02', '2858', 48.26, 57.912),
+(1158, 'TV-01', 'CV-02', '2508', 14.74, 17.688),
+(1159, 'TV-01', 'CV-05', '1170', 87, 104.4),
+(1160, 'TV-02', 'CV-01', '2310', 44.57, 53.484),
+(1161, 'TV-02', 'CV-05', '1398', 64.63, 77.556),
+(1162, 'TV-01', 'CV-01', '1086', 73.77, 88.524),
+(1163, 'TV-02', 'CV-04', '2169', 72.92, 87.504),
+(1164, 'TV-02', 'CV-05', '2779', 15.37, 18.444),
+(1165, 'TV-01', 'CV-03', '2949', 27.3, 32.76),
+(1166, 'TV-01', 'CV-03', '2951', 76.27, 91.524),
+(1167, 'TV-01', 'CV-03', '2467', 23.26, 27.912),
+(1168, 'TV-02', 'CV-03', '2982', 55.78, 66.936),
+(1169, 'TV-01', 'CV-05', '2159', 82.1, 98.52),
+(1170, 'TV-01', 'CV-04', '1951', 57.87, 69.444),
+(1172, 'TV-01', 'CV-05', '2603', 11.03, 13.236),
+(1173, 'TV-02', 'CV-01', '2750', 3.68, 4.416),
+(1174, 'TV-02', 'CV-02', '1487', 18.29, 21.948),
+(1175, 'TV-01', 'CV-03', '2554', 19.91, 23.892),
+(1176, 'TV-02', 'CV-04', '2762', 58.12, 69.744),
+(1177, 'TV-01', 'CV-03', '2358', 64.58, 77.496),
+(1178, 'TV-02', 'CV-04', '2649', 69.76, 83.712),
+(1179, 'TV-02', 'CV-03', '2269', 3.42, 4.104),
+(1180, 'TV-01', 'CV-04', '2486', 51.2, 61.44),
+(1181, 'TV-02', 'CV-05', '1563', 82.16, 98.592),
+(1182, 'TV-01', 'CV-05', '2009', 33.88, 40.656),
+(1183, 'TV-01', 'CV-02', '1701', 78.49, 94.188),
+(1184, 'TV-01', 'CV-01', '1416', 64.48, 77.376),
+(1185, 'TV-02', 'CV-05', '1879', 24.81, 29.772),
+(1187, 'TV-02', 'CV-05', '2845', 8.35, 10.02),
+(1188, 'TV-01', 'CV-05', '2830', 34.31, 41.172),
+(1189, 'TV-01', 'CV-03', '2818', 22.11, 26.532),
+(1191, 'TV-01', 'CV-01', '1875', 50.89, 61.068),
+(1192, 'TV-02', 'CV-01', '1639', 50.56, 60.672),
+(1193, 'TV-02', 'CV-02', '1386', 39.44, 47.328),
+(1194, 'TV-01', 'CV-03', '1014', 54.04, 64.848),
+(1195, 'TV-02', 'CV-05', '2531', 22.88, 27.456),
+(1196, 'TV-01', 'CV-02', '1232', 7.15, 8.58),
+(1197, 'TV-02', 'CV-03', '2483', 57.25, 68.7),
+(1198, 'TV-02', 'CV-05', '1806', 98.67, 118.404),
+(1199, 'TV-01', 'CV-05', '1440', 45.95, 55.14),
+(1200, 'TV-02', 'CV-05', '2415', 61.48, 73.776),
+(1201, 'TV-01', 'CV-05', '1098', 76.83, 92.196),
+(1202, 'TV-02', 'CV-05', '1798', 54.95, 65.94),
+(1204, 'TV-02', 'CV-04', '1186', 91.78, 110.136);
+INSERT INTO VIDRIO (CODIGO_VIDRIO, CODIGO_TIPO, CODIGO_COLOR, CODIGO_FACTURA, CANTIDAD_VIDRIO, PRECIO_VIDRIO) VALUES
+(1205, 'TV-01', 'CV-01', '1686', 90.78, 108.936),
+(1206, 'TV-01', 'CV-02', '2481', 57.29, 68.748),
+(1208, 'TV-02', 'CV-01', '1890', 7.57, 9.084),
+(1209, 'TV-01', 'CV-04', '1061', 29.74, 35.688),
+(1210, 'TV-01', 'CV-05', '2357', 50.12, 60.144),
+(1211, 'TV-01', 'CV-04', '1746', 0.15, 0.18),
+(1212, 'TV-01', 'CV-05', '1187', 44.02, 52.824),
+(1213, 'TV-01', 'CV-04', '2280', 64.68, 77.616),
+(1214, 'TV-01', 'CV-03', '1646', 50.46, 60.552),
+(1216, 'TV-01', 'CV-03', '1410', 66.63, 79.956),
+(1217, 'TV-02', 'CV-05', '2368', 0.74, 0.888),
+(1218, 'TV-01', 'CV-04', '1938', 80.68, 96.816),
+(1219, 'TV-01', 'CV-05', '2512', 9.46, 11.352),
+(1220, 'TV-02', 'CV-03', '1743', 67.34, 80.808),
+(1221, 'TV-02', 'CV-02', '1790', 40.41, 48.492),
+(1222, 'TV-01', 'CV-05', '2133', 49.58, 59.496),
+(1223, 'TV-01', 'CV-01', '1893', 85.12, 102.144),
+(1224, 'TV-01', 'CV-03', '2252', 7.65, 9.18),
+(1225, 'TV-01', 'CV-02', '1876', 67.31, 80.772),
+(1226, 'TV-01', 'CV-04', '2681', 94.3, 113.16),
+(1227, 'TV-01', 'CV-03', '2481', 60.43, 72.516),
+(1228, 'TV-01', 'CV-05', '1551', 50.09, 60.108),
+(1229, 'TV-02', 'CV-02', '1847', 0.84, 1.008),
+(1230, 'TV-02', 'CV-01', '2405', 32.77, 39.324),
+(1231, 'TV-01', 'CV-03', '1743', 89.49, 107.388),
+(1232, 'TV-01', 'CV-01', '2651', 29.91, 35.892),
+(1233, 'TV-02', 'CV-04', '1389', 89.45, 107.34),
+(1234, 'TV-01', 'CV-05', '1527', 15.25, 18.3),
+(1235, 'TV-01', 'CV-02', '1053', 93.98, 112.776),
+(1236, 'TV-02', 'CV-05', '2151', 23.57, 28.284),
+(1237, 'TV-01', 'CV-05', '2004', 91.02, 109.224),
+(1238, 'TV-01', 'CV-01', '1934', 87.78, 105.336),
+(1239, 'TV-01', 'CV-03', '2407', 15.06, 18.072),
+(1240, 'TV-02', 'CV-03', '1023', 55.16, 66.192),
+(1241, 'TV-01', 'CV-03', '2911', 66.64, 79.968),
+(1242, 'TV-01', 'CV-01', '2944', 40.54, 48.648),
+(1243, 'TV-01', 'CV-01', '2877', 63.48, 76.176),
+(1244, 'TV-01', 'CV-05', '2030', 11.17, 13.404),
+(1245, 'TV-01', 'CV-02', '2961', 29.97, 35.964),
+(1246, 'TV-02', 'CV-02', '1576', 69.61, 83.532),
+(1247, 'TV-01', 'CV-01', '2877', 18.02, 21.624),
+(1248, 'TV-01', 'CV-01', '1921', 62.36, 74.832),
+(1249, 'TV-02', 'CV-01', '2356', 82.64, 99.168),
+(1250, 'TV-02', 'CV-02', '2396', 81.58, 97.896),
+(1251, 'TV-02', 'CV-05', '2154', 95.83, 114.996),
+(1252, 'TV-02', 'CV-03', '2256', 22.89, 27.468),
+(1253, 'TV-01', 'CV-04', '1987', 39.69, 47.628),
+(1254, 'TV-01', 'CV-04', '2682', 5.38, 6.456),
+(1255, 'TV-01', 'CV-02', '1286', 53.44, 64.128),
+(1256, 'TV-02', 'CV-05', '2645', 11.78, 14.136),
+(1257, 'TV-02', 'CV-02', '2228', 90.13, 108.156),
+(1258, 'TV-01', 'CV-05', '1026', 75.31, 90.372),
+(1259, 'TV-01', 'CV-03', '1095', 44.22, 53.064),
+(1260, 'TV-02', 'CV-05', '2707', 94.8, 113.76),
+(1261, 'TV-01', 'CV-03', '1065', 60.5, 72.6),
+(1262, 'TV-02', 'CV-04', '2951', 55.47, 66.564),
+(1263, 'TV-01', 'CV-03', '2196', 40.03, 48.036),
+(1264, 'TV-02', 'CV-02', '1920', 20.57, 24.684),
+(1265, 'TV-02', 'CV-05', '1746', 78.91, 94.692),
+(1266, 'TV-01', 'CV-02', '1086', 37.03, 44.436),
+(1267, 'TV-02', 'CV-02', '2065', 65.62, 78.744),
+(1268, 'TV-02', 'CV-03', '1589', 92.19, 110.628),
+(1269, 'TV-02', 'CV-05', '2907', 37.74, 45.288),
+(1270, 'TV-02', 'CV-02', '2966', 66.52, 79.824),
+(1272, 'TV-02', 'CV-02', '1820', 7.18, 8.616),
+(1273, 'TV-02', 'CV-02', '2317', 80.34, 96.408),
+(1274, 'TV-02', 'CV-04', '2821', 74.44, 89.328),
+(1275, 'TV-01', 'CV-04', '2701', 12.62, 15.144),
+(1276, 'TV-02', 'CV-01', '2570', 35.86, 43.032),
+(1277, 'TV-01', 'CV-02', '1266', 21.56, 25.872),
+(1278, 'TV-01', 'CV-05', '2531', 92.95, 111.54),
+(1279, 'TV-01', 'CV-03', '1199', 89.66, 107.592),
+(1281, 'TV-01', 'CV-01', '2348', 18.91, 22.692),
+(1282, 'TV-02', 'CV-04', '2604', 93.75, 112.5),
+(1283, 'TV-01', 'CV-04', '1025', 86.01, 103.212),
+(1284, 'TV-01', 'CV-03', '1198', 24.91, 29.892),
+(1285, 'TV-01', 'CV-02', '1440', 51.52, 61.824),
+(1286, 'TV-01', 'CV-02', '2362', 81.39, 97.668),
+(1287, 'TV-02', 'CV-01', '1027', 50.45, 60.54),
+(1288, 'TV-02', 'CV-05', '1379', 12.36, 14.832),
+(1289, 'TV-01', 'CV-03', '2123', 86.72, 104.064),
+(1290, 'TV-01', 'CV-04', '1859', 31.47, 37.764),
+(1291, 'TV-01', 'CV-01', '1978', 86.72, 104.064),
+(1292, 'TV-02', 'CV-03', '1061', 13.69, 16.428),
+(1293, 'TV-01', 'CV-03', '2199', 69.71, 83.652),
+(1295, 'TV-02', 'CV-05', '1714', 52.72, 63.264),
+(1296, 'TV-02', 'CV-03', '1101', 81.95, 98.34),
+(1297, 'TV-02', 'CV-02', '1613', 40.45, 48.54),
+(1298, 'TV-01', 'CV-03', '1217', 98.36, 118.032),
+(1299, 'TV-02', 'CV-05', '2078', 66.76, 80.112),
+(1300, 'TV-02', 'CV-03', '1662', 65.3, 78.36),
+(1301, 'TV-02', 'CV-03', '1208', 36.96, 44.352),
+(1302, 'TV-02', 'CV-03', '1248', 83.75, 100.5),
+(1303, 'TV-01', 'CV-02', '2243', 50.28, 60.336),
+(1304, 'TV-02', 'CV-01', '2187', 8.29, 9.948),
+(1305, 'TV-01', 'CV-04', '2491', 6.07, 7.284),
+(1306, 'TV-02', 'CV-03', '1386', 26.25, 31.5),
+(1307, 'TV-01', 'CV-03', '1945', 2.32, 2.784),
+(1308, 'TV-02', 'CV-03', '2120', 8.11, 9.732),
+(1309, 'TV-01', 'CV-04', '1653', 62.08, 74.496),
+(1311, 'TV-02', 'CV-04', '1474', 73.09, 87.708),
+(1312, 'TV-02', 'CV-03', '1362', 96.49, 115.788),
+(1313, 'TV-01', 'CV-05', '2146', 9.67, 11.604),
+(1314, 'TV-02', 'CV-02', '2976', 0.31, 0.372),
+(1315, 'TV-01', 'CV-02', '2765', 34.57, 41.484),
+(1316, 'TV-02', 'CV-05', '2583', 58.72, 70.464),
+(1317, 'TV-01', 'CV-03', '2156', 31.56, 37.872),
+(1318, 'TV-02', 'CV-05', '2923', 99.35, 119.22),
+(1319, 'TV-01', 'CV-01', '1810', 42.22, 50.664),
+(1320, 'TV-02', 'CV-04', '1970', 35.69, 42.828),
+(1322, 'TV-01', 'CV-03', '2322', 60.99, 73.188),
+(1323, 'TV-02', 'CV-02', '1099', 26.68, 32.016),
+(1324, 'TV-01', 'CV-03', '2698', 22.93, 27.516),
+(1325, 'TV-02', 'CV-05', '2630', 94.88, 113.856),
+(1326, 'TV-02', 'CV-03', '2029', 20.18, 24.216),
+(1328, 'TV-02', 'CV-03', '2622', 40.22, 48.264),
+(1331, 'TV-02', 'CV-02', '2456', 95.72, 114.864),
+(1332, 'TV-01', 'CV-03', '2621', 66.9, 80.28),
+(1333, 'TV-02', 'CV-03', '1852', 29.05, 34.86),
+(1334, 'TV-01', 'CV-02', '1692', 82.96, 99.552),
+(1335, 'TV-01', 'CV-03', '1580', 27.92, 33.504),
+(1336, 'TV-01', 'CV-02', '1099', 56.95, 68.34),
+(1337, 'TV-02', 'CV-01', '1192', 75.36, 90.432),
+(1338, 'TV-02', 'CV-03', '2159', 85.27, 102.324),
+(1339, 'TV-01', 'CV-02', '2117', 96.29, 115.548),
+(1340, 'TV-02', 'CV-01', '1218', 6.64, 7.968),
+(1341, 'TV-02', 'CV-05', '2181', 31.06, 37.272),
+(1342, 'TV-01', 'CV-05', '2531', 67.38, 80.856),
+(1343, 'TV-01', 'CV-05', '1414', 26.88, 32.256),
+(1344, 'TV-02', 'CV-05', '2883', 92, 110.4),
+(1345, 'TV-01', 'CV-03', '2204', 26.36, 31.632),
+(1346, 'TV-02', 'CV-04', '2647', 3.48, 4.176),
+(1347, 'TV-02', 'CV-01', '2611', 79.08, 94.896),
+(1348, 'TV-01', 'CV-02', '2633', 46.47, 55.764),
+(1349, 'TV-02', 'CV-01', '2732', 37.18, 44.616),
+(1350, 'TV-01', 'CV-03', '1668', 39.23, 47.076),
+(1351, 'TV-01', 'CV-03', '2178', 35.27, 42.324),
+(1352, 'TV-02', 'CV-02', '1897', 4.11, 4.932),
+(1353, 'TV-02', 'CV-02', '2481', 6.63, 7.956),
+(1354, 'TV-01', 'CV-04', '2377', 72.2, 86.64),
+(1355, 'TV-02', 'CV-01', '2339', 27.14, 32.568),
+(1356, 'TV-01', 'CV-05', '2107', 23.19, 27.828),
+(1357, 'TV-01', 'CV-04', '1561', 91.51, 109.812),
+(1358, 'TV-02', 'CV-02', '2170', 47.35, 56.82),
+(1360, 'TV-02', 'CV-03', '2506', 63.92, 76.704),
+(1361, 'TV-01', 'CV-05', '1908', 92.23, 110.676),
+(1363, 'TV-02', 'CV-03', '2147', 28.92, 34.704),
+(1364, 'TV-02', 'CV-05', '1214', 58.37, 70.044),
+(1365, 'TV-02', 'CV-02', '1233', 32, 38.4),
+(1366, 'TV-02', 'CV-03', '2843', 60.76, 72.912),
+(1367, 'TV-02', 'CV-04', '1181', 65.99, 79.188),
+(1368, 'TV-02', 'CV-03', '1298', 63.36, 76.032),
+(1369, 'TV-02', 'CV-05', '2293', 11.78, 14.136),
+(1370, 'TV-01', 'CV-01', '2560', 1.3, 1.56),
+(1371, 'TV-02', 'CV-02', '1461', 46.68, 56.016),
+(1372, 'TV-02', 'CV-02', '2328', 83.85, 100.62),
+(1373, 'TV-02', 'CV-05', '1178', 86.21, 103.452),
+(1374, 'TV-01', 'CV-01', '2647', 12.57, 15.084),
+(1375, 'TV-02', 'CV-02', '1111', 99.47, 119.364),
+(1376, 'TV-01', 'CV-03', '2903', 16.54, 19.848),
+(1377, 'TV-01', 'CV-03', '2437', 32.98, 39.576),
+(1378, 'TV-01', 'CV-02', '2513', 83.72, 100.464),
+(1379, 'TV-02', 'CV-03', '2483', 44.3, 53.16),
+(1380, 'TV-01', 'CV-05', '1824', 59.65, 71.58),
+(1381, 'TV-01', 'CV-05', '1058', 22.39, 26.868),
+(1383, 'TV-02', 'CV-01', '1677', 3.26, 3.912),
+(1384, 'TV-01', 'CV-05', '2469', 67.99, 81.588),
+(1385, 'TV-01', 'CV-04', '1616', 32.63, 39.156),
+(1386, 'TV-01', 'CV-04', '2988', 95.32, 114.384),
+(1387, 'TV-02', 'CV-01', '2738', 24.62, 29.544),
+(1388, 'TV-02', 'CV-05', '2647', 16.07, 19.284),
+(1389, 'TV-01', 'CV-04', '1517', 24.85, 29.82),
+(1390, 'TV-01', 'CV-05', '2319', 88.15, 105.78),
+(1391, 'TV-02', 'CV-02', '1434', 74.88, 89.856),
+(1392, 'TV-02', 'CV-02', '1772', 12.89, 15.468),
+(1394, 'TV-01', 'CV-01', '1562', 4.79, 5.748),
+(1395, 'TV-02', 'CV-03', '2763', 50.13, 60.156),
+(1397, 'TV-02', 'CV-01', '2230', 67.03, 80.436),
+(1398, 'TV-01', 'CV-01', '1332', 30.15, 36.18),
+(1399, 'TV-02', 'CV-04', '1358', 89.17, 107.004),
+(1400, 'TV-02', 'CV-04', '1352', 85.88, 103.056),
+(1401, 'TV-01', 'CV-05', '2526', 43.85, 52.62),
+(1402, 'TV-01', 'CV-01', '1126', 55.06, 66.072),
+(1403, 'TV-02', 'CV-01', '1362', 93.78, 112.536),
+(1404, 'TV-02', 'CV-01', '1836', 22.7, 27.24),
+(1405, 'TV-01', 'CV-01', '2973', 74.57, 89.484),
+(1407, 'TV-01', 'CV-04', '2848', 37.21, 44.652),
+(1408, 'TV-01', 'CV-04', '2346', 5.16, 6.192),
+(1409, 'TV-02', 'CV-01', '1144', 4.79, 5.748),
+(1410, 'TV-01', 'CV-05', '2212', 85.3, 102.36),
+(1411, 'TV-01', 'CV-03', '2833', 3.42, 4.104),
+(1413, 'TV-02', 'CV-03', '2059', 84.01, 100.812),
+(1414, 'TV-02', 'CV-03', '2108', 40.89, 49.068),
+(1415, 'TV-02', 'CV-02', '2807', 25.11, 30.132),
+(1417, 'TV-02', 'CV-01', '1785', 33.42, 40.104),
+(1418, 'TV-02', 'CV-05', '1293', 89.69, 107.628),
+(1419, 'TV-02', 'CV-04', '2514', 30.02, 36.024),
+(1420, 'TV-01', 'CV-02', '1768', 37.78, 45.336),
+(1421, 'TV-01', 'CV-04', '1508', 17.18, 20.616),
+(1422, 'TV-01', 'CV-02', '2349', 74.68, 89.616),
+(1423, 'TV-01', 'CV-04', '2548', 66.53, 79.836),
+(1424, 'TV-02', 'CV-05', '1381', 37.95, 45.54),
+(1425, 'TV-01', 'CV-01', '2658', 43.31, 51.972),
+(1426, 'TV-02', 'CV-03', '2545', 39.48, 47.376),
+(1427, 'TV-02', 'CV-03', '2954', 73.66, 88.392),
+(1428, 'TV-01', 'CV-03', '2938', 45.37, 54.444),
+(1430, 'TV-02', 'CV-01', '1754', 74.74, 89.688),
+(1431, 'TV-02', 'CV-05', '2618', 47.37, 56.844),
+(1432, 'TV-01', 'CV-03', '1931', 43.93, 52.716),
+(1433, 'TV-01', 'CV-05', '1731', 58.83, 70.596),
+(1434, 'TV-02', 'CV-02', '1676', 89.12, 106.944),
+(1435, 'TV-01', 'CV-05', '2564', 54.14, 64.968),
+(1436, 'TV-01', 'CV-03', '2768', 87.77, 105.324),
+(1437, 'TV-02', 'CV-02', '1356', 40.15, 48.18),
+(1438, 'TV-02', 'CV-01', '1617', 44.76, 53.712),
+(1439, 'TV-01', 'CV-02', '2683', 59.53, 71.436),
+(1441, 'TV-01', 'CV-04', '1785', 30.81, 36.972),
+(1442, 'TV-01', 'CV-02', '2820', 19.97, 23.964),
+(1443, 'TV-02', 'CV-03', '1332', 25.37, 30.444),
+(1444, 'TV-02', 'CV-02', '1398', 14.29, 17.148),
+(1445, 'TV-01', 'CV-02', '1076', 23.91, 28.692),
+(1446, 'TV-02', 'CV-05', '2447', 60.39, 72.468),
+(1447, 'TV-01', 'CV-05', '1393', 65.68, 78.816),
+(1448, 'TV-02', 'CV-02', '2831', 16.21, 19.452),
+(1449, 'TV-01', 'CV-01', '1349', 23.25, 27.9),
+(1450, 'TV-02', 'CV-04', '1840', 51.92, 62.304),
+(1451, 'TV-02', 'CV-01', '2644', 77.49, 92.988),
+(1452, 'TV-01', 'CV-03', '2955', 39.35, 47.22),
+(1453, 'TV-02', 'CV-05', '1293', 96.38, 115.656),
+(1454, 'TV-01', 'CV-02', '2553', 0.45, 0.54),
+(1455, 'TV-02', 'CV-03', '1938', 29.35, 35.22),
+(1456, 'TV-01', 'CV-02', '1462', 22.86, 27.432),
+(1457, 'TV-02', 'CV-03', '1654', 10.35, 12.42),
+(1458, 'TV-01', 'CV-03', '1988', 78.41, 94.092),
+(1460, 'TV-01', 'CV-01', '1744', 30.36, 36.432),
+(1461, 'TV-01', 'CV-03', '2306', 9.54, 11.448),
+(1463, 'TV-02', 'CV-01', '1563', 80.22, 96.264),
+(1464, 'TV-01', 'CV-02', '1646', 34.28, 41.136),
+(1465, 'TV-01', 'CV-05', '1631', 76.64, 91.968),
+(1466, 'TV-02', 'CV-02', '2658', 10.84, 13.008),
+(1467, 'TV-02', 'CV-05', '2550', 76.29, 91.548),
+(1468, 'TV-01', 'CV-03', '2508', 62.42, 74.904),
+(1469, 'TV-01', 'CV-04', '1399', 69.25, 83.1),
+(1471, 'TV-01', 'CV-01', '1993', 63.71, 76.452),
+(1472, 'TV-01', 'CV-05', '2817', 80.8, 96.96),
+(1474, 'TV-02', 'CV-03', '2950', 72.35, 86.82),
+(1475, 'TV-02', 'CV-01', '1602', 43.33, 51.996),
+(1476, 'TV-02', 'CV-04', '2185', 44.15, 52.98),
+(1477, 'TV-02', 'CV-04', '2545', 43.07, 51.684),
+(1478, 'TV-01', 'CV-02', '1564', 15.65, 18.78),
+(1479, 'TV-01', 'CV-03', '2791', 5.31, 6.372),
+(1480, 'TV-02', 'CV-04', '1272', 5.51, 6.612),
+(1481, 'TV-02', 'CV-02', '2392', 34.1, 40.92),
+(1483, 'TV-01', 'CV-02', '1438', 13.77, 16.524),
+(1484, 'TV-02', 'CV-02', '1896', 85.99, 103.188),
+(1485, 'TV-01', 'CV-02', '1896', 95.88, 115.056),
+(1486, 'TV-02', 'CV-02', '1052', 46.32, 55.584),
+(1487, 'TV-02', 'CV-01', '2158', 97.18, 116.616),
+(1488, 'TV-01', 'CV-02', '1058', 13.5, 16.2),
+(1489, 'TV-02', 'CV-01', '2891', 94.52, 113.424),
+(1490, 'TV-01', 'CV-02', '1067', 62.78, 75.336),
+(1491, 'TV-02', 'CV-02', '2821', 84.24, 101.088),
+(1492, 'TV-02', 'CV-02', '1292', 92.64, 111.168),
+(1493, 'TV-01', 'CV-04', '2482', 71.04, 85.248),
+(1495, 'TV-02', 'CV-03', '1807', 69.63, 83.556),
+(1496, 'TV-02', 'CV-01', '1212', 56.25, 67.5),
+(1497, 'TV-02', 'CV-04', '2442', 21.68, 26.016),
+(1498, 'TV-01', 'CV-05', '2899', 22.99, 27.588),
+(1499, 'TV-01', 'CV-05', '1266', 37.75, 45.3),
+(1500, 'TV-02', 'CV-02', '2048', 72.63, 87.156),
+(1501, 'TV-02', 'CV-04', '2836', 95.18, 114.216),
+(1502, 'TV-01', 'CV-05', '1800', 82.16, 98.592),
+(1503, 'TV-01', 'CV-04', '2136', 11.87, 14.244),
+(1504, 'TV-01', 'CV-02', '2007', 89, 106.8),
+(1505, 'TV-01', 'CV-02', '2289', 51.86, 62.232),
+(1506, 'TV-01', 'CV-02', '2073', 83.77, 100.524),
+(1507, 'TV-02', 'CV-05', '2421', 80.78, 96.936),
+(1508, 'TV-02', 'CV-01', '2537', 42.83, 51.396),
+(1509, 'TV-01', 'CV-01', '1459', 58.52, 70.224),
+(1510, 'TV-01', 'CV-02', '2548', 8.87, 10.644),
+(1511, 'TV-01', 'CV-03', '1067', 92.28, 110.736),
+(1512, 'TV-01', 'CV-04', '2069', 76.33, 91.596),
+(1513, 'TV-01', 'CV-03', '1145', 22.91, 27.492),
+(1514, 'TV-01', 'CV-03', '2608', 39.06, 46.872),
+(1515, 'TV-01', 'CV-05', '2959', 98.62, 118.344),
+(1517, 'TV-01', 'CV-03', '2569', 34.63, 41.556),
+(1518, 'TV-02', 'CV-01', '1008', 0, 0),
+(1519, 'TV-02', 'CV-03', '1625', 94.77, 113.724),
+(1520, 'TV-01', 'CV-01', '2476', 21.29, 25.548),
+(1521, 'TV-01', 'CV-03', '1715', 51.13, 61.356),
+(1522, 'TV-01', 'CV-05', '1961', 14.98, 17.976),
+(1523, 'TV-02', 'CV-02', '2860', 53.17, 63.804),
+(1524, 'TV-02', 'CV-02', '1624', 17.43, 20.916),
+(1525, 'TV-02', 'CV-05', '1103', 81.57, 97.884),
+(1526, 'TV-02', 'CV-03', '1770', 10.72, 12.864),
+(1527, 'TV-01', 'CV-05', '1257', 21.86, 26.232),
+(1528, 'TV-02', 'CV-02', '2497', 91.94, 110.328),
+(1529, 'TV-01', 'CV-02', '2458', 62.73, 75.276),
+(1530, 'TV-01', 'CV-01', '1711', 57.44, 68.928),
+(1531, 'TV-02', 'CV-03', '2244', 88.78, 106.536),
+(1532, 'TV-02', 'CV-01', '2945', 24.2, 29.04),
+(1533, 'TV-01', 'CV-02', '1391', 68.9, 82.68),
+(1534, 'TV-02', 'CV-03', '2651', 23.69, 28.428),
+(1535, 'TV-02', 'CV-01', '2023', 98.92, 118.704),
+(1536, 'TV-01', 'CV-03', '1514', 76.06, 91.272),
+(1537, 'TV-01', 'CV-04', '1924', 52.82, 63.384),
+(1538, 'TV-02', 'CV-04', '2550', 38.53, 46.236),
+(1539, 'TV-02', 'CV-02', '1491', 38.94, 46.728),
+(1540, 'TV-01', 'CV-03', '2603', 99.07, 118.884),
+(1541, 'TV-02', 'CV-03', '2414', 25.58, 30.696),
+(1542, 'TV-01', 'CV-03', '1724', 30.12, 36.144),
+(1543, 'TV-02', 'CV-02', '1718', 2.31, 2.772),
+(1544, 'TV-01', 'CV-04', '2114', 42, 50.4),
+(1545, 'TV-02', 'CV-04', '1853', 74.48, 89.376),
+(1546, 'TV-01', 'CV-04', '2609', 93.03, 111.636),
+(1547, 'TV-02', 'CV-05', '2779', 42.15, 50.58),
+(1548, 'TV-02', 'CV-02', '2283', 41.09, 49.308),
+(1549, 'TV-02', 'CV-02', '1275', 43.44, 52.128),
+(1550, 'TV-01', 'CV-01', '1494', 43.45, 52.14),
+(1551, 'TV-01', 'CV-01', '1416', 1.41, 1.692),
+(1552, 'TV-02', 'CV-02', '1574', 16.66, 19.992),
+(1554, 'TV-01', 'CV-03', '2749', 82.02, 98.424),
+(1555, 'TV-02', 'CV-03', '2803', 62.52, 75.024),
+(1556, 'TV-01', 'CV-05', '2030', 90.88, 109.056),
+(1557, 'TV-02', 'CV-04', '2450', 33.03, 39.636),
+(1558, 'TV-01', 'CV-01', '2450', 24.97, 29.964),
+(1559, 'TV-01', 'CV-04', '2239', 83.67, 100.404),
+(1560, 'TV-02', 'CV-04', '1024', 37.33, 44.796),
+(1561, 'TV-02', 'CV-02', '2243', 45.04, 54.048),
+(1562, 'TV-02', 'CV-05', '2395', 49, 58.8),
+(1563, 'TV-01', 'CV-03', '2042', 11.35, 13.62),
+(1564, 'TV-01', 'CV-05', '2632', 7.3, 8.76),
+(1565, 'TV-02', 'CV-01', '2847', 29.82, 35.784),
+(1567, 'TV-02', 'CV-04', '2232', 64.3, 77.16),
+(1568, 'TV-01', 'CV-05', '1736', 22.31, 26.772),
+(1569, 'TV-01', 'CV-05', '1470', 19.05, 22.86),
+(1570, 'TV-01', 'CV-05', '2797', 88.31, 105.972),
+(1571, 'TV-01', 'CV-02', '2545', 15.04, 18.048),
+(1574, 'TV-02', 'CV-05', '1040', 79.58, 95.496),
+(1575, 'TV-02', 'CV-04', '2953', 29.64, 35.568),
+(1577, 'TV-02', 'CV-02', '1908', 87.34, 104.808),
+(1578, 'TV-01', 'CV-05', '1148', 1.06, 1.272),
+(1579, 'TV-01', 'CV-01', '1072', 55.12, 66.144),
+(1580, 'TV-02', 'CV-04', '1549', 38.07, 45.684),
+(1582, 'TV-02', 'CV-01', '2062', 94.11, 112.932),
+(1583, 'TV-01', 'CV-04', '1713', 27.22, 32.664),
+(1584, 'TV-02', 'CV-02', '2339', 24.47, 29.364),
+(1586, 'TV-01', 'CV-03', '1759', 49.17, 59.004),
+(1587, 'TV-02', 'CV-05', '2488', 88.12, 105.744),
+(1588, 'TV-01', 'CV-03', '2653', 82.58, 99.096),
+(1589, 'TV-01', 'CV-05', '1583', 39.24, 47.088),
+(1590, 'TV-01', 'CV-04', '2152', 65.48, 78.576),
+(1591, 'TV-01', 'CV-02', '1358', 71.32, 85.584),
+(1592, 'TV-02', 'CV-04', '2963', 95.81, 114.972),
+(1593, 'TV-01', 'CV-02', '1527', 51.79, 62.148),
+(1594, 'TV-01', 'CV-05', '1507', 61.3, 73.56),
+(1595, 'TV-02', 'CV-04', '2156', 89.17, 107.004),
+(1596, 'TV-02', 'CV-04', '2582', 95.97, 115.164),
+(1597, 'TV-01', 'CV-03', '2551', 71.91, 86.292),
+(1599, 'TV-01', 'CV-05', '1718', 94.98, 113.976),
+(1601, 'TV-01', 'CV-02', '2326', 98.84, 118.608),
+(1602, 'TV-01', 'CV-05', '2646', 99.58, 119.496),
+(1603, 'TV-01', 'CV-04', '2558', 36.93, 44.316),
+(1604, 'TV-01', 'CV-04', '1244', 36.92, 44.304),
+(1605, 'TV-02', 'CV-02', '2894', 3.85, 4.62),
+(1606, 'TV-02', 'CV-04', '2912', 36.52, 43.824),
+(1607, 'TV-01', 'CV-03', '1929', 12.11, 14.532),
+(1608, 'TV-01', 'CV-03', '1701', 55.73, 66.876),
+(1609, 'TV-02', 'CV-01', '1258', 78.83, 94.596),
+(1610, 'TV-02', 'CV-01', '1682', 30.54, 36.648),
+(1611, 'TV-02', 'CV-03', '1497', 41.72, 50.064),
+(1612, 'TV-01', 'CV-04', '2270', 55.43, 66.516),
+(1613, 'TV-01', 'CV-03', '2951', 78.93, 94.716),
+(1614, 'TV-02', 'CV-04', '1062', 37.21, 44.652),
+(1615, 'TV-01', 'CV-02', '2589', 76.32, 91.584),
+(1616, 'TV-01', 'CV-03', '1732', 3.2, 3.84),
+(1617, 'TV-01', 'CV-05', '2070', 10.33, 12.396),
+(1618, 'TV-02', 'CV-05', '1462', 2.83, 3.396),
+(1619, 'TV-02', 'CV-04', '1496', 71.69, 86.028),
+(1620, 'TV-02', 'CV-04', '1393', 96.22, 115.464),
+(1621, 'TV-01', 'CV-04', '1168', 27.31, 32.772),
+(1622, 'TV-02', 'CV-02', '1080', 98.15, 117.78),
+(1623, 'TV-01', 'CV-03', '1851', 57.07, 68.484),
+(1624, 'TV-02', 'CV-04', '2753', 72.6, 87.12),
+(1626, 'TV-01', 'CV-02', '2458', 35.43, 42.516),
+(1628, 'TV-01', 'CV-02', '1164', 88.46, 106.152),
+(1630, 'TV-01', 'CV-03', '1597', 51.1, 61.32),
+(1631, 'TV-02', 'CV-04', '1875', 97.33, 116.796),
+(1632, 'TV-02', 'CV-02', '2870', 24.41, 29.292),
+(1633, 'TV-02', 'CV-05', '1353', 51.37, 61.644),
+(1635, 'TV-01', 'CV-03', '1144', 10.46, 12.552),
+(1636, 'TV-02', 'CV-04', '2406', 72.8, 87.36),
+(1637, 'TV-01', 'CV-02', '2683', 61.01, 73.212),
+(1638, 'TV-02', 'CV-04', '2918', 9.95, 11.94),
+(1639, 'TV-01', 'CV-04', '2740', 44.12, 52.944),
+(1640, 'TV-01', 'CV-03', '2560', 95.99, 115.188),
+(1642, 'TV-01', 'CV-01', '2230', 60.07, 72.084),
+(1643, 'TV-02', 'CV-01', '2616', 55.34, 66.408),
+(1644, 'TV-01', 'CV-03', '2092', 47.67, 57.204),
+(1645, 'TV-01', 'CV-04', '1748', 7.41, 8.892),
+(1647, 'TV-01', 'CV-02', '2069', 58.22, 69.864),
+(1648, 'TV-01', 'CV-02', '2273', 63.31, 75.972),
+(1649, 'TV-02', 'CV-02', '2024', 55.64, 66.768),
+(1650, 'TV-02', 'CV-02', '1603', 26.15, 31.38),
+(1651, 'TV-01', 'CV-03', '2199', 7.94, 9.528),
+(1652, 'TV-01', 'CV-01', '2329', 21.18, 25.416),
+(1653, 'TV-01', 'CV-04', '1285', 62.88, 75.456),
+(1655, 'TV-01', 'CV-03', '2183', 72.79, 87.348),
+(1656, 'TV-02', 'CV-03', '1347', 33.31, 39.972),
+(1657, 'TV-02', 'CV-02', '1130', 48.38, 58.056),
+(1658, 'TV-02', 'CV-03', '1071', 8.37, 10.044),
+(1659, 'TV-01', 'CV-01', '2288', 19.05, 22.86),
+(1660, 'TV-02', 'CV-05', '2604', 15.64, 18.768),
+(1661, 'TV-02', 'CV-03', '2132', 44.47, 53.364),
+(1662, 'TV-02', 'CV-04', '2886', 82.98, 99.576),
+(1663, 'TV-01', 'CV-03', '1194', 22.68, 27.216),
+(1664, 'TV-01', 'CV-02', '1738', 69.8, 83.76),
+(1665, 'TV-01', 'CV-04', '1798', 90.69, 108.828),
+(1666, 'TV-01', 'CV-04', '1237', 92.36, 110.832),
+(1667, 'TV-02', 'CV-02', '1278', 37.11, 44.532),
+(1668, 'TV-01', 'CV-03', '1843', 49.41, 59.292),
+(1670, 'TV-01', 'CV-01', '1679', 52.06, 62.472),
+(1671, 'TV-02', 'CV-01', '1915', 4.35, 5.22),
+(1672, 'TV-01', 'CV-05', '2882', 70.05, 84.06),
+(1673, 'TV-02', 'CV-03', '1694', 97.59, 117.108),
+(1674, 'TV-02', 'CV-05', '2634', 47.27, 56.724),
+(1675, 'TV-02', 'CV-03', '1102', 97, 116.4),
+(1676, 'TV-02', 'CV-01', '1180', 18.87, 22.644),
+(1677, 'TV-01', 'CV-05', '1833', 56.17, 67.404),
+(1678, 'TV-02', 'CV-04', '2040', 43.25, 51.9),
+(1679, 'TV-02', 'CV-02', '2773', 36.72, 44.064),
+(1680, 'TV-02', 'CV-02', '2485', 59.37, 71.244),
+(1681, 'TV-01', 'CV-02', '2011', 87.81, 105.372),
+(1682, 'TV-02', 'CV-03', '1433', 9.88, 11.856),
+(1683, 'TV-02', 'CV-04', '2803', 49.88, 59.856),
+(1684, 'TV-01', 'CV-01', '2734', 28.51, 34.212),
+(1685, 'TV-01', 'CV-04', '1046', 90.98, 109.176),
+(1687, 'TV-02', 'CV-05', '2734', 51.71, 62.052),
+(1688, 'TV-02', 'CV-02', '2986', 73.07, 87.684),
+(1689, 'TV-02', 'CV-02', '2307', 67.8, 81.36),
+(1690, 'TV-02', 'CV-04', '2885', 71.04, 85.248),
+(1691, 'TV-02', 'CV-05', '2133', 27.93, 33.516),
+(1692, 'TV-02', 'CV-04', '2624', 99.68, 119.616),
+(1693, 'TV-01', 'CV-02', '1801', 2.5, 3),
+(1694, 'TV-01', 'CV-04', '1888', 43.23, 51.876),
+(1695, 'TV-01', 'CV-01', '2551', 89.74, 107.688),
+(1697, 'TV-01', 'CV-05', '1878', 87.7, 105.24),
+(1698, 'TV-02', 'CV-04', '2429', 31.61, 37.932),
+(1699, 'TV-01', 'CV-05', '2378', 10.58, 12.696),
+(1700, 'TV-01', 'CV-01', '2441', 37.51, 45.012),
+(1701, 'TV-01', 'CV-03', '2736', 26.09, 31.308),
+(1702, 'TV-01', 'CV-03', '1893', 33.49, 40.188),
+(1703, 'TV-02', 'CV-05', '1835', 23.27, 27.924),
+(1704, 'TV-02', 'CV-05', '2453', 89.38, 107.256),
+(1705, 'TV-01', 'CV-03', '2358', 71.92, 86.304),
+(1707, 'TV-01', 'CV-03', '2756', 7.84, 9.408),
+(1708, 'TV-01', 'CV-05', '1870', 77.67, 93.204),
+(1709, 'TV-01', 'CV-02', '2491', 41.79, 50.148),
+(1710, 'TV-02', 'CV-01', '2845', 49.73, 59.676),
+(1711, 'TV-02', 'CV-05', '2980', 32.79, 39.348),
+(1712, 'TV-02', 'CV-05', '2826', 72.15, 86.58),
+(1713, 'TV-02', 'CV-02', '1262', 5.08, 6.096),
+(1714, 'TV-01', 'CV-02', '2242', 87.85, 105.42),
+(1715, 'TV-01', 'CV-01', '1220', 37.34, 44.808),
+(1717, 'TV-01', 'CV-02', '2108', 42.33, 50.796),
+(1718, 'TV-01', 'CV-04', '1491', 17.05, 20.46),
+(1719, 'TV-02', 'CV-03', '2785', 16.77, 20.124),
+(1720, 'TV-02', 'CV-03', '2250', 16.84, 20.208),
+(1721, 'TV-01', 'CV-05', '2987', 49.74, 59.688),
+(1722, 'TV-01', 'CV-02', '2600', 53.43, 64.116),
+(1723, 'TV-02', 'CV-01', '2781', 7.59, 9.108),
+(1724, 'TV-02', 'CV-01', '1744', 70.35, 84.42),
+(1725, 'TV-02', 'CV-04', '2500', 11.15, 13.38),
+(1726, 'TV-02', 'CV-03', '1042', 7.75, 9.3),
+(1727, 'TV-01', 'CV-03', '2142', 64.59, 77.508),
+(1728, 'TV-01', 'CV-03', '1817', 24.54, 29.448),
+(1729, 'TV-02', 'CV-04', '1752', 52.12, 62.544),
+(1730, 'TV-01', 'CV-05', '2872', 35.39, 42.468),
+(1731, 'TV-01', 'CV-01', '1646', 71.73, 86.076),
+(1732, 'TV-01', 'CV-05', '2036', 68.77, 82.524),
+(1733, 'TV-02', 'CV-04', '1917', 26.06, 31.272),
+(1734, 'TV-01', 'CV-01', '2751', 86.06, 103.272),
+(1735, 'TV-02', 'CV-01', '2438', 85.56, 102.672),
+(1737, 'TV-01', 'CV-02', '2380', 60.37, 72.444),
+(1738, 'TV-01', 'CV-03', '1461', 75.73, 90.876),
+(1739, 'TV-02', 'CV-01', '2807', 79.18, 95.016),
+(1740, 'TV-02', 'CV-01', '2399', 64.79, 77.748),
+(1742, 'TV-01', 'CV-04', '1453', 49.15, 58.98),
+(1743, 'TV-01', 'CV-04', '1514', 8.77, 10.524),
+(1745, 'TV-01', 'CV-02', '2744', 45.86, 55.032),
+(1746, 'TV-02', 'CV-03', '1222', 81.95, 98.34),
+(1747, 'TV-01', 'CV-03', '2890', 70.16, 84.192),
+(1748, 'TV-01', 'CV-03', '1514', 56.83, 68.196),
+(1749, 'TV-02', 'CV-03', '1160', 24.12, 28.944),
+(1750, 'TV-02', 'CV-03', '2612', 58.86, 70.632),
+(1751, 'TV-01', 'CV-01', '2530', 90.47, 108.564),
+(1752, 'TV-02', 'CV-01', '1612', 51.77, 62.124),
+(1753, 'TV-02', 'CV-02', '2909', 8.89, 10.668),
+(1754, 'TV-01', 'CV-05', '1699', 90.33, 108.396),
+(1755, 'TV-01', 'CV-03', '2736', 97.06, 116.472),
+(1756, 'TV-02', 'CV-04', '2790', 17.7, 21.24),
+(1757, 'TV-01', 'CV-03', '2078', 94.63, 113.556),
+(1758, 'TV-01', 'CV-02', '1606', 60.06, 72.072),
+(1760, 'TV-01', 'CV-03', '2458', 86.14, 103.368),
+(1761, 'TV-01', 'CV-03', '1177', 32.13, 38.556),
+(1762, 'TV-01', 'CV-02', '2002', 51.39, 61.668),
+(1763, 'TV-02', 'CV-03', '2584', 94.41, 113.292),
+(1764, 'TV-01', 'CV-05', '2395', 96.9, 116.28),
+(1765, 'TV-01', 'CV-01', '2832', 34.06, 40.872),
+(1766, 'TV-02', 'CV-03', '1986', 33.97, 40.764),
+(1767, 'TV-02', 'CV-04', '1827', 16.01, 19.212),
+(1768, 'TV-01', 'CV-04', '2983', 51.45, 61.74),
+(1769, 'TV-01', 'CV-02', '1011', 27.31, 32.772),
+(1770, 'TV-01', 'CV-03', '2397', 4.3, 5.16),
+(1771, 'TV-01', 'CV-04', '1050', 72.22, 86.664),
+(1772, 'TV-01', 'CV-04', '2126', 51.38, 61.656),
+(1773, 'TV-02', 'CV-04', '2826', 5.34, 6.408),
+(1774, 'TV-01', 'CV-05', '1461', 75.49, 90.588),
+(1775, 'TV-01', 'CV-04', '2889', 43.17, 51.804),
+(1776, 'TV-02', 'CV-01', '1286', 79.61, 95.532),
+(1777, 'TV-02', 'CV-05', '2934', 7.45, 8.94),
+(1778, 'TV-01', 'CV-05', '2515', 75.18, 90.216),
+(1779, 'TV-02', 'CV-04', '1383', 0.07, 0.084),
+(1780, 'TV-02', 'CV-05', '2992', 33.78, 40.536),
+(1781, 'TV-01', 'CV-02', '1445', 51.77, 62.124),
+(1782, 'TV-02', 'CV-04', '1706', 60.46, 72.552),
+(1783, 'TV-01', 'CV-02', '1768', 74.75, 89.7),
+(1784, 'TV-02', 'CV-03', '1926', 69.64, 83.568),
+(1785, 'TV-01', 'CV-05', '1813', 16.45, 19.74),
+(1786, 'TV-02', 'CV-04', '1484', 87.66, 105.192),
+(1787, 'TV-02', 'CV-03', '2304', 81.64, 97.968),
+(1788, 'TV-01', 'CV-05', '1481', 41.98, 50.376),
+(1789, 'TV-01', 'CV-04', '1240', 16.88, 20.256),
+(1790, 'TV-02', 'CV-05', '1702', 14.58, 17.496),
+(1792, 'TV-01', 'CV-04', '1682', 71.06, 85.272),
+(1793, 'TV-01', 'CV-01', '1799', 10.87, 13.044),
+(1794, 'TV-01', 'CV-03', '1020', 20.66, 24.792),
+(1795, 'TV-02', 'CV-05', '2439', 15.81, 18.972),
+(1796, 'TV-02', 'CV-04', '1834', 48.42, 58.104),
+(1797, 'TV-01', 'CV-03', '2427', 46.7, 56.04),
+(1798, 'TV-02', 'CV-04', '1026', 60.55, 72.66),
+(1799, 'TV-02', 'CV-01', '1137', 11.96, 14.352),
+(1801, 'TV-01', 'CV-05', '2450', 88.73, 106.476),
+(1802, 'TV-02', 'CV-04', '2710', 88.07, 105.684),
+(1803, 'TV-02', 'CV-01', '1759', 97.89, 117.468),
+(1804, 'TV-01', 'CV-05', '1905', 11.38, 13.656),
+(1805, 'TV-02', 'CV-03', '1984', 42.34, 50.808),
+(1806, 'TV-02', 'CV-03', '2078', 72.26, 86.712),
+(1808, 'TV-02', 'CV-03', '1744', 50.68, 60.816),
+(1809, 'TV-02', 'CV-05', '2949', 89.21, 107.052),
+(1810, 'TV-01', 'CV-01', '1407', 8.55, 10.26),
+(1811, 'TV-02', 'CV-01', '1272', 33.19, 39.828),
+(1812, 'TV-02', 'CV-02', '2581', 98.61, 118.332),
+(1813, 'TV-02', 'CV-04', '1879', 20.27, 24.324),
+(1814, 'TV-01', 'CV-05', '1891', 25.84, 31.008),
+(1815, 'TV-01', 'CV-02', '1283', 9.07, 10.884),
+(1816, 'TV-02', 'CV-03', '2813', 2.93, 3.516),
+(1817, 'TV-02', 'CV-01', '2674', 19.49, 23.388),
+(1818, 'TV-02', 'CV-03', '1244', 61.07, 73.284),
+(1819, 'TV-01', 'CV-05', '2697', 78.16, 93.792),
+(1820, 'TV-02', 'CV-04', '2686', 60.7, 72.84),
+(1821, 'TV-01', 'CV-03', '1281', 13.32, 15.984),
+(1822, 'TV-02', 'CV-05', '1449', 77.18, 92.616),
+(1823, 'TV-02', 'CV-03', '2936', 47.92, 57.504),
+(1824, 'TV-01', 'CV-01', '1208', 91.42, 109.704),
+(1825, 'TV-02', 'CV-04', '1783', 1.11, 1.332),
+(1826, 'TV-01', 'CV-04', '2154', 5.39, 6.468),
+(1827, 'TV-01', 'CV-03', '2889', 28.17, 33.804),
+(1828, 'TV-02', 'CV-05', '2426', 84.89, 101.868),
+(1829, 'TV-01', 'CV-03', '2129', 68.09, 81.708),
+(1830, 'TV-01', 'CV-04', '2908', 71.78, 86.136),
+(1831, 'TV-01', 'CV-05', '2515', 80.17, 96.204),
+(1832, 'TV-01', 'CV-01', '1799', 93.2, 111.84),
+(1833, 'TV-02', 'CV-03', '2657', 37.91, 45.492),
+(1834, 'TV-01', 'CV-02', '1242', 88.19, 105.828),
+(1835, 'TV-01', 'CV-04', '2031', 55.98, 67.176),
+(1836, 'TV-01', 'CV-01', '2975', 30.73, 36.876),
+(1837, 'TV-02', 'CV-05', '1378', 13.03, 15.636),
+(1838, 'TV-02', 'CV-03', '2913', 53.44, 64.128),
+(1839, 'TV-02', 'CV-04', '1815', 19.48, 23.376),
+(1840, 'TV-02', 'CV-01', '2645', 67.16, 80.592),
+(1841, 'TV-02', 'CV-01', '1290', 41.49, 49.788),
+(1842, 'TV-01', 'CV-05', '2257', 78.52, 94.224),
+(1843, 'TV-01', 'CV-02', '1734', 87.1, 104.52),
+(1844, 'TV-02', 'CV-01', '1142', 91.14, 109.368),
+(1845, 'TV-02', 'CV-02', '2596', 89.63, 107.556),
+(1846, 'TV-02', 'CV-02', '1680', 23.14, 27.768),
+(1847, 'TV-02', 'CV-02', '1781', 94.51, 113.412),
+(1848, 'TV-01', 'CV-01', '1377', 67.13, 80.556),
+(1849, 'TV-02', 'CV-05', '1430', 55.56, 66.672),
+(1850, 'TV-01', 'CV-01', '2459', 8.16, 9.792),
+(1851, 'TV-02', 'CV-03', '1480', 25.93, 31.116),
+(1852, 'TV-01', 'CV-04', '2880', 87.44, 104.928),
+(1853, 'TV-02', 'CV-04', '1497', 41.05, 49.26),
+(1854, 'TV-01', 'CV-02', '1820', 33.93, 40.716),
+(1855, 'TV-01', 'CV-01', '2029', 34.28, 41.136),
+(1856, 'TV-01', 'CV-05', '1838', 58.55, 70.26),
+(1857, 'TV-02', 'CV-01', '2650', 38.13, 45.756),
+(1858, 'TV-02', 'CV-03', '2493', 5.12, 6.144),
+(1859, 'TV-02', 'CV-03', '1661', 7.16, 8.592),
+(1861, 'TV-02', 'CV-03', '1315', 11.72, 14.064),
+(1862, 'TV-02', 'CV-05', '2219', 78.48, 94.176),
+(1863, 'TV-02', 'CV-01', '2821', 7.75, 9.3),
+(1865, 'TV-01', 'CV-02', '1976', 59.39, 71.268),
+(1866, 'TV-01', 'CV-02', '2352', 13.49, 16.188),
+(1867, 'TV-01', 'CV-05', '1176', 20.46, 24.552),
+(1868, 'TV-01', 'CV-04', '2546', 96.73, 116.076),
+(1869, 'TV-01', 'CV-04', '1835', 19.86, 23.832),
+(1870, 'TV-01', 'CV-01', '1252', 79.22, 95.064),
+(1871, 'TV-01', 'CV-04', '1926', 94.17, 113.004),
+(1872, 'TV-01', 'CV-04', '1096', 34.91, 41.892),
+(1874, 'TV-02', 'CV-04', '2889', 24.44, 29.328),
+(1875, 'TV-02', 'CV-03', '2301', 44.14, 52.968),
+(1876, 'TV-01', 'CV-03', '2518', 96.04, 115.248),
+(1877, 'TV-02', 'CV-04', '1222', 56.59, 67.908),
+(1878, 'TV-02', 'CV-03', '1624', 4.71, 5.652),
+(1879, 'TV-01', 'CV-03', '2756', 86.58, 103.896),
+(1880, 'TV-02', 'CV-05', '2385', 96.34, 115.608),
+(1881, 'TV-01', 'CV-04', '1237', 18.58, 22.296),
+(1882, 'TV-02', 'CV-03', '2927', 33.69, 40.428),
+(1883, 'TV-02', 'CV-01', '2474', 26.45, 31.74),
+(1884, 'TV-02', 'CV-03', '2518', 30.69, 36.828),
+(1885, 'TV-01', 'CV-05', '2499', 5.07, 6.084),
+(1886, 'TV-02', 'CV-04', '1456', 70.81, 84.972),
+(1887, 'TV-01', 'CV-03', '1269', 35.19, 42.228),
+(1888, 'TV-02', 'CV-02', '2453', 52.25, 62.7),
+(1889, 'TV-02', 'CV-01', '2306', 84.76, 101.712),
+(1890, 'TV-01', 'CV-01', '2787', 2.42, 2.904),
+(1891, 'TV-02', 'CV-01', '1885', 42.77, 51.324),
+(1892, 'TV-01', 'CV-05', '1416', 31.7, 38.04),
+(1895, 'TV-01', 'CV-02', '1061', 17.18, 20.616),
+(1896, 'TV-01', 'CV-04', '2112', 46.99, 56.388),
+(1897, 'TV-02', 'CV-02', '2754', 86.66, 103.992),
+(1898, 'TV-01', 'CV-04', '2373', 32.44, 38.928),
+(1899, 'TV-02', 'CV-03', '2482', 98.48, 118.176),
+(1900, 'TV-01', 'CV-03', '2409', 29.38, 35.256),
+(1901, 'TV-01', 'CV-02', '1338', 55.4, 66.48),
+(1902, 'TV-02', 'CV-03', '2459', 29.66, 35.592),
+(1903, 'TV-01', 'CV-04', '2385', 90.62, 108.744),
+(1904, 'TV-01', 'CV-05', '1781', 17.96, 21.552),
+(1906, 'TV-02', 'CV-02', '2432', 52.72, 63.264),
+(1907, 'TV-01', 'CV-01', '2506', 8.5, 10.2),
+(1908, 'TV-02', 'CV-05', '2238', 93.31, 111.972),
+(1909, 'TV-01', 'CV-05', '2027', 42.71, 51.252),
+(1910, 'TV-01', 'CV-03', '2135', 89.43, 107.316),
+(1911, 'TV-02', 'CV-03', '1485', 74.5, 89.4),
+(1912, 'TV-01', 'CV-05', '1983', 34.7, 41.64),
+(1913, 'TV-01', 'CV-03', '1583', 12.25, 14.7),
+(1914, 'TV-01', 'CV-03', '2954', 50.41, 60.492),
+(1915, 'TV-02', 'CV-05', '2177', 42.02, 50.424),
+(1916, 'TV-02', 'CV-02', '2741', 94.02, 112.824),
+(1917, 'TV-01', 'CV-05', '2789', 35.97, 43.164),
+(1918, 'TV-01', 'CV-02', '2529', 86.99, 104.388),
+(1919, 'TV-01', 'CV-04', '2972', 29.33, 35.196),
+(1920, 'TV-02', 'CV-01', '2939', 60.56, 72.672),
+(1921, 'TV-01', 'CV-01', '2791', 44.54, 53.448),
+(1922, 'TV-02', 'CV-03', '2566', 9.74, 11.688),
+(1923, 'TV-02', 'CV-03', '2054', 14.57, 17.484),
+(1924, 'TV-02', 'CV-05', '2322', 75.12, 90.144),
+(1925, 'TV-02', 'CV-01', '1625', 57.23, 68.676),
+(1926, 'TV-02', 'CV-05', '1296', 58.51, 70.212),
+(1927, 'TV-01', 'CV-05', '2248', 32.14, 38.568),
+(1928, 'TV-02', 'CV-05', '2248', 36.36, 43.632),
+(1929, 'TV-01', 'CV-04', '2632', 51.61, 61.932),
+(1930, 'TV-02', 'CV-01', '1492', 42.45, 50.94),
+(1931, 'TV-01', 'CV-01', '2740', 33.56, 40.272),
+(1932, 'TV-01', 'CV-05', '2640', 93.96, 112.752),
+(1933, 'TV-01', 'CV-03', '2721', 53.19, 63.828),
+(1934, 'TV-01', 'CV-01', '2792', 69.21, 83.052),
+(1935, 'TV-01', 'CV-05', '2146', 73.96, 88.752),
+(1936, 'TV-01', 'CV-01', '2726', 72.28, 86.736),
+(1937, 'TV-02', 'CV-05', '1662', 7.22, 8.664),
+(1938, 'TV-01', 'CV-01', '2839', 25.21, 30.252),
+(1939, 'TV-02', 'CV-02', '1773', 97.61, 117.132),
+(1940, 'TV-01', 'CV-03', '1959', 69.29, 83.148),
+(1941, 'TV-02', 'CV-05', '2345', 60.19, 72.228),
+(1942, 'TV-02', 'CV-05', '1240', 23.88, 28.656),
+(1943, 'TV-01', 'CV-01', '2293', 44.56, 53.472),
+(1944, 'TV-02', 'CV-03', '2294', 82.6, 99.12),
+(1945, 'TV-02', 'CV-03', '2774', 30.21, 36.252),
+(1946, 'TV-01', 'CV-01', '1814', 21.88, 26.256),
+(1947, 'TV-01', 'CV-04', '1425', 22.49, 26.988),
+(1948, 'TV-02', 'CV-01', '2211', 70.69, 84.828),
+(1949, 'TV-02', 'CV-02', '1827', 25.51, 30.612),
+(1950, 'TV-02', 'CV-03', '2417', 21.06, 25.272),
+(1951, 'TV-02', 'CV-05', '2904', 49.01, 58.812),
+(1952, 'TV-01', 'CV-04', '2862', 4.45, 5.34),
+(1953, 'TV-01', 'CV-01', '2487', 51.85, 62.22),
+(1954, 'TV-01', 'CV-03', '1289', 92.09, 110.508),
+(1955, 'TV-02', 'CV-03', '1752', 6.75, 8.1),
+(1956, 'TV-02', 'CV-04', '1375', 76.36, 91.632),
+(1957, 'TV-02', 'CV-02', '1788', 31.63, 37.956),
+(1958, 'TV-02', 'CV-03', '2967', 73.65, 88.38),
+(1959, 'TV-01', 'CV-03', '1036', 36.76, 44.112),
+(1960, 'TV-02', 'CV-02', '2854', 24.09, 28.908),
+(1961, 'TV-01', 'CV-03', '1633', 13.68, 16.416),
+(1962, 'TV-01', 'CV-01', '1934', 78.14, 93.768),
+(1964, 'TV-01', 'CV-03', '1119', 92.35, 110.82),
+(1965, 'TV-02', 'CV-03', '2160', 7.42, 8.904),
+(1966, 'TV-02', 'CV-02', '2858', 24.52, 29.424),
+(1967, 'TV-01', 'CV-03', '1073', 27.26, 32.712),
+(1968, 'TV-02', 'CV-03', '2959', 99.73, 119.676),
+(1969, 'TV-02', 'CV-05', '2177', 79.02, 94.824),
+(1970, 'TV-02', 'CV-05', '1199', 22.85, 27.42),
+(1971, 'TV-01', 'CV-02', '2280', 93.66, 112.392),
+(1972, 'TV-01', 'CV-05', '1908', 62.46, 74.952),
+(1973, 'TV-01', 'CV-01', '1957', 91.78, 110.136),
+(1974, 'TV-01', 'CV-01', '1724', 5.76, 6.912),
+(1975, 'TV-02', 'CV-04', '1088', 30.38, 36.456),
+(1976, 'TV-01', 'CV-03', '1757', 67.54, 81.048),
+(1977, 'TV-01', 'CV-04', '2672', 87.35, 104.82),
+(1978, 'TV-02', 'CV-01', '1798', 99.42, 119.304),
+(1979, 'TV-01', 'CV-02', '2846', 60.62, 72.744),
+(1981, 'TV-02', 'CV-05', '1173', 50, 60),
+(1982, 'TV-02', 'CV-03', '2177', 38.6, 46.32),
+(1983, 'TV-02', 'CV-05', '1172', 52.73, 63.276),
+(1984, 'TV-02', 'CV-02', '2195', 77.68, 93.216),
+(1985, 'TV-01', 'CV-02', '2703', 56.61, 67.932),
+(1986, 'TV-01', 'CV-05', '1190', 6.37, 7.644),
+(1987, 'TV-01', 'CV-04', '2700', 10.57, 12.684),
+(1988, 'TV-01', 'CV-04', '2730', 48.41, 58.092),
+(1989, 'TV-01', 'CV-02', '1059', 31.77, 38.124),
+(1990, 'TV-01', 'CV-03', '2302', 43.7, 52.44),
+(1991, 'TV-02', 'CV-03', '2201', 48.49, 58.188),
+(1992, 'TV-01', 'CV-04', '1390', 80.36, 96.432),
+(1993, 'TV-01', 'CV-03', '2063', 83.86, 100.632),
+(1994, 'TV-02', 'CV-01', '2238', 30.47, 36.564),
+(1995, 'TV-01', 'CV-02', '2621', 22.86, 27.432),
+(1996, 'TV-01', 'CV-03', '2408', 68.05, 81.66),
+(1997, 'TV-02', 'CV-04', '2891', 34.97, 41.964),
+(1998, 'TV-02', 'CV-02', '2040', 12.7, 15.24),
+(1999, 'TV-01', 'CV-01', '2404', 43.54, 52.248),
+(2000, 'TV-01', 'CV-03', '1133', 29.52, 35.424),
+(2001, 'TV-01', 'CV-02', '1316', 42.41, 50.892),
+(2002, 'TV-02', 'CV-05', '1799', 65.71, 78.852),
+(2003, 'TV-02', 'CV-05', '2438', 2.65, 3.18),
+(2004, 'TV-02', 'CV-03', '1707', 76.51, 91.812),
+(2005, 'TV-01', 'CV-01', '2252', 94.16, 112.992),
+(2006, 'TV-01', 'CV-04', '1584', 41.51, 49.812),
+(2007, 'TV-01', 'CV-01', '2386', 32.38, 38.856),
+(2008, 'TV-02', 'CV-05', '1860', 56.87, 68.244),
+(2009, 'TV-02', 'CV-05', '1149', 96.24, 115.488),
+(2010, 'TV-01', 'CV-03', '2810', 92.13, 110.556),
+(2012, 'TV-01', 'CV-05', '2685', 97.51, 117.012),
+(2013, 'TV-02', 'CV-04', '2876', 45.16, 54.192),
+(2014, 'TV-01', 'CV-05', '2469', 53.83, 64.596),
+(2016, 'TV-01', 'CV-05', '1686', 60.87, 73.044),
+(2017, 'TV-01', 'CV-02', '1361', 65.44, 78.528),
+(2018, 'TV-01', 'CV-04', '2693', 57.35, 68.82),
+(2019, 'TV-02', 'CV-05', '1417', 23.21, 27.852),
+(2020, 'TV-02', 'CV-03', '2966', 34.58, 41.496),
+(2021, 'TV-01', 'CV-05', '2443', 4.53, 5.436),
+(2022, 'TV-01', 'CV-01', '1101', 79.39, 95.268),
+(2023, 'TV-02', 'CV-05', '2585', 0.25, 0.3),
+(2024, 'TV-01', 'CV-02', '2793', 43.39, 52.068),
+(2025, 'TV-01', 'CV-04', '1587', 4.24, 5.088),
+(2026, 'TV-02', 'CV-03', '2105', 14.53, 17.436),
+(2027, 'TV-02', 'CV-02', '2673', 95.12, 114.144),
+(2028, 'TV-02', 'CV-03', '1422', 39.66, 47.592),
+(2029, 'TV-02', 'CV-02', '1786', 85.83, 102.996),
+(2030, 'TV-01', 'CV-01', '1011', 38.55, 46.26),
+(2031, 'TV-02', 'CV-03', '1297', 85.04, 102.048),
+(2032, 'TV-02', 'CV-04', '2863', 55.53, 66.636),
+(2033, 'TV-01', 'CV-02', '1056', 73.83, 88.596),
+(2034, 'TV-01', 'CV-03', '1921', 34.94, 41.928),
+(2035, 'TV-01', 'CV-03', '2138', 37.08, 44.496),
+(2036, 'TV-02', 'CV-03', '1763', 25.71, 30.852),
+(2037, 'TV-01', 'CV-03', '2418', 72.16, 86.592),
+(2041, 'TV-02', 'CV-04', '2488', 91.46, 109.752),
+(2042, 'TV-02', 'CV-01', '2097', 60.81, 72.972),
+(2043, 'TV-02', 'CV-01', '1835', 30.82, 36.984),
+(2044, 'TV-02', 'CV-05', '2625', 58.99, 70.788),
+(2045, 'TV-01', 'CV-03', '2447', 65.74, 78.888),
+(2046, 'TV-01', 'CV-01', '2085', 80.57, 96.684),
+(2047, 'TV-02', 'CV-03', '2439', 83.68, 100.416),
+(2048, 'TV-02', 'CV-02', '1299', 98.77, 118.524),
+(2049, 'TV-02', 'CV-04', '1482', 67.22, 80.664),
+(2050, 'TV-02', 'CV-05', '1072', 93.35, 112.02),
+(2051, 'TV-02', 'CV-01', '2978', 48.82, 58.584),
+(2052, 'TV-01', 'CV-02', '2193', 48.37, 58.044),
+(2053, 'TV-02', 'CV-04', '2579', 30.17, 36.204),
+(2054, 'TV-01', 'CV-03', '1677', 31.21, 37.452),
+(2055, 'TV-02', 'CV-04', '2180', 65.49, 78.588),
+(2056, 'TV-02', 'CV-01', '2730', 21.84, 26.208),
+(2057, 'TV-01', 'CV-04', '1753', 50.57, 60.684),
+(2058, 'TV-02', 'CV-01', '2353', 15.16, 18.192),
+(2059, 'TV-01', 'CV-04', '2812', 21.01, 25.212),
+(2060, 'TV-01', 'CV-02', '1655', 75.42, 90.504),
+(2061, 'TV-02', 'CV-02', '1043', 63.58, 76.296),
+(2062, 'TV-02', 'CV-03', '1352', 7.3, 8.76),
+(2063, 'TV-01', 'CV-03', '2794', 70.41, 84.492),
+(2064, 'TV-02', 'CV-03', '1012', 35.39, 42.468),
+(2066, 'TV-01', 'CV-04', '1866', 33.48, 40.176),
+(2067, 'TV-01', 'CV-05', '2105', 23.06, 27.672),
+(2068, 'TV-02', 'CV-05', '2241', 99.12, 118.944),
+(2069, 'TV-02', 'CV-02', '1234', 65.4, 78.48),
+(2070, 'TV-02', 'CV-02', '2473', 65.07, 78.084),
+(2071, 'TV-02', 'CV-04', '1579', 96.11, 115.332),
+(2072, 'TV-01', 'CV-01', '1336', 51.7, 62.04),
+(2074, 'TV-01', 'CV-04', '2674', 24.44, 29.328),
+(2075, 'TV-01', 'CV-01', '1484', 74.45, 89.34),
+(2076, 'TV-02', 'CV-01', '1049', 73.06, 87.672),
+(2077, 'TV-02', 'CV-01', '1565', 10.76, 12.912),
+(2078, 'TV-01', 'CV-02', '2895', 47.38, 56.856),
+(2079, 'TV-02', 'CV-02', '1390', 0.5, 0.6),
+(2080, 'TV-01', 'CV-03', '2263', 73.65, 88.38),
+(2081, 'TV-01', 'CV-02', '2991', 99.73, 119.676),
+(2082, 'TV-01', 'CV-03', '2021', 50.51, 60.612),
+(2083, 'TV-02', 'CV-01', '1085', 56.32, 67.584),
+(2084, 'TV-02', 'CV-04', '2689', 13.79, 16.548),
+(2085, 'TV-01', 'CV-01', '2980', 44, 52.8),
+(2086, 'TV-01', 'CV-03', '1370', 55.89, 67.068),
+(2087, 'TV-01', 'CV-02', '2195', 3.98, 4.776),
+(2088, 'TV-02', 'CV-03', '1624', 10.72, 12.864),
+(2089, 'TV-02', 'CV-01', '1617', 65.84, 79.008),
+(2090, 'TV-02', 'CV-01', '2124', 28.82, 34.584),
+(2091, 'TV-01', 'CV-02', '2023', 35.51, 42.612),
+(2092, 'TV-01', 'CV-02', '2031', 36.02, 43.224),
+(2093, 'TV-02', 'CV-05', '2415', 3.59, 4.308),
+(2094, 'TV-01', 'CV-03', '1806', 7.95, 9.54),
+(2095, 'TV-01', 'CV-05', '1574', 90.9, 109.08),
+(2096, 'TV-02', 'CV-03', '2229', 86.04, 103.248),
+(2097, 'TV-01', 'CV-02', '1186', 1.8, 2.16),
+(2098, 'TV-01', 'CV-02', '1866', 22.52, 27.024),
+(2099, 'TV-02', 'CV-01', '2824', 38.53, 46.236),
+(2100, 'TV-02', 'CV-03', '1240', 19.29, 23.148),
+(2101, 'TV-02', 'CV-02', '2872', 13.16, 15.792),
+(2102, 'TV-01', 'CV-05', '1990', 84.33, 101.196),
+(2103, 'TV-01', 'CV-01', '1969', 89.41, 107.292),
+(2104, 'TV-01', 'CV-04', '1613', 64.67, 77.604),
+(2105, 'TV-02', 'CV-03', '1496', 19.64, 23.568),
+(2106, 'TV-02', 'CV-02', '2871', 31.88, 38.256),
+(2108, 'TV-01', 'CV-04', '2705', 28.79, 34.548),
+(2109, 'TV-02', 'CV-05', '2405', 33.82, 40.584),
+(2110, 'TV-02', 'CV-04', '2215', 17.71, 21.252),
+(2111, 'TV-02', 'CV-01', '1059', 88.86, 106.632),
+(2112, 'TV-01', 'CV-04', '2257', 90.97, 109.164),
+(2113, 'TV-02', 'CV-05', '2546', 98.47, 118.164),
+(2114, 'TV-02', 'CV-03', '2732', 35.61, 42.732),
+(2115, 'TV-02', 'CV-01', '2927', 45.94, 55.128),
+(2116, 'TV-02', 'CV-01', '1454', 16.05, 19.26),
+(2117, 'TV-02', 'CV-03', '1036', 56.51, 67.812),
+(2118, 'TV-01', 'CV-05', '1687', 10.91, 13.092),
+(2119, 'TV-02', 'CV-01', '1099', 27.62, 33.144),
+(2120, 'TV-02', 'CV-05', '2375', 61.32, 73.584),
+(2121, 'TV-02', 'CV-05', '2091', 36.53, 43.836),
+(2122, 'TV-01', 'CV-02', '1551', 22.09, 26.508),
+(2123, 'TV-01', 'CV-05', '2350', 57.89, 69.468),
+(2124, 'TV-01', 'CV-05', '2277', 56.2, 67.44),
+(2125, 'TV-01', 'CV-03', '1260', 86.39, 103.668),
+(2126, 'TV-01', 'CV-01', '1733', 23.01, 27.612),
+(2128, 'TV-01', 'CV-01', '2604', 87.42, 104.904),
+(2129, 'TV-01', 'CV-04', '2876', 38.24, 45.888),
+(2130, 'TV-01', 'CV-04', '2168', 89.11, 106.932),
+(2132, 'TV-01', 'CV-01', '2123', 70.3, 84.36),
+(2133, 'TV-02', 'CV-04', '1909', 64.47, 77.364),
+(2134, 'TV-01', 'CV-05', '1125', 20.43, 24.516),
+(2135, 'TV-02', 'CV-03', '2375', 67.7, 81.24),
+(2136, 'TV-01', 'CV-04', '2849', 78.32, 93.984),
+(2137, 'TV-01', 'CV-02', '1897', 13.56, 16.272),
+(2138, 'TV-01', 'CV-01', '2560', 33.5, 40.2),
+(2139, 'TV-02', 'CV-01', '2013', 64.3, 77.16),
+(2140, 'TV-01', 'CV-03', '1143', 2.45, 2.94),
+(2141, 'TV-01', 'CV-04', '2767', 40.2, 48.24),
+(2142, 'TV-02', 'CV-05', '2995', 3.11, 3.73),
+(2143, 'TV-01', 'CV-04', '1496', 6.54, 7.848),
+(2144, 'TV-02', 'CV-04', '1439', 26.24, 31.488),
+(2145, 'TV-01', 'CV-03', '1729', 6.24, 7.488),
+(2146, 'TV-01', 'CV-04', '1228', 23.78, 28.536),
+(2147, 'TV-01', 'CV-02', '1732', 55.07, 66.084),
+(2148, 'TV-01', 'CV-03', '2807', 47.57, 57.084),
+(2149, 'TV-02', 'CV-02', '1446', 77.55, 93.06),
+(2150, 'TV-01', 'CV-01', '2464', 11.21, 13.452),
+(2152, 'TV-02', 'CV-05', '1781', 69.11, 82.932),
+(2153, 'TV-02', 'CV-05', '1216', 66.28, 79.536),
+(2154, 'TV-01', 'CV-03', '1868', 12.14, 14.568),
+(2155, 'TV-01', 'CV-01', '1125', 6.92, 8.304),
+(2156, 'TV-01', 'CV-02', '1869', 39.06, 46.872),
+(2157, 'TV-01', 'CV-03', '1100', 47.26, 56.712),
+(2159, 'TV-02', 'CV-01', '2965', 41.95, 50.34),
+(2160, 'TV-01', 'CV-01', '2869', 63.69, 76.428),
+(2161, 'TV-01', 'CV-02', '2463', 32.51, 39.012),
+(2162, 'TV-02', 'CV-05', '2007', 90.69, 108.828),
+(2163, 'TV-01', 'CV-02', '2502', 87.15, 104.58),
+(2164, 'TV-01', 'CV-04', '1832', 46.69, 56.028),
+(2165, 'TV-01', 'CV-04', '1381', 90.26, 108.312),
+(2166, 'TV-01', 'CV-05', '1464', 55.97, 67.164),
+(2167, 'TV-02', 'CV-03', '1162', 98.65, 118.38),
+(2168, 'TV-01', 'CV-01', '2185', 58.67, 70.404),
+(2169, 'TV-02', 'CV-04', '1514', 70.87, 85.044),
+(2170, 'TV-01', 'CV-01', '2708', 64.63, 77.556),
+(2171, 'TV-02', 'CV-01', '2281', 23.48, 28.176),
+(2172, 'TV-02', 'CV-04', '2694', 92.87, 111.444),
+(2175, 'TV-02', 'CV-02', '1556', 63.55, 76.26),
+(2176, 'TV-02', 'CV-02', '1609', 14.09, 16.908),
+(2177, 'TV-02', 'CV-05', '1228', 14.77, 17.724),
+(2178, 'TV-02', 'CV-02', '2933', 57.3, 68.76),
+(2179, 'TV-02', 'CV-04', '2373', 76.18, 91.416),
+(2180, 'TV-01', 'CV-05', '2890', 36.41, 43.692),
+(2181, 'TV-02', 'CV-04', '1553', 96.93, 116.316),
+(2182, 'TV-01', 'CV-03', '1474', 94.8, 113.76),
+(2183, 'TV-02', 'CV-04', '1344', 10.85, 13.02),
+(2184, 'TV-02', 'CV-03', '1978', 62.06, 74.472),
+(2185, 'TV-01', 'CV-03', '2207', 69.04, 82.848),
+(2187, 'TV-02', 'CV-03', '1661', 7.51, 9.012),
+(2188, 'TV-02', 'CV-03', '2838', 91.89, 110.268),
+(2189, 'TV-01', 'CV-04', '2428', 4.35, 5.22),
+(2190, 'TV-02', 'CV-04', '1659', 52.01, 62.412),
+(2191, 'TV-02', 'CV-05', '2664', 26.9, 32.28),
+(2192, 'TV-01', 'CV-02', '2143', 51.09, 61.308),
+(2194, 'TV-02', 'CV-03', '2239', 16.31, 19.572),
+(2195, 'TV-01', 'CV-01', '2811', 24.03, 28.836),
+(2196, 'TV-02', 'CV-01', '2840', 39.81, 47.772),
+(2197, 'TV-02', 'CV-04', '2493', 84.31, 101.172),
+(2198, 'TV-01', 'CV-04', '2868', 31.33, 37.596),
+(2199, 'TV-02', 'CV-05', '2650', 89.87, 107.844),
+(2200, 'TV-02', 'CV-04', '2830', 11.35, 13.62),
+(2201, 'TV-02', 'CV-04', '2048', 37.67, 45.204),
+(2202, 'TV-02', 'CV-04', '1051', 18.99, 22.788),
+(2203, 'TV-01', 'CV-03', '1969', 16.65, 19.98),
+(2204, 'TV-02', 'CV-02', '2980', 48.7, 58.44),
+(2205, 'TV-01', 'CV-02', '1347', 3.09, 3.708),
+(2206, 'TV-02', 'CV-03', '2183', 80.25, 96.3),
+(2207, 'TV-01', 'CV-02', '2916', 18.78, 22.536),
+(2208, 'TV-01', 'CV-05', '1052', 23.33, 27.996),
+(2209, 'TV-02', 'CV-01', '2784', 97.92, 117.504),
+(2210, 'TV-02', 'CV-01', '1345', 67.04, 80.448),
+(2211, 'TV-01', 'CV-04', '1037', 54.38, 65.256),
+(2212, 'TV-01', 'CV-05', '1615', 60.05, 72.06),
+(2213, 'TV-02', 'CV-03', '2536', 26.52, 31.824),
+(2215, 'TV-02', 'CV-05', '2670', 88.88, 106.656),
+(2216, 'TV-02', 'CV-03', '1043', 33.68, 40.416),
+(2217, 'TV-01', 'CV-05', '2664', 23.09, 27.708),
+(2218, 'TV-01', 'CV-03', '2400', 15.5, 18.6),
+(2219, 'TV-02', 'CV-04', '1643', 49.61, 59.532),
+(2220, 'TV-01', 'CV-05', '1815', 73.78, 88.536),
+(2221, 'TV-02', 'CV-01', '2422', 47.2, 56.64),
+(2223, 'TV-01', 'CV-03', '1811', 9.77, 11.724),
+(2224, 'TV-01', 'CV-04', '2350', 53.47, 64.164),
+(2225, 'TV-02', 'CV-03', '2030', 13.17, 15.804),
+(2226, 'TV-02', 'CV-03', '1814', 94.37, 113.244),
+(2227, 'TV-02', 'CV-03', '2446', 94.04, 112.848),
+(2228, 'TV-02', 'CV-02', '2477', 12.12, 14.544),
+(2229, 'TV-02', 'CV-05', '2143', 59.09, 70.908),
+(2230, 'TV-01', 'CV-04', '1333', 25.63, 30.756),
+(2231, 'TV-01', 'CV-01', '2856', 27.14, 32.568),
+(2232, 'TV-02', 'CV-05', '2593', 79.77, 95.724),
+(2233, 'TV-01', 'CV-05', '2207', 31.19, 37.428),
+(2234, 'TV-02', 'CV-03', '1995', 29.24, 35.088),
+(2235, 'TV-02', 'CV-04', '1129', 93.06, 111.672),
+(2236, 'TV-02', 'CV-02', '2964', 74.18, 89.016),
+(2237, 'TV-02', 'CV-01', '2204', 81.51, 97.812),
+(2238, 'TV-01', 'CV-03', '1047', 39.33, 47.196),
+(2239, 'TV-01', 'CV-01', '2150', 63.07, 75.684),
+(2240, 'TV-02', 'CV-05', '1524', 87.43, 104.916),
+(2241, 'TV-01', 'CV-03', '1407', 36.17, 43.404),
+(2242, 'TV-02', 'CV-03', '2540', 0.1, 0.12),
+(2244, 'TV-01', 'CV-02', '1440', 37.84, 45.408),
+(2245, 'TV-02', 'CV-03', '2159', 33.65, 40.38),
+(2246, 'TV-02', 'CV-01', '2234', 41.15, 49.38),
+(2247, 'TV-02', 'CV-02', '1035', 14.7, 17.64),
+(2248, 'TV-01', 'CV-03', '1467', 62.52, 75.024),
+(2249, 'TV-01', 'CV-01', '1876', 33.54, 40.248),
+(2250, 'TV-01', 'CV-01', '2216', 57.03, 68.436),
+(2251, 'TV-01', 'CV-01', '1816', 95.65, 114.78),
+(2252, 'TV-01', 'CV-05', '1727', 95.65, 114.78),
+(2253, 'TV-01', 'CV-05', '2539', 6.51, 7.812),
+(2254, 'TV-02', 'CV-03', '2808', 90.46, 108.552),
+(2255, 'TV-01', 'CV-04', '1402', 36.7, 44.04),
+(2256, 'TV-02', 'CV-05', '2468', 12.47, 14.964),
+(2257, 'TV-02', 'CV-05', '1223', 29.16, 34.992),
+(2258, 'TV-01', 'CV-01', '2141', 89.25, 107.1),
+(2259, 'TV-01', 'CV-04', '1712', 30.57, 36.684),
+(2260, 'TV-01', 'CV-02', '1277', 94, 112.8),
+(2261, 'TV-02', 'CV-02', '1701', 51.37, 61.644),
+(2262, 'TV-01', 'CV-01', '1345', 21.28, 25.536),
+(2263, 'TV-01', 'CV-04', '2905', 29.42, 35.304),
+(2264, 'TV-02', 'CV-02', '1553', 0.43, 0.516),
+(2265, 'TV-01', 'CV-04', '2078', 21.75, 26.1),
+(2266, 'TV-01', 'CV-01', '2009', 68.4, 82.08),
+(2267, 'TV-02', 'CV-02', '1125', 42.08, 50.496),
+(2268, 'TV-01', 'CV-01', '2712', 81.05, 97.26),
+(2269, 'TV-01', 'CV-03', '2831', 73.81, 88.572),
+(2270, 'TV-02', 'CV-02', '2531', 5.01, 6.012),
+(2271, 'TV-02', 'CV-03', '2839', 29.02, 34.824),
+(2272, 'TV-01', 'CV-02', '2846', 67.24, 80.688),
+(2273, 'TV-01', 'CV-01', '2244', 36.23, 43.476),
+(2274, 'TV-01', 'CV-02', '1158', 62.97, 75.564),
+(2276, 'TV-02', 'CV-01', '1341', 41.87, 50.244),
+(2277, 'TV-02', 'CV-05', '1798', 69.66, 83.592),
+(2278, 'TV-01', 'CV-03', '1804', 85.31, 102.372),
+(2280, 'TV-01', 'CV-02', '2752', 51.81, 62.172),
+(2281, 'TV-01', 'CV-01', '1381', 26.76, 32.112),
+(2282, 'TV-01', 'CV-04', '2804', 62.9, 75.48),
+(2283, 'TV-02', 'CV-05', '2088', 73.65, 88.38),
+(2284, 'TV-01', 'CV-05', '1011', 5.67, 6.804),
+(2285, 'TV-02', 'CV-01', '1105', 34.33, 41.196),
+(2286, 'TV-01', 'CV-03', '2787', 11.28, 13.536),
+(2287, 'TV-01', 'CV-05', '1989', 87.05, 104.46),
+(2288, 'TV-02', 'CV-04', '2974', 40.47, 48.564),
+(2289, 'TV-02', 'CV-05', '2739', 38.05, 45.66),
+(2290, 'TV-01', 'CV-01', '1079', 35.74, 42.888),
+(2292, 'TV-01', 'CV-02', '1868', 4.21, 5.052),
+(2293, 'TV-02', 'CV-01', '2128', 41.12, 49.344),
+(2294, 'TV-01', 'CV-04', '1041', 47.08, 56.496),
+(2297, 'TV-02', 'CV-04', '2248', 71.37, 85.644),
+(2298, 'TV-01', 'CV-04', '2461', 16.92, 20.304),
+(2299, 'TV-01', 'CV-03', '2976', 1.09, 1.308),
+(2300, 'TV-02', 'CV-04', '2977', 88.11, 105.732),
+(2302, 'TV-01', 'CV-03', '2026', 27.62, 33.144),
+(2303, 'TV-01', 'CV-05', '2449', 7.51, 9.012),
+(2304, 'TV-01', 'CV-02', '2482', 94.36, 113.232),
+(2305, 'TV-02', 'CV-03', '2337', 96.46, 115.752),
+(2306, 'TV-01', 'CV-03', '1732', 32.18, 38.616),
+(2307, 'TV-02', 'CV-03', '1933', 31.87, 38.244),
+(2308, 'TV-01', 'CV-05', '1793', 45.08, 54.096),
+(2309, 'TV-02', 'CV-04', '1498', 80.4, 96.48),
+(2310, 'TV-01', 'CV-02', '1683', 48.42, 58.104),
+(2311, 'TV-01', 'CV-03', '1141', 84.59, 101.508),
+(2312, 'TV-02', 'CV-03', '2373', 61.61, 73.932),
+(2313, 'TV-02', 'CV-04', '1997', 79.32, 95.184),
+(2314, 'TV-02', 'CV-02', '2073', 72.03, 86.436),
+(2315, 'TV-02', 'CV-03', '1668', 94.46, 113.352),
+(2316, 'TV-01', 'CV-03', '2545', 9.74, 11.688),
+(2317, 'TV-02', 'CV-01', '2383', 13.91, 16.692),
+(2318, 'TV-01', 'CV-01', '1618', 14.76, 17.712),
+(2319, 'TV-02', 'CV-01', '1931', 19.38, 23.256),
+(2320, 'TV-02', 'CV-05', '1817', 33.73, 40.476),
+(2321, 'TV-02', 'CV-02', '1144', 34.5, 41.4),
+(2322, 'TV-02', 'CV-03', '1487', 92.12, 110.544),
+(2323, 'TV-02', 'CV-02', '2866', 35.21, 42.252),
+(2324, 'TV-01', 'CV-01', '2941', 41.4, 49.68),
+(2325, 'TV-02', 'CV-04', '2645', 89, 106.8),
+(2326, 'TV-02', 'CV-02', '2519', 94.22, 113.064),
+(2327, 'TV-01', 'CV-03', '2516', 10.95, 13.14),
+(2329, 'TV-01', 'CV-05', '2998', 93.42, 112.104),
+(2330, 'TV-01', 'CV-03', '2896', 22.91, 27.492),
+(2331, 'TV-01', 'CV-05', '1102', 15.62, 18.744),
+(2332, 'TV-02', 'CV-05', '1045', 13.35, 16.02),
+(2333, 'TV-01', 'CV-02', '2185', 97.89, 117.468),
+(2334, 'TV-01', 'CV-03', '2832', 26.49, 31.788),
+(2335, 'TV-01', 'CV-05', '2213', 60.99, 73.188),
+(2336, 'TV-01', 'CV-05', '1751', 65.14, 78.168),
+(2337, 'TV-02', 'CV-03', '2309', 45.38, 54.456),
+(2338, 'TV-01', 'CV-01', '1900', 25.42, 30.504),
+(2339, 'TV-02', 'CV-03', '1931', 78.08, 93.696),
+(2340, 'TV-02', 'CV-01', '1463', 4.84, 5.808),
+(2341, 'TV-02', 'CV-05', '2271', 33.17, 39.804),
+(2342, 'TV-01', 'CV-03', '1023', 98.89, 118.668),
+(2343, 'TV-01', 'CV-05', '1840', 87.87, 105.444),
+(2344, 'TV-02', 'CV-04', '1113', 52.36, 62.832),
+(2345, 'TV-02', 'CV-04', '1701', 93.18, 111.816),
+(2346, 'TV-02', 'CV-04', '2283', 14.39, 17.268),
+(2347, 'TV-02', 'CV-02', '1145', 20.35, 24.42),
+(2348, 'TV-01', 'CV-02', '2989', 33.35, 40.02),
+(2349, 'TV-02', 'CV-05', '2888', 85.31, 102.372),
+(2350, 'TV-01', 'CV-01', '1347', 68.1, 81.72),
+(2351, 'TV-02', 'CV-04', '2816', 2.24, 2.688),
+(2353, 'TV-01', 'CV-02', '2333', 48.56, 58.272),
+(2354, 'TV-01', 'CV-03', '1754', 31.65, 37.98),
+(2355, 'TV-01', 'CV-01', '2071', 7.9, 9.48),
+(2356, 'TV-02', 'CV-04', '2387', 81.54, 97.848),
+(2357, 'TV-01', 'CV-05', '2169', 61.72, 74.064),
+(2358, 'TV-01', 'CV-01', '1502', 18.9, 22.68),
+(2359, 'TV-01', 'CV-04', '1463', 13.37, 16.044),
+(2360, 'TV-01', 'CV-02', '2818', 89.05, 106.86),
+(2361, 'TV-02', 'CV-02', '2354', 14.51, 17.412),
+(2362, 'TV-01', 'CV-05', '2545', 31.16, 37.392);
+INSERT INTO VIDRIO (CODIGO_VIDRIO, CODIGO_TIPO, CODIGO_COLOR, CODIGO_FACTURA, CANTIDAD_VIDRIO, PRECIO_VIDRIO) VALUES
+(2363, 'TV-01', 'CV-02', '1400', 90.19, 108.228),
+(2364, 'TV-01', 'CV-04', '2852', 15.46, 18.552),
+(2366, 'TV-02', 'CV-05', '2787', 11.93, 14.316),
+(2367, 'TV-02', 'CV-01', '1219', 60.6, 72.72),
+(2368, 'TV-01', 'CV-05', '1179', 9.44, 11.328),
+(2369, 'TV-01', 'CV-04', '2825', 46.03, 55.236),
+(2370, 'TV-01', 'CV-05', '2640', 74.84, 89.808),
+(2371, 'TV-01', 'CV-04', '2801', 64.8, 77.76),
+(2372, 'TV-01', 'CV-05', '1306', 48.75, 58.5),
+(2374, 'TV-01', 'CV-04', '2463', 6.19, 7.428),
+(2375, 'TV-01', 'CV-05', '1133', 50.82, 60.984),
+(2376, 'TV-01', 'CV-02', '1608', 71.47, 85.764),
+(2377, 'TV-01', 'CV-04', '1619', 92.91, 111.492),
+(2378, 'TV-02', 'CV-02', '2647', 5.89, 7.068),
+(2379, 'TV-01', 'CV-01', '1376', 15.35, 18.42),
+(2380, 'TV-02', 'CV-04', '2312', 93.88, 112.656),
+(2381, 'TV-02', 'CV-02', '2130', 40.13, 48.156),
+(2382, 'TV-01', 'CV-01', '2232', 19.14, 22.968),
+(2383, 'TV-02', 'CV-02', '1104', 61.35, 73.62),
+(2384, 'TV-01', 'CV-01', '2405', 0.72, 0.864),
+(2385, 'TV-02', 'CV-03', '1021', 88.9, 106.68),
+(2386, 'TV-02', 'CV-02', '2422', 0.84, 1.008),
+(2387, 'TV-01', 'CV-04', '2577', 94.77, 113.724),
+(2388, 'TV-01', 'CV-04', '1359', 83.07, 99.684),
+(2389, 'TV-02', 'CV-05', '2207', 64.64, 77.568),
+(2390, 'TV-01', 'CV-04', '2166', 93.07, 111.684),
+(2391, 'TV-02', 'CV-03', '1756', 73.77, 88.524),
+(2392, 'TV-02', 'CV-03', '2149', 96.05, 115.26),
+(2393, 'TV-02', 'CV-02', '1522', 99.69, 119.628),
+(2394, 'TV-01', 'CV-05', '1049', 9.37, 11.244),
+(2395, 'TV-01', 'CV-01', '2599', 57.45, 68.94),
+(2396, 'TV-02', 'CV-05', '1981', 37.4, 44.88),
+(2397, 'TV-01', 'CV-03', '1042', 19.05, 22.86),
+(2399, 'TV-01', 'CV-02', '1023', 64.71, 77.652),
+(2400, 'TV-02', 'CV-03', '1558', 27.22, 32.664),
+(2401, 'TV-02', 'CV-02', '2488', 16.97, 20.364),
+(2402, 'TV-02', 'CV-01', '2510', 55.23, 66.276),
+(2403, 'TV-01', 'CV-05', '1433', 42.96, 51.552),
+(2404, 'TV-01', 'CV-01', '2808', 27.52, 33.024),
+(2405, 'TV-02', 'CV-03', '2715', 91.41, 109.692),
+(2406, 'TV-02', 'CV-02', '2619', 37.03, 44.436),
+(2407, 'TV-02', 'CV-02', '1196', 73.83, 88.596),
+(2408, 'TV-01', 'CV-03', '2760', 44.08, 52.896),
+(2410, 'TV-02', 'CV-02', '2805', 0.28, 0.336),
+(2411, 'TV-02', 'CV-02', '2376', 68.16, 81.792),
+(2412, 'TV-01', 'CV-02', '2774', 14.92, 17.904),
+(2413, 'TV-01', 'CV-04', '2854', 44.96, 53.952),
+(2414, 'TV-02', 'CV-04', '1028', 28.83, 34.596),
+(2415, 'TV-02', 'CV-02', '1418', 55.65, 66.78),
+(2416, 'TV-01', 'CV-01', '1592', 22.72, 27.264),
+(2417, 'TV-01', 'CV-05', '2744', 58.64, 70.368),
+(2418, 'TV-02', 'CV-03', '1875', 43.9, 52.68),
+(2419, 'TV-01', 'CV-01', '1407', 12.48, 14.976),
+(2420, 'TV-01', 'CV-05', '2108', 5.37, 6.444),
+(2421, 'TV-01', 'CV-05', '2541', 41.14, 49.368),
+(2422, 'TV-02', 'CV-04', '1144', 70.32, 84.384),
+(2423, 'TV-01', 'CV-02', '2320', 41.28, 49.536),
+(2424, 'TV-01', 'CV-04', '1188', 67.28, 80.736),
+(2425, 'TV-02', 'CV-05', '2655', 26.96, 32.352),
+(2426, 'TV-01', 'CV-01', '2102', 22.74, 27.288),
+(2427, 'TV-02', 'CV-01', '2736', 51.58, 61.896),
+(2428, 'TV-01', 'CV-05', '1351', 72.86, 87.432),
+(2429, 'TV-01', 'CV-05', '1570', 85.55, 102.66),
+(2430, 'TV-01', 'CV-03', '2533', 47.9, 57.48),
+(2431, 'TV-01', 'CV-01', '2459', 95.98, 115.176),
+(2432, 'TV-02', 'CV-05', '2826', 89.44, 107.328),
+(2433, 'TV-01', 'CV-02', '1580', 56.04, 67.248),
+(2434, 'TV-01', 'CV-05', '1450', 23.71, 28.452),
+(2435, 'TV-02', 'CV-02', '1098', 63.01, 75.612),
+(2436, 'TV-01', 'CV-02', '2405', 29.32, 35.184),
+(2438, 'TV-01', 'CV-02', '1193', 81.48, 97.776),
+(2439, 'TV-02', 'CV-04', '2537', 53.68, 64.416),
+(2440, 'TV-01', 'CV-05', '1615', 79.92, 95.904),
+(2441, 'TV-01', 'CV-01', '1891', 54.59, 65.508),
+(2442, 'TV-02', 'CV-04', '1743', 42.71, 51.252),
+(2443, 'TV-02', 'CV-04', '1237', 26.02, 31.224),
+(2445, 'TV-01', 'CV-01', '1697', 23.5, 28.2),
+(2446, 'TV-02', 'CV-01', '1731', 78.98, 94.776),
+(2447, 'TV-02', 'CV-04', '2994', 79.77, 95.724),
+(2448, 'TV-01', 'CV-05', '2772', 87.24, 104.688),
+(2449, 'TV-01', 'CV-02', '2379', 60.55, 72.66),
+(2450, 'TV-01', 'CV-01', '1144', 63.04, 75.648),
+(2451, 'TV-02', 'CV-02', '1695', 91.01, 109.212),
+(2452, 'TV-01', 'CV-02', '1358', 36.29, 43.548),
+(2453, 'TV-02', 'CV-05', '1418', 75.57, 90.684),
+(2454, 'TV-01', 'CV-01', '2893', 27.12, 32.544),
+(2455, 'TV-01', 'CV-02', '1364', 98.82, 118.584),
+(2456, 'TV-01', 'CV-03', '1568', 44.8, 53.76),
+(2457, 'TV-02', 'CV-01', '2126', 78.38, 94.056),
+(2458, 'TV-02', 'CV-05', '1144', 40.93, 49.116),
+(2459, 'TV-02', 'CV-01', '1278', 94.57, 113.484),
+(2460, 'TV-02', 'CV-05', '1277', 83.01, 99.612),
+(2461, 'TV-02', 'CV-04', '1801', 98.48, 118.176),
+(2462, 'TV-02', 'CV-03', '1807', 72.83, 87.396),
+(2463, 'TV-01', 'CV-04', '2407', 63.06, 75.672),
+(2464, 'TV-01', 'CV-05', '1432', 20.17, 24.204),
+(2466, 'TV-01', 'CV-02', '1798', 79.77, 95.724),
+(2467, 'TV-01', 'CV-03', '1335', 55.26, 66.312),
+(2468, 'TV-02', 'CV-03', '2665', 11.4, 13.68),
+(2469, 'TV-01', 'CV-03', '1363', 91.17, 109.404),
+(2470, 'TV-01', 'CV-02', '1473', 25.74, 30.888),
+(2471, 'TV-02', 'CV-03', '2716', 6.94, 8.328),
+(2472, 'TV-01', 'CV-03', '1558', 71.48, 85.776),
+(2473, 'TV-01', 'CV-02', '2104', 6.18, 7.416),
+(2474, 'TV-02', 'CV-01', '1589', 45.94, 55.128),
+(2475, 'TV-02', 'CV-02', '1564', 19.46, 23.352),
+(2477, 'TV-02', 'CV-01', '2911', 13.5, 16.2),
+(2478, 'TV-01', 'CV-02', '2930', 5.94, 7.128),
+(2479, 'TV-02', 'CV-02', '2604', 70.99, 85.188),
+(2480, 'TV-02', 'CV-01', '1357', 59.4, 71.28),
+(2481, 'TV-01', 'CV-05', '2897', 60.46, 72.552),
+(2482, 'TV-01', 'CV-03', '2132', 15.6, 18.72),
+(2483, 'TV-02', 'CV-02', '2753', 99.74, 119.688),
+(2484, 'TV-01', 'CV-05', '2337', 41.79, 50.148),
+(2485, 'TV-01', 'CV-04', '1688', 77.83, 93.396),
+(2486, 'TV-01', 'CV-05', '2145', 71.45, 85.74),
+(2487, 'TV-01', 'CV-05', '2579', 83.96, 100.752),
+(2488, 'TV-02', 'CV-05', '2347', 15.4, 18.48),
+(2489, 'TV-01', 'CV-04', '2198', 60.71, 72.852),
+(2490, 'TV-01', 'CV-01', '1978', 74.86, 89.832),
+(2491, 'TV-02', 'CV-04', '1202', 72.62, 87.144),
+(2492, 'TV-02', 'CV-01', '2394', 32.7, 39.24),
+(2493, 'TV-02', 'CV-04', '2713', 49.23, 59.076),
+(2494, 'TV-01', 'CV-05', '2047', 92.75, 111.3),
+(2495, 'TV-02', 'CV-04', '2364', 60.93, 73.116),
+(2496, 'TV-02', 'CV-04', '2628', 37.75, 45.3),
+(2497, 'TV-02', 'CV-03', '1784', 10.68, 12.816),
+(2498, 'TV-01', 'CV-05', '2314', 36.72, 44.064),
+(2499, 'TV-01', 'CV-04', '2918', 36.7, 44.04),
+(2500, 'TV-02', 'CV-03', '1821', 56.41, 67.692),
+(2501, 'TV-01', 'CV-04', '1340', 19.78, 23.736),
+(2502, 'TV-02', 'CV-02', '2999', 75.65, 90.78),
+(2503, 'TV-01', 'CV-01', '2827', 44.58, 53.496),
+(2504, 'TV-01', 'CV-05', '1781', 97.27, 116.724),
+(2505, 'TV-01', 'CV-04', '2305', 30.29, 36.348),
+(2506, 'TV-01', 'CV-01', '2283', 83.04, 99.648),
+(2507, 'TV-02', 'CV-02', '1383', 33.96, 40.752),
+(2508, 'TV-02', 'CV-04', '1671', 11.34, 13.608),
+(2509, 'TV-02', 'CV-01', '1451', 46.55, 55.86),
+(2510, 'TV-02', 'CV-05', '2364', 88.07, 105.684),
+(2511, 'TV-02', 'CV-05', '1378', 89.32, 107.184),
+(2512, 'TV-02', 'CV-05', '2813', 87.54, 105.048),
+(2514, 'TV-01', 'CV-04', '1533', 24.16, 28.992),
+(2515, 'TV-01', 'CV-02', '1939', 60.22, 72.264),
+(2516, 'TV-02', 'CV-03', '1016', 14.06, 16.872),
+(2518, 'TV-01', 'CV-04', '1980', 37.56, 45.072),
+(2520, 'TV-02', 'CV-02', '1875', 9.56, 11.472),
+(2522, 'TV-02', 'CV-03', '2148', 12.21, 14.652),
+(2523, 'TV-02', 'CV-05', '1464', 4.16, 4.992),
+(2524, 'TV-02', 'CV-02', '1459', 5.88, 7.056),
+(2525, 'TV-01', 'CV-05', '1038', 38.25, 45.9),
+(2526, 'TV-01', 'CV-04', '1863', 10.83, 12.996),
+(2527, 'TV-01', 'CV-03', '1536', 82.87, 99.444),
+(2528, 'TV-02', 'CV-05', '2364', 67.59, 81.108),
+(2529, 'TV-02', 'CV-05', '1387', 77.26, 92.712),
+(2530, 'TV-02', 'CV-02', '2672', 53.04, 63.648),
+(2531, 'TV-02', 'CV-04', '1693', 64.01, 76.812),
+(2533, 'TV-02', 'CV-02', '1683', 59.66, 71.592),
+(2534, 'TV-02', 'CV-01', '2198', 72.07, 86.484),
+(2535, 'TV-02', 'CV-02', '2478', 48.14, 57.768),
+(2536, 'TV-01', 'CV-05', '2634', 4.77, 5.724),
+(2537, 'TV-02', 'CV-04', '1149', 42.35, 50.82),
+(2538, 'TV-01', 'CV-02', '2895', 85.79, 102.948),
+(2539, 'TV-02', 'CV-03', '2994', 33.4, 40.08),
+(2540, 'TV-02', 'CV-05', '2406', 58.99, 70.788),
+(2541, 'TV-02', 'CV-02', '2741', 28.4, 34.08),
+(2542, 'TV-01', 'CV-02', '2874', 93.23, 111.876),
+(2543, 'TV-02', 'CV-01', '1545', 33.12, 39.744),
+(2544, 'TV-02', 'CV-05', '1453', 90.03, 108.036),
+(2545, 'TV-02', 'CV-01', '2782', 68.29, 81.948),
+(2546, 'TV-02', 'CV-05', '1248', 36.44, 43.728),
+(2547, 'TV-01', 'CV-03', '2688', 36.94, 44.328),
+(2549, 'TV-02', 'CV-05', '1182', 97.73, 117.276),
+(2550, 'TV-02', 'CV-03', '2812', 2.5, 3),
+(2551, 'TV-01', 'CV-03', '2800', 43.45, 52.14),
+(2552, 'TV-02', 'CV-03', '1485', 25.9, 31.08),
+(2553, 'TV-01', 'CV-05', '2417', 5.06, 6.072),
+(2554, 'TV-01', 'CV-01', '2633', 54.19, 65.028),
+(2555, 'TV-02', 'CV-01', '2107', 10.1, 12.12),
+(2556, 'TV-02', 'CV-04', '2585', 62.36, 74.832),
+(2557, 'TV-01', 'CV-03', '1852', 92.81, 111.372),
+(2558, 'TV-02', 'CV-03', '2187', 68.68, 82.416),
+(2559, 'TV-01', 'CV-03', '1478', 4.53, 5.436),
+(2560, 'TV-02', 'CV-01', '1084', 95.38, 114.456),
+(2561, 'TV-01', 'CV-01', '1855', 4.27, 5.124),
+(2562, 'TV-02', 'CV-02', '1744', 44.79, 53.748),
+(2563, 'TV-01', 'CV-04', '2999', 23.55, 28.26),
+(2564, 'TV-02', 'CV-04', '2718', 38.25, 45.9),
+(2565, 'TV-01', 'CV-05', '1398', 62.64, 75.168),
+(2566, 'TV-02', 'CV-01', '2432', 60.01, 72.012),
+(2567, 'TV-01', 'CV-04', '1461', 55.18, 66.216),
+(2568, 'TV-02', 'CV-05', '1234', 6.37, 7.644),
+(2569, 'TV-02', 'CV-05', '2996', 7.01, 8.412),
+(2571, 'TV-01', 'CV-05', '2048', 23.15, 27.78),
+(2572, 'TV-02', 'CV-03', '1599', 36.03, 43.236),
+(2573, 'TV-01', 'CV-03', '1449', 81.1, 97.32),
+(2575, 'TV-01', 'CV-04', '2777', 35.54, 42.648),
+(2576, 'TV-01', 'CV-01', '2995', 3.11, 3.732),
+(2577, 'TV-02', 'CV-04', '1172', 45.33, 54.396),
+(2578, 'TV-01', 'CV-04', '2014', 95.04, 114.048),
+(2579, 'TV-02', 'CV-01', '1442', 47.66, 57.192),
+(2580, 'TV-01', 'CV-05', '1712', 3.93, 4.716),
+(2581, 'TV-01', 'CV-01', '2879', 46.55, 55.86),
+(2582, 'TV-02', 'CV-04', '1374', 95.96, 115.152),
+(2583, 'TV-02', 'CV-01', '2214', 37.92, 45.504),
+(2585, 'TV-01', 'CV-01', '2672', 19.3, 23.16),
+(2587, 'TV-01', 'CV-04', '1059', 30.05, 36.06),
+(2588, 'TV-02', 'CV-04', '2401', 6.63, 7.956),
+(2589, 'TV-01', 'CV-05', '1660', 33.06, 39.672),
+(2590, 'TV-02', 'CV-04', '2107', 63.66, 76.392),
+(2591, 'TV-01', 'CV-03', '2541', 21.49, 25.788),
+(2592, 'TV-01', 'CV-04', '2246', 72.98, 87.576),
+(2593, 'TV-01', 'CV-03', '2655', 73.13, 87.756),
+(2594, 'TV-02', 'CV-03', '2014', 7.65, 9.18),
+(2595, 'TV-01', 'CV-01', '2369', 43.94, 52.728),
+(2596, 'TV-02', 'CV-02', '1447', 97.5, 117),
+(2597, 'TV-02', 'CV-01', '2015', 98.25, 117.9),
+(2598, 'TV-02', 'CV-03', '1878', 82.77, 99.324),
+(2599, 'TV-01', 'CV-02', '2284', 39.39, 47.268),
+(2601, 'TV-02', 'CV-03', '2100', 67.74, 81.288),
+(2602, 'TV-02', 'CV-05', '1879', 70.41, 84.492),
+(2603, 'TV-01', 'CV-04', '1777', 99.13, 118.956),
+(2604, 'TV-01', 'CV-04', '2833', 2.68, 3.216),
+(2605, 'TV-01', 'CV-04', '2926', 49.98, 59.976),
+(2606, 'TV-02', 'CV-01', '2573', 5.71, 6.852),
+(2608, 'TV-02', 'CV-04', '2486', 37.73, 45.276),
+(2609, 'TV-01', 'CV-04', '2626', 75.35, 90.42),
+(2610, 'TV-01', 'CV-04', '1324', 67.32, 80.784),
+(2611, 'TV-02', 'CV-01', '2574', 30.51, 36.612),
+(2613, 'TV-01', 'CV-01', '2844', 75.61, 90.732),
+(2614, 'TV-01', 'CV-03', '1429', 18.26, 21.912),
+(2615, 'TV-01', 'CV-02', '1239', 29.11, 34.932),
+(2616, 'TV-01', 'CV-02', '2307', 60.22, 72.264),
+(2617, 'TV-02', 'CV-03', '1984', 85.31, 102.372),
+(2618, 'TV-02', 'CV-05', '1589', 33.24, 39.888),
+(2619, 'TV-02', 'CV-03', '1738', 83.4, 100.08),
+(2620, 'TV-01', 'CV-02', '2282', 11.24, 13.488),
+(2621, 'TV-02', 'CV-04', '2544', 50.07, 60.084),
+(2622, 'TV-02', 'CV-01', '1825', 95.73, 114.876),
+(2623, 'TV-01', 'CV-05', '1571', 42.46, 50.952),
+(2624, 'TV-01', 'CV-05', '2855', 24.93, 29.916),
+(2625, 'TV-02', 'CV-02', '2079', 39, 46.8),
+(2626, 'TV-02', 'CV-03', '2059', 68.7, 82.44),
+(2627, 'TV-01', 'CV-02', '2606', 62.26, 74.712),
+(2628, 'TV-01', 'CV-05', '1288', 97.19, 116.628),
+(2629, 'TV-01', 'CV-04', '1279', 73.05, 87.66),
+(2630, 'TV-02', 'CV-02', '1266', 0.33, 0.396),
+(2631, 'TV-01', 'CV-02', '1488', 2.91, 3.492),
+(2632, 'TV-02', 'CV-02', '1623', 8.71, 10.452),
+(2633, 'TV-02', 'CV-04', '1164', 65.1, 78.12),
+(2634, 'TV-01', 'CV-01', '1534', 7.59, 9.108),
+(2635, 'TV-01', 'CV-01', '2507', 77.54, 93.048),
+(2636, 'TV-01', 'CV-04', '1064', 60.58, 72.696),
+(2638, 'TV-02', 'CV-02', '1636', 61.02, 73.224),
+(2639, 'TV-01', 'CV-03', '2288', 22.77, 27.324),
+(2640, 'TV-02', 'CV-01', '2021', 12.73, 15.276),
+(2641, 'TV-02', 'CV-01', '2846', 5.1, 6.12),
+(2643, 'TV-01', 'CV-03', '1309', 76.34, 91.608),
+(2644, 'TV-02', 'CV-05', '1633', 41.85, 50.22),
+(2645, 'TV-02', 'CV-03', '1397', 84.36, 101.232),
+(2647, 'TV-01', 'CV-02', '1391', 47.33, 56.796),
+(2648, 'TV-02', 'CV-04', '2656', 77.2, 92.64),
+(2649, 'TV-02', 'CV-04', '2787', 83.15, 99.78),
+(2650, 'TV-01', 'CV-03', '2269', 24.35, 29.22),
+(2652, 'TV-02', 'CV-03', '1294', 39.54, 47.448),
+(2653, 'TV-01', 'CV-04', '1573', 56.78, 68.136),
+(2654, 'TV-02', 'CV-04', '2418', 31.61, 37.932),
+(2655, 'TV-02', 'CV-05', '1702', 24.37, 29.244),
+(2656, 'TV-01', 'CV-03', '2400', 42.32, 50.784),
+(2657, 'TV-02', 'CV-02', '1351', 43.3, 51.96),
+(2658, 'TV-01', 'CV-01', '2716', 17.24, 20.688),
+(2659, 'TV-01', 'CV-04', '1117', 48.38, 58.056),
+(2661, 'TV-01', 'CV-04', '1458', 23.05, 27.66),
+(2662, 'TV-01', 'CV-02', '1204', 18.95, 22.74),
+(2663, 'TV-01', 'CV-03', '1461', 67.85, 81.42),
+(2664, 'TV-02', 'CV-01', '1316', 91.59, 109.908),
+(2665, 'TV-01', 'CV-04', '2817', 56.74, 68.088),
+(2666, 'TV-02', 'CV-05', '1502', 32.02, 38.424),
+(2667, 'TV-01', 'CV-05', '2196', 97.74, 117.288),
+(2668, 'TV-01', 'CV-05', '1429', 24.89, 29.868),
+(2669, 'TV-01', 'CV-03', '2953', 64.26, 77.112),
+(2670, 'TV-01', 'CV-05', '1935', 98.27, 117.924),
+(2671, 'TV-02', 'CV-02', '1130', 35.41, 42.492),
+(2672, 'TV-01', 'CV-04', '1371', 93.61, 112.332),
+(2673, 'TV-01', 'CV-01', '1309', 7.03, 8.436),
+(2674, 'TV-02', 'CV-04', '2373', 77.22, 92.664),
+(2675, 'TV-01', 'CV-04', '1654', 16.68, 20.016),
+(2676, 'TV-01', 'CV-02', '2920', 23.72, 28.464),
+(2677, 'TV-01', 'CV-01', '1124', 66.89, 80.268),
+(2678, 'TV-01', 'CV-01', '2108', 89.24, 107.088),
+(2679, 'TV-01', 'CV-02', '1634', 94.66, 113.592),
+(2680, 'TV-01', 'CV-03', '2538', 49.42, 59.304),
+(2681, 'TV-01', 'CV-04', '2516', 25.65, 30.78),
+(2682, 'TV-02', 'CV-02', '2631', 44.2, 53.04),
+(2683, 'TV-02', 'CV-04', '2328', 78.61, 94.332),
+(2684, 'TV-02', 'CV-04', '1380', 95.76, 114.912),
+(2686, 'TV-02', 'CV-05', '1536', 46.11, 55.332),
+(2687, 'TV-01', 'CV-05', '2924', 43.51, 52.212),
+(2688, 'TV-01', 'CV-02', '2827', 67.25, 80.7),
+(2689, 'TV-02', 'CV-05', '2164', 50.27, 60.324),
+(2691, 'TV-01', 'CV-01', '1143', 85.7, 102.84),
+(2692, 'TV-02', 'CV-01', '1698', 31.36, 37.632),
+(2693, 'TV-01', 'CV-02', '2991', 30.71, 36.852),
+(2694, 'TV-02', 'CV-03', '2977', 23.5, 28.2),
+(2695, 'TV-02', 'CV-05', '2697', 68.9, 82.68),
+(2696, 'TV-02', 'CV-03', '2602', 10.88, 13.056),
+(2697, 'TV-02', 'CV-04', '1070', 27.47, 32.964),
+(2698, 'TV-01', 'CV-04', '2926', 98.79, 118.548),
+(2699, 'TV-01', 'CV-02', '1777', 14.3, 17.16),
+(2700, 'TV-02', 'CV-04', '2410', 70.41, 84.492),
+(2701, 'TV-01', 'CV-03', '1470', 32, 38.4),
+(2704, 'TV-01', 'CV-02', '1597', 17.52, 21.024),
+(2705, 'TV-01', 'CV-03', '1629', 79.67, 95.604),
+(2706, 'TV-01', 'CV-01', '2858', 8.62, 10.344),
+(2707, 'TV-01', 'CV-05', '2453', 76.43, 91.716),
+(2708, 'TV-01', 'CV-05', '2656', 31.89, 38.268),
+(2709, 'TV-01', 'CV-02', '1898', 75.23, 90.276),
+(2710, 'TV-01', 'CV-02', '1795', 80.03, 96.036),
+(2711, 'TV-02', 'CV-01', '1044', 33.12, 39.744),
+(2713, 'TV-01', 'CV-01', '2861', 16.92, 20.304),
+(2715, 'TV-01', 'CV-05', '2015', 45.92, 55.104),
+(2716, 'TV-02', 'CV-03', '2194', 8.2, 9.84),
+(2717, 'TV-02', 'CV-03', '1744', 44.79, 53.748),
+(2718, 'TV-02', 'CV-05', '2137', 59.15, 70.98),
+(2719, 'TV-02', 'CV-05', '1058', 67.88, 81.456),
+(2720, 'TV-01', 'CV-02', '2897', 56.42, 67.704),
+(2721, 'TV-01', 'CV-03', '2984', 72.98, 87.576),
+(2722, 'TV-01', 'CV-04', '1244', 17.8, 21.36),
+(2723, 'TV-01', 'CV-01', '1246', 63.7, 76.44),
+(2724, 'TV-01', 'CV-05', '1990', 1.7, 2.04),
+(2725, 'TV-02', 'CV-04', '1531', 58.94, 70.728),
+(2726, 'TV-01', 'CV-02', '2631', 98.16, 117.792),
+(2727, 'TV-01', 'CV-01', '1640', 19.49, 23.388),
+(2728, 'TV-01', 'CV-05', '1108', 34.83, 41.796),
+(2729, 'TV-01', 'CV-01', '1296', 74.98, 89.976),
+(2730, 'TV-02', 'CV-01', '1971', 37.47, 44.964),
+(2731, 'TV-01', 'CV-04', '1327', 8.69, 10.428),
+(2732, 'TV-02', 'CV-02', '1425', 21.62, 25.944),
+(2733, 'TV-02', 'CV-05', '2436', 10.46, 12.552),
+(2735, 'TV-02', 'CV-01', '2689', 9.07, 10.884),
+(2736, 'TV-02', 'CV-05', '1390', 9.25, 11.1),
+(2737, 'TV-01', 'CV-04', '2429', 3.93, 4.716),
+(2738, 'TV-02', 'CV-05', '2051', 40.45, 48.54),
+(2739, 'TV-01', 'CV-02', '1740', 41.36, 49.632),
+(2740, 'TV-01', 'CV-02', '2719', 95.28, 114.336),
+(2741, 'TV-01', 'CV-02', '2867', 25.97, 31.164),
+(2742, 'TV-02', 'CV-05', '1818', 4.53, 5.436),
+(2743, 'TV-02', 'CV-04', '2595', 73.39, 88.068),
+(2744, 'TV-02', 'CV-03', '1980', 11, 13.2),
+(2745, 'TV-01', 'CV-03', '2712', 68.21, 81.852),
+(2746, 'TV-02', 'CV-05', '2446', 39.06, 46.872),
+(2747, 'TV-01', 'CV-05', '2500', 75.98, 91.176),
+(2748, 'TV-01', 'CV-03', '2662', 36.76, 44.112),
+(2750, 'TV-01', 'CV-03', '2436', 12.2, 14.64),
+(2751, 'TV-02', 'CV-03', '2739', 98.56, 118.272),
+(2752, 'TV-01', 'CV-01', '1194', 5.93, 7.116),
+(2753, 'TV-02', 'CV-01', '2935', 41.17, 49.404),
+(2754, 'TV-02', 'CV-05', '1455', 92.15, 110.58),
+(2755, 'TV-01', 'CV-03', '2000', 53.05, 63.66),
+(2756, 'TV-01', 'CV-02', '1117', 16.23, 19.476),
+(2757, 'TV-02', 'CV-04', '2946', 35.24, 42.288),
+(2758, 'TV-02', 'CV-02', '2088', 49.94, 59.928),
+(2759, 'TV-02', 'CV-01', '1243', 69.78, 83.736),
+(2760, 'TV-02', 'CV-04', '2710', 96.31, 115.572),
+(2761, 'TV-02', 'CV-05', '2420', 87.67, 105.204),
+(2762, 'TV-02', 'CV-03', '1479', 23.2, 27.84),
+(2763, 'TV-02', 'CV-04', '2042', 35.17, 42.204),
+(2765, 'TV-02', 'CV-01', '1552', 97.62, 117.144),
+(2766, 'TV-01', 'CV-02', '1772', 46.96, 56.352),
+(2767, 'TV-02', 'CV-05', '2397', 82.2, 98.64),
+(2769, 'TV-01', 'CV-05', '1372', 70.86, 85.032),
+(2770, 'TV-01', 'CV-05', '2812', 44.16, 52.992),
+(2771, 'TV-01', 'CV-02', '2076', 5.87, 7.044),
+(2772, 'TV-01', 'CV-01', '2659', 63.84, 76.608),
+(2773, 'TV-02', 'CV-02', '1459', 27.64, 33.168),
+(2774, 'TV-02', 'CV-03', '1553', 13.79, 16.548),
+(2775, 'TV-02', 'CV-01', '2972', 25.3, 30.36),
+(2776, 'TV-02', 'CV-01', '2802', 88.65, 106.38),
+(2777, 'TV-02', 'CV-01', '1238', 86.45, 103.74),
+(2778, 'TV-01', 'CV-01', '2655', 92.33, 110.796),
+(2779, 'TV-02', 'CV-05', '1771', 89.24, 107.088),
+(2780, 'TV-01', 'CV-05', '2964', 49.69, 59.628),
+(2782, 'TV-01', 'CV-03', '1279', 67.09, 80.508),
+(2783, 'TV-02', 'CV-01', '2341', 64.63, 77.556),
+(2784, 'TV-02', 'CV-05', '2914', 20.29, 24.348),
+(2785, 'TV-01', 'CV-02', '2632', 97.6, 117.12),
+(2786, 'TV-01', 'CV-04', '2256', 91.05, 109.26),
+(2787, 'TV-02', 'CV-02', '1874', 5.43, 6.516),
+(2788, 'TV-02', 'CV-05', '1444', 10.97, 13.164),
+(2789, 'TV-02', 'CV-02', '1166', 49.24, 59.088),
+(2790, 'TV-01', 'CV-03', '1397', 79.71, 95.652),
+(2791, 'TV-02', 'CV-03', '1998', 55.55, 66.66),
+(2792, 'TV-02', 'CV-05', '1679', 98.32, 117.984),
+(2793, 'TV-02', 'CV-02', '2552', 58.72, 70.464),
+(2794, 'TV-02', 'CV-03', '2648', 99.45, 119.34),
+(2795, 'TV-01', 'CV-05', '2325', 15.54, 18.648),
+(2796, 'TV-01', 'CV-04', '1863', 47.21, 56.652),
+(2797, 'TV-01', 'CV-04', '1958', 16.45, 19.74),
+(2798, 'TV-02', 'CV-01', '2779', 9.45, 11.34),
+(2799, 'TV-02', 'CV-01', '2493', 13.54, 16.248),
+(2800, 'TV-01', 'CV-01', '1866', 10.05, 12.06),
+(2801, 'TV-01', 'CV-01', '1535', 76.22, 91.464),
+(2802, 'TV-02', 'CV-05', '1727', 45.79, 54.948),
+(2803, 'TV-01', 'CV-04', '1599', 12.32, 14.784),
+(2804, 'TV-01', 'CV-03', '1223', 56.77, 68.124),
+(2805, 'TV-01', 'CV-03', '2558', 61.34, 73.608),
+(2806, 'TV-02', 'CV-01', '2457', 91.92, 110.304),
+(2807, 'TV-02', 'CV-02', '2937', 95.56, 114.672),
+(2810, 'TV-02', 'CV-03', '2877', 53.51, 64.212),
+(2811, 'TV-02', 'CV-01', '1524', 2.65, 3.18),
+(2812, 'TV-02', 'CV-05', '2123', 52.77, 63.324),
+(2813, 'TV-02', 'CV-05', '2654', 22.18, 26.616),
+(2814, 'TV-02', 'CV-01', '1863', 19.67, 23.604),
+(2815, 'TV-01', 'CV-04', '1506', 36.51, 43.812),
+(2816, 'TV-02', 'CV-04', '1011', 65.28, 78.336),
+(2817, 'TV-02', 'CV-02', '2964', 55.92, 67.104),
+(2819, 'TV-01', 'CV-04', '2136', 19.14, 22.968),
+(2820, 'TV-01', 'CV-01', '1801', 92.98, 111.576),
+(2821, 'TV-02', 'CV-01', '2383', 87.47, 104.964),
+(2822, 'TV-02', 'CV-05', '1875', 86.4, 103.68),
+(2823, 'TV-02', 'CV-05', '1455', 41.43, 49.716),
+(2824, 'TV-01', 'CV-04', '2051', 3.24, 3.888),
+(2827, 'TV-01', 'CV-01', '1361', 90.42, 108.504),
+(2828, 'TV-02', 'CV-05', '1170', 44.52, 53.424),
+(2829, 'TV-02', 'CV-02', '1376', 35.5, 42.6),
+(2830, 'TV-02', 'CV-01', '2339', 18.66, 22.392),
+(2831, 'TV-02', 'CV-03', '2942', 67.32, 80.784),
+(2832, 'TV-02', 'CV-03', '2046', 41, 49.2),
+(2833, 'TV-02', 'CV-04', '1601', 55.12, 66.144),
+(2834, 'TV-02', 'CV-01', '2336', 33.47, 40.164),
+(2835, 'TV-01', 'CV-01', '1744', 41.44, 49.728),
+(2836, 'TV-02', 'CV-01', '1361', 90.6, 108.72),
+(2838, 'TV-02', 'CV-04', '2728', 34.08, 40.896),
+(2839, 'TV-01', 'CV-01', '1058', 98.06, 117.672),
+(2840, 'TV-01', 'CV-03', '2481', 22.36, 26.832),
+(2841, 'TV-01', 'CV-05', '2450', 99.19, 119.028),
+(2842, 'TV-01', 'CV-03', '1125', 37.84, 45.408),
+(2843, 'TV-02', 'CV-01', '2527', 62.09, 74.508),
+(2845, 'TV-01', 'CV-02', '1855', 27.11, 32.532),
+(2846, 'TV-02', 'CV-01', '2668', 61.07, 73.284),
+(2847, 'TV-02', 'CV-01', '2398', 9.72, 11.664),
+(2848, 'TV-01', 'CV-03', '2404', 51.47, 61.764),
+(2849, 'TV-02', 'CV-04', '2713', 91.09, 109.308),
+(2850, 'TV-01', 'CV-05', '2061', 29.59, 35.508),
+(2851, 'TV-02', 'CV-04', '1920', 26.56, 31.872),
+(2852, 'TV-02', 'CV-05', '2390', 68.86, 82.632),
+(2853, 'TV-01', 'CV-02', '2429', 24.67, 29.604),
+(2854, 'TV-02', 'CV-01', '2925', 38.69, 46.428),
+(2855, 'TV-01', 'CV-05', '2291', 44.42, 53.304),
+(2856, 'TV-02', 'CV-05', '1384', 62.63, 75.156),
+(2857, 'TV-02', 'CV-04', '2516', 82.55, 99.06),
+(2858, 'TV-02', 'CV-05', '1875', 52.9, 63.48),
+(2859, 'TV-01', 'CV-05', '1752', 66.62, 79.944),
+(2860, 'TV-01', 'CV-03', '1174', 94.34, 113.208),
+(2861, 'TV-02', 'CV-04', '1714', 0.59, 0.708),
+(2863, 'TV-01', 'CV-04', '2760', 85.32, 102.384),
+(2865, 'TV-01', 'CV-01', '1514', 85.54, 102.648),
+(2866, 'TV-02', 'CV-03', '2248', 27.25, 32.7),
+(2867, 'TV-01', 'CV-01', '2845', 88.9, 106.68),
+(2868, 'TV-02', 'CV-03', '1321', 36.79, 44.148),
+(2869, 'TV-02', 'CV-02', '2794', 73.69, 88.428),
+(2870, 'TV-01', 'CV-02', '1244', 82.07, 98.484),
+(2871, 'TV-02', 'CV-01', '1726', 89.06, 106.872),
+(2872, 'TV-01', 'CV-04', '2215', 80.94, 97.128),
+(2874, 'TV-02', 'CV-01', '1771', 35.33, 42.396),
+(2875, 'TV-02', 'CV-04', '2671', 29.82, 35.784),
+(2876, 'TV-02', 'CV-03', '2879', 3.57, 4.284),
+(2877, 'TV-01', 'CV-01', '1817', 82.91, 99.492),
+(2878, 'TV-01', 'CV-03', '2264', 90.68, 108.816),
+(2879, 'TV-02', 'CV-05', '2353', 36.08, 43.296),
+(2880, 'TV-02', 'CV-02', '2501', 49.94, 59.928),
+(2881, 'TV-02', 'CV-01', '1838', 26.48, 31.776),
+(2882, 'TV-02', 'CV-02', '1982', 74.17, 89.004),
+(2883, 'TV-02', 'CV-05', '2113', 90.48, 108.576),
+(2884, 'TV-01', 'CV-05', '1258', 53.7, 64.44),
+(2885, 'TV-02', 'CV-05', '2655', 51.27, 61.524),
+(2886, 'TV-01', 'CV-04', '2569', 96.84, 116.208),
+(2887, 'TV-01', 'CV-05', '1413', 19.69, 23.628),
+(2889, 'TV-02', 'CV-01', '1292', 18.8, 22.56),
+(2890, 'TV-02', 'CV-04', '2637', 56.81, 68.172),
+(2891, 'TV-01', 'CV-01', '2672', 10.37, 12.444),
+(2892, 'TV-01', 'CV-05', '1480', 41.12, 49.344),
+(2893, 'TV-02', 'CV-01', '1215', 32.71, 39.252),
+(2894, 'TV-02', 'CV-03', '2006', 10.54, 12.648),
+(2895, 'TV-01', 'CV-05', '2735', 42.95, 51.54),
+(2896, 'TV-02', 'CV-03', '2213', 20.89, 25.068),
+(2897, 'TV-02', 'CV-02', '1192', 65.12, 78.144),
+(2898, 'TV-01', 'CV-02', '1949', 75.67, 90.804),
+(2900, 'TV-02', 'CV-01', '1124', 74.69, 89.628),
+(2901, 'TV-01', 'CV-01', '1253', 83.75, 100.5),
+(2902, 'TV-02', 'CV-04', '2950', 64.42, 77.304),
+(2903, 'TV-01', 'CV-01', '2685', 63.32, 75.984),
+(2904, 'TV-02', 'CV-02', '1694', 33.6, 40.32),
+(2905, 'TV-01', 'CV-01', '2457', 54.2, 65.04),
+(2906, 'TV-01', 'CV-05', '2168', 42.97, 51.564),
+(2907, 'TV-01', 'CV-03', '1527', 66.53, 79.836),
+(2908, 'TV-01', 'CV-05', '2790', 35.35, 42.42),
+(2909, 'TV-01', 'CV-01', '1648', 10.61, 12.732),
+(2910, 'TV-01', 'CV-03', '2282', 91.34, 109.608),
+(2911, 'TV-02', 'CV-05', '2953', 49.57, 59.484),
+(2912, 'TV-02', 'CV-03', '1642', 39.3, 47.16),
+(2913, 'TV-02', 'CV-04', '2160', 7.73, 9.276),
+(2914, 'TV-02', 'CV-03', '2891', 12.87, 15.444),
+(2915, 'TV-02', 'CV-05', '2332', 17.64, 21.168),
+(2916, 'TV-01', 'CV-02', '1963', 41.21, 49.452),
+(2917, 'TV-02', 'CV-01', '1317', 77.46, 92.952),
+(2918, 'TV-02', 'CV-02', '1483', 94.96, 113.952),
+(2919, 'TV-01', 'CV-01', '1995', 0.62, 0.744),
+(2920, 'TV-02', 'CV-05', '1654', 76.01, 91.212),
+(2921, 'TV-02', 'CV-04', '2971', 48.44, 58.128),
+(2922, 'TV-02', 'CV-04', '2497', 30.79, 36.948),
+(2923, 'TV-02', 'CV-03', '1035', 43.74, 52.488),
+(2924, 'TV-01', 'CV-02', '2680', 16.66, 19.992),
+(2925, 'TV-02', 'CV-02', '2957', 93.07, 111.684),
+(2926, 'TV-02', 'CV-03', '1760', 48.71, 58.452),
+(2927, 'TV-02', 'CV-03', '1738', 16.08, 19.296),
+(2928, 'TV-02', 'CV-02', '1056', 22.33, 26.796),
+(2929, 'TV-01', 'CV-02', '1354', 16.08, 19.296),
+(2930, 'TV-01', 'CV-04', '2229', 39.23, 47.076),
+(2931, 'TV-01', 'CV-01', '2374', 81.92, 98.304),
+(2932, 'TV-01', 'CV-03', '1332', 37.84, 45.408),
+(2933, 'TV-01', 'CV-01', '2183', 39.56, 47.472),
+(2934, 'TV-02', 'CV-05', '1280', 40.33, 48.396),
+(2935, 'TV-02', 'CV-02', '2713', 34.62, 41.544),
+(2936, 'TV-01', 'CV-01', '1912', 23.48, 28.176),
+(2937, 'TV-02', 'CV-03', '1615', 39.37, 47.244),
+(2938, 'TV-02', 'CV-01', '2118', 31.99, 38.388),
+(2939, 'TV-02', 'CV-03', '1400', 68.51, 82.212),
+(2940, 'TV-01', 'CV-01', '1759', 11.34, 13.608),
+(2941, 'TV-01', 'CV-03', '2527', 95.99, 115.188),
+(2942, 'TV-01', 'CV-01', '1651', 92.14, 110.568),
+(2943, 'TV-02', 'CV-03', '2669', 66.09, 79.308),
+(2944, 'TV-02', 'CV-02', '2411', 83.27, 99.924),
+(2945, 'TV-02', 'CV-02', '2372', 34.95, 41.94),
+(2946, 'TV-01', 'CV-01', '2840', 71.68, 86.016),
+(2947, 'TV-02', 'CV-01', '1116', 36.35, 43.62),
+(2948, 'TV-02', 'CV-01', '2598', 20.22, 24.264),
+(2949, 'TV-01', 'CV-04', '2993', 89.14, 106.968),
+(2950, 'TV-01', 'CV-04', '1051', 50.68, 60.816),
+(2951, 'TV-01', 'CV-05', '1450', 70.39, 84.468),
+(2952, 'TV-02', 'CV-04', '1505', 67.18, 80.616),
+(2953, 'TV-02', 'CV-03', '2475', 48.81, 58.572),
+(2954, 'TV-01', 'CV-04', '1140', 51.08, 61.296),
+(2955, 'TV-02', 'CV-03', '2312', 46.46, 55.752),
+(2956, 'TV-02', 'CV-05', '2851', 16.89, 20.268),
+(2957, 'TV-01', 'CV-05', '2696', 23.93, 28.716),
+(2958, 'TV-02', 'CV-02', '2164', 68.2, 81.84),
+(2959, 'TV-01', 'CV-02', '2754', 92.57, 111.084),
+(2960, 'TV-02', 'CV-01', '1422', 58.55, 70.26),
+(2961, 'TV-02', 'CV-01', '1020', 33.85, 40.62),
+(2962, 'TV-02', 'CV-04', '1849', 94.74, 113.688),
+(2963, 'TV-02', 'CV-05', '1866', 73.23, 87.876),
+(2964, 'TV-01', 'CV-05', '2675', 55.14, 66.168),
+(2966, 'TV-01', 'CV-02', '1603', 22.65, 27.18),
+(2967, 'TV-01', 'CV-02', '1275', 56.67, 68.004),
+(2968, 'TV-02', 'CV-02', '2558', 0.26, 0.312),
+(2969, 'TV-01', 'CV-05', '2900', 44.1, 52.92),
+(2970, 'TV-01', 'CV-02', '2323', 0.37, 0.444),
+(2971, 'TV-01', 'CV-05', '2397', 73.7, 88.44),
+(2973, 'TV-01', 'CV-01', '2729', 18.84, 22.608),
+(2975, 'TV-02', 'CV-01', '1481', 13.09, 15.708),
+(2976, 'TV-01', 'CV-03', '2313', 25.51, 30.612),
+(2977, 'TV-02', 'CV-02', '1694', 91.63, 109.956),
+(2978, 'TV-01', 'CV-05', '2312', 77.98, 93.576),
+(2979, 'TV-01', 'CV-03', '1516', 25.88, 31.056),
+(2980, 'TV-01', 'CV-01', '1547', 77.44, 92.928),
+(2981, 'TV-02', 'CV-05', '1235', 53.85, 64.62),
+(2982, 'TV-02', 'CV-02', '2664', 25.31, 30.372),
+(2983, 'TV-02', 'CV-03', '2488', 61.4, 73.68),
+(2984, 'TV-01', 'CV-03', '2473', 10.1, 12.12),
+(2985, 'TV-01', 'CV-05', '1060', 95.53, 114.636),
+(2986, 'TV-01', 'CV-04', '2555', 49.99, 59.988),
+(2987, 'TV-01', 'CV-04', '1060', 88.09, 105.708),
+(2988, 'TV-01', 'CV-01', '2149', 77.12, 92.544),
+(2989, 'TV-02', 'CV-01', '2172', 19.51, 23.412),
+(2990, 'TV-01', 'CV-01', '1827', 44.25, 53.1),
+(2991, 'TV-02', 'CV-04', '1062', 25.74, 30.888),
+(2992, 'TV-01', 'CV-04', '2685', 74.82, 89.784),
+(2994, 'TV-02', 'CV-04', '1159', 42.61, 51.132),
+(2995, 'TV-01', 'CV-04', '1601', 73.76, 88.512),
+(2996, 'TV-01', 'CV-03', '2002', 74.15, 88.98),
+(2997, 'TV-01', 'CV-01', '2739', 80.14, 96.168),
+(2998, 'TV-02', 'CV-03', '2178', 55.93, 67.116),
+(2999, 'TV-02', 'CV-01', '1813', 95.9, 115.08),
+(3000, 'TV-02', 'CV-04', '2997', 80, 96),
+(3001, 'TV-01', 'CV-01', '2149', 77.12, 92.544),
+(3002, 'TV-02', 'CV-01', '2172', 19.51, 23.412),
+(3003, 'TV-01', 'CV-01', '1827', 44.25, 53.1),
+(3004, 'TV-02', 'CV-04', '1062', 25.74, 30.888),
+(3006, 'TV-01', 'CV-01', '2213', 27.87, 33.444),
+(3007, 'TV-02', 'CV-02', '1654', 55.69, 66.828),
+(3008, 'TV-01', 'CV-02', '2311', 46.15, 55.38),
+(3009, 'TV-01', 'CV-05', '1898', 30.21, 36.252),
+(3010, 'TV-01', 'CV-01', '2741', 20.48, 24.576),
+(3011, 'TV-01', 'CV-04', '2605', 75.49, 90.588),
+(3012, 'TV-02', 'CV-04', '2847', 11.03, 13.236),
+(3013, 'TV-02', 'CV-02', '2372', 34.95, 41.94),
+(3014, 'TV-01', 'CV-01', '2840', 71.68, 86.016),
+(3015, 'TV-02', 'CV-01', '1116', 36.35, 43.62),
+(3016, 'TV-02', 'CV-01', '2598', 20.22, 24.264),
+(3017, 'TV-01', 'CV-04', '2993', 89.14, 106.968),
+(3018, 'TV-01', 'CV-04', '1051', 50.68, 60.816),
+(3019, 'TV-01', 'CV-05', '1450', 70.39, 84.468),
+(3020, 'TV-02', 'CV-04', '1505', 67.18, 80.616),
+(3021, 'TV-02', 'CV-03', '2475', 48.81, 58.572),
+(3022, 'TV-01', 'CV-04', '1140', 51.08, 61.296),
+(3023, 'TV-02', 'CV-03', '2312', 46.46, 55.752),
+(3024, 'TV-02', 'CV-05', '2851', 16.89, 20.268),
+(3025, 'TV-01', 'CV-04', '1051', 50.68, 60.816),
+(3026, 'TV-01', 'CV-05', '1450', 70.39, 84.468),
+(3027, 'TV-02', 'CV-04', '1505', 67.18, 80.616),
+(3028, 'TV-02', 'CV-03', '2475', 48.81, 58.572),
+(3029, 'TV-02', 'CV-05', '2358', 64.13, 76.956),
+(3031, 'TV-01', 'CV-01', '2749', 56.91, 68.292),
+(3032, 'TV-01', 'CV-04', '2901', 69.48, 83.376),
+(3033, 'TV-02', 'CV-05', '1768', 44.72, 53.664),
+(3034, 'TV-01', 'CV-03', '2908', 19.35, 23.22),
+(3035, 'TV-01', 'CV-04', '1461', 61.95, 74.34),
+(3036, 'TV-01', 'CV-05', '2404', 6.9, 8.28),
+(3037, 'TV-02', 'CV-01', '2288', 50.58, 60.696),
+(3038, 'TV-02', 'CV-03', '2108', 40.89, 49.068),
+(3039, 'TV-02', 'CV-02', '2807', 25.11, 30.132),
+(3041, 'TV-02', 'CV-01', '1785', 33.42, 40.104),
+(3042, 'TV-02', 'CV-05', '1293', 89.69, 107.628),
+(3043, 'TV-02', 'CV-04', '2514', 30.02, 36.024),
+(3044, 'TV-01', 'CV-02', '1768', 37.78, 45.336),
+(3045, 'TV-01', 'CV-04', '1508', 17.18, 20.616),
+(3046, 'TV-01', 'CV-02', '2349', 74.68, 89.616),
+(3047, 'TV-01', 'CV-04', '2548', 66.53, 79.836),
+(3048, 'TV-02', 'CV-05', '1381', 37.95, 45.54),
+(3049, 'TV-01', 'CV-01', '2658', 43.31, 51.972),
+(3050, 'TV-02', 'CV-03', '2545', 39.48, 47.376),
+(3100, 'TV-02', 'CV-02', '1008', 87.85, 105.42),
+(3101, 'TV-02', 'CV-02', '1008', 87.85, 105.42),
+(3102, 'TV-02', 'CV-02', '1008', 175.7, 210.84),
+(3103, 'TV-02', 'CV-02', '1008', 351.4, 527.1),
+(3104, 'TV-01', 'CV-02', '1014', 54.04, 81.06),
+(3105, 'TV-02', 'CV-03', '1014', 93.51, 140.27),
+(3106, 'TV-01', 'CV-02', '1014', 54.04, 81.06),
+(3107, 'TV-01', 'CV-03', '1014', 54.04, 64.85),
+(3108, 'TV-02', 'CV-04', '1014', 89.67, 107.6),
+(3109, 'TV-02', 'CV-05', '1014', 93.51, 140.27),
+(3112, 'TV-02', 'CV-02', '1008', 702.8, 1054.2),
+(3113, 'TV-01', 'CV-02', '1014', 108.08, 162.12),
+(3114, 'TV-01', 'CV-03', '1014', 108.08, 162.12),
+(3115, 'TV-02', 'CV-04', '1014', 89.67, 134.51),
+(3116, 'TV-02', 'CV-05', '1014', 93.51, 140.27),
+(3117, 'TV-02', 'CV-01', '1014', 89.67, 134.51),
+(3118, 'TV-02', 'CV-02', '1014', 93.51, 140.27),
+(3119, 'TV-02', 'CV-02', '2995', 89.42, 507.91),
+(3120, 'TV-02', 'CV-02', '2995', 89.42, 507.91),
+(3121, 'TV-02', 'CV-03', '2995', 3.11, 17.66),
+(3122, 'TV-02', 'CV-02', '2995', 178.84, 214.61),
+(3123, 'TV-02', 'CV-03', '2995', 3.11, 3.73),
+(3124, 'TV-02', 'CV-04', '2995', 3.11, 3.73);
