@@ -1,10 +1,23 @@
-- Proceso de modificar compra
 - Implementar la meta mensual de william
 - Arreglar reporte de recolector diario
+
 - Historial de compras, validar cuando solo hay una sola factura registrada en el sistema
+- Historial de compras, validar requerimientos de william
 
-- Eliminar recolector, validar cuando ya no hay mas recolectores a quien reasignar centros de acopio
+- Eliminar recolector, validar cuando ya no hay más recolectores a quien reasignar centros de acopio
 - No se puede eliminar un centro de acopio si no hay al menos un centro de acopio para trasladar las compras
-- No se puede registrar una nueva compra si no existe al menos un centro de acopio, un recolector y un proveedor
 
-- No se puede eliminar el usuario actualmente logeado
+- Límite de intentos de inicio de sesión
+- Al modificar un usuario no se puede poner un "nombre de usuario" que ya exista, solo se va a poder si el usuario que se va a modificar es el mismo que esta logeado
+
+- Ordenar la lista de backups de bases de datos por fecha
+
+- Implementar recuperación de cuenta de usuario por correo electrónico u algun otro metodo de recuperacion por si no se tiene conexión a internet
+
+- La administración de backups de bases de datos requerirá algo que autentifique que sea usuario administrador y asegure de lo riesgoso de esta operación
+
+- Implementar que se puedan eliminar más de un registro para compras de vidrio, proveedores, recolectores y centros de acopio
+
+- Crear índices y optimización de queries
+
+- Reescribir de una forma más eficiente y fácil las funciones vendeMas y compraMas

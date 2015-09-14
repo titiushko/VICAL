@@ -1,0 +1,15 @@
+.titulo4{
+    color: #CACACA;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.fondo5{	/*inputs nuevas compra*/
+	text-align: center;
+    border: none;
+	width: 40px;
+}
+
+.fondo6{	/*tablas nuevas compra*/
+	background: #f0f0f0;	/*gris oscuro*/
+}
